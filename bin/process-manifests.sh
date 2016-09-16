@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
 
-unset CDPATH
-cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 
-# Error out early
 if ! $( git status &> /dev/null ); then
     echo "This script must be run from within a git repo."
     exit 1
 fi
 if ! $( git diff-index --quiet HEAD -- ); then
     echo "This script can only be run in a clean git repo."
-    exit 1
-fi
-if [ -z "$VIRTUAL_ENV" ]; then
-    echo "You must be in a virtualenv to use this script."
     exit 1
 fi
 if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
@@ -24,38 +17,22 @@ fi
 set -eu
 
 
-UNAME=$( uname )
+GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_COMMIT="$( git rev-parse HEAD )"
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 
 MANIFESTS_DIR="manifests"
 VERSIONED_MANIFESTS_DIR="versioned-manifests"
-SENTINEL_FILENAME="git-commit-hash"
+SENTINEL_FILENAME="SENTINEL"
 
 INVOCATION_SCHEMA=""
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
-if [ $UNAME == "Linux" ]; then
-    JQ_URL="https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64"
-    GCLOUD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-126.0.0-linux-x86_64.tar.gz"
-    SHA_CMD='sha384sum'
-elif [ $UNAME == "Darwin" ]; then
-    JQ_URL="https://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64"
-    GCLOUD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-126.0.0-darwin-x86_64.tar.gz"
-    SHA_CMD='shasum -a 384'
-else
-    echo "OS not supported"
-    exit 1
-fi
 
-if [ ! -x "$VIRTUAL_ENV/bin/jq" ]; then
-    curl -L $JQ_URL > $VIRTUAL_ENV/bin/jq
-    chmod +x $VIRTUAL_ENV/bin/jq
-fi
-
-if [ ! -x "$VIRTUAL_ENV/bin/gcloud" ]; then
-    curl $GCLOUD_URL | tar xz -C $VIRTUAL_ENV --strip-components 1
+if ! $( git config --get user.email &> /dev/null ); then
+    git config user.email "bot@flywheel.exchange"
+    git config user.name "Flywheel Exchange Bot"
 fi
 
 if $( gcloud auth list |& grep -q "No credentialed accounts" ); then
@@ -112,9 +89,9 @@ function process_manifests() {
             docker_image="$( jq -r '."docker-image"' $manifest_path )"
             container=$( docker create $docker_image /bin/true )
             docker export $container | gzip -n > $rootfs_path
-            shasum=$( $SHA_CMD $rootfs_path | cut -d " " -f 1 )
+            shasum=$( sha256sum $rootfs_path | cut -d " " -f 1 )
 
-            versioned_manifest_name="$manifest_name-sha384-$shasum"
+            versioned_manifest_name="$manifest_name-sha256-$shasum"
             versioned_manifest_filename="$versioned_manifest_name.json"
             jq ".\"rootfs-hash\" = \"$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$versioned_manifest_name.tgz\"" $manifest_path \
                 > $VERSIONED_MANIFESTS_DIR/$versioned_manifest_filename
@@ -136,10 +113,10 @@ function process_manifests() {
         fi
     done
 
-    if git push; then
+    if git push $GIT_REMOTE $GIT_BRANCH; then
         echo "Git push successful, attempting to update sentinel"
         echo $( git rev-parse HEAD ) > /tmp/$SENTINEL_FILENAME
-        gsutil cp $SENTINEL_FILENAME $EXCHANGE_BUCKET_URI
+        gsutil -h "Content-Type:text/plain" cp /tmp/$SENTINEL_FILENAME $EXCHANGE_BUCKET_URI
         rm /tmp/$SENTINEL_FILENAME
         echo "Sentinel updated successfully"
     else

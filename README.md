@@ -11,6 +11,7 @@ Upon each commit to master:
 - if commit fails, delete build artifacts from storage bucket
 
 
+```
 .travis
 /bin
 /manifests
@@ -21,3 +22,4 @@ Upon each commit to master:
     /fsl-<sha384-v2>
     /afq-<sha384-v1>
     /afq-<sha384-v2>
+```
