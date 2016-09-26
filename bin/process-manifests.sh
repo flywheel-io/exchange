@@ -14,7 +14,7 @@ if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
     exit 1
 fi
 
-set -eux
+set -eu
 
 
 MANIFESTS_DIR="manifests"
@@ -23,7 +23,7 @@ SENTINEL_FILENAME=".sentinel"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
-GIT_COMMIT_CURRENT="$( git rev-parse HEAD )"
+GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 
 INVOCATION_SCHEMA=""
@@ -36,9 +36,9 @@ if ! $( git config --get user.email &> /dev/null ); then
     git config user.name "Flywheel Exchange Bot"
 fi
 
-if $( gcloud auth list |& grep -q "No credentialed accounts" ); then
+if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
     GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-    echo $GCLOUD_SERVICE_ACCOUNT > $GCLOUD_SERVICE_ACCOUNT_FILE
+    echo "$GCLOUD_SERVICE_ACCOUNT" > $GCLOUD_SERVICE_ACCOUNT_FILE
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
@@ -119,8 +119,8 @@ function process_manifests() {
     git add $SENTINEL_FILENAME
     git commit -m "Update sentinel"
 
-    if git push $GIT_REMOTE $GIT_BRANCH; then
-        echo "Git push successful, attempting to update sentinel"
+    if git push -q $GIT_REMOTE $GIT_BRANCH; then
+        echo "Git push successful"
     else
         echo "Git push failed"
         EXIT_STATUS=1

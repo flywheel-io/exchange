@@ -1,0 +1,18 @@
+sudo: required
+dist: trusty
+
+before_install:
+    - git checkout -qf $TRAVIS_BRANCH
+
+install:
+    - docker build -t flywheel/exchange .
+
+script:
+    - docker run --rm --privileged
+          -v /var/run/docker.sock:/var/run/docker.sock
+          -v $(pwd):/flywheel-exchange -w /flywheel-exchange
+          -e "EXCHANGE_BUCKET_URI=$EXCHANGE_BUCKET_URI"
+          -e "EXCHANGE_DOWNLOAD_URL=$EXCHANGE_DOWNLOAD_URL"
+          -e "GCLOUD_SERVICE_ACCOUNT=$GCLOUD_SERVICE_ACCOUNT"
+          -e "GIT_REMOTE=$GIT_REMOTE"
+          flywheel/exchange process-manifests.sh
