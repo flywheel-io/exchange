@@ -14,16 +14,17 @@ if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
     exit 1
 fi
 
-set -eu
+set -eux
 
-
-GIT_REMOTE=${GIT_REMOTE:-"origin"}
-GIT_COMMIT="$( git rev-parse HEAD )"
-GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 
 MANIFESTS_DIR="manifests"
 VERSIONED_MANIFESTS_DIR="versioned-manifests"
-SENTINEL_FILENAME="SENTINEL"
+SENTINEL_FILENAME=".sentinel"
+
+GIT_REMOTE=${GIT_REMOTE:-"origin"}
+GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
+GIT_COMMIT_CURRENT="$( git rev-parse HEAD )"
+GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 
 INVOCATION_SCHEMA=""
 BUILD_ARTIFACTS=""
@@ -31,13 +32,14 @@ EXIT_STATUS=0
 
 
 if ! $( git config --get user.email &> /dev/null ); then
-    git config user.email "bot@flywheel.exchange"
+    git config user.email "service+github-flywheel-exchange@flywheel.io"
     git config user.name "Flywheel Exchange Bot"
 fi
 
 if $( gcloud auth list |& grep -q "No credentialed accounts" ); then
-    echo $GCLOUD_SERVICE_ACCOUNT > .gcloud-service-account
-    gcloud auth activate-service-account --key-file .gcloud-service-account
+    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
+    echo $GCLOUD_SERVICE_ACCOUNT > $GCLOUD_SERVICE_ACCOUNT_FILE
+    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
 
@@ -66,7 +68,7 @@ function derive_invocation_schema() {
 
 cleanup () {
     echo "Restoring git commit history"
-    git reset --hard $GIT_COMMIT
+    git reset --hard $GIT_COMMIT_CURRENT
     echo "Attempting to remove build artifacts"
     gsutil rm $BUILD_ARTIFACTS
     echo "Build artifacts removed successfully"
@@ -113,12 +115,12 @@ function process_manifests() {
         fi
     done
 
+    echo $( git rev-parse HEAD ) > $SENTINEL_FILENAME
+    git add $SENTINEL_FILENAME
+    git commit -m "Update sentinel"
+
     if git push $GIT_REMOTE $GIT_BRANCH; then
         echo "Git push successful, attempting to update sentinel"
-        echo $( git rev-parse HEAD ) > /tmp/$SENTINEL_FILENAME
-        gsutil -h "Content-Type:text/plain" cp /tmp/$SENTINEL_FILENAME $EXCHANGE_BUCKET_URI
-        rm /tmp/$SENTINEL_FILENAME
-        echo "Sentinel updated successfully"
     else
         echo "Git push failed"
         EXIT_STATUS=1
@@ -128,13 +130,16 @@ function process_manifests() {
 
 
 if [ $GIT_BRANCH == "master" ]; then
-    base_commit=$( gsutil cat $EXCHANGE_BUCKET_URI/$SENTINEL_FILENAME 2> /dev/null || true )
-    if [ -z "$base_commit" ]; then
+    if [ -z "$GIT_COMMIT_SENTINEL" ]; then
         updated_manifests=$( ls $MANIFESTS_DIR )
     else
-        updated_manifests=$( git diff --name-only $base_commit | grep "^$MANIFESTS_DIR/..*$" )
+        updated_manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$MANIFESTS_DIR/..*$" || true)
     fi
-    process_manifests "$updated_manifests"
+    if [ -z "$updated_manifests" ]; then
+        echo "No updated manifests to process"
+    else
+        process_manifests "$updated_manifests"
+    fi
 else
     validate_manifests $( ls $MANIFESTS_DIR )
 fi
