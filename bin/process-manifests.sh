@@ -105,7 +105,7 @@ function process_manifests() {
                 > $tempfile && mv $tempfile $v_manifest_path
 
             derive_invocation_schema $manifest_path # sets $INVOCATION_SCHEMA
-            jq ".\"invocation-schema\"=\"$INVOCATION_SCHEMA\"" $v_manifest_path \
+            jq ".\"invocation-schema\".\"manifest\" = \"$INVOCATION_SCHEMA\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
             rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
