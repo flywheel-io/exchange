@@ -14,11 +14,11 @@ if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
     exit 1
 fi
 
-set -eu
+set -eux
 
 
 MANIFESTS_DIR="manifests"
-VERSIONED_MANIFESTS_DIR="versioned-manifests"
+V_MANIFESTS_DIR="versioned-manifests"
 SENTINEL_FILENAME=".sentinel"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
@@ -50,9 +50,9 @@ function validate_manifest() {
 
 
 function validate_manifests() {
-    for manifest_file in $1; do
-        manifest_name="${manifest_file%.json}"
-        manifest_path="manifests/$manifest_file"
+    for manifest_path in $1; do
+        manifest_name="${manifest_path##*/}"
+        manifest_name="${manifest_name%.json}"
         echo "Validating manifest $manifest_name"
         validate_manifest $manifest_path
     done
@@ -76,9 +76,9 @@ cleanup () {
 
 
 function process_manifests() {
-    for manifest_file in $1; do
-        manifest_name="${manifest_file%.json}"
-        manifest_path="manifests/$manifest_file"
+    for manifest_path in $1; do
+        manifest_name="${manifest_path##*/}"
+        manifest_name="${manifest_name%.json}"
         echo "Processing manifest $manifest_name"
 
         if ! validate_manifest $manifest_path; then
@@ -86,29 +86,32 @@ function process_manifests() {
             cleanup
         else
             tempdir=$( mktemp -d )
-            rootfs_path="$tempdir/$manifest_name.tgz"
+            tempfile=$tempdir/tempfile
 
             docker_image="$( jq -r '."docker-image"' $manifest_path )"
             container=$( docker create $docker_image /bin/true )
+            rootfs_path="$tempdir/$manifest_name.tgz"
             docker export $container | gzip -n > $rootfs_path
             shasum=$( sha256sum $rootfs_path | cut -d " " -f 1 )
 
-            versioned_manifest_name="$manifest_name-sha256-$shasum"
-            versioned_manifest_filename="$versioned_manifest_name.json"
-            jq ".\"rootfs-hash\" = \"$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$versioned_manifest_name.tgz\"" $manifest_path \
-                > $VERSIONED_MANIFESTS_DIR/$versioned_manifest_filename
+            v_manifest_name="$manifest_name-sha256-$shasum"
+            v_manifest_path="$V_MANIFESTS_DIR/$v_manifest_name.json"
+            cp $manifest_path $v_manifest_path
+
+            jq ".\"rootfs-hash\" = \"$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
+                > $tempfile && mv $tempfile $v_manifest_path
 
             derive_invocation_schema $manifest_path # sets $INVOCATION_SCHEMA
-            jq ".\"invocation-schema\"=\"$INVOCATION_SCHEMA\"" $manifest_path \
-                > $VERSIONED_MANIFESTS_DIR/$versioned_manifest_filename
+            jq ".\"invocation-schema\"=\"$INVOCATION_SCHEMA\"" $v_manifest_path \
+                > $tempfile && mv $tempfile $v_manifest_path
 
-            rootfs_hash_path="/tmp/$versioned_manifest_name.tgz"
+            rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
             mv $rootfs_path $rootfs_hash_path
             gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
             BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
 
             commit_message="Process $manifest_name manifest"
-            git add $VERSIONED_MANIFESTS_DIR/$versioned_manifest_filename
+            git add $v_manifest_path
             git commit -m "$commit_message"
 
             rm -rf $tempdir
@@ -131,7 +134,7 @@ function process_manifests() {
 
 if [ $GIT_BRANCH == "master" ]; then
     if [ -z "$GIT_COMMIT_SENTINEL" ]; then
-        updated_manifests=$( ls $MANIFESTS_DIR )
+        updated_manifests=$( find $MANIFESTS_DIR -iname "*.json" )
     else
         updated_manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$MANIFESTS_DIR/..*$" || true)
     fi
