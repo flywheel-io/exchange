@@ -14,7 +14,7 @@ if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
     exit 1
 fi
 
-set -eux
+set -eu
 
 
 MANIFESTS_DIR="manifests"
@@ -97,6 +97,9 @@ function process_manifests() {
             v_manifest_name="$manifest_name-sha256-$shasum"
             v_manifest_path="$V_MANIFESTS_DIR/$v_manifest_name.json"
             cp $manifest_path $v_manifest_path
+
+            jq ".\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
+                > $tempfile && mv $tempfile $v_manifest_path
 
             jq ".\"rootfs-hash\" = \"$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
