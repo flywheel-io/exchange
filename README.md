@@ -1,25 +1,33 @@
+## Flywheel Exchange
 
-Disable concurrent execution of Travis builds
+This repository consists of three distinct assets:
+- User-generated, weakly-versioned manifests (`manifests`)
+- Machine-generated, strongly-versioned manifests (`versioned-manifests`)
+- Manifest processing code (`bin`)
 
-Upon each commit to master:
-- retrieve git hash of latest successfully-processed commit
-- for each updated weakly-versioned manifest
-    - convert to strongly-versioned manifest
-    - upload build artifact to storage bucket
-- commit all new strongly-versioned manifests
-- if commit succeeds, update successfully-processed commit hash
-- if commit fails, delete build artifacts from storage bucket
+The manifest processing code is automatically executed by Travis whenever a new commit gets pushed. It validates weakly-versioned manifests and converts them to strongly-versioned manifests and rootfs build artifacts.
+
+#### Operation
+
+For each new commit to the master branch:
+- Retrieve git hash of latest *successfully-processed commit*
+- For each updated weakly-versioned manifest
+    - Validate the weakly-versioned manifest against the manifest schema
+    - Generate a strongly-versioned rootfs build artifact
+    - Upload build artifact to storage bucket
+    - Derive a strongly-versioned manifest that references the uploaded build artifact
+- Commit all new strongly-versioned manifests
+- Update *successfully-processed commit* hash
+- Push all commits to GitHub
+- If push fails, delete build artifacts from storage bucket
+
+For each new commit to the master branch:
+- Validate all weakly-versioned manifests against the manifest schema
 
 
+#### Notes
+
+Generate Travis-compliant GCP service account string:
 ```
-.travis
-/bin
-/manifests
-    /fsl
-    /afq
-/versioned-manifests
-    /fsl-<sha384-v1>
-    /fsl-<sha384-v2>
-    /afq-<sha384-v1>
-    /afq-<sha384-v2>
+printf "%q" "$( <flywheel-exchange-storage-service-account.json )"
 ```
