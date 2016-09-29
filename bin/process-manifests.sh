@@ -77,8 +77,9 @@ cleanup () {
 
 function process_manifests() {
     for manifest_path in $1; do
-        manifest_name="${manifest_path##*/}"
+        manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
+        manifest_slug="${manifest_name//\//-}"
         echo "Processing manifest $manifest_name"
 
         if ! validate_manifest $manifest_path; then
@@ -90,11 +91,11 @@ function process_manifests() {
 
             docker_image="$( jq -r '."docker-image"' $manifest_path )"
             container=$( docker create $docker_image /bin/true )
-            rootfs_path="$tempdir/$manifest_name.tgz"
+            rootfs_path="$tempdir/$manifest_slug.tgz"
             docker export $container | gzip -n > $rootfs_path
             shasum=$( sha256sum $rootfs_path | cut -d " " -f 1 )
 
-            v_manifest_name="$manifest_name-sha256-$shasum"
+            v_manifest_name="$manifest_slug-sha256-$shasum"
             v_manifest_path="$V_MANIFESTS_DIR/$v_manifest_name.json"
             cp $manifest_path $v_manifest_path
 
@@ -142,6 +143,7 @@ if [ $GIT_BRANCH == "master" ]; then
         echo "No updated manifests to process"
     else
         echo "Processing updated manifests"
+        echo "$manifests"
         process_manifests "$manifests"
     fi
 else
