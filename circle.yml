@@ -2,10 +2,6 @@ machine:
   services:
     - docker
 
-dependencies:
-  override:
-    - sudo $( which gcloud ) components update -q
-
 test:
   override:
     - ./bin/process-manifests.sh:

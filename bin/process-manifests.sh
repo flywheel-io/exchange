@@ -51,7 +51,7 @@ function validate_manifest() {
 
 function validate_manifests() {
     for manifest_path in $1; do
-        manifest_name="${manifest_path##*/}"
+        manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
         echo "Validating manifest $manifest_name"
         validate_manifest $manifest_path
@@ -135,19 +135,21 @@ function process_manifests() {
 }
 
 
+echo "On branch $GIT_BRANCH"
+manifests=$( find $MANIFESTS_DIR -iname "*.json" )
 if [ $GIT_BRANCH == "master" ]; then
-    if [ -z "$GIT_COMMIT_SENTINEL" ]; then
-        updated_manifests=$( find $MANIFESTS_DIR -iname "*.json" )
-    else
-        updated_manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$MANIFESTS_DIR/..*$" || true)
+    if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
+        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$MANIFESTS_DIR/..*$" || true)
     fi
-    if [ -z "$updated_manifests" ]; then
+    if [ -z "$manifests" ]; then
         echo "No updated manifests to process"
     else
-        process_manifests "$updated_manifests"
+        echo "Processing updated manifests"
+        process_manifests "$manifests"
     fi
 else
-    validate_manifests $( ls $MANIFESTS_DIR )
+    echo "Validating all manifests"
+    validate_manifests "$manifests"
 fi
 
 exit $EXIT_STATUS
