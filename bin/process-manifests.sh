@@ -113,17 +113,14 @@ function process_manifests() {
             gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
             BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
 
-            commit_message="Process $manifest_name manifest"
             git add $v_manifest_path
-            git commit -m "$commit_message"
+            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
+            git add $SENTINEL_FILENAME
+            git commit -m "Process $manifest_name manifest"
 
             rm -rf $tempdir
         fi
     done
-
-    echo $( git rev-parse HEAD ) > $SENTINEL_FILENAME
-    git add $SENTINEL_FILENAME
-    git commit -m "Update sentinel"
 
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
         echo "Git push successful"
