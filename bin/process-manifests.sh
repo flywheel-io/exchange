@@ -93,16 +93,16 @@ function process_manifests() {
             container=$( docker create $docker_image /bin/true )
             rootfs_path="$tempdir/$manifest_slug.tgz"
             docker export $container | gzip -n > $rootfs_path
-            shasum=$( sha256sum $rootfs_path | cut -d " " -f 1 )
+            shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
 
-            v_manifest_name="$manifest_slug-sha256-$shasum"
+            v_manifest_name="$manifest_slug-sha384-$shasum"
             v_manifest_path="$V_MANIFESTS_DIR/$v_manifest_name.json"
             cp $manifest_path $v_manifest_path
 
             jq ".\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
-            jq ".\"rootfs-hash\" = \"$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
+            jq ".\"rootfs-hash\" = \"sha384:$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
             derive_invocation_schema $manifest_path # sets $INVOCATION_SCHEMA
