@@ -79,6 +79,8 @@ function process_manifests() {
     for manifest_path in $1; do
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
+        manifest_hier="/$manifest_name"
+        manifest_hier="${manifest_hier%/*}"
         manifest_slug="${manifest_name//\//-}"
         echo "Processing manifest $manifest_name"
 
@@ -96,7 +98,8 @@ function process_manifests() {
             shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
 
             v_manifest_name="$manifest_slug-sha384-$shasum"
-            v_manifest_path="$V_MANIFESTS_DIR/$v_manifest_name.json"
+            v_manifest_path="$V_MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
+            mkdir -p "$V_MANIFESTS_DIR/$manifest_hier"
             cp $manifest_path $v_manifest_path
 
             jq ".\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
