@@ -17,8 +17,8 @@ fi
 set -eu
 
 
-MANIFESTS_DIR="boutiques"
-V_MANIFESTS_DIR="manifests"
+BOUTIQUES_DIR="boutiques"
+MANIFESTS_DIR="manifests"
 SENTINEL_FILENAME=".sentinel"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
@@ -77,6 +77,8 @@ cleanup () {
 
 function process_manifests() {
     for manifest_path in $1; do
+        manifest_type="${manifest_path%%s/*}"
+        echo $manifest_type
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
         manifest_hier="/$manifest_name"
@@ -98,9 +100,10 @@ function process_manifests() {
             shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
 
             v_manifest_name="$manifest_slug-sha384-$shasum"
-            v_manifest_path="$V_MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-            mkdir -p "$V_MANIFESTS_DIR/$manifest_hier"
-            cp $manifest_path $v_manifest_path
+            v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
+            mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+
+            jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
 
             jq ".\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
@@ -137,10 +140,10 @@ function process_manifests() {
 
 
 echo "On branch $GIT_BRANCH"
-manifests=$( find $MANIFESTS_DIR -iname "*.json" )
+manifests=$( find $BOUTIQUES_DIR -iname "*.json" )
 if [ $GIT_BRANCH == "master" ]; then
     if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
-        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$MANIFESTS_DIR/..*$" || true)
+        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$BOUTIQUES_DIR/..*$" || true)
     fi
     if [ -z "$manifests" ]; then
         echo "No updated manifests to process"
