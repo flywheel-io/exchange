@@ -17,8 +17,8 @@ fi
 set -eu
 
 
-MANIFESTS_DIR="manifests"
-V_MANIFESTS_DIR="versioned-manifests"
+MANIFESTS_DIR="boutiques"
+V_MANIFESTS_DIR="manifests"
 SENTINEL_FILENAME=".sentinel"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
