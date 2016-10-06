@@ -2,6 +2,10 @@ machine:
   services:
     - docker
 
+dependencies:
+  override:
+    - pip install jsonschema
+
 test:
   override:
     - ./bin/process-manifests.sh:

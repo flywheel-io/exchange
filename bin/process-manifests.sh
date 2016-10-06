@@ -1,26 +1,13 @@
 #!/usr/bin/env bash
 
 
-if ! $( git status &> /dev/null ); then
-    echo "This script must be run from within a git repo."
-    exit 1
-fi
-if ! $( git diff-index --quiet HEAD -- ); then
-    echo "This script can only be run in a clean git repo."
-    exit 1
-fi
-if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-    echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
-    exit 1
-fi
-
-set -eu
-
-
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
 SENTINEL_FILENAME=".sentinel"
+
+GEAR_SCHEMA_URL="https://raw.githubusercontent.com/flywheel-io/gears/master/spec/manifest.schema.json"
+BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/master/schema/descriptor.schema.json"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
@@ -31,6 +18,25 @@ INVOCATION_SCHEMA=""
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
+
+if [ $BASH_VERSION \< 4.2 ]; then
+    echo "This script requires bash version 4.2 or greater."
+    exit 1
+fi
+
+if ! $( git status &> /dev/null ); then
+    echo "This script must be run from within a git repo."
+    exit 1
+fi
+if ! $( git diff-index --quiet HEAD -- ); then
+    echo "This script can only be run in a clean git repo."
+    exit 1
+fi
+
+if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+    echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+    exit 1
+fi
 
 if ! $( git config --get user.email &> /dev/null ); then
     git config user.email "service+github-flywheel-exchange@flywheel.io"
@@ -43,10 +49,29 @@ if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
+set -eu
+
 
 function validate_manifest() {
-    # TODO implement manifest validation
-    echo "Manifest validation not yet implemented"
+    if [ "$1" == "gear" ]; then
+        if [ ! -v GEAR_SCHEMA_PATH ]; then
+            echo "Installing gear schema"
+            GEAR_SCHEMA_PATH=$( mktemp )
+            curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
+            jq ".properties.\"docker-image\".type = \"string\"" $GEAR_SCHEMA_PATH > $GEAR_SCHEMA_PATH- && mv $GEAR_SCHEMA_PATH- $GEAR_SCHEMA_PATH
+        fi
+        python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
+    elif [ "$1" == "boutique" ]; then
+        if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
+            BOUTIQUE_SCHEMA_PATH=$( mktemp )
+            curl -o $BOUTIQUE_SCHEMA_PATH $BOUTIQUE_SCHEMA_URL
+            jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH
+        fi
+        python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
+    else
+        echo "Manifest validation for type \"$1\" not implemented"
+        return 1
+    fi
 }
 
 
@@ -86,10 +111,13 @@ function process_manifests() {
         manifest_slug="${manifest_name//\//-}"
         echo "Processing manifest $manifest_name"
 
-        if ! validate_manifest $manifest_path; then
+        if ! validate_manifest $manifest_type $manifest_path; then
+            echo "Schema validation failed for $manifest_name"
             EXIT_STATUS=1
             cleanup
         else
+            >&2 echo "Schema successfully validated for $manifest_name"
+
             tempdir=$( mktemp -d )
             tempfile=$tempdir/tempfile
 
