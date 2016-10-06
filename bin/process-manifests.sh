@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
@@ -14,27 +13,26 @@ GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 
-INVOCATION_SCHEMA=""
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
 
 if [ $BASH_VERSION \< 4.2 ]; then
-    echo "This script requires bash version 4.2 or greater."
+    >&2 echo "This script requires bash version 4.2 or greater."
     exit 1
 fi
 
 if ! $( git status &> /dev/null ); then
-    echo "This script must be run from within a git repo."
+    >&2 echo "This script must be run from within a git repo."
     exit 1
 fi
 if ! $( git diff-index --quiet HEAD -- ); then
-    echo "This script can only be run in a clean git repo."
+    >&2 echo "This script can only be run in a clean git repo."
     exit 1
 fi
 
 if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-    echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+    >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
     exit 1
 fi
 
@@ -55,7 +53,7 @@ set -eu
 function validate_manifest() {
     if [ "$1" == "gear" ]; then
         if [ ! -v GEAR_SCHEMA_PATH ]; then
-            echo "Installing gear schema"
+            >&2 echo "Installing gear schema"
             GEAR_SCHEMA_PATH=$( mktemp )
             curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
             jq ".properties.\"docker-image\".type = \"string\"" $GEAR_SCHEMA_PATH > $GEAR_SCHEMA_PATH- && mv $GEAR_SCHEMA_PATH- $GEAR_SCHEMA_PATH
@@ -69,7 +67,7 @@ function validate_manifest() {
         fi
         python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
     else
-        echo "Manifest validation for type \"$1\" not implemented"
+        >&2 echo "Manifest validation for type \"$1\" not implemented"
         return 1
     fi
 }
@@ -79,7 +77,7 @@ function validate_manifests() {
     for manifest_path in $1; do
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
-        echo "Validating manifest $manifest_name"
+        >&2 echo "Validating manifest $manifest_name"
         validate_manifest $manifest_path
     done
 }
@@ -87,17 +85,17 @@ function validate_manifests() {
 
 function derive_invocation_schema() {
     # TODO implement invocation schema generation
-    echo "Invocation schema generation not yet implemented"
-    INVOCATION_SCHEMA=$1
+    >&2 echo "Invocation schema generation not yet implemented"
+    echo=$1
 }
 
 
 cleanup () {
-    echo "Restoring git commit history"
+    >&2 echo "Restoring git commit history"
     git reset --hard $GIT_COMMIT_CURRENT
-    echo "Attempting to remove build artifacts"
+    >&2 echo "Attempting to remove build artifacts"
     gsutil rm $BUILD_ARTIFACTS
-    echo "Build artifacts removed successfully"
+    >&2 echo "Build artifacts removed successfully"
 }
 
 
@@ -109,10 +107,10 @@ function process_manifests() {
         manifest_hier="/$manifest_name"
         manifest_hier="${manifest_hier%/*}"
         manifest_slug="${manifest_name//\//-}"
-        echo "Processing manifest $manifest_name"
+        >&2 echo "Processing manifest $manifest_name"
 
         if ! validate_manifest $manifest_type $manifest_path; then
-            echo "Schema validation failed for $manifest_name"
+            >&2 echo "Schema validation failed for $manifest_name"
             EXIT_STATUS=1
             cleanup
         else
@@ -139,8 +137,8 @@ function process_manifests() {
             jq ".\"rootfs-hash\" = \"sha384:$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
-            derive_invocation_schema $manifest_path # sets $INVOCATION_SCHEMA
-            jq ".\"invocation-schema\".\"manifest\" = \"$INVOCATION_SCHEMA\"" $v_manifest_path \
+            invocation_schema=$( derive_invocation_schema $manifest_path )
+            jq ".\"invocation-schema\".\"manifest\" = \"$invocation_schema\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
             rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
@@ -158,30 +156,30 @@ function process_manifests() {
     done
 
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
-        echo "Git push successful"
+        >&2 echo "Git push successful"
     else
-        echo "Git push failed"
+        >&2 echo "Git push failed"
         EXIT_STATUS=1
         cleanup
     fi
 }
 
 
-echo "On branch $GIT_BRANCH"
+>&2 echo "On branch $GIT_BRANCH"
 manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
 if [ $GIT_BRANCH == "master" ]; then
     if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
         manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
     fi
     if [ -z "$manifests" ]; then
-        echo "No updated manifests to process"
+        >&2 echo "No updated manifests to process"
     else
-        echo "Processing updated manifests"
-        echo "$manifests"
+        >&2 echo "Processing updated manifests"
+        >&2 echo "$manifests"
         process_manifests "$manifests"
     fi
 else
-    echo "Validating all manifests"
+    >&2 echo "Validating all manifests"
     validate_manifests "$manifests"
 fi
 
