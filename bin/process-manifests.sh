@@ -17,6 +17,7 @@ fi
 set -eu
 
 
+GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
 SENTINEL_FILENAME=".sentinel"
@@ -78,7 +79,6 @@ cleanup () {
 function process_manifests() {
     for manifest_path in $1; do
         manifest_type="${manifest_path%%s/*}"
-        echo $manifest_type
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
         manifest_hier="/$manifest_name"
@@ -140,10 +140,10 @@ function process_manifests() {
 
 
 echo "On branch $GIT_BRANCH"
-manifests=$( find $BOUTIQUES_DIR -iname "*.json" )
+manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
 if [ $GIT_BRANCH == "master" ]; then
     if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
-        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep "^$BOUTIQUES_DIR/..*$" || true)
+        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
     fi
     if [ -z "$manifests" ]; then
         echo "No updated manifests to process"
