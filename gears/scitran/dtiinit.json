@@ -1,5 +1,4 @@
 {
-    "docker-image": "scitran/dtiinit",
     "name": "dtiinit",
     "label": "Diffusion Data Initialization Pipeline",
     "description": "dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. See: http://white.stanford.edu/newlm/index.php/DTI_Preprocessing for more information regarding the pipeline. This dtiInit gear will output motion-corrected diffusion data (nifti, bval, bvecs) aligned to the first b0 image in the acquisition. It will also calculate FA, MD, RD, and AD maps. Tensors, vector RGB, brain mask, white-matter mask, and white-matter probability maps will also be output. All outputs will be included in a zip file.",
@@ -100,6 +99,11 @@
             "description": "Noise calculation method for robust tensor fitting. ['corner', 'b0' (default)]. There are 2 ways to calculate the noise. The first is based on the standard deviation of the signal in the corner of the image (noiseCalcMethod = 'corner'). This method works well as long as the corner of the image has not been padded with zeros. Currently GE zeros out the pixel intensity outside of the brain. So for new GE data we calculate the noise by taking the standard deviation of the b=0 images (noiseCalcMethod = 'b0') which means that we need a number of b0 acquisitions. If you are using robust tensor fitting you must decide how to calculate the image noise. If the corner of the image is padded with zeros then you should use the 'b0' method which calculates the noise based on the std of the b0 image.",
             "type": "string",
             "default": "b0"
+        }
+    },
+    "custom": {
+        "flywheel-exchange": {
+            "docker-image": "scitran/dtiinit"
         }
     }
 }

@@ -56,14 +56,13 @@ function validate_manifest() {
             >&2 echo "Installing gear schema"
             GEAR_SCHEMA_PATH=$( mktemp )
             curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
-            jq ".properties.\"docker-image\".type = \"string\"" $GEAR_SCHEMA_PATH > $GEAR_SCHEMA_PATH- && mv $GEAR_SCHEMA_PATH- $GEAR_SCHEMA_PATH
         fi
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             BOUTIQUE_SCHEMA_PATH=$( mktemp )
             curl -o $BOUTIQUE_SCHEMA_PATH $BOUTIQUE_SCHEMA_URL
-            jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH
+            jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH # FIXME upgrade to full boutiques and remove this hack
         fi
         python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
     else
@@ -119,7 +118,12 @@ function process_manifests() {
             tempdir=$( mktemp -d )
             tempfile=$tempdir/tempfile
 
-            docker_image="$( jq -r '."docker-image"' $manifest_path )"
+            if [ "$manifest_type" == "gear" ]; then
+                docker_image="$( jq -r '.custom."flywheel-exchange"."docker-image"' $manifest_path )"
+            else
+                docker_image="$( jq -r '."docker-image"' $manifest_path )"
+            fi
+
             container=$( docker create $docker_image /bin/true )
             rootfs_path="$tempdir/$manifest_slug.tgz"
             docker export $container | gzip -n > $rootfs_path
