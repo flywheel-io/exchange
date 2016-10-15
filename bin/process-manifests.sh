@@ -60,8 +60,9 @@ function validate_manifest() {
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
+            >&2 echo "Installing boutique schema"
             BOUTIQUE_SCHEMA_PATH=$( mktemp )
-            curl -o $BOUTIQUE_SCHEMA_PATH $BOUTIQUE_SCHEMA_URL
+            curl -s $BOUTIQUE_SCHEMA_URL > $BOUTIQUE_SCHEMA_PATH
             jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH # FIXME upgrade to full boutiques and remove this hack
         fi
         python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
@@ -74,10 +75,11 @@ function validate_manifest() {
 
 function validate_manifests() {
     for manifest_path in $1; do
+        manifest_type="${manifest_path%%s/*}"
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
-        >&2 echo "Validating manifest $manifest_name"
-        validate_manifest $manifest_path
+        >&2 echo "Validating $manifest_type $manifest_name"
+        validate_manifest $manifest_type $manifest_path
     done
 }
 
