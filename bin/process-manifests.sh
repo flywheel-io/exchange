@@ -85,9 +85,15 @@ function validate_manifests() {
 
 
 function derive_invocation_schema() {
-    # TODO implement invocation schema generation
-    >&2 echo "Invocation schema generation not yet implemented"
-    echo=$1
+    if [ "$1" == "gear" ]; then
+        echo $( python -m gears generate-invocation-schema "$2" )
+    elif [ "$1" == "boutique" ]; then
+        # FIXME add invocation schema generation for boutiques
+        echo "{\"WARNING\": \"Invocation schema validation for boutiques not yet implemented\"}"
+    else
+        >&2 echo "Invocation schema generation for type \"$1\" not implemented"
+        return 1
+    fi
 }
 
 
@@ -108,14 +114,14 @@ function process_manifests() {
         manifest_hier="/$manifest_name"
         manifest_hier="${manifest_hier%/*}"
         manifest_slug="${manifest_name//\//-}"
-        >&2 echo "Processing manifest $manifest_name"
+        >&2 echo "Processing manifest $manifest_type $manifest_name"
 
         if ! validate_manifest $manifest_type $manifest_path; then
-            >&2 echo "Schema validation failed for $manifest_name"
+            >&2 echo "Schema validation failed for $manifest_type $manifest_name"
             EXIT_STATUS=1
             cleanup
         else
-            >&2 echo "Schema successfully validated for $manifest_name"
+            >&2 echo "Schema successfully validated for $manifest_type $manifest_name"
 
             tempdir=$( mktemp -d )
             tempfile=$tempdir/tempfile
@@ -143,9 +149,10 @@ function process_manifests() {
             jq ".\"rootfs-hash\" = \"sha384:$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
-            invocation_schema=$( derive_invocation_schema $manifest_path )
-            jq ".\"invocation-schema\".\"manifest\" = \"$invocation_schema\"" $v_manifest_path \
+            invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
+            jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
+            >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
 
             rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
             mv $rootfs_path $rootfs_hash_path
@@ -155,7 +162,7 @@ function process_manifests() {
             git add $v_manifest_path
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
             git add $SENTINEL_FILENAME
-            git commit -m "Process $manifest_name manifest"
+            git commit -m "Process $manifest_type $manifest_name"
 
             rm -rf $tempdir
         fi
