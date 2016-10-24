@@ -1,0 +1,27 @@
+{
+    "name": "structural-analysis",
+    "label": "Structural Analysis",
+    "description": "Register structural image to standard templates. Returns warps and masks that are used later on in this processing pipeline.",
+    "author": "Carlos Correa <cgc@stanford.edu>",
+    "url": "https://github.com/scitran-apps/structural-analysis",
+    "source": "https://github.com/scitran-apps/structural-analysis",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "inputs": {
+        "structural": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "config": {},
+    "custom": {
+        "flywheel-exchange": {
+            "docker-image": "scitran/structural-analysis"
+        }
+    }
+}
