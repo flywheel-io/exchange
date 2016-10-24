@@ -1,0 +1,28 @@
+{
+    "name": "parrec-mr-classifier",
+    "label": "SciTran PAR/REC MR Classifier",
+    "description": "Extract metadata from PAR/REC MR data Philips",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://scitran.github.io",
+    "source": "https://github.com/scitran-apps/parrec-mr-classifier",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.3",
+    "config": {},
+    "inputs": {
+        "parrec": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "parrec"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "flywheel-exchange": {
+            "docker-image": "scitran/parrec-mr-classifier"
+        }
+    }
+}
