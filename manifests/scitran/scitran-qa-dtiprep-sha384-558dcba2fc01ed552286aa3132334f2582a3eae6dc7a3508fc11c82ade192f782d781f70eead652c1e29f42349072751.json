@@ -1,0 +1,104 @@
+{
+  "gear": {
+    "name": "qa-dtiprep",
+    "label": "DTIPREP: DWI Quality Assurance Report",
+    "description": "DTIPrep performs a Study-specific Protocol based automatic pipeline for DWI/DTI quality control and preparation. This is both a GUI and command line tool. The configurable pipeline includes image/diffusion information check, padding/Cropping of data, slice-wise, interlace-wise and gradient-wise intensity and motion check, head motion and Eddy current artifact correction, and DTI computing. Version 1.2.4",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "DTIPrep (Francois Budin <fbudin@unc.edu>)",
+    "url": "https://www.nitrc.org/projects/dtiprep",
+    "source": "https://github.com/scitran-apps/qa-dtiprep",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.2",
+    "config": {},
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "bvec": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      },
+      "bval": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "flywheel-exchange": {
+        "docker-image": "scitran/qa-dtiprep"
+      }
+    }
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:558dcba2fc01ed552286aa3132334f2582a3eae6dc7a3508fc11c82ade192f782d781f70eead652c1e29f42349072751",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-qa-dtiprep-sha384-558dcba2fc01ed552286aa3132334f2582a3eae6dc7a3508fc11c82ade192f782d781f70eead652c1e29f42349072751.tgz",
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bvec",
+          "bval",
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "bvec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "bval": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for DTIPREP: DWI Quality Assurance Report"
+  }
+}
