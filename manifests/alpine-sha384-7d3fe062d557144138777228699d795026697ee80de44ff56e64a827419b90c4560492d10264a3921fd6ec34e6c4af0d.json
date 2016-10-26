@@ -1,0 +1,11 @@
+{
+  "boutique": {
+    "docker-image": "alpine"
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:7d3fe062d557144138777228699d795026697ee80de44ff56e64a827419b90c4560492d10264a3921fd6ec34e6c4af0d",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/alpine-sha384-7d3fe062d557144138777228699d795026697ee80de44ff56e64a827419b90c4560492d10264a3921fd6ec34e6c4af0d.tgz",
+  "invocation-schema": {
+    "WARNING": "Invocation schema validation for boutiques not yet implemented"
+  }
+}
