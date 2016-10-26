@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "parrec-mr-classifier",
+    "label": "SciTran PAR/REC MR Classifier",
+    "description": "Extract metadata from PAR/REC MR data Philips",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://scitran.github.io",
+    "source": "https://github.com/scitran-apps/parrec-mr-classifier",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.3",
+    "config": {},
+    "inputs": {
+      "parrec": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "parrec"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "flywheel-exchange": {
+        "docker-image": "scitran/parrec-mr-classifier"
+      }
+    }
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:8bb0129e932a42ad192eba0d1068a10e77c866509f3d5df0f41ad2b905d20e350bca29ff892f5df7992c75ea0a18d7fa",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-parrec-mr-classifier-sha384-8bb0129e932a42ad192eba0d1068a10e77c866509f3d5df0f41ad2b905d20e350bca29ff892f5df7992c75ea0a18d7fa.tgz",
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "parrec"
+        ],
+        "type": "object",
+        "properties": {
+          "parrec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "parrec"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for SciTran PAR/REC MR Classifier"
+  }
+}
