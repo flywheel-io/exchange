@@ -1,0 +1,68 @@
+{
+  "gear": {
+    "name": "dcm2niix",
+    "label": "DCM2NIIX: v.6June2016",
+    "description": "Chris Rorden's dcm2niiX version 6June2016 (64-bit). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Chris Rorden",
+    "url": "https://www.nitrc.org/projects/dcm2nii",
+    "source": "https://github.com/scitran-apps/dcm2niiix",
+    "license": "BSD-2-Clause",
+    "flywheel": "0",
+    "version": "0.0.3",
+    "config": {},
+    "inputs": {
+      "dcm2niix": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom",
+            "parrec"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "flywheel-exchange": {
+        "docker-image": "scitran/dcm2niix"
+      }
+    }
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:fcb62c2f643a2d47e2ae86c7561a9625f3d3903822f489b09ce4cc02ff42ceb543d8687386e1a7e7a01b25cb15eaa721",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dcm2niix-sha384-fcb62c2f643a2d47e2ae86c7561a9625f3d3903822f489b09ce4cc02ff42ceb543d8687386e1a7e7a01b25cb15eaa721.tgz",
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dcm2niix"
+        ],
+        "type": "object",
+        "properties": {
+          "dcm2niix": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom",
+                  "parrec"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for DCM2NIIX: v.6June2016"
+  }
+}
