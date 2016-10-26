@@ -1,0 +1,11 @@
+{
+  "boutique": {
+    "docker-image": "bids/example"
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:be2b7be7081a54b6185b4ca5a16fab6c173ebf19037a6d39b0b754b9507824e73357b35ea81848d35dd793141bcc5ecd",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/bids-example-sha384-be2b7be7081a54b6185b4ca5a16fab6c173ebf19037a6d39b0b754b9507824e73357b35ea81848d35dd793141bcc5ecd.tgz",
+  "invocation-schema": {
+    "WARNING": "Invocation schema validation for boutiques not yet implemented"
+  }
+}
