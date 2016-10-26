@@ -1,0 +1,11 @@
+{
+  "boutique": {
+    "docker-image": "busybox"
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:a41d871f319f4dfbbd798806b54643bd0e5379315e0a706b53bd6a65fcffcf328e3d207ffbc73c92ce10659a3464a7c0",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/busybox-sha384-a41d871f319f4dfbbd798806b54643bd0e5379315e0a706b53bd6a65fcffcf328e3d207ffbc73c92ce10659a3464a7c0.tgz",
+  "invocation-schema": {
+    "WARNING": "Invocation schema validation for boutiques not yet implemented"
+  }
+}
