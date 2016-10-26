@@ -1,0 +1,168 @@
+{
+  "gear": {
+    "name": "flywheel-example-gear",
+    "label": "Flywheel Example Gear",
+    "description": "Sample gear to demonstrate a simple use case of outputting the name of each input file.",
+    "author": "Flywheel <support@flywheel.io>",
+    "maintainer": "Ryan Sanford <ryansanford@flywheel.io>",
+    "url": "https://flywheel.io/",
+    "source": "https://github.com/flywheel-apps/example-gear",
+    "license": "MIT",
+    "flywheel": "0",
+    "version": "0.0.2",
+    "config": {
+      "any boolean": {
+        "default": true,
+        "type": "boolean"
+      },
+      "any integer": {
+        "default": 7,
+        "type": "integer"
+      },
+      "any number": {
+        "default": 3.5,
+        "type": "number"
+      },
+      "any string": {
+        "default": "Example",
+        "type": "string"
+      },
+      "phone number": {
+        "pattern": "^[0-9]{3}-[0-9]{4}$",
+        "type": "string"
+      },
+      "string of specific length": {
+        "maxLength": 5,
+        "minLength": 2,
+        "type": "string"
+      },
+      "two-digit multiple of ten": {
+        "exclusiveMaximum": true,
+        "maximum": 100,
+        "multipleOf": 10,
+        "type": "number"
+      }
+    },
+    "inputs": {
+      "any dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "any file": {
+        "base": "file"
+      },
+      "any text file <= 100 KB": {
+        "base": "file",
+        "name": {
+          "pattern": "^.*.txt$"
+        },
+        "size": {
+          "maximum": 100000
+        }
+      }
+    },
+    "custom": {
+      "flywheel-exchange": {
+        "docker-image": "flywheel/example-gear"
+      }
+    }
+  },
+  "git-commit": "2d2b62689ce44a74ad3ae394070c4e4bc2a9089b",
+  "rootfs-hash": "sha384:41bb4531c27bac3e4262816b91715ed2b9b8fbb4e2bb5b111971f38a32a90b8a01ff8273e0273a3aa1a4c070c4721c37",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-example-gear-sha384-41bb4531c27bac3e4262816b91715ed2b9b8fbb4e2bb5b111971f38a32a90b8a01ff8273e0273a3aa1a4c070c4721c37.tgz",
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "any file",
+          "any dicom",
+          "any text file <= 100 KB"
+        ],
+        "type": "object",
+        "properties": {
+          "any file": {
+            "type": "object",
+            "properties": {}
+          },
+          "any dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "any text file <= 100 KB": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "pattern": "^.*.txt$"
+              },
+              "size": {
+                "maximum": 100000
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "any boolean",
+          "phone number",
+          "any number",
+          "any integer",
+          "two-digit multiple of ten",
+          "any string",
+          "string of specific length"
+        ],
+        "type": "object",
+        "properties": {
+          "any boolean": {
+            "default": true,
+            "type": "boolean"
+          },
+          "phone number": {
+            "pattern": "^[0-9]{3}-[0-9]{4}$",
+            "type": "string"
+          },
+          "any number": {
+            "default": 3.5,
+            "type": "number"
+          },
+          "any integer": {
+            "default": 7,
+            "type": "integer"
+          },
+          "two-digit multiple of ten": {
+            "exclusiveMaximum": true,
+            "type": "number",
+            "maximum": 100,
+            "multipleOf": 10
+          },
+          "string of specific length": {
+            "minLength": 2,
+            "type": "string",
+            "maxLength": 5
+          },
+          "any string": {
+            "default": "Example",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Flywheel Example Gear"
+  }
+}
