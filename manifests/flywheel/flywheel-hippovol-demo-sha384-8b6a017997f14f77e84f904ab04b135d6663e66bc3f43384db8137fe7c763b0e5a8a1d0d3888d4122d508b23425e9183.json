@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "hippovol-demo",
+    "label": "Hippocampus Segmentation and Volume Measurement (DEMO)",
+    "description": "Automated segmentation of the human hippocampus along its longitudinal axis. This gear will run an image segmentation algorithm on an anatomical image and generate a measurement of hippocampal volume by segment.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Garikoitz Lerma",
+    "url": "https://github.com/garikoitz/hippovol",
+    "source": "https://github.com/flywheel-apps/hippovol-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "flywheel-exchange": {
+        "docker-image": "flywheel/hippovol-demo"
+      }
+    }
+  },
+  "git-commit": "48e5c9f1f2794c2aeefdb6dc1ca7dd8b7606e66c",
+  "rootfs-hash": "sha384:8b6a017997f14f77e84f904ab04b135d6663e66bc3f43384db8137fe7c763b0e5a8a1d0d3888d4122d508b23425e9183",
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hippovol-demo-sha384-8b6a017997f14f77e84f904ab04b135d6663e66bc3f43384db8137fe7c763b0e5a8a1d0d3888d4122d508b23425e9183.tgz",
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Hippocampus Segmentation and Volume Measurement (DEMO)"
+  }
+}
