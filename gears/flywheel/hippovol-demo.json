@@ -1,0 +1,28 @@
+{
+    "name": "hippovol-demo",
+    "label": "Hippocampus Segmentation and Volume Measurement (DEMO)",
+    "description": "Automated segmentation of the human hippocampus along its longitudinal axis. This gear will run an image segmentation algorithm on an anatomical image and generate a measurement of hippocampal volume by segment.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Garikoitz Lerma",
+    "url": "https://github.com/garikoitz/hippovol",
+    "source": "https://github.com/flywheel-apps/hippovol-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+        "anatomical": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "flywheel-exchange": {
+            "docker-image": "flywheel/hippovol-demo"
+        }
+    }
+}
