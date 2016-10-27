@@ -1,0 +1,117 @@
+{
+    "name": "dtiinit-demo",
+    "label": "Diffusion Data Initialization Pipeline (DEMO)",
+    "description": "dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. See: http://white.stanford.edu/newlm/index.php/DTI_Preprocessing for more information regarding the pipeline. This dtiInit gear will output motion-corrected diffusion data (nifti, bval, bvecs) aligned to the first b0 image in the acquisition. It will also calculate FA, MD, RD, and AD maps. Tensors, vector RGB, brain mask, white-matter mask, and white-matter probability maps will also be output.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Stanford VISTA Lab <vistalab.stanford.edu>",
+    "url": "https://github.com/vistalab/vistasoft/wiki",
+    "source": "https://github.com/flywheel-apps/dtiinit-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.2",
+    "config": {
+        "bvalue": {
+            "type": "string",
+            "default": ""
+        },
+        "gradDirsCode": {
+            "type": "string",
+            "default": ""
+        },
+        "clobber": {
+            "default": 0,
+            "type": "integer"
+        },
+        "dt6BaseName": {
+            "type": "string",
+            "default": ""
+        },
+        "flipLrApFlag": {
+            "default": 0,
+            "type": "integer"
+        },
+        "numBootStrapSamples": {
+            "default": 500,
+            "type": "integer"
+        },
+        "fitMethod": {
+            "default": "ls",
+            "type": "string"
+        },
+        "nStep": {
+            "default": 50,
+            "type": "integer"
+        },
+        "eddyCorrect": {
+            "default": 1,
+            "type": "integer"
+        },
+        "excludeVols": {
+            "type": "string",
+            "default": ""
+        },
+        "bsplineInterpFlag": {
+            "default": 0,
+            "type": "integer"
+        },
+        "phaseEncodeDir": {
+            "type": "integer",
+            "default": 2
+        },
+        "dwOutMm-1": {
+            "type": "integer",
+            "default": 2
+        },
+        "dwOutMm-2": {
+            "type": "integer",
+            "default": 2
+        },
+        "dwOutMm-3": {
+            "type": "integer",
+            "default": 2
+        },
+        "rotateBvecsWithRx": {
+            "default": 0,
+            "type": "integer"
+        },
+        "rotateBvecsWithCanXform": {
+            "default": 0,
+            "type": "integer"
+        },
+        "noiseCalcMethod": {
+            "type": "string",
+            "default": "b0"
+        }
+    },
+    "inputs": {
+        "diffusion": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "bvec": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            }
+        },
+        "bval": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "flywheel-exchange": {
+            "docker-image": "flywheel/dtiinit-demo"
+        }
+    }
+}
