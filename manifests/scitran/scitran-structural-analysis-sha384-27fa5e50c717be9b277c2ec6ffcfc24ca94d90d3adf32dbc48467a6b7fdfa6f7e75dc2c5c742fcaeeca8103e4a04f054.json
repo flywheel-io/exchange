@@ -1,0 +1,65 @@
+{
+  "gear": {
+    "name": "structural-analysis",
+    "label": "Structural Analysis",
+    "description": "Register structural image to standard templates. Returns warps and masks that are used later on in this processing pipeline.",
+    "author": "Carlos Correa <cgc@stanford.edu>",
+    "url": "https://github.com/scitran-apps/structural-analysis",
+    "source": "https://github.com/scitran-apps/structural-analysis",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "inputs": {
+      "structural": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {},
+    "custom": {
+      "docker-image": "scitran/structural-analysis"
+    }
+  },
+  "exchange": {
+    "git-commit": "ffc6ca523f861dcd210a7ba5d95ba8b96350e88b",
+    "rootfs-hash": "sha384:27fa5e50c717be9b277c2ec6ffcfc24ca94d90d3adf32dbc48467a6b7fdfa6f7e75dc2c5c742fcaeeca8103e4a04f054",
+    "invocation-schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "config",
+        "inputs"
+      ],
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "required": [
+            "structural"
+          ],
+          "type": "object",
+          "properties": {
+            "structural": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "nifti"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "title": "Invocation manifest for Structural Analysis"
+    }
+  },
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-structural-analysis-sha384-27fa5e50c717be9b277c2ec6ffcfc24ca94d90d3adf32dbc48467a6b7fdfa6f7e75dc2c5c742fcaeeca8103e4a04f054.tgz"
+}
