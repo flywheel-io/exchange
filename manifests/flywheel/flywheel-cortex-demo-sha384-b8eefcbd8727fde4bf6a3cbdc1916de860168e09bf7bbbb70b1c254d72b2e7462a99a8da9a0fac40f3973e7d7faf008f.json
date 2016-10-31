@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "cortex-demo",
+    "label": "Cortex: Build Cortical Surface Object (DEMO)",
+    "description": "This (demo) gear will run an image segmentation algorithm on an anatomical image and generate, from that segmentation, a cortical surface object (OBJ) file.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Brian Wandell <wandell@stanford.edu>",
+    "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file",
+    "source": "https://github.com/flywheel-apps/cortex-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+      "anatomy": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/cortex-demo"
+    }
+  },
+  "exchange": {
+    "git-commit": "ffc6ca523f861dcd210a7ba5d95ba8b96350e88b",
+    "rootfs-hash": "sha384:b8eefcbd8727fde4bf6a3cbdc1916de860168e09bf7bbbb70b1c254d72b2e7462a99a8da9a0fac40f3973e7d7faf008f",
+    "invocation-schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "config",
+        "inputs"
+      ],
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "required": [
+            "anatomy"
+          ],
+          "type": "object",
+          "properties": {
+            "anatomy": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "nifti"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "title": "Invocation manifest for Cortex: Build Cortical Surface Object (DEMO)"
+    }
+  },
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-cortex-demo-sha384-b8eefcbd8727fde4bf6a3cbdc1916de860168e09bf7bbbb70b1c254d72b2e7462a99a8da9a0fac40f3973e7d7faf008f.tgz"
+}
