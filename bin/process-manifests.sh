@@ -146,11 +146,11 @@ function process_manifests() {
             jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
-            jq ".exchange.\"rootfs-hash\" = \"sha384:$shasum\" | .\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
+            jq ".exchange.\"rootfs-hash\" = \"sha384:$shasum\" | .exchange.\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
 
             invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-            jq ".exchange.\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+            jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
                 > $tempfile && mv $tempfile $v_manifest_path
             >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
 
