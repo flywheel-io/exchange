@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "hippovol-demo",
+    "label": "Hippocampus Segmentation and Volume Measurement (DEMO)",
+    "description": "Automated segmentation of the human hippocampus along its longitudinal axis. This gear will run an image segmentation algorithm on an anatomical image and generate a measurement of hippocampal volume by segment.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Garikoitz Lerma",
+    "url": "https://github.com/garikoitz/hippovol",
+    "source": "https://github.com/flywheel-apps/hippovol-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/hippovol-demo"
+    }
+  },
+  "exchange": {
+    "git-commit": "ffc6ca523f861dcd210a7ba5d95ba8b96350e88b",
+    "rootfs-hash": "sha384:d41f453c040d970b94678fad6da736788d6af47a22daf30efb8ea79cf0493f70862dde305f1c4164e9644c507a5f2e3a",
+    "invocation-schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "config",
+        "inputs"
+      ],
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "required": [
+            "anatomical"
+          ],
+          "type": "object",
+          "properties": {
+            "anatomical": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "nifti"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "title": "Invocation manifest for Hippocampus Segmentation and Volume Measurement (DEMO)"
+    }
+  },
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hippovol-demo-sha384-d41f453c040d970b94678fad6da736788d6af47a22daf30efb8ea79cf0493f70862dde305f1c4164e9644c507a5f2e3a.tgz"
+}
