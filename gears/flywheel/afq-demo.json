@@ -154,8 +154,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "flywheel/afq-demo"
-        }
+        "docker-image": "flywheel/afq-demo"
     }
 }

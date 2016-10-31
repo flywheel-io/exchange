@@ -20,8 +20,6 @@
     },
     "config": {},
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/structural-analysis"
-        }
+        "docker-image": "scitran/structural-analysis"
     }
 }

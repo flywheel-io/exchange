@@ -127,7 +127,7 @@ function process_manifests() {
             tempfile=$tempdir/tempfile
 
             if [ "$manifest_type" == "gear" ]; then
-                docker_image="$( jq -r '.custom."flywheel-exchange"."docker-image"' $manifest_path )"
+                docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
             else
                 docker_image="$( jq -r '."docker-image"' $manifest_path )"
             fi

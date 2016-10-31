@@ -102,8 +102,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/dtiinit"
-        }
+        "docker-image": "scitran/dtiinit"
     }
 }

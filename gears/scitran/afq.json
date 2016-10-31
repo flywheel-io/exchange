@@ -197,8 +197,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/afq"
-        }
+        "docker-image": "scitran/afq"
     }
 }
