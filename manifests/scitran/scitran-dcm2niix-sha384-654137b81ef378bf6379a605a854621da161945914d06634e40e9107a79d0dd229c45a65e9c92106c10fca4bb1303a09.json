@@ -1,0 +1,68 @@
+{
+  "gear": {
+    "name": "dcm2niix",
+    "label": "DCM2NIIX: v.6June2016",
+    "description": "Chris Rorden's dcm2niiX version 6June2016 (64-bit). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Chris Rorden",
+    "url": "https://www.nitrc.org/projects/dcm2nii",
+    "source": "https://github.com/scitran-apps/dcm2niiix",
+    "license": "BSD-2-Clause",
+    "flywheel": "0",
+    "version": "0.0.3",
+    "config": {},
+    "inputs": {
+      "dcm2niix": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom",
+            "parrec"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/dcm2niix"
+    }
+  },
+  "exchange": {
+    "git-commit": "ffc6ca523f861dcd210a7ba5d95ba8b96350e88b",
+    "rootfs-hash": "sha384:654137b81ef378bf6379a605a854621da161945914d06634e40e9107a79d0dd229c45a65e9c92106c10fca4bb1303a09",
+    "invocation-schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "required": [
+        "config",
+        "inputs"
+      ],
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "required": [
+            "dcm2niix"
+          ],
+          "type": "object",
+          "properties": {
+            "dcm2niix": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "dicom",
+                    "parrec"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "config": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "title": "Invocation manifest for DCM2NIIX: v.6June2016"
+    }
+  },
+  "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dcm2niix-sha384-654137b81ef378bf6379a605a854621da161945914d06634e40e9107a79d0dd229c45a65e9c92106c10fca4bb1303a09.tgz"
+}
