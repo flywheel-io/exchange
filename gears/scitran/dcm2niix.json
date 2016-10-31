@@ -22,8 +22,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/dcm2niix"
-        }
+        "docker-image": "scitran/dcm2niix"
     }
 }
