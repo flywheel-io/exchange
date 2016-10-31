@@ -37,8 +37,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/qa-dtiprep"
-        }
+        "docker-image": "scitran/qa-dtiprep"
     }
 }

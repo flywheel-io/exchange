@@ -21,8 +21,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "flywheel/cortex-demo"
-        }
+        "docker-image": "flywheel/cortex-demo"
     }
 }

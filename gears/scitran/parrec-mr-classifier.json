@@ -21,8 +21,6 @@
         }
     },
     "custom": {
-        "flywheel-exchange": {
-            "docker-image": "scitran/parrec-mr-classifier"
-        }
+        "docker-image": "scitran/parrec-mr-classifier"
     }
 }
