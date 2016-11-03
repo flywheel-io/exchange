@@ -1,0 +1,26 @@
+{
+    "name": "qa-report-fmri",
+    "label": "Quality Assurance Report (fMRI)",
+    "description": "Run QA metrics (displacement, signal spikes) to create a quality assurance report (png) for an fMRI NIfTI using modified CNI/NIMS code from @rfdougherty.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Robert F. Dougherty",
+    "url": "https://github.com/cni/nims/blob/master/nimsproc/qa_report.py",
+    "source": "https://github.com/scitran-apps/qa-report-fmri",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1.6",
+    "config": {},
+    "inputs": {
+        "nifti": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "docker-image": "scitran/qa-report-fmri"
+    }
+}
