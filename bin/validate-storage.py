@@ -33,7 +33,7 @@ manifests = {os.path.basename(gto['path']).split('.')[0]: gto for gto in git_tre
 
 
 if set(storage_objects) == set(manifests):
-    print 'All manifests and storage objects accounted for'
+    print '%d manifests and storage objects accounted for' % len(manifests)
 else:
     ## Do we have a storage object for each manifest?
     for m in manifests:
