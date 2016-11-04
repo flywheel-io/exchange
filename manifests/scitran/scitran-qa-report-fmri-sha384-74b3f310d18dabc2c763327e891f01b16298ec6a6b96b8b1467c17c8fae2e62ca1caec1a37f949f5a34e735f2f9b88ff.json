@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "qa-report-fmri",
+    "label": "Quality Assurance Report (fMRI)",
+    "description": "Run QA metrics (displacement, signal spikes) to create a quality assurance report (png) for an fMRI NIfTI using modified CNI/NIMS code from @rfdougherty.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Robert F. Dougherty",
+    "url": "https://github.com/cni/nims/blob/master/nimsproc/qa_report.py",
+    "source": "https://github.com/scitran-apps/qa-report-fmri",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1.6",
+    "config": {},
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/qa-report-fmri"
+    }
+  },
+  "exchange": {
+    "git-commit": "eed6dbcda4e1e73040950846aa13b1f2e84a610b",
+    "rootfs-hash": "sha384:74b3f310d18dabc2c763327e891f01b16298ec6a6b96b8b1467c17c8fae2e62ca1caec1a37f949f5a34e735f2f9b88ff",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-qa-report-fmri-sha384-74b3f310d18dabc2c763327e891f01b16298ec6a6b96b8b1467c17c8fae2e62ca1caec1a37f949f5a34e735f2f9b88ff.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Quality Assurance Report (fMRI)"
+  }
+}
