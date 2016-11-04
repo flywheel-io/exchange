@@ -24,3 +24,8 @@ For each new commit to the master branch:
 For each new commit to any non-master branch:
 - For each weakly-versioned boutique or gear
     - Validate boutique or gear against the respective schema
+
+#### Notes
+```
+ORG=[flyhweel|scitran]; REPO=repo; curl -s https://raw.githubusercontent.com/$ORG-apps/$REPO/master/manifest.json | jq --indent 4 ".custom.\"docker-image\"=\"$ORG/$REPO\"" > gears/$ORG/$REPO.json; git add gears; git commit -m "Add $REPO gear"; git show
+```
