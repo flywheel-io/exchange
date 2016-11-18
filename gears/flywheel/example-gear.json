@@ -1,73 +1,70 @@
 {
-	"name": "flywheel-example-gear",
-	"label": "Flywheel Example Gear",
-	"description": "Sample gear to demonstrate a simple use case of outputting the name of each input file.",
-	"author": "Flywheel <support@flywheel.io>",
-	"maintainer": "Ryan Sanford <ryansanford@flywheel.io>",
-	"url": "https://flywheel.io/",
-	"source": "https://github.com/flywheel-apps/example-gear",
-	"license": "MIT",
-	"flywheel": "0",
-	"version":  "0.0.2",
-
-	"config": {
-		"any boolean": {
-			"default": true,
-			"type": "boolean"
-		},
-		"any integer": {
-			"default": 7,
-			"type": "integer"
-		},
-		"any number": {
-			"default": 3.5,
-			"type": "number"
-		},
-		"any string": {
-			"default": "Example",
-			"type": "string"
-		},
-		"phone number": {
-			"pattern": "^[0-9]{3}-[0-9]{4}$",
-			"type": "string"
-		},
-		"string of specific length": {
-			"maxLength": 5,
-			"minLength": 2,
-			"type": "string"
-		},
-		"two-digit multiple of ten": {
-			"exclusiveMaximum": true,
-			"maximum": 100,
-			"multipleOf": 10,
-			"type": "number"
-		}
-	},
-
-	"inputs": {
-		"any dicom": {
-			"base": "file",
-			"type": {
-				"enum": [
-					"dicom"
-				]
-			}
-		},
-		"any file": {
-			"base": "file"
-		},
-		"any text file <= 100 KB": {
-			"base": "file",
-			"name": {
-				"pattern": "^.*.txt$"
-			},
-			"size": {
-				"maximum": 100000
-			}
-		}
+    "name": "flywheel-example-gear",
+    "label": "Flywheel Example Gear",
+    "description": "Sample gear to demonstrate a simple use case of outputting the name of each input file.",
+    "author": "Flywheel <support@flywheel.io>",
+    "maintainer": "Ryan Sanford <ryansanford@flywheel.io>",
+    "url": "https://flywheel.io/",
+    "source": "https://github.com/flywheel-apps/example-gear",
+    "license": "MIT",
+    "flywheel": "0",
+    "version": "0.0.2",
+    "config": {
+        "any boolean": {
+            "default": true,
+            "type": "boolean"
+        },
+        "any integer": {
+            "default": 7,
+            "type": "integer"
+        },
+        "any number": {
+            "default": 3.5,
+            "type": "number"
+        },
+        "any string": {
+            "default": "Example",
+            "type": "string"
+        },
+        "phone number": {
+            "pattern": "^[0-9]{3}-[0-9]{4}$",
+            "type": "string"
+        },
+        "string of specific length": {
+            "maxLength": 5,
+            "minLength": 2,
+            "type": "string"
+        },
+        "two-digit multiple of ten": {
+            "exclusiveMaximum": true,
+            "maximum": 100,
+            "multipleOf": 10,
+            "type": "number"
+        }
+    },
+    "inputs": {
+        "any dicom": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "dicom"
+                ]
+            }
+        },
+        "any file": {
+            "base": "file"
+        },
+        "any text file <= 100 KB": {
+            "base": "file",
+            "name": {
+                "pattern": "^.*.txt$"
+            },
+            "size": {
+                "maximum": 100000
+            }
+        }
     },
     "custom": {
         "docker-image": "flywheel/example-gear"
-	}
+    }
 }
-
