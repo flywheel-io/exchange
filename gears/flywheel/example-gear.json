@@ -10,58 +10,71 @@
     "flywheel": "0",
     "version": "0.0.2",
     "config": {
-        "any boolean": {
+        "boolean": {
             "default": true,
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Any boolean."
         },
-        "any integer": {
+        "integer": {
             "default": 7,
-            "type": "integer"
+            "type": "integer",
+            "description": "Any integer."
         },
-        "any number": {
+        "number": {
             "default": 3.5,
-            "type": "number"
+            "type": "number",
+            "description": "Any number."
         },
-        "any string": {
+        "string": {
             "default": "Example",
-            "type": "string"
+            "type": "string",
+            "description": "Any string."
         },
-        "phone number": {
+        "phone": {
+            "default": "555-5555",
             "pattern": "^[0-9]{3}-[0-9]{4}$",
-            "type": "string"
+            "type": "string",
+            "description": "Any local phone number, no country or area code."
         },
-        "string of specific length": {
-            "maxLength": 5,
+        "string2": {
+            "default": "Example 2",
+            "maxLength": 15,
             "minLength": 2,
-            "type": "string"
+            "type": "string",
+            "description": "Any string from 2 to 15 characters long."
         },
-        "two-digit multiple of ten": {
+        "multiple": {
+            "default": 20,
             "exclusiveMaximum": true,
             "maximum": 100,
             "multipleOf": 10,
-            "type": "number"
+            "type": "number",
+            "description": "Any two-digit multiple of ten."
         }
     },
     "inputs": {
-        "any dicom": {
+        "dicom": {
             "base": "file",
             "type": {
                 "enum": [
                     "dicom"
                 ]
-            }
+            },
+            "description": "Any dicom file."
         },
-        "any file": {
-            "base": "file"
+        "file": {
+            "base": "file",
+            "description": "Any file."
         },
-        "any text file <= 100 KB": {
+        "text": {
             "base": "file",
             "name": {
                 "pattern": "^.*.txt$"
             },
             "size": {
                 "maximum": 100000
-            }
+            },
+            "description": "Any test file that is 10 KB in size or less."
         }
     },
     "custom": {
