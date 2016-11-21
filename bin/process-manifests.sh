@@ -47,7 +47,7 @@ if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
-if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD"]; then
+if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD" ]; then
     docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD"
 fi
 
