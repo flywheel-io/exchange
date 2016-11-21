@@ -48,7 +48,7 @@ if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
 fi
 
 if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD" ]; then
-    docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD" "$DOCKERHUB_EMAIL"
+    docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD" $DOCKERHUB_EMAIL
 fi
 
 set -eu
