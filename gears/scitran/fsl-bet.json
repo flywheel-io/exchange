@@ -1,0 +1,26 @@
+{
+    "name": "fsl-bet",
+    "label": "FSL: Brain Extraction Tool (BET2)",
+    "description": "Brain Extraction Tool (bet2). FMRIB Software Library (FSL) v5.0",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET",
+    "source": "https://github.com/scitran/apps/analysis/fsl-bet",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.6",
+    "config": {},
+    "inputs": {
+        "nifti": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "docker-image": "scitran/fsl-bet"
+    }
+}
