@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "fsl-bet",
+    "label": "FSL: Brain Extraction Tool (BET2)",
+    "description": "Brain Extraction Tool (bet2). FMRIB Software Library (FSL) v5.0",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET",
+    "source": "https://github.com/scitran/apps/analysis/fsl-bet",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.6",
+    "config": {},
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/fsl-bet"
+    }
+  },
+  "exchange": {
+    "git-commit": "7914cfd5e191f5244a3f19791de47f944690864e",
+    "rootfs-hash": "sha384:8e4f5e3d1cadcbe31bd4193e48b53576ad21c3d9fc41e7275b44ccacbc2c8f0179d0a254d97434f67dd29cb0fac0defd",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-fsl-bet-sha384-8e4f5e3d1cadcbe31bd4193e48b53576ad21c3d9fc41e7275b44ccacbc2c8f0179d0a254d97434f67dd29cb0fac0defd.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for FSL: Brain Extraction Tool (BET2)"
+  }
+}
