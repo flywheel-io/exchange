@@ -1,0 +1,26 @@
+{
+    "name": "fsl-fast",
+    "label": "FSL: FMRIB Automated Segmentation Tool (FAST)",
+    "description": "FMRIB Automated Segmentation Tool. FMRIB Software Library (FSL) v5.0",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FAST",
+    "source": "https://github.com/scitran/apps/analysis/fsl-fast",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.7"
+    "config": {},
+    "inputs": {
+        "nifti": {
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "custom": {
+        "docker-image": "scitran/fsl-fast"
+    }
+}
