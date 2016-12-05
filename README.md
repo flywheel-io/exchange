@@ -1,6 +1,7 @@
 ## Flywheel Exchange
 
 This repository consists of three distinct assets:
+
 - User-generated, weakly-versioned *boutiques* and *gears*
 - Machine-generated, strongly-versioned *manifests*
 - Manifest processing code
@@ -9,7 +10,24 @@ The manifest processing code is automatically executed by CircleCI whenever a ne
 
 #### Operation
 
+![Exchange Operation](http://g.gravizo.com/g?
+    digraph G {
+        gear_schema [label="Gear Schema"];
+        gear_json [label="Gear Spec"];
+        boutique_schema [label="Boutique Schema"];
+        boutique_json [label="Boutique Spec"];
+        manifest [label="Manifest with embedded Invocation Schema"];
+        invocation [label="Invocation"];
+        boutique_schema -> boutique_json [label="validate"];
+        boutique_json -> manifest [label="generate"];
+        gear_schema -> gear_json [label="validate"];
+        gear_json -> manifest [label="generate"];
+        manifest -> invocation [label="validate"];
+    }
+)
+
 For each new commit to the master branch:
+
 - Retrieve git hash of latest *successfully-processed commit*
 - For each updated weakly-versioned boutique or gear
     - Validate boutique or gear against the respective schema
