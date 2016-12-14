@@ -1,0 +1,27 @@
+{
+	"name": "apply-canonical-xform",
+	"label": "Apply Canonical Transform",
+	"description": "Reorient NIfTI data and metadata fields into RAS space by estimating and applying a canonical transform.",
+	"author": "Bob Dougherty <bobd@stanford.edu>",
+	"maintainer": "Michael Perry <lmperry@stanford.edu>",
+	"url": "https://github.com/vistalab/vistasoft/blob/master/fileFilters/nifti/niftiApplyCannonicalXform.m",
+	"source": "https://github.com/scitran-apps/apply-canonical-xform",
+	"license": "MIT",
+	"flywheel": "0",
+	"version": "0.1.0",
+	"config": {},
+	"inputs": {
+		"nifti": {
+			"base": "file",
+			"type": {
+				"enum": [
+					"nifti"
+				]
+			},
+			"description": "NIfTI input file."
+		}
+	},
+	"custom": {
+		"docker-image": "scitran/apply-canonical-xform"
+	}
+}
