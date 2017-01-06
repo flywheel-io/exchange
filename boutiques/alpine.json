@@ -1,3 +1,8 @@
 {
-  "docker-image": "alpine"
+  "container-image": {
+    "working-directory": " ",
+    "container-hash": " ",
+    "type": "docker",
+    "image": "alpine"
+    }
 }
