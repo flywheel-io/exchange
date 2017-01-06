@@ -133,7 +133,7 @@ function process_manifests() {
             if [ "$manifest_type" == "gear" ]; then
                 docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
             else
-                docker_image="$( jq -r '."docker-image"' $manifest_path )"
+                docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
             fi
 
             container=$( docker create $docker_image /bin/true )
