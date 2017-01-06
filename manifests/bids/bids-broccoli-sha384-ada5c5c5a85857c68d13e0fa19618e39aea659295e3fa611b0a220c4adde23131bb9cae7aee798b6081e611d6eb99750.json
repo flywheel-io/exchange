@@ -1,0 +1,18 @@
+{
+  "boutique": {
+    "container-image": {
+      "working-directory": " ",
+      "container-hash": " ",
+      "type": "docker",
+      "image": "bids/broccoli"
+    }
+  },
+  "exchange": {
+    "git-commit": "9f7d027380545661cb75451c9466af8c75c983b6",
+    "rootfs-hash": "sha384:ada5c5c5a85857c68d13e0fa19618e39aea659295e3fa611b0a220c4adde23131bb9cae7aee798b6081e611d6eb99750",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/bids-broccoli-sha384-ada5c5c5a85857c68d13e0fa19618e39aea659295e3fa611b0a220c4adde23131bb9cae7aee798b6081e611d6eb99750.tgz"
+  },
+  "invocation-schema": {
+    "WARNING": "Invocation schema validation for boutiques not yet implemented"
+  }
+}
