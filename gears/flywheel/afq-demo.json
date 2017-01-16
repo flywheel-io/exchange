@@ -10,7 +10,7 @@
 	"flywheel": "0",
 	"version": "0.2.0",
 	"custom": {
-		"docker-image": "flwyheel/afq-demo:v0.2.0"
+		"docker-image": "flywheel/afq-demo:v0.2.0"
 	},
 	"inputs": {
 		"diffusion": {
