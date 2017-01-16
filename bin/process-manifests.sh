@@ -56,12 +56,17 @@ set -eu
 
 function validate_manifest() {
     if [ "$1" == "gear" ]; then
+        # Validate the manifest against the schema
         if [ ! -v GEAR_SCHEMA_PATH ]; then
             >&2 echo "Installing gear schema"
             GEAR_SCHEMA_PATH=$( mktemp )
             curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
         fi
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
+
+        # Confirm the image is valid.
+        docker_image="$( jq -r '.custom."docker-image"' $2 )"
+        docker run luebken/skopeo skopeo inspect "docker://docker.io/$docker_image"
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
