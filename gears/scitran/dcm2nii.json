@@ -1,0 +1,24 @@
+{
+	"name": "dcm2nii",
+	"label": "DCM2NII: v.4AUGUST2014",
+	"description": "Chris Rorden's dcm2nii (4AUGUST2014 64-bit) is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2nii works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+	"maintainer": "Michael Perry <lmperry@stanford.edu>",
+	"author": "Chris Rorden",
+	"url": "https://www.nitrc.org/projects/dcm2nii/",
+	"source": "https://github.com/scitran-apps/dcm2nii",
+	"license": "BSD-2-Clause",
+	"flywheel": "0",
+	"version": "0.1.0",
+	"config": {},
+	"inputs": {
+		"dicom": {
+			"base": "file",
+			"type": {
+				"enum": ["dicom", "parrec"]
+			}
+		}
+	},
+	"custom": {
+		"docker-image": "scitran/dcm2nii:v0.1.0"
+	}
+}
