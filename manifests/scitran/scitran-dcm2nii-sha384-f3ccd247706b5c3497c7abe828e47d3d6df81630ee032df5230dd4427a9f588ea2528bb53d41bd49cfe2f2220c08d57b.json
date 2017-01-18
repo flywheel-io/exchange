@@ -1,0 +1,68 @@
+{
+  "gear": {
+    "name": "dcm2nii",
+    "label": "DCM2NII: v.4AUGUST2014",
+    "description": "Chris Rorden's dcm2nii (4AUGUST2014 64-bit) is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2nii works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Chris Rorden",
+    "url": "https://www.nitrc.org/projects/dcm2nii/",
+    "source": "https://github.com/scitran-apps/dcm2nii",
+    "license": "BSD-2-Clause",
+    "flywheel": "0",
+    "version": "0.1.0",
+    "config": {},
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom",
+            "parrec"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/dcm2nii:v0.1.0"
+    }
+  },
+  "exchange": {
+    "git-commit": "571c12665dd0ad2a896b551d54ce7355cc29d0a0",
+    "rootfs-hash": "sha384:f3ccd247706b5c3497c7abe828e47d3d6df81630ee032df5230dd4427a9f588ea2528bb53d41bd49cfe2f2220c08d57b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dcm2nii-sha384-f3ccd247706b5c3497c7abe828e47d3d6df81630ee032df5230dd4427a9f588ea2528bb53d41bd49cfe2f2220c08d57b.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dicom"
+        ],
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom",
+                  "parrec"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for DCM2NII: v.4AUGUST2014"
+  }
+}
