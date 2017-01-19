@@ -66,7 +66,17 @@ function validate_manifest() {
 
         # Confirm the image is valid.
         docker_image="$( jq -r '.custom."docker-image"' $2 )"
-        docker run luebken/skopeo skopeo inspect "docker://docker.io/$docker_image"
+        
+        IFS=':' read -ra _docker_image <<< "$docker_image"
+        image_root=${_docker_image[0]}
+        image_tag=${_docker_image[1]}
+        
+        response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/" | jq '."results"[]["name"]' | sort)
+
+        if [[ $? == 0 ]] && [[ -n ${image_tag} ]]; then
+          echo ${response} | grep ${image_tag} > /dev/null
+        fi
+        
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
