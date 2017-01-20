@@ -56,12 +56,49 @@ set -eu
 
 function validate_manifest() {
     if [ "$1" == "gear" ]; then
+        # Validate the manifest against the schema
         if [ ! -v GEAR_SCHEMA_PATH ]; then
             >&2 echo "Installing gear schema"
             GEAR_SCHEMA_PATH=$( mktemp )
             curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
         fi
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
+
+        # Confirm the image is valid.
+        docker_image="$( jq -r '.custom."docker-image"' $2 )"
+        
+        # Parse docker-image to extract image root and tag
+        IFS=':' read -ra _docker_image <<< "${docker_image}"
+        PARSE_ERROR=0
+        if [[ ${#_docker_image[@]} == 1 ]]; then
+          image_root=${docker_image}
+          image_tag=
+          if [[ ${image_root} == *":"* ]]; then PARSE_ERROR=1; fi
+        elif [[ ${#_docker_image[@]} == 2 ]]; then
+          image_root=${_docker_image[0]}
+          image_tag=${_docker_image[1]}
+          if [[ -z $image_tag ]]; then PARSE_ERROR=1; fi
+        else
+          PARSE_ERROR=1
+        fi
+
+        if [[ $PARSE_ERROR == 1 ]]; then
+          echo "Unrecognized format: Could not parse ${docker_image}" && exit 1
+        fi
+
+        # Curl for the image root and check the response for its existence
+        response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/")
+        if [[ ${response} != *"Object not found"* ]]; then
+          image_info=$(echo ${response} | jq '."results"[]["name"]' | sort)
+        else
+          echo "Image: \"${docker_image}\" does not exist" && exit 1
+        fi
+
+        # If there is a tag, check the response for its existence
+        if [[ -n ${image_tag} && ${image_info} != *"\"${image_tag}\""* ]]; then
+          echo "Specified image tag: \"${image_tag}\" does not exist for image \"${image_root}\"" && exit 1
+        fi
+        
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
