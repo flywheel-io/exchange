@@ -1,0 +1,134 @@
+{
+  "gear": {
+    "name": "retinotopy-templates",
+    "label": "NEUROPYTHY: Retinotopy Template Generation (Benson, et. al.)",
+    "description": "Runs FreeSurfer's RECON-ALL and applies the V1, V2, and V3 anatomical template of retinotopy from Benson et al. (2014) as well as the ROI template of Wang et al. (2015) to the output images using the Neuropythy neuroscience library for Python by Noah C. Benson. * Note that this Gear does not use the original version of the Benson et al. template, but rather an updated version that has also been published on the website indicated in the original paper. If using this Gear in your work, please cite: Benson NC, Butt OH, Datta R, Radoeva PD, Brainard DH, Aguirre GK (2012) The retinotopic organization of striate cortex is well predicted by surface topology. Curr Biol22(21):2081-5.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Noah C. Benson <nben@nyu.edu>",
+    "url": "https://github.com/noahbenson/neuropythy",
+    "source": "https://github.com/scitran-apps/retinotopy-templates",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.1.0",
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "subject_id": {
+        "description": "Desired subject ID. This will be used to name the resulting freesurfer output directory.",
+        "default": "rt_sub000",
+        "type": "string"
+      },
+      "convert_surfaces": {
+        "description": "Convert selected FreeSurfer surface files to OBJ format. (Default=1, true)",
+        "default": 1,
+        "type": "integer"
+      },
+      "convert_volumes": {
+        "description": "Convert selected FreeSurfer volume files (mgz) to NIfTI format. (Default=1, true)",
+        "default": 1,
+        "type": "integer"
+      },
+      "convert_aseg_stats": {
+        "description": "Convert FreeSurfer aseg.stats file to CSV. (Default=1, true)",
+        "default": 1,
+        "type": "integer"
+      },
+      "license_email": {
+        "description": "Email address used during FreeSurfer Registration (1st line of 'license.txt')",
+        "type": "string"
+      },
+      "license_number": {
+        "description": "FreeSurfer License Number (2nd line of 'license.txt')",
+        "type": "string"
+      },
+      "license_key": {
+        "description": "FreeSurfer License Key (3rd line of 'license.txt')",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/retinotopy-templates:v0.1.0"
+    }
+  },
+  "exchange": {
+    "git-commit": "c91dc33938ed242c39863a29f95d2e89fdfa5cc6",
+    "rootfs-hash": "sha384:0e8e8f64421fb9773879fd250be2f0adbd94fa0fec225783c7d6ffa4428a2fe836f26e363553f10ba5c7f9a27762e51b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-retinotopy-templates-sha384-0e8e8f64421fb9773879fd250be2f0adbd94fa0fec225783c7d6ffa4428a2fe836f26e363553f10ba5c7f9a27762e51b.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "convert_aseg_stats",
+          "convert_surfaces",
+          "license_email",
+          "subject_id",
+          "convert_volumes",
+          "license_number",
+          "license_key"
+        ],
+        "type": "object",
+        "properties": {
+          "convert_aseg_stats": {
+            "default": 1,
+            "type": "integer"
+          },
+          "convert_surfaces": {
+            "default": 1,
+            "type": "integer"
+          },
+          "license_email": {
+            "type": "string"
+          },
+          "subject_id": {
+            "default": "rt_sub000",
+            "type": "string"
+          },
+          "convert_volumes": {
+            "default": 1,
+            "type": "integer"
+          },
+          "license_number": {
+            "type": "string"
+          },
+          "license_key": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for NEUROPYTHY: Retinotopy Template Generation (Benson, et. al.)"
+  }
+}
