@@ -54,6 +54,6 @@
 		}
 	},
 	"custom": {
-		"docker-image": "scitran/retinotopy-templates"
+		"docker-image": "scitran/retinotopy-templates:v0.1.0"
 	}
 }
