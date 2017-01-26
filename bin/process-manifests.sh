@@ -31,11 +31,6 @@ if ! $( git diff-index --quiet HEAD -- ); then
     exit 1
 fi
 
-if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-    >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
-    exit 1
-fi
-
 if ! $( git config --get user.email &> /dev/null ); then
     git config user.email "service+github-flywheel-exchange@flywheel.io"
     git config user.name "Flywheel Exchange Bot"
@@ -221,7 +216,7 @@ function process_manifests() {
 
 >&2 echo "On branch $GIT_BRANCH"
 manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
-if [ $GIT_BRANCH == "master" ]; then
+if [ $GIT_BRANCH == "master" -a ! -v CIRCLE_PR_USERNAME ]; then  # CIRCLE_PR_USERNAME is only set on fork builds
     if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
         manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
     fi
@@ -230,6 +225,10 @@ if [ $GIT_BRANCH == "master" ]; then
     else
         >&2 echo "Processing updated manifests"
         >&2 echo "$manifests"
+        if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+            >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+            exit 1
+        fi
         process_manifests "$manifests"
     fi
 else
