@@ -16,6 +16,10 @@ GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
+echo CIRCLE_PR_USERNAME $([ -v CIRCLE_PR_USERNAME ] && echo true || echo false)
+echo CIRCLE_PR_REPONAME $([ -v CIRCLE_PR_REPONAME ] && echo true || echo false)
+echo CIRCLE_PR_NUMBER $([ -v CIRCLE_PR_NUMBER ] && echo true || echo false)
+echo CIRCLE_PR_FOO $([ -v CIRCLE_PR_FOO ] && echo true || echo false)
 
 if [ $BASH_VERSION \< 4.2 ]; then
     >&2 echo "This script requires bash version 4.2 or greater."
@@ -61,7 +65,7 @@ function validate_manifest() {
 
         # Confirm the image is valid.
         docker_image="$( jq -r '.custom."docker-image"' $2 )"
-        
+
         # Parse docker-image to extract image root and tag
         IFS=':' read -ra _docker_image <<< "${docker_image}"
         PARSE_ERROR=0
@@ -93,7 +97,7 @@ function validate_manifest() {
         if [[ -n ${image_tag} && ${image_info} != *"\"${image_tag}\""* ]]; then
           echo "Specified image tag: \"${image_tag}\" does not exist for image \"${image_root}\"" && exit 1
         fi
-        
+
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
@@ -216,7 +220,7 @@ function process_manifests() {
 
 >&2 echo "On branch $GIT_BRANCH"
 manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
-if [ $GIT_BRANCH == "master" ]; then
+if [ $GIT_BRANCH == "master" -a ! -v CIRCLE_PR_USERNAME ]; then  # CIRCLE_PR_USERNAME is only set on fork builds
     if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
         manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
     fi
