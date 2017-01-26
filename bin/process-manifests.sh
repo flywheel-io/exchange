@@ -31,11 +31,6 @@ if ! $( git diff-index --quiet HEAD -- ); then
     exit 1
 fi
 
-if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-    >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
-    exit 1
-fi
-
 if ! $( git config --get user.email &> /dev/null ); then
     git config user.email "service+github-flywheel-exchange@flywheel.io"
     git config user.name "Flywheel Exchange Bot"
@@ -230,6 +225,10 @@ if [ $GIT_BRANCH == "master" ]; then
     else
         >&2 echo "Processing updated manifests"
         >&2 echo "$manifests"
+        if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+            >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+            exit 1
+        fi
         process_manifests "$manifests"
     fi
 else
