@@ -1,0 +1,107 @@
+{
+  "gear": {
+    "name": "afni-brain-warp",
+    "label": "AFNI: Brain Warp",
+    "description": "AFNI-based brain warping based on D99 Macaque Atlas warp scripts, which use AFNI functions (AFNI_2011_12_21_1014) to align a template and segmentation to the native space of an individual macaque in its native space. The output includes the native aligned to the template dataset and vice versa. It also creates surfaces for structures in the individual native space and an approximate surface for the whole brain. All surfaces are saved in GIFTI format, and volumes are in AFNI format. This Gear will convert output volume files to NIfTI format.",
+    "author": "Daniel Glen <glend@mail.nih.gov>",
+    "maintainer": "Carlos Correa <cgc@stanford.edu>",
+    "url": "https://afni.nimh.nih.gov/pub/dist/atlases/macaque/macaqueatlas_1.2a/AFNI_scripts/",
+    "source": "https://github.com/scitran-apps/afni-brain-warp",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "custom": {
+      "docker-image": "scitran/afni-brain-warp:v0.0.1"
+    },
+    "inputs": {
+      "standard": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "description": "Template image. This is our reference for standard-space."
+      },
+      "native": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "description": "Subject image. This is our reference for native-space."
+      },
+      "warp_target": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "description": "Image that we want to warp from standard-space to native-space."
+      }
+    },
+    "config": {}
+  },
+  "exchange": {
+    "git-commit": "038aa402e0333a628814c300128b4be41bcca4d3",
+    "rootfs-hash": "sha384:c802bd1bda9f3356b0f9d99db209c4e595cbb2c4ef41c0716a2f05d0c3dbd54c97169f80b53d2c2840f333fa2cb88900",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-afni-brain-warp-sha384-c802bd1bda9f3356b0f9d99db209c4e595cbb2c4ef41c0716a2f05d0c3dbd54c97169f80b53d2c2840f333fa2cb88900.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "warp_target",
+          "native",
+          "standard"
+        ],
+        "type": "object",
+        "properties": {
+          "warp_target": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "standard": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "native": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for AFNI: Brain Warp"
+  }
+}
