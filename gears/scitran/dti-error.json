@@ -1,0 +1,43 @@
+{
+  "name": "dti-error",
+  "label": "VISTALAB: DTI Error",
+  "description": "Find RMSE between the measured and ADC (or dSIG) based on tensor model. Calculate the histogram of differences between dti based predictions (ADC or dSig) with the actual ADC or dSig data. Larger deviations suggest noisier data.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Brian Wandell <wandell@stanford.edu>, Michael Perry <lmperry@stanford.edu>",
+  "url": "https://github.com/scitran-apps/dtiError",
+  "source": "https://github.com/scitran-apps/dtiError/src",
+  "license": "GPL-2.0",
+  "flywheel": "0",
+  "version": "0.1.0",
+  "custom": {
+    "docker-image": "scitran/dti-error:v0.1.0"
+  },
+  "inputs": {
+    "dtiInit_Archive": {
+      "description": "Output archive (.zip) from scitran/dtiinit gear run.",
+      "base": "file",
+      "type": {
+        "enum": [
+          "archive"
+        ]
+      }
+    }
+  },
+  "config": {
+    "error_type": {
+      "description": "The type of error that will be used in the calculation ('dsig', 'adc', or 'all').",
+      "default": "all",
+      "type": "string"
+    },
+    "ncoords": {
+      "description": "The number of randomly chosen coordinates used in the calculation.",
+      "default": 150,
+      "type": "integer"
+    },
+    "wm_prob": {
+      "description": "Use a white matter probability map to retrict which coordinates should be used.",
+      "default": true,
+      "type": "boolean"
+    }
+  }
+}
