@@ -8,7 +8,7 @@
     "source": "https://github.com/flywheel-apps/example-gear",
     "license": "MIT",
     "flywheel": "0",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "config": {
         "boolean": {
             "default": true,
@@ -78,6 +78,6 @@
         }
     },
     "custom": {
-        "docker-image": "flywheel/example-gear"
+        "docker-image": "flywheel/example-gear:0.0.3"
     }
 }
