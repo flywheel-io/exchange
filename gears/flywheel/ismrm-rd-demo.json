@@ -1,0 +1,26 @@
+{
+    "author": "Michael Hansen <michael.hansen@nih.gov>", 
+    "config": {}, 
+    "custom": {
+        "docker-image": "flywheel/ismrm-rd-demo:v0.0.1"
+    }, 
+    "description": "Convert Siemens MR Raw to ISMRMRD format", 
+    "inputs": {
+        "input": {
+            "base": "file", 
+            "description": "Siemens MR Raw", 
+            "type": {
+                "enum": [
+                    "Siemens MR Raw"
+                ]
+            }
+        }
+    }, 
+    "label": "ISMRM-RD (DEMO)", 
+    "license": "Other", 
+    "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>", 
+    "name": "ismrm-rd-demo", 
+    "source": "https://ismrmrd.github.io/", 
+    "url": "https://github.com/flywheel-apps/ismrm-rd-demo", 
+    "version": "0.0.1"
+}
