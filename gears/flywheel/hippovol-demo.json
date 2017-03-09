@@ -9,6 +9,9 @@
     "license": "GPL-2.0",
     "flywheel": "0",
     "version": "0.0.1",
+    "custom": {
+        "docker-image": "flywheel/hippovol-demo:v0.0.1"
+    },
     "config": {},
     "inputs": {
         "anatomical": {
@@ -19,8 +22,5 @@
                 ]
             }
         }
-    },
-    "custom": {
-        "docker-image": "flywheel/hippovol-demo"
     }
 }
