@@ -9,6 +9,9 @@
     "license": "GPL-2.0",
     "flywheel": "0",
     "version": "0.0.2",
+    "custom": {
+        "docker-image": "flywheel/dtiinit-demo:v0.0.2"
+    },
     "config": {
         "bvalue": {
             "type": "string",
@@ -108,8 +111,5 @@
                 ]
             }
         }
-    },
-    "custom": {
-        "docker-image": "flywheel/dtiinit-demo"
     }
 }
