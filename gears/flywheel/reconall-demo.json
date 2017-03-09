@@ -21,6 +21,6 @@
         }
     },
     "custom": {
-        "docker-image": "flywheel/reconall-demo"
+        "docker-image": "flywheel/reconall-demo:v0.0.3"
     }
 }
