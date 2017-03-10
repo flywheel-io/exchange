@@ -11,6 +11,11 @@ BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/maste
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
+
+# GIT_COMMIT_SENTINEL represents the closest ancestor git commit, under
+# which a manifest was generated successfully. This is used to determine which
+# gears and boutiques have since been changed or added and thus need to be
+# processed.
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 
 BUILD_ARTIFACTS=""
@@ -61,7 +66,7 @@ function validate_manifest() {
 
         # Confirm the image is valid.
         docker_image="$( jq -r '.custom."docker-image"' $2 )"
-        
+
         # Parse docker-image to extract image root and tag
         IFS=':' read -ra _docker_image <<< "${docker_image}"
         PARSE_ERROR=0
@@ -93,7 +98,7 @@ function validate_manifest() {
         if [[ -n ${image_tag} && ${image_info} != *"\"${image_tag}\""* ]]; then
           echo "Specified image tag: \"${image_tag}\" does not exist for image \"${image_root}\"" && exit 1
         fi
-        
+
     elif [ "$1" == "boutique" ]; then
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
@@ -215,24 +220,29 @@ function process_manifests() {
 
 
 >&2 echo "On branch $GIT_BRANCH"
-manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
-if [ $GIT_BRANCH == "master" ]; then
-    if [ ! -z "$GIT_COMMIT_SENTINEL" ]; then
-        manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
-    fi
-    if [ -z "$manifests" ]; then
-        >&2 echo "No updated manifests to process"
-    else
-        >&2 echo "Processing updated manifests"
-        >&2 echo "$manifests"
-        if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-            >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
-            exit 1
-        fi
-        process_manifests "$manifests"
-    fi
+if [ -z "$GIT_COMMIT_SENTINEL" ]; then
+    >&2 echo "Using all manifests"
+    manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
+    >&2 echo "$manifests"
 else
-    >&2 echo "Validating all manifests"
+    >&2 echo "Using updated manifests"
+    manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
+    >&2 echo "$manifests"
+fi
+if [ -z "$manifests" ]; then
+    >&2 echo "No manifests to process or validate"
+    exit 0
+fi
+
+if [ $GIT_BRANCH == "master" ]; then
+    >&2 echo "Processing..."
+    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+        >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+        exit 1
+    fi
+    process_manifests "$manifests"
+else
+    >&2 echo "Validating..."
     validate_manifests "$manifests"
 fi
 
