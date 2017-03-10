@@ -3,6 +3,7 @@
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
+SENTINEL_FILENAME=".sentinel"
 
 GEAR_SCHEMA_URL="https://raw.githubusercontent.com/flywheel-io/gears/master/spec/manifest.schema.json"
 BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/master/schema/descriptor.schema.json"
@@ -11,10 +12,10 @@ GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 
-# SENTINEL represents the closest ancestor git commit with a successful build.
-# This is used to determine which gears and botiques have changes and should be
+# GIT_COMMIT_SENTINEL represents the closest ancestor git commit, under
+# which a manifest was generated successfully. This is used to determine which
+# gears and boutiques have since been changed or added and thus need to be
 # processed.
-SENTINEL_FILENAME=".sentinel"
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
 
 BUILD_ARTIFACTS=""
@@ -225,16 +226,15 @@ if [ -z "$GIT_COMMIT_SENTINEL" ]; then
     >&2 echo "$manifests"
 else
     >&2 echo "Using updated manifests"
-    manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
+    manifests=$( git diff --name-only $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
     >&2 echo "$manifests"
 fi
 if [ -z "$manifests" ]; then
-    >&2 echo "No updated manifests to process"
+    >&2 echo "No manifests to process or validate"
     exit 0
 fi
 
 if [ $GIT_BRANCH == "master" ]; then
-
     >&2 echo "Processing..."
     if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
         >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
