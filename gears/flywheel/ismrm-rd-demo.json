@@ -16,11 +16,11 @@
             }
         }
     }, 
-    "label": "ISMRM-RD (DEMO)", 
+    "label": "ISMRMRD: Siemens MR Raw to ISMRMRD Converter (DEMO)", 
     "license": "Other", 
     "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>", 
     "name": "ismrm-rd-demo", 
-    "source": "https://ismrmrd.github.io/", 
-    "url": "https://github.com/flywheel-apps/ismrm-rd-demo", 
+    "source": "https://github.com/flywheel-apps/ismrm-rd-demo", 
+    "url": "https://ismrmrd.github.io/", 
     "version": "0.0.1"
 }
