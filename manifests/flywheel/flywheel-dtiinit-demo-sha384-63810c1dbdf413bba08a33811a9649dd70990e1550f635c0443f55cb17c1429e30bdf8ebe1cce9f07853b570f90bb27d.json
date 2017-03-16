@@ -1,0 +1,270 @@
+{
+  "gear": {
+    "name": "dtiinit-demo",
+    "label": "Diffusion Data Initialization Pipeline (DEMO)",
+    "description": "dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. See: http://white.stanford.edu/newlm/index.php/DTI_Preprocessing for more information regarding the pipeline. This dtiInit gear will output motion-corrected diffusion data (nifti, bval, bvecs) aligned to the first b0 image in the acquisition. It will also calculate FA, MD, RD, and AD maps. Tensors, vector RGB, brain mask, white-matter mask, and white-matter probability maps will also be output.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Stanford VISTA Lab <vistalab.stanford.edu>",
+    "url": "https://github.com/vistalab/vistasoft/wiki",
+    "source": "https://github.com/flywheel-apps/dtiinit-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.2",
+    "custom": {
+      "docker-image": "flywheel/dtiinit-demo:v0.0.2"
+    },
+    "config": {
+      "bvalue": {
+        "type": "string",
+        "default": ""
+      },
+      "gradDirsCode": {
+        "type": "string",
+        "default": ""
+      },
+      "clobber": {
+        "default": 0,
+        "type": "integer"
+      },
+      "dt6BaseName": {
+        "type": "string",
+        "default": ""
+      },
+      "flipLrApFlag": {
+        "default": 0,
+        "type": "integer"
+      },
+      "numBootStrapSamples": {
+        "default": 500,
+        "type": "integer"
+      },
+      "fitMethod": {
+        "default": "ls",
+        "type": "string"
+      },
+      "nStep": {
+        "default": 50,
+        "type": "integer"
+      },
+      "eddyCorrect": {
+        "default": 1,
+        "type": "integer"
+      },
+      "excludeVols": {
+        "type": "string",
+        "default": ""
+      },
+      "bsplineInterpFlag": {
+        "default": 0,
+        "type": "integer"
+      },
+      "phaseEncodeDir": {
+        "type": "integer",
+        "default": 2
+      },
+      "dwOutMm-1": {
+        "type": "integer",
+        "default": 2
+      },
+      "dwOutMm-2": {
+        "type": "integer",
+        "default": 2
+      },
+      "dwOutMm-3": {
+        "type": "integer",
+        "default": 2
+      },
+      "rotateBvecsWithRx": {
+        "default": 0,
+        "type": "integer"
+      },
+      "rotateBvecsWithCanXform": {
+        "default": 0,
+        "type": "integer"
+      },
+      "noiseCalcMethod": {
+        "type": "string",
+        "default": "b0"
+      }
+    },
+    "inputs": {
+      "diffusion": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "bvec": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      },
+      "bval": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "e8e76ee8d598db14b99727b1e98d7f5abf250b4c",
+    "rootfs-hash": "sha384:63810c1dbdf413bba08a33811a9649dd70990e1550f635c0443f55cb17c1429e30bdf8ebe1cce9f07853b570f90bb27d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dtiinit-demo-sha384-63810c1dbdf413bba08a33811a9649dd70990e1550f635c0443f55cb17c1429e30bdf8ebe1cce9f07853b570f90bb27d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "diffusion",
+          "bvec",
+          "bval"
+        ],
+        "type": "object",
+        "properties": {
+          "diffusion": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "bvec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "bval": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "fitMethod",
+          "numBootStrapSamples",
+          "noiseCalcMethod",
+          "flipLrApFlag",
+          "rotateBvecsWithCanXform",
+          "dwOutMm-1",
+          "phaseEncodeDir",
+          "gradDirsCode",
+          "dwOutMm-2",
+          "clobber",
+          "dwOutMm-3",
+          "dt6BaseName",
+          "rotateBvecsWithRx",
+          "bvalue",
+          "bsplineInterpFlag",
+          "nStep",
+          "eddyCorrect",
+          "excludeVols"
+        ],
+        "type": "object",
+        "properties": {
+          "bvalue": {
+            "default": "",
+            "type": "string"
+          },
+          "numBootStrapSamples": {
+            "default": 500,
+            "type": "integer"
+          },
+          "noiseCalcMethod": {
+            "default": "b0",
+            "type": "string"
+          },
+          "flipLrApFlag": {
+            "default": 0,
+            "type": "integer"
+          },
+          "rotateBvecsWithCanXform": {
+            "default": 0,
+            "type": "integer"
+          },
+          "dwOutMm-1": {
+            "default": 2,
+            "type": "integer"
+          },
+          "phaseEncodeDir": {
+            "default": 2,
+            "type": "integer"
+          },
+          "dwOutMm-2": {
+            "default": 2,
+            "type": "integer"
+          },
+          "clobber": {
+            "default": 0,
+            "type": "integer"
+          },
+          "nStep": {
+            "default": 50,
+            "type": "integer"
+          },
+          "dt6BaseName": {
+            "default": "",
+            "type": "string"
+          },
+          "gradDirsCode": {
+            "default": "",
+            "type": "string"
+          },
+          "rotateBvecsWithRx": {
+            "default": 0,
+            "type": "integer"
+          },
+          "fitMethod": {
+            "default": "ls",
+            "type": "string"
+          },
+          "bsplineInterpFlag": {
+            "default": 0,
+            "type": "integer"
+          },
+          "dwOutMm-3": {
+            "default": 2,
+            "type": "integer"
+          },
+          "eddyCorrect": {
+            "default": 1,
+            "type": "integer"
+          },
+          "excludeVols": {
+            "default": "",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Diffusion Data Initialization Pipeline (DEMO)"
+  }
+}
