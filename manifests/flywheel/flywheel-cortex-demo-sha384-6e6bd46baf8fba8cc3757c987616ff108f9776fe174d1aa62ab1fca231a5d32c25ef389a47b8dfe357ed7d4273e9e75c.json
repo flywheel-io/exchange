@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "cortex-demo",
+    "label": "Cortex: Build Cortical Surface Object (DEMO)",
+    "description": "This (demo) gear will run an image segmentation algorithm on an anatomical image and generate, from that segmentation, a cortical surface object (OBJ) file.",
+    "maintainer": "Michael Perry <michaelperry@flywheel.io>",
+    "author": "Brian Wandell <wandell@stanford.edu>",
+    "url": "https://en.wikipedia.org/wiki/Wavefront_.obj_file",
+    "source": "https://github.com/flywheel-apps/cortex-demo",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+      "anatomy": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/cortex-demo:v0.0.1"
+    }
+  },
+  "exchange": {
+    "git-commit": "e8e76ee8d598db14b99727b1e98d7f5abf250b4c",
+    "rootfs-hash": "sha384:6e6bd46baf8fba8cc3757c987616ff108f9776fe174d1aa62ab1fca231a5d32c25ef389a47b8dfe357ed7d4273e9e75c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-cortex-demo-sha384-6e6bd46baf8fba8cc3757c987616ff108f9776fe174d1aa62ab1fca231a5d32c25ef389a47b8dfe357ed7d4273e9e75c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomy"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomy": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Cortex: Build Cortical Surface Object (DEMO)"
+  }
+}
