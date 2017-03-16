@@ -21,6 +21,6 @@
         }
     },
     "custom": {
-        "docker-image": "flywheel/spectroscopy-demo"
+        "docker-image": "flywheel/spectroscopy-demo:v0.0.1"
     }
 }
