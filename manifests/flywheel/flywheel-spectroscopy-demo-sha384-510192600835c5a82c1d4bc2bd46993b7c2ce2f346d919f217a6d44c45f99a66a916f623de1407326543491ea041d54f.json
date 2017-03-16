@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "spectroscopy-demo",
+    "label": "Spectroscopy (DEMO)",
+    "description": "Automated segmentation of the human hippocampus along its longitudinal axis. This gear will run an image segmentation algorithm on an anatomical image and generate a measurement of hippocampal volume by segment.",
+    "maintainer": "Ryan Sanford <ryansanford@flywheel.io>",
+    "author": "Ryan Chamberlain <ryanchamberlain@flywheel.io>",
+    "url": "https://github.com/flywheel-apps/spectroscopy-demo",
+    "source": "https://github.com/flywheel-apps/spectroscopy-demo",
+    "license": "MIT",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "config": {},
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/spectroscopy-demo:v0.0.1"
+    }
+  },
+  "exchange": {
+    "git-commit": "e8e76ee8d598db14b99727b1e98d7f5abf250b4c",
+    "rootfs-hash": "sha384:510192600835c5a82c1d4bc2bd46993b7c2ce2f346d919f217a6d44c45f99a66a916f623de1407326543491ea041d54f",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-spectroscopy-demo-sha384-510192600835c5a82c1d4bc2bd46993b7c2ce2f346d919f217a6d44c45f99a66a916f623de1407326543491ea041d54f.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Spectroscopy (DEMO)"
+  }
+}
