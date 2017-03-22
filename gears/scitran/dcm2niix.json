@@ -1,27 +1,65 @@
 {
-    "name": "dcm2niix",
-    "label": "DCM2NIIX: v.6June2016",
-    "description": "Chris Rorden's dcm2niiX version 6June2016 (64-bit). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
-    "maintainer": "Michael Perry <lmperry@stanford.edu>",
-    "author": "Chris Rorden",
-    "url": "https://www.nitrc.org/projects/dcm2nii",
-    "source": "https://github.com/scitran-apps/dcm2niiix",
-    "license": "BSD-2-Clause",
-    "flywheel": "0",
-    "version": "0.0.3",
-    "config": {},
-    "inputs": {
-        "dcm2niix": {
-            "base": "file",
-            "type": {
-                "enum": [
-                    "dicom",
-                    "parrec"
-                ]
-            }
-        }
+  "name": "dcm2niix",
+  "label": "DCM2NIIX: v1.0.20170130",
+  "description": "Chris Rorden's dcm2niiX version v1.0.20170130 (64-bit Linux). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Chris Rorden",
+  "url": "https://www.nitrc.org/projects/dcm2nii",
+  "source": "https://github.com/scitran-apps/dcm2niiix",
+  "license":  "BSD-2-Clause",
+  "flywheel": "0",
+  "version":  "0.1.0",
+  "config": {
+    "decompress_dicoms": {
+      "default": false,
+      "type": "boolean",
+      "description": "Decompress dicom files prior to conversion. This will perform decompression using gdcmconv and subsequently perform conversion using dcm2niix. (true/false, default=false)"
     },
-    "custom": {
-        "docker-image": "scitran/dcm2niix"
+    "bids_sidecar": {
+      "description": "Output BIDS sidecar in JSON format. (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-b"
+    },
+    "merge2d": {
+      "description": "merge 2D slices from same series regardless of study time, echo, coil, orientation, etc. (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-m"
+    },
+    "text_notes_private": {
+      "description": "text notes includes private patient details (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-t"
+    },
+    "crop": {
+      "description": "Crop images (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-x"
+    },
+    "compress_nifti":{
+      "description": "Compress output NIfTI file. Options, y=pigz, i=internal, n=no. (y/i/n, default=y) ",
+      "type": "string",
+      "default": "y",
+      "id": "-z"
+    },
+    "filename": {
+      "description": "Determine how files are named: filename (%a=antenna (coil) number, %c=comments, %d=description, %e=echo number, %f=folder name, %i=ID of patient, %m=manufacturer, %n=name of patient, %p=protocol, %s=series number, %t=time, %u=acquisition number, %z=sequence name; [default='%f'])",
+      "type": "string",
+      "default": "%f",
+      "id": "-f"
     }
+  },
+  "inputs": {
+    "dcm2niix_input": {
+      "description": "Input file for dcm2niix. This can be either a DICOM archive ('.dicom.zip'), an enhanced dicom file (gzipped or not, e.g., 'IM0001.gz', 'IM0001'), or a PAR/REC archive ('.parrec.zip')",
+      "base": "file",
+      "type": { "enum": [ "dicom", "parrec" ] }
+    }
+  },
+  "custom": {
+    "docker-image": "scitran/dcm2niix:v0.1.0"
+  }
 }
