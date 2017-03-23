@@ -63,13 +63,11 @@ function gear_version_already_exists() {
     gear_name="$2"
     gear_version="$3"
 
-    for f in $MANIFESTS_DIR/*.json $MANIFESTS_DIR/**/*.json ; do
+    for f in "$MANIFESTS_DIR/$gear_org/"*.json ; do
         v_gear_name="$( jq -r '.gear.name' $f )"
         v_gear_version="$( jq -r '.gear.version' $f )"
-        v_gear_dir="${f%/*}"
-        v_gear_org="${v_gear_dir##*/}"
 
-        if [[ "$gear_org" == "$v_gear_org" && "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
+        if [[ "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
             >&2 echo "Strongly versioned gear '$gear_name' of version '$gear_version' found in file '$f'"
 
             # true = 0
