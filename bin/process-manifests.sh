@@ -53,9 +53,46 @@ fi
 
 set -eu
 
+function gear_version_already_exists() {
+    if [ "$#" -ne 3 ]; then
+         >&2 echo "Invalid number of positional arguments in gear_version_already_exists()"
+        exit 1
+    fi
+
+    gear_org="$1"
+    gear_name="$2"
+    gear_version="$3"
+
+    for f in $MANIFESTS_DIR/*.json $MANIFESTS_DIR/**/*.json ; do
+        v_gear_name="$( jq -r '.gear.name' $f )"
+        v_gear_version="$( jq -r '.gear.version' $f )"
+        v_gear_dir="${f%/*}"
+        v_gear_org="${v_gear_dir##*/}"
+
+        if [[ "$gear_org" == "$v_gear_org" && "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
+            >&2 echo "Strongly versioned gear '$gear_name' of version '$gear_version' found in file '$f'"
+
+            # true = 0
+            return 0
+        fi
+    done
+
+    # false = 1
+    return 1
+}
+
 
 function validate_manifest() {
     if [ "$1" == "gear" ]; then
+        # Validate that strongly versioned gear with same name and version doesn't already exist.
+        gear_name="$( jq -r '.name' $2 )"
+        gear_version="$( jq -r '.version' $2 )"
+        gear_dir="${2%/*}"
+        gear_org="${gear_dir##*/}"
+        if gear_version_already_exists "$gear_org" "$gear_name" "$gear_version" ; then
+          >&2 echo "Error: Candidate gear already strongly versioned. Submit the gear to the exchange with a unique version." && exit 1
+        fi
+
         # Validate the manifest against the schema
         if [ ! -v GEAR_SCHEMA_PATH ]; then
             >&2 echo "Installing gear schema"
