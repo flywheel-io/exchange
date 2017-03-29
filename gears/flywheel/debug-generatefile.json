@@ -1,0 +1,20 @@
+{
+    "author": "Jennifer Reiter <jenniferreiter@invenshure.com>", 
+    "config": {}, 
+    "custom": {
+        "docker-image": "flywheel/debug-generatefile:v0.0.1"
+    }, 
+    "description": "This Gear produces a 1GB .txt file.", 
+    "inputs": {
+        "dummy": {
+            "base": "file"
+        }
+    }, 
+    "label": "Debug File Generator: Creating a 1 GB file", 
+    "license": "Other", 
+    "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>", 
+    "name": "debug-generatefile", 
+    "source": "https://github.com/flywheel-apps/debug-generatefile", 
+    "url": "https://github.com/flywheel-apps/debug-generatefile", 
+    "version": "0.0.1"
+}
