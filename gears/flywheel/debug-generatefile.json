@@ -7,7 +7,7 @@
     "description": "This Gear produces a 1GB .txt file.", 
     "inputs": {
         "dummy": {
-            "base": "file",
+            "base": "file"
         }
     }, 
     "label": "Debug File Generator: Creating a 1 GB file", 
