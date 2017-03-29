@@ -1,0 +1,54 @@
+{
+  "gear": {
+    "author": "Jennifer Reiter <jenniferreiter@invenshure.com>",
+    "config": {},
+    "custom": {
+      "docker-image": "flywheel/debug-generatefile:v0.0.1"
+    },
+    "description": "This Gear produces a 1GB .txt file.",
+    "inputs": {
+      "dummy": {
+        "base": "file"
+      }
+    },
+    "label": "Debug File Generator: Creating a 1 GB file",
+    "license": "Other",
+    "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
+    "name": "debug-generatefile",
+    "source": "https://github.com/flywheel-apps/debug-generatefile",
+    "url": "https://github.com/flywheel-apps/debug-generatefile",
+    "version": "0.0.1"
+  },
+  "exchange": {
+    "git-commit": "b87836d1acfa3c024cbd6ad88fafe571fed9abe0",
+    "rootfs-hash": "sha384:67f06a070983107c73fa44bf8b4bdfeaeca7d887a58e9f8da561c733640be232d69d6e10a5844444e17655b274d243a9",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-debug-generatefile-sha384-67f06a070983107c73fa44bf8b4bdfeaeca7d887a58e9f8da561c733640be232d69d6e10a5844444e17655b274d243a9.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dummy"
+        ],
+        "type": "object",
+        "properties": {
+          "dummy": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Debug File Generator: Creating a 1 GB file"
+  }
+}
