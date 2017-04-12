@@ -1,0 +1,65 @@
+{
+  "gear": {
+    "author": "Poldrack Lab at Stanford University",
+    "config": {},
+    "custom": {
+      "docker-image": "flywheel/mriqc:v0.1"
+    },
+    "description": "The package provides a series of image processing workflows to extract and compute a series of NR (no-reference), IQMs (image quality metrics) to be used in QAPs (quality assessment protocols) for MRI (magnetic resonance imaging). This tool extracts a series of IQMs from structural or functional MRI data. Note, this gear only supports the generation of individual scan reports; group reports are not generated.",
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "label": "MRIQC: NR-IQMs for Functional MRI (mriqc v0.9.0-0)",
+    "license": "BSD-3-Clause",
+    "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
+    "name": "mriqc",
+    "source": "https://github.com/flywheel-apps/mriqc",
+    "url": "https://github.com/poldracklab/mriqc",
+    "version": "0.1"
+  },
+  "exchange": {
+    "git-commit": "7598e5f844bbe9f014e3be307502906f0f4c3e21",
+    "rootfs-hash": "sha384:f5a8836e14bad6229fcc3547fd099a9297f2b0687c7a3752bf4ac2a649bbfe68c3ee6d567ff7d587502af5d68d2c67ab",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-mriqc-sha384-f5a8836e14bad6229fcc3547fd099a9297f2b0687c7a3752bf4ac2a649bbfe68c3ee6d567ff7d587502af5d68d2c67ab.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for MRIQC: NR-IQMs for Functional MRI (mriqc v0.9.0-0)"
+  }
+}
