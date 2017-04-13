@@ -1,0 +1,94 @@
+{
+  "name": "sti-qsm-demo",
+  "label": "STI SUITE: Quantitative Susceptibility Mapping Pipeline (v2.2 DEMO) ",
+  "description": "Quantitative Susceptibility Mapping (QSM) and Susceptibility Tensor Imaging (STI) are two recently developed imaging methods for quantifying tissue’s magnetic property. Magnetic susceptibility offers a new contrast for high-resolution anatomical imaging; it further provides important information on tissue’s chemical composition, especially myelin and iron, and white matter microstructures of the brain.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Chunlei Liu, Ph.D <STI.Suite.MRI@gmail.com>",
+  "url": "http://people.duke.edu/~cl160",
+  "source": "https://github.com/flywheel-apps",
+  "license": "GPL-2.0",
+  "flywheel": "0",
+  "version": "0.1.0",
+  "custom": {
+    "docker-image": "flywheel/sti-qsm:demo-v0.1.0"
+  },
+  "inputs": {
+    "Magnitude": {
+      "description": "Magnitude image (can be Matlab data (.mat) or NIfTI file). For Multi-echo magnitude/phase data 4D Data are in the order of X, Y, Z, echo 3D single echo data is also OK.",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti",
+          "MATLAB data"
+        ]
+      }
+    },
+    "Phase": {
+      "description": "Phase image (can be Matlab data (.mat) or NIfTI file). For Multi-echo magnitude/phase data4D Data are in the order of X, Y, Z, echo 3D single echo data is also OK.",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti",
+          "MATLAB data"
+        ]
+      }
+    },
+      "Brain_Mask": {
+        "description": "A binary brain mask (can be Matlab (.mat) or NIfTI data).",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti",
+            "MATLAB data"
+          ]
+        }
+      }
+    },
+  "config": {
+    "ID": {
+      "description": "Desired Subject ID [DEFAULT='S001']",
+      "default": "S001",
+      "type": "string"
+    },
+    "B0": {
+      "description": "B0 Field Stregth in Tesla [DEFAULT=3]",
+      "default": 3,
+      "type": "integer"
+    },
+    "B0_vector": {
+      "description": "B0_vector. Please ensure this is correct! For axial scan, B0_vector=[0 0 1]. For oblique scan, B0_vector should be calculated from a dicom file associated with the multi-echo GRE scan. [DEFAULT==[0 0 1]==AXIAL]",
+      "default": "[0 0 1]",
+      "type": "string"
+    },
+    "Voxel_Size": {
+      "description": "Voxel Size [DEFAULT=[1, 1, 1]]",
+      "default": "[1 1 1]",
+      "type": "string"
+    },
+    "TE": {
+      "description": "Echo Time (TE) of the first image in the unit of ms [DEFAULT=40]",
+      "default": 4,
+      "type": "integer"
+    },
+    "DeltaTE": {
+      "description": "Difference between the TE of the first and susequent images.",
+      "default": 4,
+      "type": "integer"
+    },
+    "iHARPERELLA": {
+      "description": "Integrated phase unwrapping and background phase removal. iHARPERELLA is an improved implementation of HARPERELLA. [DEFAULT=true]",
+      "default": true,
+      "type": "boolean"
+    },
+    "V-SHARP": {
+      "description": "V-SHARP is modified version of the SHARP method by Schweser et al. It uses a varying spherical kernel to remove the background phase and preserve the contrast near the boundary of the brain. [DEFAULT=false]",
+      "type": "boolean",
+      "default": false
+    },
+    "V-SHARP_Radius": {
+      "description": "Size of spherical kernel radius for V-SHARP (DEFAULT=25)",
+      "type": "integer",
+      "default": 25
+    }
+  }
+}
