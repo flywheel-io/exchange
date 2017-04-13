@@ -1,7 +1,7 @@
 {
   "name": "sti-qsm-demo",
   "label": "STI SUITE: Quantitative Susceptibility Mapping Pipeline (v2.2 DEMO) ",
-  "description": "Quantitative susceptibility mapping (QSM) and susceptibility tensor imaging (STI) are two recently developed imaging methods for quantifying tissue’s magnetic property. Magnetic susceptibility offers a new contrast for high-resolution anatomical imaging; it further provides important information on tissue’s chemical composition, especially myelin and iron, and white matter microstructures of the brain.",
+  "description": "Quantitative Susceptibility Mapping (QSM) and Susceptibility Tensor Imaging (STI) are two recently developed imaging methods for quantifying tissue’s magnetic property. Magnetic susceptibility offers a new contrast for high-resolution anatomical imaging; it further provides important information on tissue’s chemical composition, especially myelin and iron, and white matter microstructures of the brain.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Chunlei Liu, Ph.D <STI.Suite.MRI@gmail.com>",
   "url": "http://people.duke.edu/~cl160",
