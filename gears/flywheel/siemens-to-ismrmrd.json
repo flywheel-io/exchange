@@ -1,0 +1,53 @@
+{
+  "author": "Souheil Inati, Michael Hansen, et al.",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Debug XML flag. The debug flag outputs the following additional files: xml_raw.xml, processed.xml, config_buffer.xprot.",
+      "type": "boolean"
+    },
+    "measNum": {
+      "default": 1,
+      "description": "Measurement number. Value used in the case of input VD file that contains multiple measurements.",
+      "type": "integer"
+    }
+  },
+  "custom": {
+    "docker-image": "flywheel/siemens_to_ismrmrd:v0.1"
+  },
+  "description": "The Siemens to ISMRM-RD Converter (siemens_to_ismrmrd v1.0.1, ismrmrd v1.3.2) is used to convert data from Siemens raw data format (.dat) to ISMRM-RD raw data format (.h5).",
+  "inputs": {
+    "dat": {
+      "base": "file",
+      "description": "Input is a Siemens dat file. Dat file can be a VB file or a VD file. In case of VD file that contains multiple measurements, the user can specify which measurement to convert by using the config option 'measNum'.",
+      "type": {
+        "enum": [
+          "Siemens MR Raw"
+        ]
+      }
+    },
+    "user_map": {
+      "base": "file",
+      "description": "Parameter map XML file.",
+      "name": {
+        "pattern": "^.*.xml$"
+      },
+      "optional": true
+    },
+    "user_stylesheet": {
+      "base": "file",
+      "description": "Parameter stylesheet XSL file.",
+      "name": {
+        "pattern": "^.*.xsl$"
+      },
+      "optional": true
+    }
+  },
+  "label": "Siemens to ISMRM-RD Converter (siemens_to_ismrmrd v1.0.1, ismrmrd v1.3.2)",
+  "license": "Other",
+  "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
+  "name": "siemens-to-ismrmrd",
+  "source": "https://github.com/flywheel-apps/siemens_to_ismrmrd",
+  "url": "https://github.com/ismrmrd/siemens_to_ismrmrd",
+  "version": "0.1"
+}
