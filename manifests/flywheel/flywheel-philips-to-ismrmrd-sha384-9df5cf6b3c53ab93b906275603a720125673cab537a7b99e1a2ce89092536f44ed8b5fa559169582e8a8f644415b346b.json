@@ -1,0 +1,136 @@
+{
+  "gear": {
+    "author": "Souheil Inati, Michael Hansen, et al.",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Debug XML flag. The debug flag outputs the following additional files: raw.xml, processed.xml.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/philips_to_ismrmrd:v0.1"
+    },
+    "description": "The Philips to ISMRM-RD Convertor (philips_to_ismrmrd v0.1.0, ismrmrd v1.3.2) is used to convert data from Philips Raw file (.raw) to ISMRM-RD raw data format (.h5).",
+    "inputs": {
+      "raw": {
+        "base": "file",
+        "description": "Input is a Philips .raw file.",
+        "type": {
+          "enum": [
+            "Philips Raw file"
+          ]
+        }
+      },
+      "lab": {
+        "base": "file",
+        "description": "Input is Philips .lab file.",
+        "type": {
+          "enum": [
+            "Philips Lab file"
+          ]
+        }
+      },
+      "sin": {
+        "base": "file",
+        "description": "Input is Philips .sin file.",
+        "type": {
+          "enum": [
+            "Philips Sin file"
+          ]
+        }
+      },
+      "user_stylesheet": {
+        "base": "file",
+        "description": "Parameter stylesheet XSL file from user",
+        "name": {
+          "pattern": "^.*.xsl$"
+        },
+        "optional": true
+      }
+    },
+    "label": "Philips to ISMRM-RD Converter (philips_to_ismrmrd v0.1.0, ismrmrd v1.3.2)",
+    "license": "Other",
+    "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
+    "name": "philips-to-ismrmrd",
+    "source": "https://github.com/flywheel-apps/philips_to_ismrmrd",
+    "url": "https://github.com/ismrmrd/philips_to_ismrmrd",
+    "version": "0.1"
+  },
+  "exchange": {
+    "git-commit": "62a01a7d448b362a8afc40cca6c7023abdc04142",
+    "rootfs-hash": "sha384:9df5cf6b3c53ab93b906275603a720125673cab537a7b99e1a2ce89092536f44ed8b5fa559169582e8a8f644415b346b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-philips-to-ismrmrd-sha384-9df5cf6b3c53ab93b906275603a720125673cab537a7b99e1a2ce89092536f44ed8b5fa559169582e8a8f644415b346b.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "raw",
+          "sin",
+          "lab"
+        ],
+        "type": "object",
+        "properties": {
+          "raw": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "Philips Raw file"
+                ]
+              }
+            }
+          },
+          "user_stylesheet": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "pattern": "^.*.xsl$"
+              }
+            }
+          },
+          "sin": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "Philips Sin file"
+                ]
+              }
+            }
+          },
+          "lab": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "Philips Lab file"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "debug"
+        ],
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Philips to ISMRM-RD Converter (philips_to_ismrmrd v0.1.0, ismrmrd v1.3.2)"
+  }
+}
