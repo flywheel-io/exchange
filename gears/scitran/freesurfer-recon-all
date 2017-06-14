@@ -1,14 +1,14 @@
 {
   "name": "freesurfer-recon-all",
   "label": "FreeSurfer (v6.0.0): Recon-All",
-  "description": " This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subejct ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
+  "description": " This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
-  "author": "Laboratory for Computational Neuroimaging <freesurfer@nmr.mgh.harvard.edu>",
+  "author": "FREESURFER <freesurfer@nmr.mgh.harvard.edu>",
   "url": "https://surfer.nmr.mgh.harvard.edu",
   "source": "https://github.com/scitran-apps/freesurfer-recon-all",
   "license": "GPL-2.0",
   "flywheel": "0",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "inputs": {
     "anatomical": {
       "description": "Anatomical NIfTI file or DICOM archive.",
@@ -23,12 +23,12 @@
   },
   "config": {
     "subject_id": {
-      "description": "Desired subject ID (Default='s000'). This will be used to name the resulting freesurfer output directory.",
+      "description": "Desired subject ID (Default='s000'). Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory.",
       "default": "s000",
       "type": "string"
     },
     "reconall_options": {
-      "description": "Command line options to the recon-all algorithm. DEFAULT: By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm. This can speed later processing. WARNING: Modification of these options can result in failures.",
+      "description": "Command line options to the recon-all algorithm. (Default='-all -qcache'). By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm, which can speed later processing. Note that modification of these options may result in failure if the options are not recognized.",
       "default": "-all -qcache",
       "type": "string"
     },
@@ -38,7 +38,7 @@
       "type": "boolean"
     },
     "brainstem_structures": {
-      "description": "generates an automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
+      "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
       "default": true,
       "type": "boolean"
     },
@@ -58,12 +58,12 @@
       "type": "boolean"
     },
     "convert_stats": {
-      "description": "Convert FreeSurfer stats files to CSV. (Default=true). Converts a subcortical stats file created by recon-all and/or mri_segstats (eg, aseg.stats) into a table in which each line is a subject and each column is a segmentation. The values are the volume of the segmentation in mm3 or the mean intensity over the structure. The first row is a list of the segmentation names. The first column is the subject name. If the measure is volume, then the estimated intracranial volume (eTIV) is printed as the 2nd to last column (if present in the input), and BrainSegVol is the last column.",
+      "description": "Convert FreeSurfer stats files to CSV. (Default=true). Converts a subcortical stats file created by recon-all and/or mri_segstats (eg, aseg.stats) into a table in which each line is a subject and each column is a segmentation. The values are the volume of the segmentation in mm3 or the mean intensity over the structure. Also Converts a cortical stats file created by recon-all and or mris_anatomical_stats (eg, ?h.aparc.stats) into a table in which each line is a subject and each column is a parcellation. By default, the values are the area of the parcellation in mm2.",
       "default": true,
       "type": "boolean"
     },
     "license_email": {
-      "description": "Email address used during FreeSurfer Registration (1st line of 'license')",
+      "description": "Email address used during FreeSurfer registration (1st line of 'license')",
       "default": "",
       "type": "string"
     },
@@ -84,6 +84,6 @@
     }
   },
   "custom": {
-    "docker-image": "scitran/freesurfer-recon-all:v0.1.0"
+    "docker-image": "scitran/freesurfer-recon-all:v0.1.2"
   }
 }
