@@ -1,9 +1,9 @@
 {
   "name": "freesurfer-recon-all",
   "label": "FreeSurfer (v6.0.0): Recon-All",
-  "description": " This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
+  "description": "This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
-  "author": "FREESURFER <freesurfer@nmr.mgh.harvard.edu>",
+  "author": "Laboratory for Computational Neuroimaging <freesurfer@nmr.mgh.harvard.edu>",
   "url": "https://surfer.nmr.mgh.harvard.edu",
   "source": "https://github.com/scitran-apps/freesurfer-recon-all",
   "license": "GPL-2.0",
