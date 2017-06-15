@@ -8,7 +8,7 @@
 	"source": "https://github.com/scitran-apps/dicom-mr-classifier",
 	"license": "Apache-2.0",
 	"flywheel": "0",
-	"version": "0.1.9",
+	"version": "0.1.10",
 	"config": {},
 	"inputs": {
 		"dicom": {
@@ -20,6 +20,6 @@
 		}
 	},
 	"custom": {
-		"docker-image": "scitran/dicom-mr-classifier:v0.1.9"
+		"docker-image": "scitran/dicom-mr-classifier:v0.1.10"
 	}
 }
