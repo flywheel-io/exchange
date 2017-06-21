@@ -1,0 +1,67 @@
+{
+  "gear": {
+    "name": "qa-report-fmri",
+    "label": "Quality Assurance Report (fMRI)",
+    "description": "Run QA metrics (displacement, signal spikes) to create a quality assurance report (png) for an fMRI NIfTI using modified CNI/NIMS code from @rfdougherty.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Robert F. Dougherty",
+    "url": "https://github.com/cni/nims/blob/master/nimsproc/qa_report.py",
+    "source": "https://github.com/scitran-apps/qa-report-fmri",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1.7",
+    "config": {},
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "description": "Functional NIfTI data file.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/qa-report-fmri:v0.1.7"
+    }
+  },
+  "exchange": {
+    "git-commit": "0cbf07df475446853f0fe38fc805cf2aed5b8ba4",
+    "rootfs-hash": "sha384:9eab0e75540ddf637297f2aef9df16fa02a9df68b9248ff2163c831de46be8247b6009a1841a0942131923884e8ff352",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-qa-report-fmri-sha384-9eab0e75540ddf637297f2aef9df16fa02a9df68b9248ff2163c831de46be8247b6009a1841a0942131923884e8ff352.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Quality Assurance Report (fMRI)"
+  }
+}
