@@ -5,10 +5,10 @@
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Chris Rorden",
   "url": "https://www.nitrc.org/projects/dcm2nii",
-  "source": "https://github.com/scitran-apps/dcm2niiix",
+  "source": "https://github.com/scitran-apps/dcm2niix",
   "license":  "BSD-2-Clause",
   "flywheel": "0",
-  "version":  "0.1.0",
+  "version":  "0.1.1",
   "config": {
     "decompress_dicoms": {
       "default": false,
@@ -60,6 +60,6 @@
     }
   },
   "custom": {
-    "docker-image": "scitran/dcm2niix:v0.1.0"
+    "docker-image": "scitran/dcm2niix:v0.1.1"
   }
 }
