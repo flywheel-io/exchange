@@ -1,25 +1,27 @@
 {
-	"name": "dicom-mr-classifier",
-	"label": "SciTran DICOM MR Classifier",
-	"description": "Extract metadata from raw DICOM data from Siemens, Philips, or GE.",
-	"maintainer": "Michael Perry <lmperry@stanford.edu>",
-	"author": "Michael Perry <lmperry@stanford.edu>",
-	"url": "https://scitran.github.io",
-	"source": "https://github.com/scitran-apps/dicom-mr-classifier",
-	"license": "Apache-2.0",
-	"flywheel": "0",
-	"version": "0.1.10",
-	"config": {},
-	"inputs": {
-		"dicom": {
-			"base": "file",
-			"type": {
-				"enum": ["dicom"]
-			},
-			"description": "Archive (.zip) containing DICOM files."
-		}
-	},
-	"custom": {
-		"docker-image": "scitran/dicom-mr-classifier:v0.1.10"
-	}
+  "name": "dicom-mr-classifier",
+  "label": "SciTran DICOM MR Classifier",
+  "description": "Extract metadata from raw DICOM data from Siemens, Philips, or GE.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Michael Perry <lmperry@stanford.edu>",
+  "url": "https://scitran.github.io",
+  "source": "https://github.com/scitran-apps/dicom-mr-classifier",
+  "license": "Apache-2.0",
+  "flywheel": "0",
+  "version": "0.1.11",
+  "config": {},
+  "inputs": {
+    "dicom": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      },
+      "description": "Archive (.zip) containing DICOM files."
+    }
+  },
+  "custom": {
+    "docker-image": "scitran/dicom-mr-classifier:v0.1.11"
+  }
 }
