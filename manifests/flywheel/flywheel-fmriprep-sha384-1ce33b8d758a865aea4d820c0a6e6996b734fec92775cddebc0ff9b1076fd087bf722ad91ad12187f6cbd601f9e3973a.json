@@ -1,0 +1,66 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc1)",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to differences in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that make running a variety of group level analyses (task based or resting state fMRI, graph theory measures, surface or volume, etc.) easy.",
+    "author": "Poldrack lab at Stanford University",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://github.com/poldracklab/fmriprep",
+    "version": "0.1",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:v0.1"
+    },
+    "license": "BSD-3-Clause",
+    "inputs": {
+      "bids_dataset": {
+        "description": "Archive (.zip, .tgz, .tar) containing a BIDS Dataset.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "archive"
+          ]
+        }
+      }
+    },
+    "config": {}
+  },
+  "exchange": {
+    "git-commit": "97ba3707730292740352fb9921d4439b5ee61b98",
+    "rootfs-hash": "sha384:1ce33b8d758a865aea4d820c0a6e6996b734fec92775cddebc0ff9b1076fd087bf722ad91ad12187f6cbd601f9e3973a",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-1ce33b8d758a865aea4d820c0a6e6996b734fec92775cddebc0ff9b1076fd087bf722ad91ad12187f6cbd601f9e3973a.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bids_dataset"
+        ],
+        "type": "object",
+        "properties": {
+          "bids_dataset": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "archive"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc1)"
+  }
+}
