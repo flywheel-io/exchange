@@ -23,6 +23,9 @@
                 }
 		}
 	},
+	"custom": {
+    		"docker-image": "flywheel/v0.0.1"
+  	},
 	"config": {
 	}
 }
