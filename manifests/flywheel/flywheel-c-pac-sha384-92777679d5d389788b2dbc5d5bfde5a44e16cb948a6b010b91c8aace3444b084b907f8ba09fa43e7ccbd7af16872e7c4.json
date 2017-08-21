@@ -1,0 +1,85 @@
+{
+  "gear": {
+    "name": "c-pac",
+    "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Craddock C, Sikka S, Cheung B, et al.",
+    "url": "https://github.com/BIDS-Apps/CPAC",
+    "source": "https://github.com/flywheel-apps/c-pac",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.0.1",
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "functional": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/c-pac:v0.0.1"
+    },
+    "config": {}
+  },
+  "exchange": {
+    "git-commit": "ebb2b127a8c800570f309d60d4fa5c5016666d86",
+    "rootfs-hash": "sha384:92777679d5d389788b2dbc5d5bfde5a44e16cb948a6b010b91c8aace3444b084b907f8ba09fa43e7ccbd7af16872e7c4",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-c-pac-sha384-92777679d5d389788b2dbc5d5bfde5a44e16cb948a6b010b91c8aace3444b084b907f8ba09fa43e7ccbd7af16872e7c4.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "functional",
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "functional": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)"
+  }
+}
