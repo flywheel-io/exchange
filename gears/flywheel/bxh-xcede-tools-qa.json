@@ -1,0 +1,32 @@
+{
+  "name": "bxh-xcede-tools-qa",
+  "label": "BXH-XCEDE-TOOLS: fMRI QA (v1.11.14-lsb30.x86_64)",
+  "description": "These tools perform QA (quality assurance) calculations and produce images, graphs, and/or XML data as output. fmriqa_phantomqa.pl and fmriqa_generate.pl produce an HTML report with various QA measures. fmriqa_phantomqa.pl was designed for fMRI images of the BIRN stability phantom, and fmriqa_generate.pl has been used for human fMRI data.",
+  "author": "Syam Gadde <gadde@biac.duke.edu>",
+  "url": "https://www.nitrc.org/projects/bxh_xcede_tools/",
+  "source": "https://github.com/flywheel-apps/bxh-xcede-tools-qa/",
+  "license": "Other",
+  "flywheel": "0",
+  "version": "0.1",
+  "config": {
+    "birn_phantom": {
+      "description": "This determines if the Phantom QA algorithm (fmriqa_phantomqa.pl) should be run instead of the default Human fMRI QA algorithm (fmriqa_generate.pl). [Default=false]",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "inputs": {
+    "fmri_dicom_input": {
+      "description": "Input file for bxh-xcede-tools-qa. This can be either a DICOM archive ('.dicom.zip'), or a folder of DICOM files, or an enhanced DICOM image (gzipped or not, e.g., 'IM0001.gz', 'IM0001').",
+      "base": "file",
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      }
+    }
+  },
+  "custom": {
+    "docker-image": "flywheel/bxh-xcede-tools-qa:v0.1"
+  }
+}
