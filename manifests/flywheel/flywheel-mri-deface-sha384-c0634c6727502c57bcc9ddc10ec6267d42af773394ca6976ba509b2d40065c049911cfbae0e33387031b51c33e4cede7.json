@@ -1,0 +1,93 @@
+{
+  "gear": {
+    "author": "Amanda Bischoff-Grethe, et al.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "config": {
+      "output_nifti": {
+        "description": "Write output as compressed NIfTI (default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_mgh": {
+        "description": "Write the output file as compressed MGH file (.mgz) (default=false)",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "description": "MBIRN Defacer for structural MRI (mri-deface v1.22). MRI_DEFACE (v1.22) from FreeSurfer is a tool for removing identifiable facial features (eyes, nose, and mouth). This algorithm locates the subject's facial features and removes them without disturbing brain tissue. The algorithm was devised to work on T1-weighted anatomical MR data; it consumes NIfTI, DICOM, or MGH formats and produces a defaced anatomical image in either NIfTI or MGH format. Please cite http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2408762/ if using this tool in your work.",
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti",
+            "mgh",
+            "dicom"
+          ]
+        }
+      }
+    },
+    "label": "FreeSurfer: MBIRN Defacer for structural MRI (mri-deface v1.22)",
+    "license": "GPL-2.0",
+    "name": "mri-deface",
+    "source": "https://github.com/flywheel-apps/mri-deface",
+    "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/mri_deface",
+    "version": "0.2",
+    "custom": {
+      "docker-image": "flywheel/mri-deface:v0.2"
+    }
+  },
+  "exchange": {
+    "git-commit": "f5733391b7224f56ff1c54cda19ff006fd211e73",
+    "rootfs-hash": "sha384:c0634c6727502c57bcc9ddc10ec6267d42af773394ca6976ba509b2d40065c049911cfbae0e33387031b51c33e4cede7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-mri-deface-sha384-c0634c6727502c57bcc9ddc10ec6267d42af773394ca6976ba509b2d40065c049911cfbae0e33387031b51c33e4cede7.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "mgh",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "output_mgh",
+          "output_nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "output_mgh": {
+            "default": false,
+            "type": "boolean"
+          },
+          "output_nifti": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FreeSurfer: MBIRN Defacer for structural MRI (mri-deface v1.22)"
+  }
+}
