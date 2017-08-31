@@ -1,33 +1,38 @@
 {
-	"author": "Amanda Bischoff-Grethe, et al.",
-	"maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
-	"config": {
-		"output_extension": {
-			"description": "Desired extension of output file format. Can be either '.mgz' or '.nii.gz' (default='.nii.gz').",
-			"default": ".nii.gz",
-			"type": "string"
-		}
-	},
-	"description": "This Gear contains an algorithm (mri-deface, from FreeSurfer) for removing identifiable facial features (eyes, nose, and mouth). This algorithm locates the subject's facial features and removes them without disturbing brain tissue. The algorithm was devised to work on T1-weighted structural MRI; it produces a defaced structural image, and an image of the applied mask. Please cite http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2408762/ if using this gear in your work.",
-	"inputs": {
-		"anatomical": {
-			"base": "file",
-			"type": {
-				"enum": [
-					"nifti",
-					"mgh",
-					"dicom"
-				]
-			}
-		}
-	},
-	"label": "FreeSurfer: MBIRN Defacer for structural MRI (mri-deface v1.22)",
-	"license": "GPL-2.0",
-	"name": "mri-deface",
-	"source": "https://github.com/flywheel-apps/mri-deface",
-	"url": "https://surfer.nmr.mgh.harvard.edu/fswiki/mri_deface",
-	"version": "0.1.2",
-	"custom": {
-		"docker-image": "flywheel/mri-deface:v0.1.2"
-	}
+  "author": "Amanda Bischoff-Grethe, et al.",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "config": {
+    "output_nifti": {
+      "description": "Write output as compressed NIfTI (default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "output_mgh": {
+      "description": "Write the output file as compressed MGH file (.mgz) (default=false)",
+      "default": false,
+      "type": "boolean"
+    }
+  },
+  "description": "MBIRN Defacer for structural MRI (mri-deface v1.22). MRI_DEFACE (v1.22) from FreeSurfer is a tool for removing identifiable facial features (eyes, nose, and mouth). This algorithm locates the subject's facial features and removes them without disturbing brain tissue. The algorithm was devised to work on T1-weighted anatomical MR data; it consumes NIfTI, DICOM, or MGH formats and produces a defaced anatomical image in either NIfTI or MGH format. Please cite http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2408762/ if using this tool in your work.",
+  "inputs": {
+    "anatomical": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti",
+          "mgh",
+          "dicom"
+        ]
+      }
+    }
+  },
+  "label": "FreeSurfer: MBIRN Defacer for structural MRI (mri-deface v1.22)",
+  "license": "GPL-2.0",
+  "name": "mri-deface",
+  "source": "https://github.com/flywheel-apps/mri-deface",
+  "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/mri_deface",
+  "version": "0.2",
+  "custom": {
+    "docker-image": "flywheel/mri-deface:v0.2"
+  }
 }
