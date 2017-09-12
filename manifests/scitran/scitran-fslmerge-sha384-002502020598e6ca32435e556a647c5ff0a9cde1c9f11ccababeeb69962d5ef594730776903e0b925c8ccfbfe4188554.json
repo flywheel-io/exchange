@@ -1,0 +1,254 @@
+{
+  "gear": {
+    "name": "fslmerge",
+    "label": "FSL: FSLMERGE - FMRIB Merge Tool (FSL v5.0)",
+    "description": "FSLMERGE (FMRIB) concatenates image files into a single output. This concatenation can be in time, or in X, Y or Z. All image dimensions (except for the one being concatenated over) must be the same in all input images. For example, this can be used to take multiple 3D files (eg as output by SPM) and create a single 4D image file. This Gear also supports the merger of diffusion data with bvec/bval files.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+    "source": "https://github.com/scitran-apps/fslmerge",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1",
+    "custom": {
+      "docker-image": "scitran/fslmerge:v0.1"
+    },
+    "config": {
+      "catTime": {
+        "description": "concatenate images in time [default=false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-t"
+      },
+      "catX": {
+        "description": "concatenate images in the x direction [default=false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-x"
+      },
+      "catY": {
+        "description": "concatenate images in the y direction  [default=false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-y"
+      },
+      "catZ": {
+        "description": "concatenate images in the z direction  [default=false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-z"
+      },
+      "auto": {
+        "description": "auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
+        "default": true,
+        "type": "boolean",
+        "id": "-a"
+      },
+      "catTR": {
+        "description": "concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
+        "default": 0,
+        "type": "number",
+        "id": "-tr"
+      },
+      "base_outname": {
+        "description": "Base name for output file(s) [by default, 'none' signals the code to use the input filenames, separated by '_', to generate a base name]",
+        "default": "none",
+        "base": "file",
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "NIFTI_1": {
+        "description": "NIfTI image to be merged.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "NIFTI_2": {
+        "description": "NIfTI image to be merged.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "BVAL_1": {
+        "description": "BVAL file to be merged.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "BVAL_2": {
+        "description": "BVAL file to be merged.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "BVEC_1": {
+        "description": "BVEC file to be merged.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      },
+      "BVEC_2": {
+        "description": "BVEC file to be merged.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "8a5c166167758c8ac0b142ce897631e80432d6f4",
+    "rootfs-hash": "sha384:002502020598e6ca32435e556a647c5ff0a9cde1c9f11ccababeeb69962d5ef594730776903e0b925c8ccfbfe4188554",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-fslmerge-sha384-002502020598e6ca32435e556a647c5ff0a9cde1c9f11ccababeeb69962d5ef594730776903e0b925c8ccfbfe4188554.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "NIFTI_1",
+          "NIFTI_2"
+        ],
+        "type": "object",
+        "properties": {
+          "BVAL_1": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "BVAL_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "BVEC_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "BVEC_1": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "NIFTI_1": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "NIFTI_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "catTR",
+          "auto",
+          "base_outname",
+          "catTime",
+          "catX",
+          "catY",
+          "catZ"
+        ],
+        "type": "object",
+        "properties": {
+          "catTR": {
+            "default": 0,
+            "type": "number",
+            "id": "-tr"
+          },
+          "auto": {
+            "default": true,
+            "type": "boolean",
+            "id": "-a"
+          },
+          "base_outname": {
+            "default": "none",
+            "type": "string"
+          },
+          "catTime": {
+            "default": false,
+            "type": "boolean",
+            "id": "-t"
+          },
+          "catX": {
+            "default": false,
+            "type": "boolean",
+            "id": "-x"
+          },
+          "catY": {
+            "default": false,
+            "type": "boolean",
+            "id": "-y"
+          },
+          "catZ": {
+            "default": false,
+            "type": "boolean",
+            "id": "-z"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL: FSLMERGE - FMRIB Merge Tool (FSL v5.0)"
+  }
+}
