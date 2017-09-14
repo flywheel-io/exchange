@@ -1,0 +1,101 @@
+{
+  "gear": {
+    "name": "dcm-convert",
+    "label": "SciTran: DCM-CONVERT - DICOM conversion tool",
+    "description": "DCM-CONVERT uses SciTran's data library (https://github.com/scitran/data) to convert raw DICOM data (zip archive) to NIfTI, Montage, and PNG (screenshot acquisitions) formats. DCM-CONVERT supports Siemens and GE DICOM data.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Scientific Transparency (RF Dougherty, K Hahn, R Bowen, G Schaefer, LM Perry)",
+    "url": "https://github.com/scitran/data",
+    "source": "https://github.com/scitran-apps/dcm-convert",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "1.1.3",
+    "config": {
+      "convert_montage": {
+        "description": "Convert DICOM archive to MONTAGE format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_nifti": {
+        "description": "Convert DICOM archive to NIfTI format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_png": {
+        "description": "Convert screenshot acquisitions to PNG. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "inputs": {
+      "dicom": {
+        "description": "DICOM archive (.zip file)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/dcm-convert:v1.1.3"
+    }
+  },
+  "exchange": {
+    "git-commit": "a0549781b7953084a2cdfc9e7e5256fdfc6438cc",
+    "rootfs-hash": "sha384:faa424a6568d4ff57c8a080e54ac352b0c2b40ced7b4903a8b3ae0d1eefcd7744253d13f30a28daa84213192ef6ccf5e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dcm-convert-sha384-faa424a6568d4ff57c8a080e54ac352b0c2b40ced7b4903a8b3ae0d1eefcd7744253d13f30a28daa84213192ef6ccf5e.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dicom"
+        ],
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "convert_montage",
+          "convert_png",
+          "convert_nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "convert_montage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "convert_png": {
+            "default": false,
+            "type": "boolean"
+          },
+          "convert_nifti": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for SciTran: DCM-CONVERT - DICOM conversion tool"
+  }
+}
