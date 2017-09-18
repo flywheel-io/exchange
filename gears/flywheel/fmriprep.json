@@ -6,21 +6,161 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://github.com/poldracklab/fmriprep",
-  "version": "0.1",
+  "version": "0.2",
   "custom": {
-    "docker-image": "flywheel/fmriprep:v0.1"
+    "docker-image": "flywheel/fmriprep:v0.2"
   },
   "license": "BSD-3-Clause",
   "inputs": {
-    "bids_dataset": {
-      "description": "Archive (.zip, .tgz, .tar) containing a BIDS Dataset.",
+    "T1w_NIfTI": {
+      "description": "T1w anatomical NIfTI file",
       "base": "file",
       "type": {
         "enum": [
-          "archive"
+          "nifti"
+        ]
+      }
+    },
+    "T2_NIfTI": {
+      "description": "T2 inplane NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-01": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-02": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-03": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-04": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-05": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "Functional_NIfTI_run-06": {
+      "description": "Functional NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
         ]
       }
     }
   },
-  "config": {}
+  "config": {
+    "freesurfer": {
+      "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+      "type": "boolean",
+      "default": true
+    },
+    "Subject_ID": {
+      "description": "Subject identifier [default=01]",
+      "type": "string",
+      "default": "01"
+    },
+    "Functional_NIfTI_run_01_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_01_TASK": {
+      "description": "Task for Run01",
+      "type": "string",
+      "default": "firstrun"
+    },
+    "Functional_NIfTI_run_02_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_02_TASK": {
+      "description": "Task for Run02",
+      "type": "string",
+      "default": "secondrun"
+    },
+    "Functional_NIfTI_run_03_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_03_TASK": {
+      "description": "Task for Run03",
+      "type": "string",
+      "default": "thirdrun"
+    },
+    "Functional_NIfTI_run_04_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_04_TASK": {
+      "description": "Task for Run04",
+      "type": "string",
+      "default": "fourthrun"
+    },
+    "Functional_NIfTI_run_05_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_05_TASK": {
+      "description": "Task for Run05",
+      "type": "string",
+      "default": "fifthrun"
+    },
+    "Functional_NIfTI_run_06_TR": {
+      "description": "Repetition_Time in seconds",
+      "type": "number",
+      "default": 2
+    },
+    "Functional_NIfTI_run_06_TASK": {
+      "description": "Task for Run06",
+      "type": "string",
+      "default": "sixthrun"
+    }
+  }
 }
