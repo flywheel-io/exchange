@@ -1,0 +1,350 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc1)",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to differences in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that make running a variety of group level analyses (task based or resting state fMRI, graph theory measures, surface or volume, etc.) easy.",
+    "author": "Poldrack lab at Stanford University",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://github.com/poldracklab/fmriprep",
+    "version": "0.2",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:v0.2"
+    },
+    "license": "BSD-3-Clause",
+    "inputs": {
+      "T1w_NIfTI": {
+        "description": "T1w anatomical NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "T2_NIfTI": {
+        "description": "T2 inplane NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-01": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-02": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-03": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-04": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-05": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "Functional_NIfTI_run-06": {
+        "description": "Functional NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "freesurfer": {
+        "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+        "type": "boolean",
+        "default": true
+      },
+      "Subject_ID": {
+        "description": "Subject identifier [default=01]",
+        "type": "string",
+        "default": "01"
+      },
+      "Functional_NIfTI_run_01_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_01_TASK": {
+        "description": "Task for Run01",
+        "type": "string",
+        "default": "firstrun"
+      },
+      "Functional_NIfTI_run_02_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_02_TASK": {
+        "description": "Task for Run02",
+        "type": "string",
+        "default": "secondrun"
+      },
+      "Functional_NIfTI_run_03_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_03_TASK": {
+        "description": "Task for Run03",
+        "type": "string",
+        "default": "thirdrun"
+      },
+      "Functional_NIfTI_run_04_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_04_TASK": {
+        "description": "Task for Run04",
+        "type": "string",
+        "default": "fourthrun"
+      },
+      "Functional_NIfTI_run_05_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_05_TASK": {
+        "description": "Task for Run05",
+        "type": "string",
+        "default": "fifthrun"
+      },
+      "Functional_NIfTI_run_06_TR": {
+        "description": "Repetition_Time in seconds",
+        "type": "number",
+        "default": 2
+      },
+      "Functional_NIfTI_run_06_TASK": {
+        "description": "Task for Run06",
+        "type": "string",
+        "default": "sixthrun"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "cbd848dc4c391e6bc5b01cb8ef8c2f4cae9979db",
+    "rootfs-hash": "sha384:378f8039d03f2a7a58522748d48fe9fa9192cfd4536fd07f2b5dfe4c2e565708012daab9d5128c8683ac5d0d51f9ef3c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-378f8039d03f2a7a58522748d48fe9fa9192cfd4536fd07f2b5dfe4c2e565708012daab9d5128c8683ac5d0d51f9ef3c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "Functional_NIfTI_run-01",
+          "T1w_NIfTI"
+        ],
+        "type": "object",
+        "properties": {
+          "T2_NIfTI": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-02": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-01": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "T1w_NIfTI": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-03": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-04": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-05": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "Functional_NIfTI_run-06": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "Functional_NIfTI_run_05_TASK",
+          "Functional_NIfTI_run_03_TASK",
+          "Functional_NIfTI_run_04_TASK",
+          "Functional_NIfTI_run_04_TR",
+          "freesurfer",
+          "Subject_ID",
+          "Functional_NIfTI_run_06_TR",
+          "Functional_NIfTI_run_01_TR",
+          "Functional_NIfTI_run_03_TR",
+          "Functional_NIfTI_run_05_TR",
+          "Functional_NIfTI_run_01_TASK",
+          "Functional_NIfTI_run_02_TR",
+          "Functional_NIfTI_run_06_TASK",
+          "Functional_NIfTI_run_02_TASK"
+        ],
+        "type": "object",
+        "properties": {
+          "Functional_NIfTI_run_05_TASK": {
+            "default": "fifthrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_02_TASK": {
+            "default": "secondrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_03_TASK": {
+            "default": "thirdrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_04_TASK": {
+            "default": "fourthrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_04_TR": {
+            "default": 2,
+            "type": "number"
+          },
+          "freesurfer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "Subject_ID": {
+            "default": "01",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_01_TR": {
+            "default": 2,
+            "type": "number"
+          },
+          "Functional_NIfTI_run_03_TR": {
+            "default": 2,
+            "type": "number"
+          },
+          "Functional_NIfTI_run_05_TR": {
+            "default": 2,
+            "type": "number"
+          },
+          "Functional_NIfTI_run_01_TASK": {
+            "default": "firstrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_02_TR": {
+            "default": 2,
+            "type": "number"
+          },
+          "Functional_NIfTI_run_06_TASK": {
+            "default": "sixthrun",
+            "type": "string"
+          },
+          "Functional_NIfTI_run_06_TR": {
+            "default": 2,
+            "type": "number"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc1)"
+  }
+}
