@@ -1,0 +1,108 @@
+{
+  "name": "fsl-feat",
+  "label": "FSL: FEAT - fMRI preprocessing (v6.0)",
+  "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting).",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Analysis Group, FMRIB, Oxford, UK.",
+  "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT",
+  "source": "https://github.com/flywheel-apps/fsl-feat",
+  "license": "Apache-2.0",
+  "flywheel": "0",
+  "version": "0.1",
+  "custom": {
+    "docker-image": "flywheel/fsl-feat:v0.1"
+  },
+  "config": {
+    "BB_THRESH": {
+      "description": "SET THE BRAIN BACKGROUND THRESHOLD. This is used in intensity normalisation, brain mask generation and various other places in the analysis. [Default=10]",
+      "default": 10,
+      "type": "number"
+    },
+    "Z_THRESH": {
+      "description": "SET THE Z THRESHOLD FOR DESIGN EFFICIENCY CALCULATION. Used to determine what level of activation would be statistically significant, to be used only in the design efficiency calculation. Increasing this will result in higher estimates of required effect. [default=5.3]",
+      "default": 5.3,
+      "type": "number"
+    },
+    "NOISE_LVL": {
+      "description": "SET THE FMRI NOISE LEVEL. The standard deviation (over time) for a typical voxel, expressed as a percentage of the baseline signal level. [default=0.66]",
+      "default": 0.66,
+      "type": "number"
+    },
+    "T_SMOOTH": {
+      "description": "SET TNE TEMPORAL SMOOTHNESS is the smoothness coefficient in a simple AR(1) autocorrelation model (much simpler than that actually used in the FILM timeseries analysis but good enough for the efficiency calculation here). [default=0.34]",
+      "default": 0.34,
+      "type": "number"
+    },
+    "MC": {
+      "description": "RUN MOTION CORRECTION [1=yes, 0=no. default=1]",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    },
+    "STC": {
+      "description": "RUN SLICE TIMING CORRECTION 0 = None. 1 = Regular up (0, 1, 2, 3, ...). 2 = Regular down. 3 = Use slice order file. 4 = Use slice timings file. 5 = Interleaved (0, 2, 4 ... 1, 3, 5 ... )",
+      "default": 1,
+      "type": "integer"
+    },
+    "BET": {
+      "description": "RUN BRAIN EXTRACTION USING FSL's BET [1=yes, 0=no. default=1]",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    },
+    "FWHM": {
+      "description": "FWHM FOR SPATIAL SMOOTHING (mm) [default=5]",
+      "default": 5,
+      "type": "number"
+    },
+    "INT_NORM": {
+      "description": "RUN INTENSITY NORMALIZATION [1=yes, 0=no. default=1]",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    },
+    "HPF_CUTOF": {
+      "description": "HIGHPASS FILTER CUTOFF (seconds) [default=100]",
+      "default": 100,
+      "type": "number"
+    },
+    "HPF": {
+      "description": "RUN HIGHPASS FILTERING [1=yes, 0=no. default=1]",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    },
+    "REG_STANDARD_IMAGE": {
+      "description": "REGISTER TO STANDARD IMAGE (MNI152_T1_2mm_brain) [1=yes, 0=no. default=1]",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    }
+  },
+  "inputs": {
+    "NIFTI": {
+      "description": "Anatomical NIfTI image, or multi-channel set of images, to be segmented.",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "SLICE_FILE": {
+      "description": "SLICE ORDER/TIMING FILE. Must set STC config option to 3.",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "text"
+        ]
+      }
+    }
+  }
+}
