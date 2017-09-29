@@ -1,16 +1,16 @@
 {
   "name": "fsl-feat",
   "label": "FSL: FEAT - fMRI preprocessing (v6.0)",
-  "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting).",
-  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).",
+  "maintainer": "Flywheel <support@flywheel.io>",
   "author": "Analysis Group, FMRIB, Oxford, UK.",
   "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT",
   "source": "https://github.com/flywheel-apps/fsl-feat",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.1",
+  "version": "0.1.1",
   "custom": {
-    "docker-image": "flywheel/fsl-feat:v0.1"
+    "docker-image": "flywheel/fsl-feat:v0.1.1"
   },
   "config": {
     "BB_THRESH": {
@@ -77,8 +77,8 @@
       "type": "integer"
     },
     "REG_STANDARD_IMAGE": {
-      "description": "REGISTER TO STANDARD IMAGE (MNI152_T1_2mm_brain) [1=yes, 0=no. default=1]",
-      "default": 1,
+      "description": "REGISTER TO STANDARD IMAGE (MNI152_T1_2mm_brain) [1=yes, 0=no. default=0]",
+      "default": 0,
       "minimum": 0,
       "maximum": 1,
       "type": "integer"
