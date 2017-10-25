@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/nifti-montage",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.1",
+  "version": "1.2",
   "custom": {
-    "docker-image": "scitran/nifti-montage:v1.1"
+    "docker-image": "scitran/nifti-montage:v1.2"
   },
   "config": {
     "voxel_order": {
@@ -21,7 +21,7 @@
     "tile_size": {
       "description": "int [default 256] Tile size for generated zip or directory pyramid (has no affect when montage_type='png').",
       "default": 256,
-      "type": "int"
+      "type": "integer"
     },
     "montage_type": {
       "description": "str [default 'zip'] Type of montage to create. can be 'zip', or 'png'.",
