@@ -6,9 +6,9 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://github.com/poldracklab/fmriprep",
-  "version": "0.3",
+  "version": "0.3.2",
   "custom": {
-    "docker-image": "flywheel/fmriprep:v0.3"
+    "docker-image": "flywheel/fmriprep:v0.3.2"
   },
   "license": "BSD-3-Clause",
   "inputs": {
@@ -21,6 +21,11 @@
       "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
       "type": "boolean",
       "default": true
+    },
+    "save_outputs": {
+      "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
+      "type": "boolean",
+      "default": false
     }
   }
 }
