@@ -1,0 +1,67 @@
+{
+  "gear": {
+    "name": "dicom-mr-classifier",
+    "label": "SciTran DICOM MR Classifier",
+    "description": "Extract metadata from raw DICOM data from Siemens, Philips, or GE.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://scitran.github.io",
+    "source": "https://github.com/scitran-apps/dicom-mr-classifier",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1.12",
+    "config": {},
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "description": "Archive (.zip) containing DICOM files."
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/dicom-mr-classifier:v0.1.12"
+    }
+  },
+  "exchange": {
+    "git-commit": "c818acdfc9a4901061a9fd84d2a6e7daa7e0351b",
+    "rootfs-hash": "sha384:cbecb5056835090ed9f6b625e57301d434c445285b83beaffb3f55b61bfbd51676017ecfa596083d680a1a35df52d64d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dicom-mr-classifier-sha384-cbecb5056835090ed9f6b625e57301d434c445285b83beaffb3f55b61bfbd51676017ecfa596083d680a1a35df52d64d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dicom"
+        ],
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for SciTran DICOM MR Classifier"
+  }
+}
