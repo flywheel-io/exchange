@@ -1,0 +1,36 @@
+{
+	"name": "csv-import",
+	"label": "CSV Import",
+	"description": "Import a CSV of subject metadata into Flywheel. Import a CSV of subject metadata into Flywheel. Each row is a subject, each column is a value. First row must contain header. Subject Code matching input column name, or default to Subject ID",
+	"version": "0.1.0",
+	"flywheel": "0",
+	"inputs": {
+		"file": {
+			"base": "file",
+			"description": "Subject Metadata CSV file."
+		},
+		"api_key": {
+      			"base": "api-key"
+    		}
+	},
+	"config": {
+		"Group_Tags_By": {
+			"default": "",
+			"description": "Enter value to group imported tags by, or leave blank to import to subject.info",
+			"type": "string"
+		},
+		"Match_Column": {
+			"default": "Subject ID",
+			"description": "Column header for column containing Subject Code.",
+			"type": "string"
+		}
+	},
+	"author": "Imad Nijim",
+	"maintainer": "Flywheel <support@flywheel.io>",
+	"license": "Other",
+	"source": "https://github.com/flywheel-apps/csv-import",
+	"url": "www.flywheel.io",
+	"custom": {
+    		"docker-image": "flywheel/csv-import:v0.1.0"
+  	}
+}
