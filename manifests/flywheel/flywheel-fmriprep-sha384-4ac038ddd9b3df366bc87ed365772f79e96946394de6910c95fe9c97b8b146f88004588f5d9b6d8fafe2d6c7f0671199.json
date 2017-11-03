@@ -1,0 +1,79 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc5)",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "author": "Poldrack Lab, Stanford University",
+    "cite": "Esteban O, Blair R, Markiewicz CJ, Berleant SL, Moodie C, Ma F, Isik AI, Erramuzpe A, Kent JD, Goncalves M, Poldrack RA, Gorgolewski KJ; poldracklab/fmriprep: 1.0.0-rc9. Zenodo; 2017. doi:10.5281/zenodo.1041020",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://github.com/poldracklab/fmriprep",
+    "version": "0.3.3",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:v0.3.3"
+    },
+    "license": "BSD-3-Clause",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "freesurfer": {
+        "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+        "type": "boolean",
+        "default": true
+      },
+      "save_outputs": {
+        "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
+        "type": "boolean",
+        "default": false
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "08b86efbbb9f2184e0e6d6e61dbba790bee0ea03",
+    "rootfs-hash": "sha384:4ac038ddd9b3df366bc87ed365772f79e96946394de6910c95fe9c97b8b146f88004588f5d9b6d8fafe2d6c7f0671199",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-4ac038ddd9b3df366bc87ed365772f79e96946394de6910c95fe9c97b8b146f88004588f5d9b6d8fafe2d6c7f0671199.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key"
+        ],
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "save_outputs",
+          "freesurfer"
+        ],
+        "type": "object",
+        "properties": {
+          "save_outputs": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data (1.0.0-rc5)"
+  }
+}
