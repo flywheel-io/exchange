@@ -1,5 +1,6 @@
 {
-  "author": "Oscar Esteban and Krzysztof F. Gorgolewski. Stanford University",
+  "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
+  "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
   "config": {
     "measurement": {
       "default": "auto-detect",
@@ -14,9 +15,9 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/mriqc:v0.3.1"
+    "docker-image": "flywheel/mriqc:v0.3.2"
   },
-  "description": "The MRIQC package provides a series of image processing workflows to extract and compute a series of NR (no-reference), IQMs (image quality metrics) to be used in QAPs (quality assessment protocols) for MRI (magnetic resonance imaging). This tool extracts a series of IQMs from structural or functional MRI data. Note, this gear only supports the generation of individual scan reports; group reports are not generated.",
+  "description": "MRIQC extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated.",
   "inputs": {
     "nifti": {
       "description": "MRI NIfTI file. Input can be a T1w or T2w anatomical file or a Functional.",
@@ -34,5 +35,5 @@
   "name": "mriqc",
   "source": "https://github.com/flywheel-apps/mriqc",
   "url": "https://github.com/poldracklab/mriqc",
-  "version": "0.3.1"
+  "version": "0.3.2"
 }
