@@ -1,0 +1,93 @@
+{
+  "gear": {
+    "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
+    "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+    "config": {
+      "measurement": {
+        "default": "auto-detect",
+        "description": "Type of input image. Can be either 'anatomy_t1w', 'anatomy_t2w' or 'functional' (default='auto-detect' - gear will attempt to automatically detect the type of input image. If input does not have a classification value, making auto-detection impossible, the gear will then assume the input type is 'functional').",
+        "type": "string",
+        "enum": [
+          "auto-detect",
+          "functional",
+          "anatomy_t1w",
+          "anatomy_t2w"
+        ]
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/mriqc:v0.3.2"
+    },
+    "description": "MRIQC extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated.",
+    "inputs": {
+      "nifti": {
+        "description": "MRI NIfTI file. Input can be a T1w or T2w anatomical file or a Functional.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "label": "MRIQC: No-reference image quality metrics for quality assessment of MRI (v0.9.4)",
+    "license": "BSD-3-Clause",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "mriqc",
+    "source": "https://github.com/flywheel-apps/mriqc",
+    "url": "https://github.com/poldracklab/mriqc",
+    "version": "0.3.2"
+  },
+  "exchange": {
+    "git-commit": "08b86efbbb9f2184e0e6d6e61dbba790bee0ea03",
+    "rootfs-hash": "sha384:6fce4ae1bdfd896a350aacd323cc47b0ad7d698d9809c08e9b78fd3f5f9d31037be40be95d3c28203db2c7c92ba4f1f4",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-mriqc-sha384-6fce4ae1bdfd896a350aacd323cc47b0ad7d698d9809c08e9b78fd3f5f9d31037be40be95d3c28203db2c7c92ba4f1f4.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "measurement"
+        ],
+        "type": "object",
+        "properties": {
+          "measurement": {
+            "default": "auto-detect",
+            "enum": [
+              "auto-detect",
+              "functional",
+              "anatomy_t1w",
+              "anatomy_t2w"
+            ],
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for MRIQC: No-reference image quality metrics for quality assessment of MRI (v0.9.4)"
+  }
+}
