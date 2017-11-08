@@ -1,0 +1,101 @@
+{
+  "gear": {
+    "name": "scitran-nifti-montage",
+    "label": "SciTran: NIfTI Montage Creation Tool",
+    "description": "Creates a montage (zip, or png) from a NIfTI file.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "SciTran Team",
+    "url": "https://github.com/scitran-apps/nifti-montage",
+    "source": "https://github.com/scitran-apps/nifti-montage",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "1.3",
+    "custom": {
+      "docker-image": "scitran/nifti-montage:v1.3"
+    },
+    "config": {
+      "voxel_order": {
+        "description": "str [default 'LPS'] Three character string indicating the voxel order.",
+        "default": "LPS",
+        "type": "string"
+      },
+      "tile_size": {
+        "description": "int [default 256] Tile size for generated zip or directory pyramid (has no affect when montage_type='png').",
+        "default": 256,
+        "type": "integer"
+      },
+      "montage_type": {
+        "description": "str [default 'zip'] Type of montage to create. can be 'zip', or 'png'.",
+        "default": "zip",
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "4c8a37d8b93194a1c0bbd0118ebfdb90bb81217f",
+    "rootfs-hash": "sha384:17d91cf3e37c55b6e827310c97776dd64c63761bd5416045e80171e12db0d36738e227fbae5f9c1dc8ec3dbcd712aa04",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-nifti-montage-sha384-17d91cf3e37c55b6e827310c97776dd64c63761bd5416045e80171e12db0d36738e227fbae5f9c1dc8ec3dbcd712aa04.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "tile_size",
+          "voxel_order",
+          "montage_type"
+        ],
+        "type": "object",
+        "properties": {
+          "tile_size": {
+            "default": 256,
+            "type": "integer"
+          },
+          "voxel_order": {
+            "default": "LPS",
+            "type": "string"
+          },
+          "montage_type": {
+            "default": "zip",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for SciTran: NIfTI Montage Creation Tool"
+  }
+}
