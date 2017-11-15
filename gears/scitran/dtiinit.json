@@ -3,18 +3,18 @@
   "label": "VISTALAB: dtiInit - Diffusion Data Initialization Pipeline",
   "description": "VISTALAB's dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. This Gear allows all dtiInit parameters to be set from within the configuration UI. All outputs are archived in a zip file for easy download. dtiInit.json is saved for easy reference to configuration parameters used at runtime.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
-  "author": "Stanford VISTA Lab",
+  "author": "VISTA Lab, Stanford University",
   "url": "https://github.com/vistalab/vistasoft/wiki/dwi-Initialization",
   "source": "https://github.com/scitran-apps/dtiinit",
   "license": "GPL-2.0",
   "flywheel": "0",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "custom": {
-    "docker-image": "scitran/dtiinit:v0.2.1"
+    "docker-image": "scitran/dtiinit:v0.2.2"
   },
   "inputs": {
     "anatomical": {
-      "description": "OPTIONAL: Anatomical (e.g., t1-weighted) NIfTI file. During the inital phase of processing the diffusion data (b=0 images) will be aligned to this image. By default the dwi data will be aligned to the MNI_EPI template.",
+      "description": "OPTIONAL: Anatomical (e.g., t1-weighted) NIfTI file. During the initial phase of processing the diffusion data (b=0 images) will be aligned to this image. By default the dwi data will be aligned to the MNI_EPI template.",
       "base": "file",
       "optional": true,
       "type": {
@@ -33,7 +33,7 @@
       }
     },
     "bvec": {
-      "description": "REQUIRED: File contianing a list of diffusion b-vectors.",
+      "description": "REQUIRED: File containing a list of diffusion b-vectors.",
       "base": "file",
       "type": {
         "enum": [
@@ -58,12 +58,12 @@
       "type": "integer"
     },
     "numBootStrapSamples": {
-      "description": "Number of boostrap interations. DEFAULT=500",
+      "description": "Number of bootstrap iterations. DEFAULT=500",
       "default": 500,
       "type": "integer"
     },
     "fitMethod": {
-      "description": "Fit-method for tesnsor fitting. Options are ['ls', 'rt', 'lsrt']: 'ls': least-squares (default) 'rt': RESTORE robust tensor fitting and outlier rejection (Chang, Jones & Pierpaoli (2005) RESTORE: Robust Estimation of Tensors by Outlier Rejection. Magnetic Resonance in Medicine, v53). 'lsrt': does least-squares and robust tensor fitting in one go. DEFAULT='ls'",
+      "description": "Fit-method for tensor fitting. Options are ['ls', 'rt', 'lsrt']: 'ls': least-squares (default) 'rt': RESTORE robust tensor fitting and outlier rejection (Chang, Jones & Pierpaoli (2005) RESTORE: Robust Estimation of Tensors by Outlier Rejection. Magnetic Resonance in Medicine, v53). 'lsrt': does least-squares and robust tensor fitting in one go. DEFAULT='ls'",
       "default": "ls",
       "type": "string"
     },
@@ -83,7 +83,7 @@
       "type": "integer"
     },
     "phaseEncodeDir": {
-      "description": "Phase encoding direction. (1=L/R='row', 2=A/P='col'). This value is read from the rawDti nifti field, you should specify it here if it does not exist. If you collected your DTI data using GE's ASSET, you should provide the phase-encode direction (1=L/R='row', 2=A/P='col'). Information about this, as well as the b-value and gradient code, can be found in the dicom file header. DEFAULT=2",
+      "description": "Phase encoding direction. (1=L/R='row', 2=A/P='col'). This value is read from the raw dti nifti field, you should specify it here if it does not exist. If you collected your DTI data using GE's ASSET, you should provide the phase-encode direction (1=L/R='row', 2=A/P='col'). Information about this, as well as the b-value and gradient code, can be found in the DICOM file header. DEFAULT=2",
       "type": "integer",
       "default": 2
     },
@@ -103,7 +103,7 @@
       "default": 2
     },
     "rotateBvecsWithRx": {
-      "description": "Rotate the b-vectors according to the scanner perscription. 0=false, 1=true. DEFAULT=0",
+      "description": "Rotate the b-vectors according to the scanner prescription. 0=false, 1=true. DEFAULT=0",
       "default": 0,
       "type": "integer"
     },
