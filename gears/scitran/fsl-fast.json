@@ -4,13 +4,14 @@
   "description": "FAST (FMRIB's Automated Segmentation Tool) segments a 3D image of the brain into different tissue types (Grey Matter, White Matter, CSF, etc.), whilst also correcting for spatial intensity variations (also known as bias field or RF inhomogeneities). The underlying method is based on a hidden Markov random field model and an associated Expectation-Maximization algorithm. The whole process is fully automated and can also produce a bias field-corrected input image and a probabilistic and/or partial volume tissue segmentation. It is robust and reliable, compared to most finite mixture model-based methods, which are sensitive to noise.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Analysis Group, FMRIB, Oxford, UK.",
+  "cite": "Zhang, Y. and Brady, M. and Smith, S. Segmentation of brain MR images through a hidden Markov random field model and the expectation-maximization algorithm. IEEE Trans Med Imag, 20(1):45-57, 2001.",
   "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FAST",
   "source": "https://github.com/scitran-apps/fsl-fast",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.1",
+  "version": "0.1.1",
   "custom": {
-    "docker-image": "scitran/fsl-fast:v0.1"
+    "docker-image": "scitran/fsl-fast:v0.1.1"
   },
   "config": {
     "nobias": {
