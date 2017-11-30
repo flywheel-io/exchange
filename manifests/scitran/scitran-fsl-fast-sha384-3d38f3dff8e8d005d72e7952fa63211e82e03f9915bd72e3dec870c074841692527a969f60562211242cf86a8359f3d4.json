@@ -1,0 +1,260 @@
+{
+  "gear": {
+    "name": "fsl-fast",
+    "label": "FSL: FMRIB Automated Segmentation Tool (FAST4, v5.0.9)",
+    "description": "FAST (FMRIB's Automated Segmentation Tool) segments a 3D image of the brain into different tissue types (Grey Matter, White Matter, CSF, etc.), whilst also correcting for spatial intensity variations (also known as bias field or RF inhomogeneities). The underlying method is based on a hidden Markov random field model and an associated Expectation-Maximization algorithm. The whole process is fully automated and can also produce a bias field-corrected input image and a probabilistic and/or partial volume tissue segmentation. It is robust and reliable, compared to most finite mixture model-based methods, which are sensitive to noise.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "cite": "Zhang, Y. and Brady, M. and Smith, S. Segmentation of brain MR images through a hidden Markov random field model and the expectation-maximization algorithm. IEEE Trans Med Imag, 20(1):45-57, 2001.",
+    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FAST",
+    "source": "https://github.com/scitran-apps/fsl-fast",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "0.1.1",
+    "custom": {
+      "docker-image": "scitran/fsl-fast:v0.1.1"
+    },
+    "config": {
+      "nobias": {
+        "description": "Do not remove bias field; default=false",
+        "default": false,
+        "type": "boolean",
+        "id": "-N"
+      },
+      "nopve": {
+        "description": "Turn off PVE (partial volume estimation); default=false",
+        "default": false,
+        "type": "boolean",
+        "id": "--nopve"
+      },
+      "segments": {
+        "description": "Outputs a separate binary image for each tissue type; Boolean, default=false",
+        "default": false,
+        "type": "boolean",
+        "id": "-g"
+      },
+      "mixel": {
+        "description": "Spatial smoothness for mixeltype; default=0.3",
+        "default": 0.3,
+        "type": "number",
+        "id": "-R"
+      },
+      "fHard": {
+        "description": "Initial segmentation spatial smoothness (during bias field estimation); default=0.02",
+        "default": 0.02,
+        "type": "number",
+        "id": "-f"
+      },
+      "Hyper": {
+        "description": "Segmentation spatial smoothness; default=0.1",
+        "default": 0.1,
+        "type": "number",
+        "id": "-H"
+      },
+      "init": {
+        "description": "Number of segmentation-initialisation iterations; default=15",
+        "default": 15,
+        "type": "integer",
+        "id": "-W"
+      },
+      "fixed": {
+        "description": "Number of main-loop iterations after bias-field removal; default=4",
+        "default": 4,
+        "type": "integer",
+        "id": "-O"
+      },
+      "lowpass": {
+        "description": "Bias field smoothing extent (FWHM) in mm; default=20",
+        "default": 20,
+        "type": "integer",
+        "id": "-I"
+      },
+      "iterations": {
+        "description": "Number of main-loop iterations during bias-field removal; default=4",
+        "default": 4,
+        "type": "integer",
+        "id": "-I"
+      },
+      "image_type": {
+        "description": "Type of image (1 for T1, 2 for T2, 3 for PD). This aids the segmentation in identifying which classes are which tissue type. Note that this option is not used for multi-channel segmentation. [1 = T1, 2 = T2, 3 = PD. DEFAULT = 1]",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 3,
+        "type": "integer",
+        "id": "-t"
+      },
+      "tissue_classes": {
+        "description": "Number of tissue classes to be segmented. Normally you will want 3 (Grey Matter, White Matter and CSF). However, if there is very poor grey/white contrast you may want to reduce this to 2; alternatively, if there are strong lesions showing up as a fourth class, you may want to increase this. Also, if you are segmenting T2-weighted images, you may need to select 4 classes so that dark non-brain matter is processed correctly (this is not a problem with T1-weighted as CSF and dark non-brain matter look similar). [DEFAULT = 3]",
+        "default": 3,
+        "minimum": 1,
+        "maximum": 4,
+        "type": "integer",
+        "id": "-n"
+      },
+      "channels": {
+        "description": "Number number of image channels. [DEFAULT = 1]",
+        "default": 1,
+        "type": "integer",
+        "id": "-S"
+      },
+      "bias_field": {
+        "description": "Output estimated bias field. [true/false. DEFAULT = false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-b"
+      },
+      "restored_image": {
+        "description": "Output restored image (bias-corrected image). [true/false. DEFAULT = false]",
+        "default": false,
+        "type": "boolean",
+        "id": "-B"
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "Anatomical NIfTI image, or multi-channel set of images, to be segmented.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "cc2c1defdf9e6de1efc837a055545692cbc89015",
+    "rootfs-hash": "sha384:3d38f3dff8e8d005d72e7952fa63211e82e03f9915bd72e3dec870c074841692527a969f60562211242cf86a8359f3d4",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-fsl-fast-sha384-3d38f3dff8e8d005d72e7952fa63211e82e03f9915bd72e3dec870c074841692527a969f60562211242cf86a8359f3d4.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "nopve",
+          "Hyper",
+          "bias_field",
+          "iterations",
+          "image_type",
+          "segments",
+          "mixel",
+          "init",
+          "nobias",
+          "lowpass",
+          "tissue_classes",
+          "fixed",
+          "fHard",
+          "restored_image",
+          "channels"
+        ],
+        "type": "object",
+        "properties": {
+          "nopve": {
+            "default": false,
+            "type": "boolean",
+            "id": "--nopve"
+          },
+          "Hyper": {
+            "default": 0.1,
+            "type": "number",
+            "id": "-H"
+          },
+          "bias_field": {
+            "default": false,
+            "type": "boolean",
+            "id": "-b"
+          },
+          "lowpass": {
+            "default": 20,
+            "type": "integer",
+            "id": "-I"
+          },
+          "image_type": {
+            "default": 1,
+            "maximum": 3,
+            "minimum": 1,
+            "type": "integer",
+            "id": "-t"
+          },
+          "segments": {
+            "default": false,
+            "type": "boolean",
+            "id": "-g"
+          },
+          "mixel": {
+            "default": 0.3,
+            "type": "number",
+            "id": "-R"
+          },
+          "init": {
+            "default": 15,
+            "type": "integer",
+            "id": "-W"
+          },
+          "nobias": {
+            "default": false,
+            "type": "boolean",
+            "id": "-N"
+          },
+          "iterations": {
+            "default": 4,
+            "type": "integer",
+            "id": "-I"
+          },
+          "tissue_classes": {
+            "default": 3,
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer",
+            "id": "-n"
+          },
+          "fixed": {
+            "default": 4,
+            "type": "integer",
+            "id": "-O"
+          },
+          "fHard": {
+            "default": 0.02,
+            "type": "number",
+            "id": "-f"
+          },
+          "restored_image": {
+            "default": false,
+            "type": "boolean",
+            "id": "-B"
+          },
+          "channels": {
+            "default": 1,
+            "type": "integer",
+            "id": "-S"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL: FMRIB Automated Segmentation Tool (FAST4, v5.0.9)"
+  }
+}
