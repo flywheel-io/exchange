@@ -5,7 +5,7 @@
 
   "description": "Run HCP structural pipeline: PreFreeSurfer, FreeSurfer, PostFreeSurfer, and generate QC images",
 
-  "version": "0.1.1",
+  "version": "0.1.2",
 
   "author":  "Human Connectome Project",
 
@@ -19,7 +19,7 @@
 
   "custom": {
 
-     "docker-image": "flywheel/hcp-struct:v0.1.1"
+     "docker-image": "flywheel/hcp-struct:v0.1.2"
 
   	},
 
