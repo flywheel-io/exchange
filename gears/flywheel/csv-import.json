@@ -1,7 +1,7 @@
 {
 	"name": "csv-import",
 	"label": "CSV Import",
-	"description": "Import a CSV of subject metadata into Flywheel. Import a CSV of subject metadata into Flywheel. Each row is a subject, each column is a value. First row must contain header. Subject Code matching input column name, or default to Subject ID",
+	"description": "Import a CSV of subject metadata into Flywheel. Each row is a subject, each column is a value. First row must contain header. Subject Code matching input column name, or default to Subject ID",
 	"version": "0.1.0",
 	"flywheel": "0",
 	"inputs": {
