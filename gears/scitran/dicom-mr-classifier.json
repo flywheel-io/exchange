@@ -1,14 +1,14 @@
 {
   "name": "dicom-mr-classifier",
   "label": "SciTran DICOM MR Classifier",
-  "description": "Extract metadata from raw DICOM data from Siemens, Philips, or GE.",
+  "description": "Extract DICOM header metadata and determine measurement classification. Works with Siemens, Philips, and GE DICOM data.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Michael Perry <lmperry@stanford.edu>",
   "url": "https://scitran.github.io",
   "source": "https://github.com/scitran-apps/dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "config": {
     "timezone": {
       "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
@@ -28,6 +28,6 @@
     }
   },
   "custom": {
-    "docker-image": "scitran/dicom-mr-classifier:v0.2.3"
+    "docker-image": "scitran/dicom-mr-classifier:v0.2.4"
   }
 }
