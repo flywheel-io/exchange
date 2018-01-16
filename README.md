@@ -10,21 +10,7 @@ The manifest processing code is automatically executed by CircleCI whenever a ne
 
 #### Operation
 
-![Exchange Operation](http://g.gravizo.com/g?
-    digraph G {
-        gear_schema [label="Gear Schema"];
-        gear_json [label="Gear Spec"];
-        boutique_schema [label="Boutique Schema"];
-        boutique_json [label="Boutique Spec"];
-        manifest [label="Manifest with embedded Invocation Schema"];
-        invocation [label="Invocation"];
-        boutique_schema -> boutique_json [label="validate"];
-        boutique_json -> manifest [label="generate"];
-        gear_schema -> gear_json [label="validate"];
-        gear_json -> manifest [label="generate"];
-        manifest -> invocation [label="validate"];
-    }
-)
+![Exchange Operation](http://g.gravizo.com/g?digraph%20G%20{%20gear_schema%20[label="Gear%20Schema"];%20gear_json%20[label="Gear%20Spec"];%20boutique_schema%20[label="Boutique%20Schema"];%20boutique_json%20[label="Boutique%20Spec"];%20manifest%20[label="Manifest%20with%20embedded%20Invocation%20Schema"];%20invocation%20[label="Invocation"];%20boutique_schema%20->%20boutique_json%20[label="validate"];%20boutique_json%20->%20manifest%20[label="generate"];%20gear_schema%20->%20gear_json%20[label="validate"];%20gear_json%20->%20manifest%20[label="generate"];%20manifest%20->%20invocation%20[label="validate"];%20})
 
 For each new commit to the master branch:
 
