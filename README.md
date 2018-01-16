@@ -29,7 +29,13 @@ For each new commit to any non-master branch:
 - For each weakly-versioned boutique or gear
     - Validate boutique or gear against the respective schema
 
-#### Notes
+#### Technical Notes
+The following commands are useful for adding a gear from *scitran-apps* or *flywheel-apps* to the Exchange. Only the first line needs to be modified, provided that the gear is hosted in the expected location on Docker Hub.
+
 ```
-ORG=[flyhweel|scitran]; REPO=repo; curl -s https://raw.githubusercontent.com/$ORG-apps/$REPO/master/manifest.json | jq --indent 4 ".custom.\"docker-image\"=\"$ORG/$REPO\"" > gears/$ORG/$REPO.json; git add gears; git commit -m "Add $REPO gear"; git show
+ORG=[flyhweel|scitran]; REPO=repo
+curl -s https://raw.githubusercontent.com/$ORG-apps/$REPO/master/manifest.json | jq --indent 4 ".custom.\"docker-image\"=\"$ORG/$REPO\"" > gears/$ORG/$REPO.json
+git add gears
+git commit -m "Add $REPO gear"
+git show
 ```
