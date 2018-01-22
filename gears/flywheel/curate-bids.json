@@ -6,9 +6,9 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/curate-bids",
   "url": "http://bids.neuroimaging.io/",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "custom": {
-    "docker-image": "flywheel/curate-bids:v0.1.0"
+    "docker-image": "flywheel/curate-bids:v0.2.0"
   },
   "license": "BSD-3-Clause",
   "inputs": {
@@ -17,10 +17,5 @@
     }
   },
   "config": {
-    "project_label": {
-      "description": "Name of Project on which to run the gear.",
-      "type": "string",
-      "default": ""
-    }
   }
 }
