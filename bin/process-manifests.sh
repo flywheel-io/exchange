@@ -81,6 +81,12 @@ function gear_version_already_exists() {
 
 
 function validate_manifest() {
+
+    if [[ "$2" != *.json ]]; then
+        >&2 echo "Manifest files must have a .json file name extension."
+        exit 1
+    fi
+
     if [ "$1" == "gear" ]; then
         # Validate that strongly versioned gear with same name and version doesn't already exist.
         gear_name="$( jq -r '.name' $2 )"
