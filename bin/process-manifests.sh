@@ -210,14 +210,17 @@ function process_manifests() {
 
             if [ "$manifest_type" == "gear" ]; then
                 docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
+                manifest_version="$( jq -r '.version' $manifest_path )"
             else
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
+                manifest_version=""
             fi
 
             container=$( docker create $docker_image /bin/true )
             rootfs_path="$tempdir/$manifest_slug.tgz"
             docker export $container | gzip -n > $rootfs_path
             shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
+            docker rm $container
 
             v_manifest_name="$manifest_slug-sha384-$shasum"
             v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
@@ -240,6 +243,10 @@ function process_manifests() {
             mv $rootfs_path $rootfs_hash_path
             gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
             BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
+
+            exchange_image="$GCR_HOST_PROJECT/$manifest_slug:$manifest_version"
+            docker tag $docker_image $exchange_image
+            gcloud docker -- push $exchange_image
 
             git add $v_manifest_path
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
