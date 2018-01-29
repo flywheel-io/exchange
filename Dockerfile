@@ -1,11 +1,10 @@
-FROM python:2.7-alpine
+FROM python:2.7-alpine3.7
 
-RUN apk --no-cache add bash docker curl git tar
+RUN apk --no-cache add bash coreutils curl docker git jq tar
 
-ENV JQ_URL "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64"
-RUN curl -L $JQ_URL > usr/local/bin/jq && chmod +x /usr/local/bin/jq
+RUN pip install jsonschema git+https://github.com/flywheel-io/gears.git
 
-ENV GCLOUD_URL "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-127.0.0-linux-x86_64.tar.gz"
+ENV GCLOUD_URL "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-186.0.0-linux-x86_64.tar.gz"
 RUN curl $GCLOUD_URL | tar xz -C /usr/local --strip-components 1
 
-ADD bin/* /usr/local/bin/
+CMD ["/bin/sh"]
