@@ -220,7 +220,7 @@ function process_manifests() {
             rootfs_path="$tempdir/$manifest_slug.tgz"
             docker export $container | gzip -n > $rootfs_path
             shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
-            docker rm $container
+            #docker rm $container # fails on CircleCI
 
             v_manifest_name="$manifest_slug-sha384-$shasum"
             v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
