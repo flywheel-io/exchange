@@ -4,6 +4,7 @@ GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
 SENTINEL_FILENAME=".sentinel"
+EXCHANGE_JSON="exchange.json"
 
 GEAR_SCHEMA_URL="https://raw.githubusercontent.com/flywheel-io/gears/master/spec/manifest.schema.json"
 BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/master/schema/descriptor.schema.json"
@@ -51,7 +52,6 @@ if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD" ]; then
     docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD" $DOCKERHUB_EMAIL
 fi
 
-set -eu
 
 function gear_version_already_exists() {
     if [ "$#" -ne 3 ]; then
@@ -218,6 +218,7 @@ function process_manifests() {
 
             container=$( docker create $docker_image /bin/true )
             rootfs_path="$tempdir/$manifest_slug.tgz"
+            >&2 echo "Exporting container"
             docker export $container | gzip -n > $rootfs_path
             shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
             #docker rm $container # fails on CircleCI
@@ -259,6 +260,10 @@ function process_manifests() {
 
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
         >&2 echo "Git push successful"
+        >&2 echo "Publish global manifest"
+        find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls)' | gzip > $EXCHANGE_JSON
+        gsutil -h "Cache-Control:private" -h "Content-Encoding:gzip" cp -a public-read $EXCHANGE_JSON $EXCHANGE_IMAGE_BUCKET_URI
+
     else
         >&2 echo "Git push failed"
         EXIT_STATUS=1
@@ -284,13 +289,15 @@ fi
 
 if [ $GIT_BRANCH == "master" ]; then
     >&2 echo "Processing..."
-    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-        >&2 echo "EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" -o -z "$EXCHANGE_IMAGE_BUCKET_URI" ]; then
+        >&2 echo "Error: EXCHANGE_BUCKET_URI, EXCHANGE_DOWNLOAD_URL, and EXCHANGE_IMAGE_BUCKET_URI must be defined."
         exit 1
     fi
+    set -eu
     process_manifests "$manifests"
 else
     >&2 echo "Validating..."
+    set -eu
     validate_manifests "$manifests"
 fi
 
