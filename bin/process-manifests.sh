@@ -261,9 +261,13 @@ function process_manifests() {
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
         >&2 echo "Git push successful"
         >&2 echo "Publish global manifest"
-        find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls)' | gzip > $EXCHANGE_JSON
-        gsutil -h "Cache-Control:private" -h "Content-Encoding:gzip" cp -a public-read $EXCHANGE_JSON $EXCHANGE_IMAGE_BUCKET_URI
-
+        find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls)' > .$EXCHANGE_JSON
+        git checkout gh-pages-json
+        mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
+        git add $EXCHANGE_JSON && git checkout gh-pages -- circle.yml
+        git commit --amend --reset-author -m "Add exchange.json"
+        git push -f origin gh-pages-json
+        git checkout $GIT_BRANCH
     else
         >&2 echo "Git push failed"
         EXIT_STATUS=1
