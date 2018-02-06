@@ -1,0 +1,6 @@
+dependencies:
+  override:
+    - echo "No dependencies on this branch."
+test:
+  override:
+    - echo "No testing on this branch."

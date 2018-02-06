@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Flywheel Exchange</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+
+<script>
+
+function output(inp) {
+    document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+}
+
+$.getJSON("https://raw.githubusercontent.com/flywheel-io/exchange/gh-pages-json/exchange.json", function(data) {
+  var str = JSON.stringify(data, undefined, 4);
+  output(str);
+});
+
+</script>
+
+</body>
+</html>
