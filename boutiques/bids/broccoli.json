@@ -1,8 +1,0 @@
-{
-  "container-image": {
-    "working-directory": " ",
-    "container-hash": " ",
-    "type": "docker",
-    "image": "bids/broccoli"
-    }
-}
