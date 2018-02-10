@@ -261,7 +261,7 @@ function process_manifests() {
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
         >&2 echo "Git push successful"
         >&2 echo "Publish global manifest"
-        find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls)' > .$EXCHANGE_JSON
+        find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
         git checkout gh-pages-json
         mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
         git add $EXCHANGE_JSON && git checkout gh-pages -- circle.yml
