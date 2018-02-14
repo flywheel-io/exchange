@@ -1,0 +1,67 @@
+{
+  "gear": {
+    "name": "eeg-classifier",
+    "label": "Brain Vision EEG Classifier",
+    "description": "Classifies Brain Vision EEG data and appends metadata attributes to the file's custom info structure within Flywheel. Input to this gear is a Flywheel packaged EEG archive (.eeg.zip) containing Brain Vision EEG data (in .vhdr format). Output is a JSON file (.metadata.json) containing metadata that will be used by the Flywheel platform to populate the input file's custom info fields.",
+    "version": "1.0.0",
+    "flywheel": "0",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Brain Vision EEG data file packaged in Flywheel zip format (.eeg.zip).",
+        "type": {
+          "enum": [
+            "eeg"
+          ]
+        }
+      }
+    },
+    "config": {},
+    "author": "Travis Richardson",
+    "maintainer": "Travis Richardson",
+    "license": "MIT",
+    "source": "https://github.com/flywheel-apps/eeg-classifier",
+    "url": "https://github.com/flywheel-apps/eeg-classifier",
+    "custom": {
+      "docker-image": "flywheel/eeg-classifier:1.0.0"
+    }
+  },
+  "exchange": {
+    "git-commit": "68fa211d16b0347e416f61e612e92bc961f12514",
+    "rootfs-hash": "sha384:7d6f22eb77c885c83b0047d6fa0fda9cfca25e1e0f3ecae467476353f917668c515476586fd120355b1d0818e5b9c620",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-eeg-classifier-sha384-7d6f22eb77c885c83b0047d6fa0fda9cfca25e1e0f3ecae467476353f917668c515476586fd120355b1d0818e5b9c620.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "eeg"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for Brain Vision EEG Classifier"
+  }
+}
