@@ -1,5 +1,5 @@
 {
-  "name": "brain-vision-eeg-classifier",
+  "name": "eeg-classifier",
   "label": "Brain Vision EEG Classifier",
   "description": "Classifies Brain Vision EEG data and appends metadata attributes to the file's custom info structure within Flywheel. Input to this gear is a Flywheel packaged EEG archive (.eeg.zip) containing Brain Vision EEG data (in .vhdr format). Output is a JSON file (.metadata.json) containing metadata that will be used by the Flywheel platform to populate the input file's custom info fields.",
   "version": "1.0.0",
