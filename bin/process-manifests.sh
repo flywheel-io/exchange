@@ -264,7 +264,7 @@ function process_manifests() {
         find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
         git checkout gh-pages-json
         mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
-        git add $EXCHANGE_JSON && git checkout gh-pages -- circle.yml
+        git add $EXCHANGE_JSON && git checkout origin/gh-pages -- circle.yml
         git commit --amend --reset-author -m "Add exchange.json"
         git push -f origin gh-pages-json
         git checkout $GIT_BRANCH
