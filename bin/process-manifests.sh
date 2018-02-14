@@ -191,6 +191,7 @@ cleanup () {
     git reset --hard $GIT_COMMIT_CURRENT
     >&2 echo "Attempting to remove build artifacts"
     gsutil rm $BUILD_ARTIFACTS
+    gcloud container images delete --quiet $exchange_image
     >&2 echo "Build artifacts removed successfully"
 }
 
