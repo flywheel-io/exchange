@@ -266,7 +266,7 @@ function process_manifests() {
         mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
         git add $EXCHANGE_JSON && git checkout origin/gh-pages -- circle.yml
         git commit --amend --reset-author -m "Add exchange.json"
-        git push -f origin gh-pages-json
+        git push -f $GIT_REMOTE  gh-pages-json
         git checkout $GIT_BRANCH
     else
         >&2 echo "Git push failed"
