@@ -103,7 +103,7 @@
       }
     },
     "custom": {
-      "docker-image": "scitran/dtiinit"
+      "docker-image": "scitran/dtiinit:0.1.2"
     }
   },
   "exchange": {

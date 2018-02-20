@@ -23,7 +23,7 @@
       }
     },
     "custom": {
-      "docker-image": "scitran/apply-canonical-xform"
+      "docker-image": "scitran/apply-canonical-xform:v0.1.0"
     }
   },
   "exchange": {
