@@ -1,0 +1,89 @@
+{
+  "gear": {
+    "name": "dicom-send",
+    "label": "DICOM Send",
+    "description": "The DICOM Send Gear uses DCMTK dcmstoresu to send DICOM data from Flywheel to a DICOM server.  The DICOM server must be reachable from the host of the Flywheel instance.",
+    "version": "0.6.3",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Any DICOM file(s), or an archive containing DICOM file(s). Non DICOM files will be ignored."
+      }
+    },
+    "config": {
+      "destination": {
+        "default": "0.0.0.0",
+        "description": "The IP address or hostname of the destination DICOM server",
+        "type": "string"
+      },
+      "called_ae": {
+        "default": "scanner",
+        "description": "The Called AE title of the recieving DICOM server. The Calling AE is set to flywheel.",
+        "type": "string"
+      },
+      "port": {
+        "default": "104",
+        "description": "Port number of the listening DICOM service.",
+        "type": "number"
+      }
+    },
+    "author": "Imad Nijim",
+    "maintainer": "support@flywheel.io",
+    "license": "Other",
+    "source": "https://flywheel.io",
+    "url": "http://support.dcmtk.org/docs/storescu.html",
+    "custom": {
+      "docker-image": "flywheel/dicom-send:0.6.3"
+    }
+  },
+  "exchange": {
+    "git-commit": "e878277ba6e2455f8c2e80ab6a58c70e9f45fec2",
+    "rootfs-hash": "sha384:2144a39fb2e3dfe1d3f1afe975ca57e509438e008eaf78a39caa710c0be6ef2db6503b592785716466e8d90f74fcebe0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-send-sha384-2144a39fb2e3dfe1d3f1afe975ca57e509438e008eaf78a39caa710c0be6ef2db6503b592785716466e8d90f74fcebe0.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "destination",
+          "called_ae",
+          "port"
+        ],
+        "type": "object",
+        "properties": {
+          "destination": {
+            "default": "0.0.0.0",
+            "type": "string"
+          },
+          "called_ae": {
+            "default": "scanner",
+            "type": "string"
+          },
+          "port": {
+            "default": "104",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for DICOM Send"
+  }
+}
