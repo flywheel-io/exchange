@@ -198,7 +198,7 @@
       }
     },
     "custom": {
-      "docker-image": "scitran/afq"
+      "docker-image": "scitran/afq:v0.0.2"
     }
   },
   "exchange": {

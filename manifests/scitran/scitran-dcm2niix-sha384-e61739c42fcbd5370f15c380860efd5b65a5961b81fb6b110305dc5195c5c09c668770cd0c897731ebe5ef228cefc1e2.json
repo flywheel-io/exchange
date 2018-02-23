@@ -23,7 +23,7 @@
       }
     },
     "custom": {
-      "docker-image": "scitran/dcm2niix"
+      "docker-image": "scitran/dcm2niix:v0.0.3"
     }
   },
   "exchange": {

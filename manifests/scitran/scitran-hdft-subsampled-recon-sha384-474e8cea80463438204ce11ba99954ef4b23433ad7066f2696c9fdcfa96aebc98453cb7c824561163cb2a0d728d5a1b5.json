@@ -62,7 +62,7 @@
       }
     },
     "custom": {
-      "docker-image": "scitran/hdft-subsampled-recon"
+      "docker-image": "scitran/hdft-subsampled-recon:v0.0.1"
     }
   },
   "exchange": {
