@@ -1,25 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="exchange">
 <head>
-  <meta charset="utf-8">
-  <title>Flywheel Exchange</title>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<meta charset="utf-8">
+	<title>Flywheel Exchange</title>
+	<!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+	<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.0.0/jqc-1.12.3/dt-1.10.16/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.0.0/jqc-1.12.3/dt-1.10.16/datatables.min.js"></script> -->
+	<link rel="stylesheet" href="style.css">
+	<script>
+	var App = angular.module('exchange', []);
+	App.controller('ExchangeCtrl', function($scope, $http) {
+	$http.get('https://raw.githubusercontent.com/flywheel-io/exchange/gh-pages-json/exchange.json')
+		.then(function(res){
+			$scope.gears = res.data;                
+		});
+	});
+	</script>
 </head>
 
-<body>
+<body ng-controller="ExchangeCtrl">
 
-<script>
+	<!-- Header -->
+	<header>
+		<img src="logo.png" alt="Flywheel Exchange, LLC." class="logo">
+		<div class="title">Gear Exchange</div>
+		<input type="text" class="form-control" id="searchInput" placeholder="Search for Gears...">
+	</header>
 
-function output(inp) {
-    document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-}
-
-$.getJSON("https://raw.githubusercontent.com/flywheel-io/exchange/gh-pages-json/exchange.json", function(data) {
-  var str = JSON.stringify(data, undefined, 4);
-  output(str);
-});
-
-</script>
-
+	<!-- Content -->
+	<div class="content" ng-repeat="gear in gears">
+		
+		<!-- Card -->
+		<div class="card">
+			<div class="card-body">
+				
+				<!-- Top Section -->
+				<h4 class="card-title">{{gear[0].label}}</h4>
+				<p class="card-text">{{gear[0].description}}</p>
+				<hr>
+				
+				<!-- Meta -->
+				<div class="row">
+					<div class="col-6">
+						<strong>Author:</strong><br>
+						<p>{{gear[0].author}}</p>
+					</div>
+					<div class="col-6">
+						<strong>Maintainer:</strong><br>
+						<p>{{gear[0].maintainer}}</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<strong>License:</strong><br>
+						<p>{{gear[0].license}}</p>
+					</div>
+					<div class="col-6">
+						<strong>Version:</strong><br>
+						<p>{{gear[0].version}}</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<strong>URL:</strong><br>
+						<p><a href="{{gear[0].url}}" target="blank">{{gear[0].url}}</a></p>
+					</div>
+					<div class="col-6">
+						<strong>Source:</strong><br>
+						<p><a href="{{gear[0].source}}" target="blank">{{gear[0].source}}</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

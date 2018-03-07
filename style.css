@@ -1,0 +1,120 @@
+html, body {
+	font-size:14px;
+	background:#eff1f5;
+	min-width:1200px;
+}
+
+html {
+	padding-top:60px;
+	padding-bottom:60px;
+}
+
+/* Header */
+header {
+	display:block;
+	width:100%;
+	height:60px;
+	background: #3b4251;
+	background: -moz-linear-gradient(left, #3b4251 0%, #4f5d79 100%);
+	background: -webkit-linear-gradient(left, #3b4251 0%,#4f5d79 100%);
+	background: linear-gradient(to right, #3b4251 0%,#4f5d79 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b4251', endColorstr='#4f5d79',GradientType=1 );
+	padding:0 15px;
+	position:fixed;
+	z-index:100;
+	top:0;
+	left:0;
+	right:0;
+}
+
+/* Logo */
+header .logo {
+	display:inline-block;
+	float:left;
+	height:25px;
+	margin:21px 0 0 0;
+}
+
+/* Title */
+header .title {
+	display:inline-block;
+	float:left;
+	font-size:16px;
+	color:rgba(255, 255, 255, .6);
+	font-weight:400;
+	padding:17px 0 0 15px;
+}
+
+/* Search */
+header .form-control {
+	display:inline-block;
+	width:650px;
+	background:rgba(255, 255, 255, .08);
+	border:none;
+	box-shadow:0px 1px 3px rgba(0, 0, 0, .04);
+	font-size:16px;
+	padding:10px 20px 12px;
+	margin-top:7px;
+	font-weight:300;
+	float:none;
+	position:absolute !important;
+	left:50%;
+	right:50%;
+	margin-left:-325px;
+
+}
+
+header .form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	color: rgba(255, 255, 255, .4);
+  }
+header .form-control::-moz-placeholder { /* Firefox 19+ */
+color: rgba(255, 255, 255, .4);
+}
+header .form-control:-ms-input-placeholder { /* IE 10+ */
+color: rgba(255, 255, 255, .4);
+}
+header .form-control:-moz-placeholder { /* Firefox 18- */
+color: rgba(255, 255, 255, .4);
+}
+
+header .form-control:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	color: rgba(0, 0, 0, .4);
+  }
+header .form-control:focus::-moz-placeholder { /* Firefox 19+ */
+color: rgba(0, 0, 0, .4);
+}
+header .form-control:focus:-ms-input-placeholder { /* IE 10+ */
+color: rgba(0, 0, 0, .4);
+}
+header .form-control:focus:-moz-placeholder { /* Firefox 18- */
+color: rgba(0, 0, 0, .4);
+}
+
+/* Hide Default Search */
+#gears_filter {display:none;}
+
+/* Data */
+.data {
+	display:block;
+	padding:0;
+}
+
+.data .table {
+	width:calc(100% + 30px);
+	margin:-2px -15px 0 !important;
+}
+
+/* Content */
+.content {
+	display:block;
+	width:650px;
+	margin:0 auto;
+}
+
+.content .card {
+	margin-top:20px;
+}
+
+.card p {
+	color:#777;
+}
