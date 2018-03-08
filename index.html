@@ -11,6 +11,8 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.core.min.js" crossorigin="anonymous"></script>
+
 	<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.0.0/jqc-1.12.3/dt-1.10.16/datatables.min.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.0.0/jqc-1.12.3/dt-1.10.16/datatables.min.js"></script> -->
 	<link rel="stylesheet" href="style.css">
@@ -19,7 +21,16 @@
 	App.controller('ExchangeCtrl', function($scope, $http) {
 	$http.get('https://raw.githubusercontent.com/flywheel-io/exchange/gh-pages-json/exchange.json')
 		.then(function(res){
-			$scope.gears = res.data;                
+			$scope.gears = [];
+			_.forEach(res.data, function(gear) {
+				_.forEach(gear, function(version, index) {
+					version.index = index;
+				});
+				$scope.gears.push({
+					index: 0,
+					versions: gear
+				});
+			})
 		});
 	});
 	</script>
@@ -31,50 +42,54 @@
 	<header>
 		<img src="logo.png" alt="Flywheel Exchange, LLC." class="logo">
 		<div class="title">Gear Exchange</div>
-		<input type="text" class="form-control" id="searchInput" placeholder="Search for Gears...">
+		<input type="text" class="form-control" ng-model="gearFilter" id="searchInput" placeholder="Search for Gears..." ng-model="test">
 	</header>
 
 	<!-- Content -->
-	<div class="content" ng-repeat="gear in gears">
-		
+	<div class="content" ng-repeat="gear in gears | filter: gearFilter">
+
 		<!-- Card -->
 		<div class="card">
 			<div class="card-body">
 				
 				<!-- Top Section -->
-				<h4 class="card-title">{{gear[0].label}}</h4>
-				<p class="card-text">{{gear[0].description}}</p>
+				<h4 class="card-title">{{gear.versions[gear.index].label}}</h4>
+				<p class="card-text">{{gear.versions[gear.index].description}}</p>
 				<hr>
 				
 				<!-- Meta -->
 				<div class="row">
 					<div class="col-6">
 						<strong>Author:</strong><br>
-						<p>{{gear[0].author}}</p>
+						<p>{{gear.versions[gear.index].author}}</p>
 					</div>
 					<div class="col-6">
 						<strong>Maintainer:</strong><br>
-						<p>{{gear[0].maintainer}}</p>
+						<p>{{gear.versions[gear.index].maintainer}}</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
 						<strong>License:</strong><br>
-						<p>{{gear[0].license}}</p>
+						<p>{{gear.versions[gear.index].license}}</p>
 					</div>
 					<div class="col-6">
 						<strong>Version:</strong><br>
-						<p>{{gear[0].version}}</p>
+						<select
+							ng-model="gear.index"
+							ng-options="version.index as version.version for version in gear.versions"
+						>
+						</select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
 						<strong>URL:</strong><br>
-						<p><a href="{{gear[0].url}}" target="blank">{{gear[0].url}}</a></p>
+						<p><a href="{{gear.versions[gear.index].url}}" target="blank">{{gear.versions[gear.index].url}}</a></p>
 					</div>
 					<div class="col-6">
 						<strong>Source:</strong><br>
-						<p><a href="{{gear[0].source}}" target="blank">{{gear[0].source}}</a></p>
+						<p><a href="{{gear.versions[gear.index].source}}" target="blank">{{gear.versions[gear.index].source}}</a></p>
 					</div>
 				</div>
 			</div>
