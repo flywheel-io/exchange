@@ -61,7 +61,11 @@ header .form-control {
 	left:50%;
 	right:50%;
 	margin-left:-325px;
-	color:#FFF !important;
+	color:#FFF;
+}
+
+header .form-control:focus {
+	color:#000;
 }
 
 header .form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
