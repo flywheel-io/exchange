@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.3.2",
+  "version": "0.3.3_1.0.20171215",
   "custom": {
-    "docker-image": "scitran/dcm2niix:v0.3.2"
+    "docker-image": "scitran/dcm2niix:0.3.3_1.0.20171215"
   },
   "config": {
     "decompress_dicoms": {
@@ -19,7 +19,7 @@
       "description": "Decompress DICOM files prior to conversion. This will perform decompression using gdcmconv and then perform conversion using dcm2niix. (true/false, default=false)"
     },
     "bids_sidecar": {
-      "description": "Output BIDS sidecar in JSON format. (y/n, default n)",
+      "description": "Output BIDS sidecar in JSON format. Options are 'y'=yes, 'n'=no, and 'o'=only (whereby no NIfTI file will be generated). Default='n'.",
       "type": "string",
       "default": "n",
       "id": "-b"
@@ -82,6 +82,18 @@
       "description": "Output 3D uncompressed volumes (true/false, default=false). Note that the filename flag will be set to '-f %p_%s' to prevent overwriting files",
       "type": "boolean",
       "default": false
+    },
+    "sort_diffusion_volumes": {
+      "description": "diffusion volumes sorted by b-value (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-d"
+    },
+    "convert_only_series": {
+      "description": "only convert this series number - can be used up to 16 times (default convert all). Provide series numbers in a space-separated list within single quotes, e.g., '12 13'",
+      "type": "string",
+      "default": "'all'",
+      "id": "-n"
     }
   },
   "inputs": {
