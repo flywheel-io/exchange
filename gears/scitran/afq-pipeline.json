@@ -9,9 +9,9 @@
   "source": "https://github.com/scitran-apps/afq-pipline",
   "license": "GPL-2.0",
   "flywheel": "0",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "custom": {
-    "docker-image": "scitran/afq-pipeline:v1.0.1"
+    "docker-image": "scitran/afq-pipeline:1.0.2"
   },
   "inputs": {
     "anatomical": {
@@ -108,13 +108,13 @@
       "id": "-z"
     },
     "auto": {
-      "description": "FSLMERGE: auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
+      "description": "FSLMERGE: auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
       "default": true,
       "type": "boolean",
       "id": "-a"
     },
     "catTR": {
-      "description": "FSLMERGE: concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
+      "description": "FSLMERGE: concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
       "default": 0,
       "type": "number",
       "id": "-tr"
