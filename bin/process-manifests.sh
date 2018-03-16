@@ -23,6 +23,12 @@ BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
 
+clean_up () {
+    git config --local --remove-section user || true
+}
+trap clean_up EXIT
+
+
 if [ $BASH_VERSION \< 4.2 ]; then
     >&2 echo "This script requires bash version 4.2 or greater."
     exit 1
@@ -38,8 +44,8 @@ if ! $( git diff-index --quiet HEAD -- ); then
 fi
 
 if ! $( git config --get user.email &> /dev/null ); then
-    git config user.email "service+github-flywheel-exchange@flywheel.io"
-    git config user.name "Flywheel Exchange Bot"
+    git config --local user.email "service+github-flywheel-exchange@flywheel.io"
+    git config --local user.name "Flywheel Exchange Bot"
 fi
 
 if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
@@ -293,8 +299,8 @@ fi
 
 if [ $GIT_BRANCH == "master" ]; then
     >&2 echo "Processing..."
-    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" -o -z "$EXCHANGE_IMAGE_BUCKET_URI" ]; then
-        >&2 echo "Error: EXCHANGE_BUCKET_URI, EXCHANGE_DOWNLOAD_URL, and EXCHANGE_IMAGE_BUCKET_URI must be defined."
+    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+        >&2 echo "Error: EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
         exit 1
     fi
     set -eu
