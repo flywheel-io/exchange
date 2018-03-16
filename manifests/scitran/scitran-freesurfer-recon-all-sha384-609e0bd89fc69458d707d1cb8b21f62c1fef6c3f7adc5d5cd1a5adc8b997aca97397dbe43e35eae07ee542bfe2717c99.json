@@ -1,0 +1,194 @@
+{
+  "gear": {
+    "name": "freesurfer-recon-all",
+    "label": "FreeSurfer (v6.0.0): Recon-All",
+    "description": "This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Laboratory for Computational Neuroimaging <freesurfer@nmr.mgh.harvard.edu>",
+    "url": "https://surfer.nmr.mgh.harvard.edu",
+    "source": "https://github.com/scitran-apps/freesurfer-recon-all",
+    "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
+    "license": "Other",
+    "flywheel": "0",
+    "version": "0.1.3",
+    "inputs": {
+      "anatomical": {
+        "description": "Anatomical NIfTI file or DICOM archive.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "subject_id": {
+        "description": "Desired subject ID (Default='s000'). Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory.",
+        "default": "s000",
+        "type": "string"
+      },
+      "reconall_options": {
+        "description": "Command line options to the recon-all algorithm. (Default='-all -qcache'). By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm, which can speed later processing. Note that modification of these options may result in failure if the options are not recognized.",
+        "default": "-all -qcache",
+        "type": "string"
+      },
+      "hippocampal_subfields": {
+        "description": "Generates an automated segmentation of the hippocampal subfields based on a statistical atlas built primarily upon ultra-high resolution (~0.1 mm isotropic) ex vivo MRI data. Choosing this option will write <subject_id>_HippocampalSubfields.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields for more info. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "brainstem_structures": {
+        "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "register_surfaces": {
+        "description": "Runs the xhemireg and surfreg scripts on your subject after having run recon-all in order to register the subject's left and inverted-right hemispheres to the fsaverage_sym subject. (The fsaverage_sym subject is a version of the fsaverage subject with a single the left-right symmetric pseudo-hemisphere.) (Default=true)",
+        "default": false,
+        "type": "boolean"
+      },
+      "convert_surfaces": {
+        "description": "Convert selected FreeSurfer surface files to OBJ format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_volumes": {
+        "description": "Convert selected FreeSurfer volume files (mgz) to NIfTI format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_stats": {
+        "description": "Convert FreeSurfer stats files to CSV. (Default=true). Converts a subcortical stats file created by recon-all and/or mri_segstats (eg, aseg.stats) into a table in which each line is a subject and each column is a segmentation. The values are the volume of the segmentation in mm3 or the mean intensity over the structure. Also Converts a cortical stats file created by recon-all and or mris_anatomical_stats (eg, ?h.aparc.stats) into a table in which each line is a subject and each column is a parcellation. By default, the values are the area of the parcellation in mm2.",
+        "default": true,
+        "type": "boolean"
+      },
+      "license_email": {
+        "description": "Email address used during FreeSurfer registration (1st line of 'license')",
+        "default": "",
+        "type": "string"
+      },
+      "license_number": {
+        "description": "FreeSurfer License Number (2nd line of 'license')",
+        "default": "",
+        "type": "string"
+      },
+      "license_key": {
+        "description": "FreeSurfer License Key (3rd line of 'license')",
+        "default": "",
+        "type": "string"
+      },
+      "license_reference": {
+        "description": "FreeSurfer License Reference (4th line of 'license')",
+        "default": "",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "docker-image": "scitran/freesurfer-recon-all:0.1.3"
+    }
+  },
+  "exchange": {
+    "git-commit": "70dfd86ec016ac5dbfa8e562482de5401e562ca4",
+    "rootfs-hash": "sha384:609e0bd89fc69458d707d1cb8b21f62c1fef6c3f7adc5d5cd1a5adc8b997aca97397dbe43e35eae07ee542bfe2717c99",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-freesurfer-recon-all-sha384-609e0bd89fc69458d707d1cb8b21f62c1fef6c3f7adc5d5cd1a5adc8b997aca97397dbe43e35eae07ee542bfe2717c99.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "brainstem_structures",
+          "license_reference",
+          "register_surfaces",
+          "convert_surfaces",
+          "license_email",
+          "subject_id",
+          "convert_volumes",
+          "reconall_options",
+          "license_number",
+          "license_key",
+          "convert_stats",
+          "hippocampal_subfields"
+        ],
+        "type": "object",
+        "properties": {
+          "brainstem_structures": {
+            "default": true,
+            "type": "boolean"
+          },
+          "license_reference": {
+            "default": "",
+            "type": "string"
+          },
+          "register_surfaces": {
+            "default": false,
+            "type": "boolean"
+          },
+          "convert_surfaces": {
+            "default": true,
+            "type": "boolean"
+          },
+          "license_email": {
+            "default": "",
+            "type": "string"
+          },
+          "subject_id": {
+            "default": "s000",
+            "type": "string"
+          },
+          "convert_volumes": {
+            "default": true,
+            "type": "boolean"
+          },
+          "reconall_options": {
+            "default": "-all -qcache",
+            "type": "string"
+          },
+          "license_number": {
+            "default": "",
+            "type": "string"
+          },
+          "license_key": {
+            "default": "",
+            "type": "string"
+          },
+          "convert_stats": {
+            "default": true,
+            "type": "boolean"
+          },
+          "hippocampal_subfields": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FreeSurfer (v6.0.0): Recon-All"
+  }
+}
