@@ -6,9 +6,9 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/curate-bids",
   "url": "http://bids.neuroimaging.io/",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "custom": {
-    "docker-image": "flywheel/curate-bids:v0.3.4"
+    "docker-image": "flywheel/curate-bids:v0.3.5"
   },
   "license": "BSD-3-Clause",
   "inputs": {
