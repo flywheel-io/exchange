@@ -1,0 +1,68 @@
+{
+  "gear": {
+    "name": "curate-bids",
+    "label": "BIDS Curation",
+    "description": "Use this gear to initialize BIDS filenames and attributes on all files within a given project.",
+    "author": "Flywheel <support@flywheel.io>",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/curate-bids",
+    "url": "http://bids.neuroimaging.io/",
+    "version": "0.3.5",
+    "custom": {
+      "docker-image": "flywheel/curate-bids:v0.3.5"
+    },
+    "license": "BSD-3-Clause",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "reset": {
+        "description": "Remove all BIDS info from files before curating",
+        "type": "boolean",
+        "default": false
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "9c3455a7829400e549ed4646090e69858eab99d3",
+    "rootfs-hash": "sha384:cdf858f44e1bfe5641432b7c02be164e6499030baafcb0e4487556e5ca45af3cae9f6fdff2ef6464390218d06db9a07b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-curate-bids-sha384-cdf858f44e1bfe5641432b7c02be164e6499030baafcb0e4487556e5ca45af3cae9f6fdff2ef6464390218d06db9a07b.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key"
+        ],
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "reset"
+        ],
+        "type": "object",
+        "properties": {
+          "reset": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for BIDS Curation"
+  }
+}
