@@ -30,7 +30,7 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/mriqc:v0.4.0"
+    "docker-image": "flywheel/mriqc:v0.4.1"
   },
   "description": "MRIQC (v0.10.1) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated. Also note, for the auto-detection config option to work for this gear, the follow gears must be run beforehand: (1) dicom-mr-classifier then (2) dcm2niix (version 0.3.1 or higher).",
   "inputs": {
@@ -50,5 +50,5 @@
   "name": "mriqc",
   "source": "https://github.com/flywheel-apps/mriqc",
   "url": "https://github.com/poldracklab/mriqc",
-  "version": "0.4.0"
+  "version": "0.4.1"
 }
