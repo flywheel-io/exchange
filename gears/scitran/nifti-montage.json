@@ -1,3 +1,4 @@
+
 {
   "name": "scitran-nifti-montage",
   "label": "SciTran: NIfTI Montage Creation Tool",
@@ -8,9 +9,9 @@
   "source": "https://github.com/scitran-apps/nifti-montage",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.3",
+  "version": "1.4.0",
   "custom": {
-    "docker-image": "scitran/nifti-montage:v1.3"
+    "docker-image": "scitran/nifti-montage:1.4.0"
   },
   "config": {
     "voxel_order": {
