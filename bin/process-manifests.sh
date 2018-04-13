@@ -50,7 +50,8 @@ fi
 
 if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
     GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-    echo "$GCLOUD_SERVICE_ACCOUNT" > $GCLOUD_SERVICE_ACCOUNT_FILE
+    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
+    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
@@ -270,7 +271,7 @@ function process_manifests() {
         find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
         git checkout gh-pages-json
         mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
-        git add $EXCHANGE_JSON && git checkout origin/gh-pages -- circle.yml
+        git add $EXCHANGE_JSON && git checkout origin/gh-pages -- .travis.yml
         git commit --amend --reset-author -m "Add exchange.json"
         git push -f $GIT_REMOTE  gh-pages-json
         git checkout $GIT_BRANCH
