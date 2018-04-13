@@ -15,7 +15,6 @@ if [ -z "$1" ]; then
 else
     GIT_BRANCH="$1"
 fi
-GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 
 # GIT_COMMIT_SENTINEL represents the closest ancestor git commit, under
