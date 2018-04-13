@@ -31,10 +31,14 @@ install:
 
 script:
   - if [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
-      travis_wait 1440 bin/process-manifests.sh "$TRAVIS_BRANCH";
+      export EXCHANGE_BRANCH=$TRAVIS_BRANCH;
     else
-      travis_wait 1440 bin/process-manifests.sh "$TRAVIS_PULL_REQUEST_BRANCH";
+      export EXCHANGE_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH;
     fi
+  - git remote add origin $GIT_REMOTE
+  - git fetch
+  - git checkout $GIT_BRANCH
+  - travis_wait 1440 bin/process-manifests.sh "$EXCHANGE_BRANCH"
 
 
 
