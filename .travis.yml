@@ -29,7 +29,11 @@ install:
   - pip install git+https://github.com/flywheel-io/gears.git
 
 script:
-  - travis_wait 1440  bin/process-manifests.sh
+  - if [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
+      travis_wait 1440 bin/process-manifests.sh "$TRAVIS_BRANCH";
+    else
+      travis_wait 1440 bin/process-manifests.sh "$TRAVIS_PULL_REQUEST_BRANCH";
+    fi
 
 
 
