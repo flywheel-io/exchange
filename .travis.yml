@@ -16,6 +16,7 @@ cache:
 before_install:
   # Install gcloud
   # From https://stackoverflow.com/questions/38762590/how-to-install-google-cloud-sdk-on-travis
+  - export BOTO_CONFIG=/dev/null
   - gcloud version || true
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then
       rm -rf $HOME/google-cloud-sdk;
