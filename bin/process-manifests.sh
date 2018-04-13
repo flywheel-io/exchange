@@ -10,11 +10,7 @@ GEAR_SCHEMA_URL="https://raw.githubusercontent.com/flywheel-io/gears/master/spec
 BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/master/schema/descriptor.schema.json"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
-if [ -z "$1" ]; then
-    GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
-else
-    GIT_BRANCH="$1"
-fi
+GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
 GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 
 # GIT_COMMIT_SENTINEL represents the closest ancestor git commit, under

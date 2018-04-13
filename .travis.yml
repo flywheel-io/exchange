@@ -30,15 +30,13 @@ install:
   - pip install git+https://github.com/flywheel-io/gears.git
 
 script:
+  - git remote -v show
+  - git config --get remote.origin.fetch
   - if [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
-      export EXCHANGE_BRANCH=$TRAVIS_BRANCH;
+      git checkout $TRAVIS_BRANCH;
     else
-      export EXCHANGE_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH;
+      git checkout $TRAVIS_PULL_REQUEST_BRANCH;
     fi
-  - git remote add origin $GIT_REMOTE
   - git fetch
-  - git checkout $GIT_BRANCH
-  - travis_wait 1440 bin/process-manifests.sh "$EXCHANGE_BRANCH"
-
-
+  - travis_wait 1440 bin/process-manifests.sh
 
