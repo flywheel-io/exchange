@@ -30,12 +30,12 @@ install:
   - pip install git+https://github.com/flywheel-io/gears.git
 
 script:
+  - git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+  - git fetch --quiet
   - if [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
       git checkout $TRAVIS_BRANCH;
     else
       git checkout $TRAVIS_PULL_REQUEST_BRANCH;
     fi
-  - git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-  - git fetch
   - travis_wait 1440 bin/process-manifests.sh
 
