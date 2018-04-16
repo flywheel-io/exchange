@@ -23,10 +23,10 @@ BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
 
-clean_up () {
+git_config_cleanup () {
     git config --local --remove-section user || true
 }
-trap clean_up EXIT
+trap git_config_cleanup EXIT
 
 
 if [ $BASH_VERSION \< 4.2 ]; then
