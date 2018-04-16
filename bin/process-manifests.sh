@@ -134,6 +134,10 @@ function validate_manifest() {
           echo "Unrecognized format: Could not parse ${docker_image}" && exit 1
         fi
 
+        if [[ -z $image_tag ]]; then
+          echo "A tagged image is required!" && exit 1
+        fi
+
         # Curl for the image root and check the response for its existence
         response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/")
         if [[ ${response} != *"Object not found"* ]]; then
