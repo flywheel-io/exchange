@@ -23,10 +23,10 @@ BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
 
-clean_up () {
+git_config_cleanup () {
     git config --local --remove-section user || true
 }
-trap clean_up EXIT
+trap git_config_cleanup EXIT
 
 
 if [ $BASH_VERSION \< 4.2 ]; then
@@ -134,6 +134,10 @@ function validate_manifest() {
           echo "Unrecognized format: Could not parse ${docker_image}" && exit 1
         fi
 
+        if [[ -z $image_tag ]]; then
+          echo "A tagged image is required!" && exit 1
+        fi
+
         # Curl for the image root and check the response for its existence
         response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/")
         if [[ ${response} != *"Object not found"* ]]; then
@@ -191,6 +195,7 @@ cleanup () {
     git reset --hard $GIT_COMMIT_CURRENT
     >&2 echo "Attempting to remove build artifacts"
     gsutil rm $BUILD_ARTIFACTS
+    gcloud container images delete --quiet $exchange_image
     >&2 echo "Build artifacts removed successfully"
 }
 
@@ -267,19 +272,23 @@ function process_manifests() {
 
     if git push -q $GIT_REMOTE $GIT_BRANCH; then
         >&2 echo "Git push successful"
-        >&2 echo "Publish global manifest"
-        find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
-        git checkout gh-pages-json
-        mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
-        git add $EXCHANGE_JSON && git checkout origin/gh-pages -- .travis.yml
-        git commit --amend --reset-author -m "Add exchange.json"
-        git push -f $GIT_REMOTE  gh-pages-json
-        git checkout $GIT_BRANCH
     else
         >&2 echo "Git push failed"
         EXIT_STATUS=1
         cleanup
     fi
+}
+
+
+publish_global_manifest() {
+    >&2 echo "Publish global manifest"
+    find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
+    git checkout gh-pages-json
+    mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
+    git add $EXCHANGE_JSON && git checkout origin/gh-pages -- .travis.yml
+    git commit --amend --reset-author -m "Add exchange.json"
+    git push -f $GIT_REMOTE  gh-pages-json
+    git checkout $GIT_BRANCH
 }
 
 
@@ -306,6 +315,7 @@ if [ $GIT_BRANCH == "master" ]; then
     fi
     set -eu
     process_manifests "$manifests"
+    publish_global_manifest
 else
     >&2 echo "Validating..."
     set -eu
