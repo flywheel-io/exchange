@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.3.4_1.0.20171215",
+  "version": "0.5.0_1.0.20171215",
   "custom": {
-    "docker-image": "scitran/dcm2niix:0.3.4_1.0.20171215"
+    "docker-image": "scitran/dcm2niix:0.5.0_1.0.20171215"
   },
   "config": {
     "decompress_dicoms": {
