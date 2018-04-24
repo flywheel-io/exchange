@@ -1,16 +1,17 @@
+
 {
   "name": "dicom-mr-classifier",
   "label": "SciTran DICOM MR Classifier",
-  "description": "Extract DICOM header metadata and determine measurement classification. Works with Siemens, Philips, and GE DICOM data.",
+  "description": "Extract metadata and determine classification from raw DICOM data. Compatible with Siemens, Philips, and GE DICOMs.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Michael Perry <lmperry@stanford.edu>",
   "url": "https://scitran.github.io",
   "source": "https://github.com/scitran-apps/dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "custom": {
-    "docker-image": "scitran/dicom-mr-classifier:0.4.0"
+    "docker-image": "scitran/dicom-mr-classifier:0.5.0"
   },
   "config": {
     "timezone": {
