@@ -7,14 +7,22 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://github.com/poldracklab/fmriprep",
-  "version": "0.4.3_1.0.6",
+  "version": "0.4.4_1.0.6",
   "custom": {
-    "docker-image": "flywheel/fmriprep:0.4.3_1.0.6"
+    "docker-image": "flywheel/fmriprep:0.4.4_1.0.6"
   },
   "license": "Other",
   "inputs": {
     "api_key": {
       "base": "api-key"
+    },
+    "t1w_anatomy": {
+      "base": "file",
+      "optional": true
+    },
+    "t2w_anatomy": {
+      "base": "file",
+      "optional": true
     }
   },
   "config": {
