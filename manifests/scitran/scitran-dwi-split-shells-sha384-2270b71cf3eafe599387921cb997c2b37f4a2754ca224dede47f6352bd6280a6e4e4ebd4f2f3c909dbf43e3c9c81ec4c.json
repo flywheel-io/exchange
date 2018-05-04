@@ -1,0 +1,107 @@
+{
+  "gear": {
+    "name": "dwi-split-shells",
+    "label": "SCITRAN: DWI Split Shells",
+    "description": "Extracts individual shells from multi-shell DWI images. Automatically outputs a NIfTI, BVEC, and BVAL file for each shell.",
+    "author": "GLU <glerma@stanford.edu>",
+    "maintainer": "GLU <glerma@stanford.edu>",
+    "url": "https://github.com/scitran-apps/dwi-split-shells",
+    "source": "https://github.com/scitran-apps/dwi-split-shells",
+    "license": "MIT",
+    "flywheel": "0",
+    "version": "1.0.0",
+    "config": {},
+    "custom": {
+      "docker-image": "scitran/dwi-split-shells:1.0.0"
+    },
+    "inputs": {
+      "bval": {
+        "base": "file",
+        "description": "Include the dwi.bvals multishell file.",
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "bvec": {
+        "base": "file",
+        "description": "Include the dwi.bvecs multishell file.",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      },
+      "dwi": {
+        "base": "file",
+        "description": "Include the dwi.nii.gz multishell file.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "9e52d2c4d01a6af2204ebd3ed3e934e30a4b4ca3",
+    "rootfs-hash": "sha384:2270b71cf3eafe599387921cb997c2b37f4a2754ca224dede47f6352bd6280a6e4e4ebd4f2f3c909dbf43e3c9c81ec4c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dwi-split-shells-sha384-2270b71cf3eafe599387921cb997c2b37f4a2754ca224dede47f6352bd6280a6e4e4ebd4f2f3c909dbf43e3c9c81ec4c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bvec",
+          "bval",
+          "dwi"
+        ],
+        "type": "object",
+        "properties": {
+          "bvec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "bval": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "dwi": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "title": "Invocation manifest for SCITRAN: DWI Split Shells"
+  }
+}
