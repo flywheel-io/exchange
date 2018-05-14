@@ -34,52 +34,52 @@
       "description": "FreeSurfer license.txt file (found in $FREESURFER_HOME/license.txt)",
       "base": "file",
       "optional": false
+    },
+    "GradientCoeff": {
+      "description": "Scanner gradient nonlinearity coefficient file",
+      "base": "file",
+      "optional": true
+    },
+    "SpinEchoPositive": {
+      "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      },
+      "optional": true
+    },
+    "SpinEchoNegative": {
+      "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      },
+      "optional": true
+    },
+    "SiemensGREMagnitude": {
+      "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      },
+      "optional": true
+    },
+    "SiemensGREPhase": {
+      "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      },
+      "optional": true
     }
-  },
-  "GradientCoeff": {
-    "description": "Scanner gradient nonlinearity coefficient file",
-    "base": "file",
-    "optional": true
-  },
-  "SpinEchoPositive": {
-    "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
-    "base": "file",
-    "type": {
-      "enum": [
-        "nifti"
-      ]
-    },
-    "optional": true
-  },
-  "SpinEchoNegative": {
-    "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
-    "base": "file",
-    "type": {
-      "enum": [
-        "nifti"
-      ]
-    },
-    "optional": true
-  },
-  "SiemensGREMagnitude": {
-    "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
-    "base": "file",
-    "type": {
-      "enum": [
-        "nifti"
-      ]
-    },
-    "optional": true
-  },
-  "SiemensGREPhase": {
-    "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
-    "base": "file",
-    "type": {
-      "enum": [
-        "nifti"
-      ]
-    },
-    "optional": true
   },
   "config": {
     "Subject": {
