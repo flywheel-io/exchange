@@ -10,7 +10,7 @@
   "license": "BSD-3-Clause",
   "version": "0.6.0",
   "custom": {
-    "docker-image": "flywheel/mriqc:0.6.0"
+    "docker-image": "flywheel/mriqc:v0.6.0"
   },
   "inputs": {
     "nifti": {
