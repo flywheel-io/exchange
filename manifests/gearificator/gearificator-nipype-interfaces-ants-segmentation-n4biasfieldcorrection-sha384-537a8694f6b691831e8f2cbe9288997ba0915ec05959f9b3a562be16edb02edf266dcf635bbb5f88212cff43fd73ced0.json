@@ -1,0 +1,212 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-n4biasfieldcorrection",
+    "description": "N4 is a variant of the popular N3 (nonparameteric nonuniform normalization)",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.0.2.nipype.1.0.3.1",
+    "config": {
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "bspline_fitting_distance": {
+        "type": "number",
+        "description": "Bspline fitting distance",
+        "optional": true
+      },
+      "bspline_order": {
+        "type": "integer",
+        "description": "Bspline order",
+        "optional": true
+      },
+      "convergence_threshold": {
+        "type": "number",
+        "description": "Convergence threshold",
+        "optional": true
+      },
+      "copy_header": {
+        "type": "boolean",
+        "description": "copy headers of the original image into the output (corrected) file"
+      },
+      "dimension": {
+        "type": "integer",
+        "description": "image dimension (2, 3 or 4) [default=3]",
+        "default": 3,
+        "enum": [
+          3,
+          2,
+          4
+        ]
+      },
+      "n_iterations": {
+        "type": "array",
+        "description": "N iterations",
+        "optional": true,
+        "items": {
+          "type": "integer"
+        }
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "output_image": {
+        "type": "string",
+        "description": "output file name",
+        "optional": true
+      },
+      "save_bias": {
+        "type": "boolean",
+        "description": "True if the estimated bias should be saved to file.",
+        "optional": true
+      },
+      "shrink_factor": {
+        "type": "integer",
+        "description": "Shrink factor",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "bias_image": {
+        "description": "Filename for the estimated bias.",
+        "optional": true,
+        "base": "file"
+      },
+      "input_image": {
+        "description": "input for bias correction. Negative values or values close to zero should be processed prior to correction",
+        "base": "file"
+      },
+      "mask_image": {
+        "description": "image to specify region to perform final bias correction in",
+        "optional": true,
+        "base": "file"
+      },
+      "weight_image": {
+        "description": "image for relative weighting (e.g. probability map of the white matter) of voxels during the B-spline fitting. ",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:N4BiasFieldCorrection",
+        "outputs": {
+          "bias_image": {
+            "description": "Estimated bias"
+          },
+          "output_image": {
+            "description": "Warped image"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "nipype:ants"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-n4biasfieldcorrection:0.0.2.nipype.1.0.3.1"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-n4biasfieldcorrection:0.0.2.nipype.1.0.3.1"
+    },
+    "label": "N4BiasFieldCorrection"
+  },
+  "exchange": {
+    "git-commit": "3695d03619a57cfead8e2455b15db816cb776762",
+    "rootfs-hash": "sha384:537a8694f6b691831e8f2cbe9288997ba0915ec05959f9b3a562be16edb02edf266dcf635bbb5f88212cff43fd73ced0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-n4biasfieldcorrection-sha384-537a8694f6b691831e8f2cbe9288997ba0915ec05959f9b3a562be16edb02edf266dcf635bbb5f88212cff43fd73ced0.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "input_image"
+        ],
+        "type": "object",
+        "properties": {
+          "input_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "weight_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "bias_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "mask_image": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "num_threads",
+          "copy_header",
+          "dimension"
+        ],
+        "type": "object",
+        "properties": {
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "shrink_factor": {
+            "type": "integer"
+          },
+          "output_image": {
+            "type": "string"
+          },
+          "bspline_fitting_distance": {
+            "type": "number"
+          },
+          "convergence_threshold": {
+            "type": "number"
+          },
+          "args": {
+            "type": "string"
+          },
+          "save_bias": {
+            "type": "boolean"
+          },
+          "n_iterations": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "bspline_order": {
+            "type": "integer"
+          },
+          "copy_header": {
+            "type": "boolean"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              3,
+              2,
+              4
+            ],
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for N4BiasFieldCorrection"
+  }
+}
