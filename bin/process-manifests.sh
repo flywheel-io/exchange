@@ -24,7 +24,7 @@ EXIT_STATUS=0
 
 
 git_config_cleanup () {
-    git config --local --remove-section user || true
+    git config --local --remove-section user 2>/dev/null || true
 }
 trap git_config_cleanup EXIT
 
@@ -70,17 +70,19 @@ function gear_version_already_exists() {
     gear_name="$2"
     gear_version="$3"
 
-    for f in "$MANIFESTS_DIR/$gear_org/"*.json ; do
-        v_gear_name="$( jq -r '.gear.name' $f )"
-        v_gear_version="$( jq -r '.gear.version' $f )"
+    if [ -d "$MANIFESTS_DIR/$gear_org" ]; then
+        for f in "$MANIFESTS_DIR/$gear_org/"*.json ; do
+            v_gear_name="$( jq -r '.gear.name' $f )"
+            v_gear_version="$( jq -r '.gear.version' $f )"
 
-        if [[ "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
-            >&2 echo "Strongly versioned gear '$gear_name' of version '$gear_version' found in file '$f'"
+            if [[ "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
+                >&2 echo "Strongly versioned gear '$gear_name' of version '$gear_version' found in file '$f'"
 
-            # true = 0
-            return 0
-        fi
-    done
+                # true = 0
+                return 0
+            fi
+        done
+    fi
 
     # false = 1
     return 1
