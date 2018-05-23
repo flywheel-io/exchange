@@ -1,0 +1,286 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-fsl-preprocess-bet",
+    "label": "FSL BET (Brain Extraction Tool)",
+    "description": "FSL BET command for skull stripping",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "Other",
+    "version": "0.0.2.nipype.1.0.3.1",
+    "config": {
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "center": {
+        "type": "array",
+        "description": "center of gravity in voxels",
+        "optional": true,
+        "items": {
+          "type": "integer"
+        }
+      },
+      "frac": {
+        "type": "number",
+        "description": "fractional intensity threshold",
+        "optional": true
+      },
+      "functional": {
+        "type": "boolean",
+        "description": "apply to 4D fMRI data",
+        "optional": true
+      },
+      "mask": {
+        "type": "boolean",
+        "description": "create binary mask image",
+        "optional": true
+      },
+      "mesh": {
+        "type": "boolean",
+        "description": "generate a vtk mesh brain surface",
+        "optional": true
+      },
+      "no_output": {
+        "type": "boolean",
+        "description": "Don't generate segmented output",
+        "optional": true
+      },
+      "outline": {
+        "type": "boolean",
+        "description": "create surface outline image",
+        "optional": true
+      },
+      "output_type": {
+        "type": "string",
+        "description": "FSL output type [default=NIFTI_GZ]",
+        "default": "NIFTI_GZ",
+        "enum": [
+          "NIFTI_PAIR",
+          "NIFTI_PAIR_GZ",
+          "NIFTI_GZ",
+          "NIFTI"
+        ]
+      },
+      "padding": {
+        "type": "boolean",
+        "description": "improve BET if FOV is very small in Z (by temporarily padding end slices)",
+        "optional": true
+      },
+      "radius": {
+        "type": "integer",
+        "description": "head radius",
+        "optional": true
+      },
+      "reduce_bias": {
+        "type": "boolean",
+        "description": "bias field and neck cleanup",
+        "optional": true
+      },
+      "remove_eyes": {
+        "type": "boolean",
+        "description": "eye & optic nerve cleanup (can be useful in SIENA)",
+        "optional": true
+      },
+      "robust": {
+        "type": "boolean",
+        "description": "robust brain centre estimation (iterates BET several times)",
+        "optional": true
+      },
+      "skull": {
+        "type": "boolean",
+        "description": "create skull image",
+        "optional": true
+      },
+      "surfaces": {
+        "type": "boolean",
+        "description": "run bet2 and then betsurf to get additional skull and scalp surfaces (includes registrations)",
+        "optional": true
+      },
+      "threshold": {
+        "type": "boolean",
+        "description": "apply thresholding to segmented brain image and mask",
+        "optional": true
+      },
+      "vertical_gradient": {
+        "type": "number",
+        "description": "vertical gradient in fractional intensity threshold (-1, 1)",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "in_file": {
+        "description": "input file to skull strip",
+        "base": "file"
+      },
+      "out_file": {
+        "description": "name of output skull stripped image",
+        "optional": true,
+        "base": "file"
+      },
+      "t2_guided": {
+        "description": "as with creating surfaces, when also feeding in non-brain-extracted T2 (includes registrations)",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.fsl.preprocess:BET",
+        "outputs": {
+          "inskull_mask_file": {
+            "description": "path/name of inskull mask (if generated)"
+          },
+          "inskull_mesh_file": {
+            "description": "path/name of inskull mesh outline (if generated)"
+          },
+          "mask_file": {
+            "description": "path/name of binary brain mask (if generated)"
+          },
+          "meshfile": {
+            "description": "path/name of vtk mesh file (if generated)"
+          },
+          "out_file": {
+            "description": "path/name of skullstripped file (if generated)"
+          },
+          "outline_file": {
+            "description": "path/name of outline file (if generated)"
+          },
+          "outskin_mask_file": {
+            "description": "path/name of outskin mask (if generated)"
+          },
+          "outskin_mesh_file": {
+            "description": "path/name of outskin mesh outline (if generated)"
+          },
+          "outskull_mask_file": {
+            "description": "path/name of outskull mask (if generated)"
+          },
+          "outskull_mesh_file": {
+            "description": "path/name of outskull mesh outline (if generated)"
+          },
+          "skull_mask_file": {
+            "description": "path/name of skull mask (if generated)"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "nipype:fsl"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-fsl-preprocess-bet:0.0.2.nipype.1.0.3.1"
+      },
+      "docker-image": "gearificator/nipype-interfaces-fsl-preprocess-bet:0.0.2.nipype.1.0.3.1"
+    }
+  },
+  "exchange": {
+    "git-commit": "14b5d4631b8ed467899ab1e760a48f44a8dd3d31",
+    "rootfs-hash": "sha384:2afef30db204fcba41a0529b0fda36439e6da56bdc5685feb00c7cddf300265d0e06be3c06cf89fcae24e291a51b13e4",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-fsl-preprocess-bet-sha384-2afef30db204fcba41a0529b0fda36439e6da56bdc5685feb00c7cddf300265d0e06be3c06cf89fcae24e291a51b13e4.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "in_file"
+        ],
+        "type": "object",
+        "properties": {
+          "t2_guided": {
+            "type": "object",
+            "properties": {}
+          },
+          "in_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "out_file": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "output_type"
+        ],
+        "type": "object",
+        "properties": {
+          "surfaces": {
+            "type": "boolean"
+          },
+          "vertical_gradient": {
+            "type": "number"
+          },
+          "remove_eyes": {
+            "type": "boolean"
+          },
+          "frac": {
+            "type": "number"
+          },
+          "reduce_bias": {
+            "type": "boolean"
+          },
+          "no_output": {
+            "type": "boolean"
+          },
+          "outline": {
+            "type": "boolean"
+          },
+          "args": {
+            "type": "string"
+          },
+          "mask": {
+            "type": "boolean"
+          },
+          "functional": {
+            "type": "boolean"
+          },
+          "padding": {
+            "type": "boolean"
+          },
+          "mesh": {
+            "type": "boolean"
+          },
+          "radius": {
+            "type": "integer"
+          },
+          "skull": {
+            "type": "boolean"
+          },
+          "output_type": {
+            "default": "NIFTI_GZ",
+            "enum": [
+              "NIFTI_PAIR",
+              "NIFTI_PAIR_GZ",
+              "NIFTI_GZ",
+              "NIFTI"
+            ],
+            "type": "string"
+          },
+          "threshold": {
+            "type": "boolean"
+          },
+          "robust": {
+            "type": "boolean"
+          },
+          "center": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL BET (Brain Extraction Tool)"
+  }
+}
