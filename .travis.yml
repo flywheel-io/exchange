@@ -35,7 +35,7 @@ script:
   - if [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
       git checkout $TRAVIS_BRANCH;
     else
-      git checkout $TRAVIS_PULL_REQUEST_BRANCH;
+      git checkout $TRAVIS_PULL_REQUEST_BRANCH || true;
     fi
   - travis_wait 1440 bin/process-manifests.sh
 
