@@ -106,7 +106,7 @@
       "category": "analysis"
     },
     "flywheel": {
-      "suite": "nipype:ants"
+      "suite": "Nipype ANTS 2"
     },
     "gear-builder": {
       "image": "gearificator/nipype-interfaces-ants-segmentation-n4biasfieldcorrection:0.0.2.nipype.1.0.3.1"
