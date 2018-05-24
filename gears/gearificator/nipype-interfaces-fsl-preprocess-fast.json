@@ -189,7 +189,7 @@
       "category": "analysis"
     },
     "flywheel": {
-      "suite": "nipype:fsl"
+      "suite": "Nipype FSL 5"
     },
     "gear-builder": {
       "image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.0.2.nipype.1.0.3.1"
