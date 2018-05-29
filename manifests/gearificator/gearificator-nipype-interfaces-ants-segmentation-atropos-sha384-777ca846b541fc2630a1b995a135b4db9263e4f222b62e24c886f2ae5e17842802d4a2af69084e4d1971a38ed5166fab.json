@@ -1,0 +1,296 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-atropos",
+    "description": "A finite mixture modeling (FMM) segmentation approach with possibilities for",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.0.2.nipype.1.0.3.1",
+    "config": {
+      "dimension": {
+        "type": "integer",
+        "description": "image dimension (2, 3, or 4) [default=3]",
+        "default": 3,
+        "enum": [
+          3,
+          2,
+          4
+        ]
+      },
+      "initialization": {
+        "type": "string",
+        "description": "Initialization [default=Random]",
+        "default": "Random",
+        "enum": [
+          "Random",
+          "Otsu",
+          "KMeans",
+          "PriorProbabilityImages",
+          "PriorLabelImage"
+        ]
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "number_of_tissue_classes": {
+        "type": "integer",
+        "description": "Number of tissue classes"
+      },
+      "output_posteriors_name_template": {
+        "type": "string",
+        "description": "Output posteriors name template [default=POSTERIOR_%02d.nii.gz]",
+        "default": "POSTERIOR_%02d.nii.gz"
+      },
+      "use_random_seed": {
+        "type": "boolean",
+        "description": "use random seed value over constant [default=True]",
+        "default": true
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "convergence_threshold": {
+        "type": "number",
+        "description": "Convergence threshold",
+        "optional": true
+      },
+      "icm_use_synchronous_update": {
+        "type": "boolean",
+        "description": "Icm use synchronous update",
+        "optional": true
+      },
+      "likelihood_model": {
+        "type": "string",
+        "description": "Likelihood model",
+        "optional": true
+      },
+      "maximum_number_of_icm_terations": {
+        "type": "integer",
+        "description": "Maximum number of icm terations",
+        "optional": true
+      },
+      "mrf_radius": {
+        "type": "array",
+        "description": "Mrf radius",
+        "optional": true,
+        "items": {
+          "type": "integer"
+        }
+      },
+      "mrf_smoothing_factor": {
+        "type": "number",
+        "description": "Mrf smoothing factor",
+        "optional": true
+      },
+      "n_iterations": {
+        "type": "integer",
+        "description": "N iterations",
+        "optional": true
+      },
+      "posterior_formulation": {
+        "type": "string",
+        "description": "Posterior formulation",
+        "optional": true
+      },
+      "prior_probability_threshold": {
+        "type": "number",
+        "description": "Prior probability threshold",
+        "optional": true
+      },
+      "prior_weighting": {
+        "type": "number",
+        "description": "Prior weighting",
+        "optional": true
+      },
+      "save_posteriors": {
+        "type": "boolean",
+        "description": "Save posteriors",
+        "optional": true
+      },
+      "use_mixture_model_proportions": {
+        "type": "boolean",
+        "description": "Use mixture model proportions",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "mask_image": {
+        "description": "Mask image",
+        "base": "file"
+      },
+      "intensity_images": {
+        "description": "Intensity images",
+        "base": "file"
+      },
+      "out_classified_image_name": {
+        "description": "Out classified image name",
+        "optional": true,
+        "base": "file"
+      },
+      "prior_probability_images": {
+        "description": "Prior probability images",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:Atropos",
+        "outputs": {
+          "classified_image": {
+            "description": "Classified image"
+          },
+          "posteriors": {
+            "description": "Posteriors"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "ANTS 2"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.0.2.nipype.1.0.3.1"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.0.2.nipype.1.0.3.1"
+    },
+    "label": "Atropos"
+  },
+  "exchange": {
+    "git-commit": "3bbe1f474f5d0a4e955ad24959ba3ab5f369efe2",
+    "rootfs-hash": "sha384:777ca846b541fc2630a1b995a135b4db9263e4f222b62e24c886f2ae5e17842802d4a2af69084e4d1971a38ed5166fab",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-atropos-sha384-777ca846b541fc2630a1b995a135b4db9263e4f222b62e24c886f2ae5e17842802d4a2af69084e4d1971a38ed5166fab.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "intensity_images",
+          "mask_image"
+        ],
+        "type": "object",
+        "properties": {
+          "prior_probability_images": {
+            "type": "object",
+            "properties": {}
+          },
+          "intensity_images": {
+            "type": "object",
+            "properties": {}
+          },
+          "mask_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "out_classified_image_name": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "output_posteriors_name_template",
+          "num_threads",
+          "initialization",
+          "use_random_seed",
+          "number_of_tissue_classes",
+          "dimension"
+        ],
+        "type": "object",
+        "properties": {
+          "output_posteriors_name_template": {
+            "default": "POSTERIOR_%02d.nii.gz",
+            "type": "string"
+          },
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "args": {
+            "type": "string"
+          },
+          "mrf_smoothing_factor": {
+            "type": "number"
+          },
+          "use_random_seed": {
+            "default": true,
+            "type": "boolean"
+          },
+          "convergence_threshold": {
+            "type": "number"
+          },
+          "prior_probability_threshold": {
+            "type": "number"
+          },
+          "likelihood_model": {
+            "type": "string"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              3,
+              2,
+              4
+            ],
+            "type": "integer"
+          },
+          "number_of_tissue_classes": {
+            "type": "integer"
+          },
+          "n_iterations": {
+            "type": "integer"
+          },
+          "icm_use_synchronous_update": {
+            "type": "boolean"
+          },
+          "mrf_radius": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "maximum_number_of_icm_terations": {
+            "type": "integer"
+          },
+          "posterior_formulation": {
+            "type": "string"
+          },
+          "save_posteriors": {
+            "type": "boolean"
+          },
+          "initialization": {
+            "default": "Random",
+            "enum": [
+              "Random",
+              "Otsu",
+              "KMeans",
+              "PriorProbabilityImages",
+              "PriorLabelImage"
+            ],
+            "type": "string"
+          },
+          "prior_weighting": {
+            "type": "number"
+          },
+          "use_mixture_model_proportions": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Atropos"
+  }
+}
