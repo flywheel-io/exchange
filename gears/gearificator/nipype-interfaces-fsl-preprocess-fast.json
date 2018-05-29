@@ -6,11 +6,6 @@
   "license": "Other",
   "version": "0.0.2.nipype.1.0.3.1",
   "config": {
-    "args": {
-      "type": "string",
-      "description": "Additional parameters to the command",
-      "optional": true
-    },
     "bias_iters": {
       "type": "integer",
       "description": "number of main-loop iterations during bias-field removal [default=1]",
@@ -63,32 +58,12 @@
       "maximum": 1.0,
       "default": 0.0
     },
-    "no_bias": {
-      "type": "boolean",
-      "description": "do not remove bias field",
-      "optional": true
-    },
-    "no_pve": {
-      "type": "boolean",
-      "description": "turn off PVE (partial volume estimation)",
-      "optional": true
-    },
     "number_classes": {
       "type": "integer",
       "description": "number of tissue-type classes [default=1]",
       "default": 1,
       "minimum": 1,
       "maximum": 10
-    },
-    "output_biascorrected": {
-      "type": "boolean",
-      "description": "output restored image (bias-corrected image)",
-      "optional": true
-    },
-    "output_biasfield": {
-      "type": "boolean",
-      "description": "output estimated bias field",
-      "optional": true
     },
     "output_type": {
       "type": "string",
@@ -101,17 +76,42 @@
         "NIFTI"
       ]
     },
-    "probability_maps": {
-      "type": "boolean",
-      "description": "outputs individual probability maps",
-      "optional": true
-    },
     "segment_iters": {
       "type": "integer",
       "description": "number of segmentation-initialisation iterations [default=1]",
       "default": 1,
       "minimum": 1,
       "maximum": 50
+    },
+    "args": {
+      "type": "string",
+      "description": "Additional parameters to the command",
+      "optional": true
+    },
+    "no_bias": {
+      "type": "boolean",
+      "description": "do not remove bias field",
+      "optional": true
+    },
+    "no_pve": {
+      "type": "boolean",
+      "description": "turn off PVE (partial volume estimation)",
+      "optional": true
+    },
+    "output_biascorrected": {
+      "type": "boolean",
+      "description": "output restored image (bias-corrected image)",
+      "optional": true
+    },
+    "output_biasfield": {
+      "type": "boolean",
+      "description": "output estimated bias field",
+      "optional": true
+    },
+    "probability_maps": {
+      "type": "boolean",
+      "description": "outputs individual probability maps",
+      "optional": true
     },
     "segments": {
       "type": "boolean",
@@ -134,11 +134,6 @@
       "description": "image, or multi-channel set of images, to be segmented",
       "base": "file"
     },
-    "init_transform": {
-      "description": "<standard2input.mat> initialise using priors",
-      "optional": true,
-      "base": "file"
-    },
     "manual_seg": {
       "description": "Filename containing intensities",
       "optional": true,
@@ -151,6 +146,11 @@
     },
     "out_basename": {
       "description": "base name of output files",
+      "optional": true,
+      "base": "file"
+    },
+    "init_transform": {
+      "description": "<standard2input.mat> initialise using priors",
       "optional": true,
       "base": "file"
     }
@@ -189,7 +189,7 @@
       "category": "analysis"
     },
     "flywheel": {
-      "suite": "nipype:fsl"
+      "suite": "FSL 5"
     },
     "gear-builder": {
       "image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.0.2.nipype.1.0.3.1"
