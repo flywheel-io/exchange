@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/gannet",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.1.4_3.0",
+  "version": "0.1.5_3.0",
   "custom": {
-    "docker-image": "scitran/gannet:0.1.4_3.0"
+    "docker-image": "scitran/gannet:0.1.5_3.0"
   },
   "inputs": {
     "pfile": {
