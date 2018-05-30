@@ -1,0 +1,81 @@
+{
+  "gear": {
+    "name": "gannet",
+    "label": "Gannet 3.0: Analysis of edited MRS data",
+    "description": "Gannet is a software package designed for the analysis of edited magnetic resonance spectroscopy (MRS) data. Gannet runs in Matlab and is available as code rather than executables, empowering users to make local changes. Gannet is designed to run without user intervention, to remove operator variance from the quantification of edited MRS data. This Gear uses a compiled version from huawu02/gannet, which is modified to support latest generation GE P-Files, and is executed using the Matlab Compiler Runtime.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Richard Edden, et. al",
+    "url": "http://www.gabamrs.com/",
+    "source": "https://github.com/scitran-apps/gannet",
+    "license": "Other",
+    "flywheel": "0",
+    "version": "0.1.5_3.0",
+    "custom": {
+      "docker-image": "scitran/gannet:0.1.5_3.0"
+    },
+    "inputs": {
+      "pfile": {
+        "description": "MEGA-PRESS P-File (.7.zip, or .7).",
+        "base": "file",
+        "type": {
+          "enum": [
+            "pfile"
+          ]
+        }
+      }
+    },
+    "config": {
+      "metabolite": {
+        "description": "Target metabolite of GannetFit, 'GABA', 'Glx' or 'GABAGlx'. Default is 'GABAGlx'.",
+        "default": "GABAGlx",
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "2b158546d1a398f0bc9d641dc73295e1f7fb7930",
+    "rootfs-hash": "sha384:a9b786461028f3edad8e06b9c5df3f65466f862533911d224a6d1a127f344069a90cc02863d2ec4a1d6f3255c41bf0d3",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-gannet-sha384-a9b786461028f3edad8e06b9c5df3f65466f862533911d224a6d1a127f344069a90cc02863d2ec4a1d6f3255c41bf0d3.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "pfile"
+        ],
+        "type": "object",
+        "properties": {
+          "pfile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "pfile"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "metabolite"
+        ],
+        "type": "object",
+        "properties": {
+          "metabolite": {
+            "default": "GABAGlx",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Gannet 3.0: Analysis of edited MRS data"
+  }
+}
