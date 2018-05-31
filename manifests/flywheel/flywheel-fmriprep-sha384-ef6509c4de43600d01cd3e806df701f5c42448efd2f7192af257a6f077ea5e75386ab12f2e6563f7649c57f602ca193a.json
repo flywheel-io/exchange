@@ -1,0 +1,157 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "author": "Poldrack Lab, Stanford University",
+    "cite": "Esteban O, Blair R, Markiewicz CJ, Berleant SL, Moodie C, Ma F, Isik AI, Erramuzpe A, Kent JD, Goncalves M, Poldrack RA, Gorgolewski KJ; poldracklab/fmriprep: 1.0.0-rc9. Zenodo; 2017. doi:10.5281/zenodo.1041020",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://github.com/poldracklab/fmriprep",
+    "version": "0.4.7_1.0.15",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:0.4.7_1.0.15"
+    },
+    "license": "Other",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      },
+      "t1w_anatomy": {
+        "base": "file",
+        "optional": true
+      },
+      "t2w_anatomy": {
+        "base": "file",
+        "optional": true
+      }
+    },
+    "config": {
+      "freesurfer": {
+        "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+        "type": "boolean",
+        "default": true
+      },
+      "save_outputs": {
+        "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "save_intermediate_work": {
+        "description": "Zip and save working directory with intermediate files. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "license_email": {
+        "description": "Email address used during FreeSurfer registration (1st line of 'license')",
+        "type": "string"
+      },
+      "license_number": {
+        "description": "FreeSurfer License Number (2nd line of 'license')",
+        "type": "string"
+      },
+      "license_key": {
+        "description": "FreeSurfer License Key (3rd line of 'license')",
+        "type": "string"
+      },
+      "license_reference": {
+        "description": "FreeSurfer License Reference (4th line of 'license')",
+        "type": "string"
+      },
+      "intermediate_files": {
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      },
+      "intermediate_folders": {
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "b3cab79b8dddea140dae83679196d2f2610d261f",
+    "rootfs-hash": "sha384:ef6509c4de43600d01cd3e806df701f5c42448efd2f7192af257a6f077ea5e75386ab12f2e6563f7649c57f602ca193a",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-ef6509c4de43600d01cd3e806df701f5c42448efd2f7192af257a6f077ea5e75386ab12f2e6563f7649c57f602ca193a.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key"
+        ],
+        "type": "object",
+        "properties": {
+          "t1w_anatomy": {
+            "type": "object",
+            "properties": {}
+          },
+          "api_key": {
+            "type": "object",
+            "properties": {}
+          },
+          "t2w_anatomy": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "save_outputs",
+          "intermediate_files",
+          "license_reference",
+          "intermediate_folders",
+          "freesurfer",
+          "license_email",
+          "save_intermediate_work",
+          "license_number",
+          "license_key"
+        ],
+        "type": "object",
+        "properties": {
+          "save_outputs": {
+            "default": false,
+            "type": "boolean"
+          },
+          "intermediate_files": {
+            "default": "",
+            "type": "string"
+          },
+          "license_reference": {
+            "type": "string"
+          },
+          "intermediate_folders": {
+            "default": "",
+            "type": "string"
+          },
+          "license_email": {
+            "type": "string"
+          },
+          "license_number": {
+            "type": "string"
+          },
+          "save_intermediate_work": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "license_key": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data"
+  }
+}
