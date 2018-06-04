@@ -1,7 +1,7 @@
 {
   "name": "pfile-mr-classifier",
   "label": "CNI: GE P-File Classifier",
-  "description": "Extracts GE P-File headers and generates JSON metadata (.metadata.json) which is saved in Flywheel on the P-File's info object. This gear also attempts to determine the P-Files classification.",
+  "description": "Extracts GE P-File header and generates JSON metadata (.metadata.json) which is saved in Flywheel on the P-File's info object. This gear also attempts to determine the P-File's classification (measurement, intent, etc.).",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Michael Perry <lmperry@stanford.edu>",
   "url": "https://cni.stanford.edu",
@@ -9,15 +9,20 @@
   "cite": "pfile-tools: GE P-File Utilities (https://github.com/njvack/pfile-tools)",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.0.0"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.1.0"
   },
   "config": {
     "timezone": {
-      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
+      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
       "type": "string",
       "default": "America/Los_Angeles"
+    },
+    "sync": {
+      "description": "Synchronize classification definitions with the latest known updates found at scitran-apps/dicom-mr-classifier [default = true].",
+      "type": "boolean",
+      "default": true
     }
   },
   "inputs": {
