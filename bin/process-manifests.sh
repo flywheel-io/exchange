@@ -266,7 +266,7 @@ function process_manifests() {
             git add $v_manifest_path
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
             git add $SENTINEL_FILENAME
-            git commit -m "Process $manifest_type $manifest_name"
+            git commit -m "Process $manifest_type $manifest_name $manifest_version"
 
             rm -rf $tempdir
         fi
