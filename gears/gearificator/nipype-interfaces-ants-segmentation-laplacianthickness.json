@@ -1,0 +1,81 @@
+{
+  "name": "nipype-interfaces-ants-segmentation-laplacianthickness",
+  "description": "Calculates the cortical thickness from an anatomical image",
+  "author": "Yaroslav O. Halchenko",
+  "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+  "license": "BSD-3-Clause",
+  "version": "0.1.dev.nipype.1.0.3.2",
+  "config": {
+    "num_threads": {
+      "type": "integer",
+      "description": "Number of ITK threads to use [default=1]",
+      "default": 1
+    },
+    "args": {
+      "type": "string",
+      "description": "Additional parameters to the command",
+      "optional": true
+    },
+    "dT": {
+      "type": "number",
+      "description": "Dt",
+      "optional": true
+    },
+    "opt_tolerance": {
+      "type": "number",
+      "description": "Opt tolerance",
+      "optional": true
+    },
+    "prior_thickness": {
+      "type": "number",
+      "description": "Prior thickness",
+      "optional": true
+    },
+    "smooth_param": {
+      "type": "number",
+      "description": "Smooth param",
+      "optional": true
+    },
+    "sulcus_prior": {
+      "type": "boolean",
+      "description": "Sulcus prior",
+      "optional": true
+    }
+  },
+  "inputs": {
+    "input_gm": {
+      "description": "gray matter segmentation image",
+      "base": "file"
+    },
+    "input_wm": {
+      "description": "white matter segmentation image",
+      "base": "file"
+    },
+    "output_image": {
+      "description": "name of output file",
+      "optional": true,
+      "base": "file"
+    }
+  },
+  "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+  "source": "https://github.com/yarikoptic/gearificator",
+  "custom": {
+    "gearificator": {
+      "interface": "nipype.interfaces.ants.segmentation:LaplacianThickness",
+      "outputs": {
+        "output_image": {
+          "description": "Cortical thickness"
+        }
+      },
+      "category": "analysis"
+    },
+    "flywheel": {
+      "suite": "ANTS 2"
+    },
+    "gear-builder": {
+      "image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.1.dev.nipype.1.0.3.2"
+    },
+    "docker-image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.1.dev.nipype.1.0.3.2"
+  },
+  "label": "LaplacianThickness"
+}
