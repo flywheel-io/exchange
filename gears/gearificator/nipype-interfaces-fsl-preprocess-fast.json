@@ -4,7 +4,7 @@
   "author": "Yaroslav O. Halchenko",
   "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
   "license": "Other",
-  "version": "0.0.2.nipype.1.0.3.1",
+  "version": "0.1.dev.nipype.1.0.3.2",
   "config": {
     "bias_iters": {
       "type": "integer",
@@ -192,9 +192,9 @@
       "suite": "FSL 5"
     },
     "gear-builder": {
-      "image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.0.2.nipype.1.0.3.1"
+      "image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.1.dev.nipype.1.0.3.2"
     },
-    "docker-image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.0.2.nipype.1.0.3.1"
+    "docker-image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.1.dev.nipype.1.0.3.2"
   },
   "label": "FAST"
 }
