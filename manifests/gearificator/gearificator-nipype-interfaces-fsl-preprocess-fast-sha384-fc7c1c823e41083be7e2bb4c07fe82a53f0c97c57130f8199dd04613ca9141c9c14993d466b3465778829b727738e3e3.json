@@ -1,0 +1,357 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-fsl-preprocess-fast",
+    "description": "FSL FAST command for segmentation and bias correction",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "Other",
+    "version": "0.1.dev.nipype.1.0.3.2",
+    "config": {
+      "bias_iters": {
+        "type": "integer",
+        "description": "number of main-loop iterations during bias-field removal [default=1]",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 10
+      },
+      "bias_lowpass": {
+        "type": "integer",
+        "description": "bias field smoothing extent (FWHM) in mm [default=4]",
+        "default": 4,
+        "minimum": 4,
+        "maximum": 40
+      },
+      "hyper": {
+        "type": "number",
+        "description": "segmentation spatial smoothness",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0
+      },
+      "img_type": {
+        "type": "integer",
+        "description": "int specifying type of image: (1 = T1, 2 = T2, 3 = PD) [default=1]",
+        "default": 1,
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "init_seg_smooth": {
+        "type": "number",
+        "description": "initial segmentation spatial smoothness (during bias field estimation) [default=0.0001]",
+        "default": 0.0001,
+        "minimum": 0.0001,
+        "maximum": 0.1
+      },
+      "iters_afterbias": {
+        "type": "integer",
+        "description": "number of main-loop iterations after bias-field removal [default=1]",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 20
+      },
+      "mixel_smooth": {
+        "type": "number",
+        "description": "spatial smoothness for mixeltype",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0
+      },
+      "number_classes": {
+        "type": "integer",
+        "description": "number of tissue-type classes [default=1]",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 10
+      },
+      "output_type": {
+        "type": "string",
+        "description": "FSL output type [default=NIFTI_GZ]",
+        "default": "NIFTI_GZ",
+        "enum": [
+          "NIFTI_PAIR",
+          "NIFTI_PAIR_GZ",
+          "NIFTI_GZ",
+          "NIFTI"
+        ]
+      },
+      "segment_iters": {
+        "type": "integer",
+        "description": "number of segmentation-initialisation iterations [default=1]",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 50
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "no_bias": {
+        "type": "boolean",
+        "description": "do not remove bias field",
+        "optional": true
+      },
+      "no_pve": {
+        "type": "boolean",
+        "description": "turn off PVE (partial volume estimation)",
+        "optional": true
+      },
+      "output_biascorrected": {
+        "type": "boolean",
+        "description": "output restored image (bias-corrected image)",
+        "optional": true
+      },
+      "output_biasfield": {
+        "type": "boolean",
+        "description": "output estimated bias field",
+        "optional": true
+      },
+      "probability_maps": {
+        "type": "boolean",
+        "description": "outputs individual probability maps",
+        "optional": true
+      },
+      "segments": {
+        "type": "boolean",
+        "description": "outputs a separate binary image for each tissue type",
+        "optional": true
+      },
+      "use_priors": {
+        "type": "boolean",
+        "description": "use priors throughout",
+        "optional": true
+      },
+      "verbose": {
+        "type": "boolean",
+        "description": "switch on diagnostic messages",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "in_files": {
+        "description": "image, or multi-channel set of images, to be segmented",
+        "base": "file"
+      },
+      "manual_seg": {
+        "description": "Filename containing intensities",
+        "optional": true,
+        "base": "file"
+      },
+      "other_priors": {
+        "description": "alternative prior images",
+        "optional": true,
+        "base": "file"
+      },
+      "out_basename": {
+        "description": "base name of output files",
+        "optional": true,
+        "base": "file"
+      },
+      "init_transform": {
+        "description": "<standard2input.mat> initialise using priors",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.fsl.preprocess:FAST",
+        "outputs": {
+          "bias_field": {
+            "description": "Bias field"
+          },
+          "mixeltype": {
+            "description": "path/name of mixeltype volume file _mixeltype"
+          },
+          "partial_volume_files": {
+            "description": "Partial volume files"
+          },
+          "partial_volume_map": {
+            "description": "path/name of partial volume file _pveseg"
+          },
+          "probability_maps": {
+            "description": "Probability maps"
+          },
+          "restored_image": {
+            "description": "Restored image"
+          },
+          "tissue_class_files": {
+            "description": "Tissue class files"
+          },
+          "tissue_class_map": {
+            "description": "path/name of binary segmented volume file one val for each class  _seg"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "FSL 5"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.1.dev.nipype.1.0.3.2"
+      },
+      "docker-image": "gearificator/nipype-interfaces-fsl-preprocess-fast:0.1.dev.nipype.1.0.3.2"
+    },
+    "label": "FAST"
+  },
+  "exchange": {
+    "git-commit": "37fcc0dc3bd906bf9ec713f691629741edd660ec",
+    "rootfs-hash": "sha384:fc7c1c823e41083be7e2bb4c07fe82a53f0c97c57130f8199dd04613ca9141c9c14993d466b3465778829b727738e3e3",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-fsl-preprocess-fast-sha384-fc7c1c823e41083be7e2bb4c07fe82a53f0c97c57130f8199dd04613ca9141c9c14993d466b3465778829b727738e3e3.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "in_files"
+        ],
+        "type": "object",
+        "properties": {
+          "out_basename": {
+            "type": "object",
+            "properties": {}
+          },
+          "manual_seg": {
+            "type": "object",
+            "properties": {}
+          },
+          "in_files": {
+            "type": "object",
+            "properties": {}
+          },
+          "other_priors": {
+            "type": "object",
+            "properties": {}
+          },
+          "init_transform": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "img_type",
+          "number_classes",
+          "hyper",
+          "mixel_smooth",
+          "init_seg_smooth",
+          "segment_iters",
+          "iters_afterbias",
+          "bias_lowpass",
+          "output_type",
+          "bias_iters"
+        ],
+        "type": "object",
+        "properties": {
+          "img_type": {
+            "default": 1,
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "type": "integer"
+          },
+          "number_classes": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 10
+          },
+          "hyper": {
+            "default": 0,
+            "minimum": 0,
+            "type": "number",
+            "maximum": 1
+          },
+          "verbose": {
+            "type": "boolean"
+          },
+          "mixel_smooth": {
+            "default": 0,
+            "minimum": 0,
+            "type": "number",
+            "maximum": 1
+          },
+          "init_seg_smooth": {
+            "default": 0.0001,
+            "minimum": 0.0001,
+            "type": "number",
+            "maximum": 0.1
+          },
+          "no_pve": {
+            "type": "boolean"
+          },
+          "use_priors": {
+            "type": "boolean"
+          },
+          "segments": {
+            "type": "boolean"
+          },
+          "args": {
+            "type": "string"
+          },
+          "probability_maps": {
+            "type": "boolean"
+          },
+          "segment_iters": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 50
+          },
+          "iters_afterbias": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 20
+          },
+          "output_biascorrected": {
+            "type": "boolean"
+          },
+          "output_biasfield": {
+            "type": "boolean"
+          },
+          "output_type": {
+            "default": "NIFTI_GZ",
+            "enum": [
+              "NIFTI_PAIR",
+              "NIFTI_PAIR_GZ",
+              "NIFTI_GZ",
+              "NIFTI"
+            ],
+            "type": "string"
+          },
+          "no_bias": {
+            "type": "boolean"
+          },
+          "bias_lowpass": {
+            "default": 4,
+            "minimum": 4,
+            "type": "integer",
+            "maximum": 40
+          },
+          "bias_iters": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 10
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FAST"
+  }
+}
