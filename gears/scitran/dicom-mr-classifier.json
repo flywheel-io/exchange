@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "custom": {
-    "docker-image": "scitran/dicom-mr-classifier:0.7.0"
+    "docker-image": "scitran/dicom-mr-classifier:0.7.1"
   },
   "config": {
     "timezone": {
