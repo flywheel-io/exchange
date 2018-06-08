@@ -6,6 +6,25 @@
   "license": "BSD-3-Clause",
   "version": "0.0.2.nipype.1.0.3.1",
   "config": {
+    "copy_header": {
+      "type": "boolean",
+      "description": "copy headers of the original image into the output (corrected) file"
+    },
+    "dimension": {
+      "type": "integer",
+      "description": "image dimension (2, 3 or 4) [default=3]",
+      "default": 3,
+      "enum": [
+        3,
+        2,
+        4
+      ]
+    },
+    "num_threads": {
+      "type": "integer",
+      "description": "Number of ITK threads to use [default=1]",
+      "default": 1
+    },
     "args": {
       "type": "string",
       "description": "Additional parameters to the command",
@@ -26,20 +45,6 @@
       "description": "Convergence threshold",
       "optional": true
     },
-    "copy_header": {
-      "type": "boolean",
-      "description": "copy headers of the original image into the output (corrected) file"
-    },
-    "dimension": {
-      "type": "integer",
-      "description": "image dimension (2, 3 or 4) [default=3]",
-      "default": 3,
-      "enum": [
-        3,
-        2,
-        4
-      ]
-    },
     "n_iterations": {
       "type": "array",
       "description": "N iterations",
@@ -47,11 +52,6 @@
       "items": {
         "type": "integer"
       }
-    },
-    "num_threads": {
-      "type": "integer",
-      "description": "Number of ITK threads to use [default=1]",
-      "default": 1
     },
     "output_image": {
       "type": "string",
@@ -70,13 +70,13 @@
     }
   },
   "inputs": {
+    "input_image": {
+      "description": "input for bias correction. Negative values or values close to zero should be processed prior to correction",
+      "base": "file"
+    },
     "bias_image": {
       "description": "Filename for the estimated bias.",
       "optional": true,
-      "base": "file"
-    },
-    "input_image": {
-      "description": "input for bias correction. Negative values or values close to zero should be processed prior to correction",
       "base": "file"
     },
     "mask_image": {
@@ -106,7 +106,7 @@
       "category": "analysis"
     },
     "flywheel": {
-      "suite": "nipype:ants"
+      "suite": "ANTS 2"
     },
     "gear-builder": {
       "image": "gearificator/nipype-interfaces-ants-segmentation-n4biasfieldcorrection:0.0.2.nipype.1.0.3.1"
