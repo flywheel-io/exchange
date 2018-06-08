@@ -1,0 +1,177 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-denoiseimage",
+    "description": "",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.1.dev.nipype.1.0.3.2",
+    "config": {
+      "dimension": {
+        "type": "integer",
+        "description": "This option forces the image to be treated as a specified-dimensional image. If not specified, the program tries to infer the dimensionality from the input image. [default=3]",
+        "default": 3,
+        "enum": [
+          2,
+          3,
+          4
+        ]
+      },
+      "noise_model": {
+        "type": "string",
+        "description": "Employ a Rician or Gaussian noise model. [default=Gaussian]",
+        "default": "Gaussian",
+        "enum": [
+          "Gaussian",
+          "Rician"
+        ]
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "shrink_factor": {
+        "type": "integer",
+        "description": "Running noise correction on large images can be time consuming. To lessen computation time, the input image can be resampled. The shrink factor, specified as a single integer, describes this resampling. Shrink factor = 1 is the default. [default=1]",
+        "default": 1
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "save_noise": {
+        "type": "boolean",
+        "description": "True if the estimated noise should be saved to file.",
+        "optional": true
+      },
+      "verbose": {
+        "type": "boolean",
+        "description": "Verbose output.",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "input_image": {
+        "description": "A scalar image is expected as input for noise correction.",
+        "base": "file"
+      },
+      "noise_image": {
+        "description": "Filename for the estimated noise.",
+        "optional": true,
+        "base": "file"
+      },
+      "output_image": {
+        "description": "The output consists of the noise corrected version of the input image.",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:DenoiseImage",
+        "outputs": {
+          "noise_image": {
+            "description": "Noise image"
+          },
+          "output_image": {
+            "description": "Output image"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "ANTS 2"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-denoiseimage:0.1.dev.nipype.1.0.3.2"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-denoiseimage:0.1.dev.nipype.1.0.3.2"
+    },
+    "label": "DenoiseImage"
+  },
+  "exchange": {
+    "git-commit": "37fcc0dc3bd906bf9ec713f691629741edd660ec",
+    "rootfs-hash": "sha384:b23d5389c8c4dbfff5319bac13f789b86eb94497355ce93aabefe9b6982db39257125fe5410124e54c6247d71d13d618",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-denoiseimage-sha384-b23d5389c8c4dbfff5319bac13f789b86eb94497355ce93aabefe9b6982db39257125fe5410124e54c6247d71d13d618.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "input_image"
+        ],
+        "type": "object",
+        "properties": {
+          "input_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "output_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "noise_image": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "num_threads",
+          "shrink_factor",
+          "noise_model",
+          "dimension"
+        ],
+        "type": "object",
+        "properties": {
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "shrink_factor": {
+            "default": 1,
+            "type": "integer"
+          },
+          "verbose": {
+            "type": "boolean"
+          },
+          "noise_model": {
+            "default": "Gaussian",
+            "enum": [
+              "Gaussian",
+              "Rician"
+            ],
+            "type": "string"
+          },
+          "save_noise": {
+            "type": "boolean"
+          },
+          "args": {
+            "type": "string"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              2,
+              3,
+              4
+            ],
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for DenoiseImage"
+  }
+}
