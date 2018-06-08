@@ -1,0 +1,321 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-corticalthickness",
+    "description": "",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.1.dev.nipype.1.0.3.2",
+    "config": {
+      "dimension": {
+        "type": "integer",
+        "description": "image dimension (2 or 3) [default=3]",
+        "default": 3,
+        "enum": [
+          3,
+          2
+        ]
+      },
+      "image_suffix": {
+        "type": "string",
+        "description": "any of standard ITK formats, nii.gz is default [default=nii.gz]",
+        "default": "nii.gz"
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "out_prefix": {
+        "type": "string",
+        "description": "Prefix that is prepended to all output files (default = antsCT_) [default=antsCT_]",
+        "default": "antsCT_"
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "b_spline_smoothing": {
+        "type": "boolean",
+        "description": "Use B-spline SyN for registrations and B-spline exponential mapping in DiReCT.",
+        "optional": true
+      },
+      "debug": {
+        "type": "boolean",
+        "description": "If > 0, runs a faster version of the script. Only for testing. Implies -u 0. Requires single thread computation for complete reproducibility.",
+        "optional": true
+      },
+      "keep_temporary_files": {
+        "type": "integer",
+        "description": "Keep brain extraction/segmentation warps, etc (default = 0).",
+        "optional": true
+      },
+      "label_propagation": {
+        "type": "string",
+        "description": "Incorporate a distance prior one the posterior formulation.  Should be of the form 'label[lambda,boundaryProbability]' where label is a value of 1,2,3,... denoting label ID.  The label probability for anything outside the current label = boundaryProbability * exp( -lambda * distanceFromBoundary ) Intuitively, smaller lambda values will increase the spatial capture range of the distance prior.  To apply to all label values, simply omit specifying the label, i.e. -l [lambda,boundaryProbability].",
+        "optional": true
+      },
+      "max_iterations": {
+        "type": "integer",
+        "description": "ANTS registration max iterations (default = 100x100x70x20)",
+        "optional": true
+      },
+      "posterior_formulation": {
+        "type": "string",
+        "description": "Atropos posterior formulation and whether or not to use mixture model proportions. e.g 'Socrates[1]' (default) or 'Aristotle[1]'. Choose the latter if you want use the distance priors (see also the -l option for label propagation control).",
+        "optional": true
+      },
+      "prior_segmentation_weight": {
+        "type": "number",
+        "description": "Atropos spatial prior *probability* weight for the segmentation",
+        "optional": true
+      },
+      "quick_registration": {
+        "type": "boolean",
+        "description": "If = 1, use antsRegistrationSyNQuick.sh as the basis for registration during brain extraction, brain segmentation, and (optional) normalization to a template. Otherwise use antsRegistrationSyN.sh (default = 0).",
+        "optional": true
+      },
+      "segmentation_iterations": {
+        "type": "integer",
+        "description": "N4 -> Atropos -> N4 iterations during segmentation (default = 3)",
+        "optional": true
+      },
+      "use_floatingpoint_precision": {
+        "type": "integer",
+        "description": "Use floating point precision in registrations (default = 0)",
+        "optional": true,
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "use_random_seeding": {
+        "type": "integer",
+        "description": "Use random number generated from system clock in Atropos (default = 1)",
+        "optional": true,
+        "enum": [
+          0,
+          1
+        ]
+      }
+    },
+    "inputs": {
+      "anatomical_image": {
+        "description": "Structural *intensity* image, typically T1. If more than one anatomical image is specified, subsequently specified images are used during the segmentation process. However, only the first image is used in the registration of priors. Our suggestion would be to specify the T1 as the first image.",
+        "base": "file"
+      },
+      "brain_probability_mask": {
+        "description": "brain probability mask in template space",
+        "base": "file"
+      },
+      "brain_template": {
+        "description": "Anatomical *intensity* template (possibly created using a population data set with buildtemplateparallel.sh in ANTs). This template is  *not* skull-stripped.",
+        "base": "file"
+      },
+      "segmentation_priors": {
+        "description": "Segmentation priors",
+        "base": "file"
+      },
+      "t1_registration_template": {
+        "description": "Anatomical *intensity* template (assumed to be skull-stripped). A common case would be where this would be the same template as specified in the -e option which is not skull stripped.",
+        "base": "file"
+      },
+      "cortical_label_image": {
+        "description": "Cortical ROI labels to use as a prior for ATITH.",
+        "optional": true,
+        "base": "file"
+      },
+      "extraction_registration_mask": {
+        "description": "Mask (defined in the template space) used during registration for brain extraction.",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:CorticalThickness",
+        "outputs": {
+          "BrainExtractionMask": {
+            "description": "brain extraction mask"
+          },
+          "BrainSegmentation": {
+            "description": "brain segmentaion image"
+          },
+          "BrainSegmentationN4": {
+            "description": "N4 corrected image"
+          },
+          "BrainSegmentationPosteriors": {
+            "description": "Posterior probability images"
+          },
+          "BrainVolumes": {
+            "description": "Brain volumes as text"
+          },
+          "CorticalThickness": {
+            "description": "cortical thickness file"
+          },
+          "CorticalThicknessNormedToTemplate": {
+            "description": "Normalized cortical thickness"
+          },
+          "SubjectToTemplate0GenericAffine": {
+            "description": "Template to subject inverse affine"
+          },
+          "SubjectToTemplate1Warp": {
+            "description": "Template to subject inverse warp"
+          },
+          "SubjectToTemplateLogJacobian": {
+            "description": "Template to subject log jacobian"
+          },
+          "TemplateToSubject0Warp": {
+            "description": "Template to subject warp"
+          },
+          "TemplateToSubject1GenericAffine": {
+            "description": "Template to subject affine"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "ANTS 2"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-corticalthickness:0.1.dev.nipype.1.0.3.2"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-corticalthickness:0.1.dev.nipype.1.0.3.2"
+    },
+    "label": "CorticalThickness"
+  },
+  "exchange": {
+    "git-commit": "37fcc0dc3bd906bf9ec713f691629741edd660ec",
+    "rootfs-hash": "sha384:418dd326037d4fbcc370cabb09406a3854e8c4cbcec7e8ba24f48d611a352fa359f96539c8f5c583250868d813eb7f1e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-corticalthickness-sha384-418dd326037d4fbcc370cabb09406a3854e8c4cbcec7e8ba24f48d611a352fa359f96539c8f5c583250868d813eb7f1e.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "segmentation_priors",
+          "anatomical_image",
+          "t1_registration_template",
+          "brain_template",
+          "brain_probability_mask"
+        ],
+        "type": "object",
+        "properties": {
+          "extraction_registration_mask": {
+            "type": "object",
+            "properties": {}
+          },
+          "segmentation_priors": {
+            "type": "object",
+            "properties": {}
+          },
+          "cortical_label_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "anatomical_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "t1_registration_template": {
+            "type": "object",
+            "properties": {}
+          },
+          "brain_template": {
+            "type": "object",
+            "properties": {}
+          },
+          "brain_probability_mask": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "num_threads",
+          "out_prefix",
+          "image_suffix",
+          "dimension"
+        ],
+        "type": "object",
+        "properties": {
+          "max_iterations": {
+            "type": "integer"
+          },
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "use_floatingpoint_precision": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "args": {
+            "type": "string"
+          },
+          "segmentation_iterations": {
+            "type": "integer"
+          },
+          "keep_temporary_files": {
+            "type": "integer"
+          },
+          "out_prefix": {
+            "default": "antsCT_",
+            "type": "string"
+          },
+          "image_suffix": {
+            "default": "nii.gz",
+            "type": "string"
+          },
+          "quick_registration": {
+            "type": "boolean"
+          },
+          "label_propagation": {
+            "type": "string"
+          },
+          "prior_segmentation_weight": {
+            "type": "number"
+          },
+          "debug": {
+            "type": "boolean"
+          },
+          "b_spline_smoothing": {
+            "type": "boolean"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              3,
+              2
+            ],
+            "type": "integer"
+          },
+          "posterior_formulation": {
+            "type": "string"
+          },
+          "use_random_seeding": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for CorticalThickness"
+  }
+}
