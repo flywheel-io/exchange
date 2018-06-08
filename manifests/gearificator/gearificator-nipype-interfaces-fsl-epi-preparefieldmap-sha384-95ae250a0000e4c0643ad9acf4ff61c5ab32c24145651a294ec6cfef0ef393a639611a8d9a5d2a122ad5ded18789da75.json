@@ -1,0 +1,150 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-fsl-epi-preparefieldmap",
+    "description": "",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "Other",
+    "version": "0.1.dev.nipype.1.0.3.3",
+    "config": {
+      "delta_TE": {
+        "type": "number",
+        "description": "echo time difference of the fieldmap sequence in ms. (usually 2.46ms in Siemens) [default=2.46]",
+        "default": 2.46
+      },
+      "output_type": {
+        "type": "string",
+        "description": "FSL output type [default=NIFTI_GZ]",
+        "default": "NIFTI_GZ",
+        "enum": [
+          "NIFTI_PAIR",
+          "NIFTI_PAIR_GZ",
+          "NIFTI_GZ",
+          "NIFTI"
+        ]
+      },
+      "scanner": {
+        "type": "string",
+        "description": "must be SIEMENS [default=SIEMENS]",
+        "default": "SIEMENS"
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "nocheck": {
+        "type": "boolean",
+        "description": "do not perform sanity checks for image size/range/dimensions",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "in_magnitude": {
+        "description": "Magnitude difference map, brain extracted",
+        "base": "file"
+      },
+      "in_phase": {
+        "description": "Phase difference map, in SIEMENS format range from 0-4096 or 0-8192)",
+        "base": "file"
+      },
+      "out_fieldmap": {
+        "description": "output name for prepared fieldmap",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.fsl.epi:PrepareFieldmap",
+        "outputs": {
+          "out_fieldmap": {
+            "description": "output name for prepared fieldmap"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "FSL 5"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-fsl-epi-preparefieldmap:0.1.dev.nipype.1.0.3.3"
+      },
+      "docker-image": "gearificator/nipype-interfaces-fsl-epi-preparefieldmap:0.1.dev.nipype.1.0.3.3"
+    },
+    "label": "PrepareFieldmap"
+  },
+  "exchange": {
+    "git-commit": "37fcc0dc3bd906bf9ec713f691629741edd660ec",
+    "rootfs-hash": "sha384:95ae250a0000e4c0643ad9acf4ff61c5ab32c24145651a294ec6cfef0ef393a639611a8d9a5d2a122ad5ded18789da75",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-fsl-epi-preparefieldmap-sha384-95ae250a0000e4c0643ad9acf4ff61c5ab32c24145651a294ec6cfef0ef393a639611a8d9a5d2a122ad5ded18789da75.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "in_phase",
+          "in_magnitude"
+        ],
+        "type": "object",
+        "properties": {
+          "in_phase": {
+            "type": "object",
+            "properties": {}
+          },
+          "in_magnitude": {
+            "type": "object",
+            "properties": {}
+          },
+          "out_fieldmap": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "delta_TE",
+          "output_type",
+          "scanner"
+        ],
+        "type": "object",
+        "properties": {
+          "delta_TE": {
+            "default": 2.46,
+            "type": "number"
+          },
+          "output_type": {
+            "default": "NIFTI_GZ",
+            "enum": [
+              "NIFTI_PAIR",
+              "NIFTI_PAIR_GZ",
+              "NIFTI_GZ",
+              "NIFTI"
+            ],
+            "type": "string"
+          },
+          "args": {
+            "type": "string"
+          },
+          "nocheck": {
+            "type": "boolean"
+          },
+          "scanner": {
+            "default": "SIEMENS",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for PrepareFieldmap"
+  }
+}
