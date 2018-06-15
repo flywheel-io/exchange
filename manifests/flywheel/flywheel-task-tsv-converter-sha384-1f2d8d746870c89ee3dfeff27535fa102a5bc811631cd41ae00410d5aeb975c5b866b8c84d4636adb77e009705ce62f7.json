@@ -1,0 +1,105 @@
+{
+  "gear": {
+    "name": "task-tsv-converter",
+    "label": "Task tsv Converter",
+    "description": "Converts log files to tsv task files as per bids specs",
+    "version": "0.1.1",
+    "flywheel": "0.1.1",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "text",
+            "tabular data"
+          ]
+        },
+        "description": "Log files"
+      },
+      "LogConfig": {
+        "base": "context"
+      }
+    },
+    "config": {
+      "FileName": {
+        "default": "",
+        "description": "Override tsv filename from {filename}[_run-#].tsv",
+        "type": "string"
+      }
+    },
+    "command": "python task_gen.py",
+    "author": "Harsha Kethineni",
+    "maintainer": "Harsha Kethineni",
+    "license": "Other",
+    "source": "",
+    "url": "",
+    "custom": {
+      "docker-image": "flywheel/task-tsv-converter:0.1.1"
+    }
+  },
+  "exchange": {
+    "git-commit": "eeec35d91afcfebeea2a70624016f951eb0a2f99",
+    "rootfs-hash": "sha384:1f2d8d746870c89ee3dfeff27535fa102a5bc811631cd41ae00410d5aeb975c5b866b8c84d4636adb77e009705ce62f7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-task-tsv-converter-sha384-1f2d8d746870c89ee3dfeff27535fa102a5bc811631cd41ae00410d5aeb975c5b866b8c84d4636adb77e009705ce62f7.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "LogConfig",
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "LogConfig": {
+            "required": [
+              "base",
+              "found",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "found": {
+                "type": "boolean"
+              },
+              "base": {
+                "type": "string"
+              },
+              "value": {}
+            }
+          },
+          "file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "text",
+                  "tabular data"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "FileName"
+        ],
+        "type": "object",
+        "properties": {
+          "FileName": {
+            "default": "",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Task tsv Converter"
+  }
+}
