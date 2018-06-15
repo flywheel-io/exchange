@@ -2,8 +2,8 @@
 	"name": "task-tsv-converter",
 	"label": "Task tsv Converter",
 	"description": "Converts log files to tsv task files as per bids specs",
-	"version": "0.1.0",
-	"flywheel": "0.1.0",
+	"version": "0.1.0-1",
+	"flywheel": "0.1.0-1",
 	"inputs": {
 		"file": {
 			"base": "file",
@@ -19,7 +19,14 @@
 			"base": "context"
 		}
 	},
-	"config": {},
+	"config": {
+		"FileName": {
+			"default": "",
+			"description": "Override tsv filename from {filename}[_run-#].tsv",
+			"type": "string"
+		}
+	},
+	"command": "python task_gen.py",
 	"author": "Harsha Kethineni",
 	"maintainer": "Harsha Kethineni",
 	"license": "Other",
@@ -29,3 +36,4 @@
 		"docker-image": "flywheel/task-tsv-converter:0.1.0"
 	}
 }
+
