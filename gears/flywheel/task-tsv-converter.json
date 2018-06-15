@@ -26,6 +26,6 @@
 	"source": "",
 	"url": "",
 	"custom": {
-		"docker-image": "flywheel/task-tsv-converter"
+		"docker-image": "flywheel/task-tsv-converter:0.1.0"
 	}
 }
