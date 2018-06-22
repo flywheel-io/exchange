@@ -9,15 +9,15 @@
   "cite": "pfile-tools: GE P-File Utilities (https://github.com/njvack/pfile-tools)",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.1.1"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.2.0"
   },
   "config": {
     "timezone": {
-      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
+      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
       "type": "string",
-      "default": "America/Los_Angeles"
+      "default": "UTC"
     },
     "sync": {
       "description": "Synchronize classification definitions with the latest known updates found at scitran-apps/dicom-mr-classifier [default = true].",
