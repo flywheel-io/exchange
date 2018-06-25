@@ -9,9 +9,9 @@
   "cite": "pfile-tools: GE P-File Utilities (https://github.com/njvack/pfile-tools)",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.2.0"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.2.1"
   },
   "config": {
     "timezone": {
