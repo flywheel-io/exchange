@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/parrec-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "custom": {
-    "docker-image": "scitran/parrec-mr-classifier:1.1.0"
+    "docker-image": "scitran/parrec-mr-classifier:1.1.1"
   },
   "config": {
     "timezone": {
