@@ -7,9 +7,9 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://github.com/poldracklab/fmriprep",
-  "version": "5.2.0_1.0.15",
+  "version": "5.2.2_1.1.1",
   "custom": {
-    "docker-image": "flywheel/fmriprep:5.2.0_1.0.15"
+    "docker-image": "flywheel/fmriprep:5.2.2_1.1.1"
   },
   "license": "Other",
   "inputs": {
@@ -58,8 +58,8 @@
       "default": false
     },
     "intermediate_files": {
-      "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
-      "default": "",
+      "description": "Space separated list of FILES to retain from the intermediate work directory. By default we save the reference corrected brain image.",
+      "default": "ref_image_corrected_brain.nii.gz",
       "type": "string"
     },
     "intermediate_folders": {
