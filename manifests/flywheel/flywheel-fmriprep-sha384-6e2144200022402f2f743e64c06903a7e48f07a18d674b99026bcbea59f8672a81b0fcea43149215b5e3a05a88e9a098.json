@@ -1,0 +1,158 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "author": "Poldrack Lab, Stanford University",
+    "cite": "Esteban O, Blair R, Markiewicz CJ, Berleant SL, Moodie C, Ma F, Isik AI, Erramuzpe A, Kent JD, Goncalves M, Poldrack RA, Gorgolewski KJ; poldracklab/fmriprep: 1.0.0-rc9. Zenodo; 2017. doi:10.5281/zenodo.1041020",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://github.com/poldracklab/fmriprep",
+    "version": "5.2.2_1.1.1",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:5.2.2_1.1.1"
+    },
+    "license": "Other",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      },
+      "t1w_anatomy": {
+        "description": "T1 weighted anatomical NIfTI file. When provided this file will be used in place of any T1w images found in the current session.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t2w_anatomy": {
+        "description": "T2 weighted anatomical NIfTI file. When provided this file will be used in place of any T2w images found in the current session.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "freesurfer_license": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file"
+      }
+    },
+    "config": {
+      "freesurfer": {
+        "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+        "type": "boolean",
+        "default": true
+      },
+      "save_outputs": {
+        "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "save_intermediate_work": {
+        "description": "Zip and save working directory with intermediate files. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "intermediate_files": {
+        "description": "Space separated list of FILES to retain from the intermediate work directory. By default we save the reference corrected brain image.",
+        "default": "ref_image_corrected_brain.nii.gz",
+        "type": "string"
+      },
+      "intermediate_folders": {
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "5a1ca50885415ab7b7cebbf91336bb2b49db8069",
+    "rootfs-hash": "sha384:6e2144200022402f2f743e64c06903a7e48f07a18d674b99026bcbea59f8672a81b0fcea43149215b5e3a05a88e9a098",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-6e2144200022402f2f743e64c06903a7e48f07a18d674b99026bcbea59f8672a81b0fcea43149215b5e3a05a88e9a098.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key",
+          "freesurfer_license"
+        ],
+        "type": "object",
+        "properties": {
+          "t1w_anatomy": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "api_key": {
+            "type": "object",
+            "properties": {}
+          },
+          "t2w_anatomy": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "freesurfer_license": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "save_outputs",
+          "freesurfer",
+          "save_intermediate_work",
+          "intermediate_folders",
+          "intermediate_files"
+        ],
+        "type": "object",
+        "properties": {
+          "save_outputs": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "intermediate_files": {
+            "default": "ref_image_corrected_brain.nii.gz",
+            "type": "string"
+          },
+          "save_intermediate_work": {
+            "default": false,
+            "type": "boolean"
+          },
+          "intermediate_folders": {
+            "default": "",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data"
+  }
+}
