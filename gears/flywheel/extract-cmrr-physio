@@ -6,11 +6,11 @@
   "author": "E. Auerbach, CMRR, 2016",
   "url": "https://github.com/CMRR-C2P/MB",
   "source": "https://github.com/flywheel-apps/extract-cmrr-physio",
-  "license": "Other",
+  "license": "MIT",
   "flywheel": "0",
-  "version": "0.1",
+  "version": "0.1.1",
   "custom": {
-    "docker-image": "flywheel/extract-cmrr-physio:v0.1"
+    "docker-image": "flywheel/extract-cmrr-physio:0.1.1"
   },
   "inputs": {
     "DICOM_ARCHIVE": {
