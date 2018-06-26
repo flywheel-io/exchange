@@ -31,7 +31,7 @@
   },
   "inputs": {
     "fmri_input": {
-      "description": "fMRI nput file for bxh-xcede-tools-qa. This can be either a DICOM archive ('.dicom.zip'), or a folder of DICOM files, or an enhanced DICOM image (gzipped or not, e.g., 'IM0001.gz', 'IM0001'), or a NIfTI file.",
+      "description": "fMRI input file for bxh-xcede-tools-qa. This can be either a DICOM archive ('.dicom.zip'), or a folder of DICOM files, or an enhanced DICOM image (gzipped or not, e.g., 'IM0001.gz', 'IM0001'), or a NIfTI file.",
       "base": "file",
       "type": {
         "enum": [
