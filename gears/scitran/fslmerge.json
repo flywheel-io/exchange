@@ -7,10 +7,12 @@
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
   "source": "https://github.com/scitran-apps/fslmerge",
   "license": "Apache-2.0",
-  "flywheel": "0",
-  "version": "0.1",
+  "flywheel": {
+    "suite": "FSL"
+  },
+  "version": "0.1.1",
   "custom": {
-    "docker-image": "scitran/fslmerge:v0.1"
+    "docker-image": "scitran/fslmerge:0.1.1"
   },
   "config": {
     "catTime": {
