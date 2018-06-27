@@ -7,7 +7,9 @@
   "url": "http://www.gabamrs.com/",
   "source": "https://github.com/scitran-apps/gannet",
   "license": "Other",
-  "flywheel": "0",
+  "flywheel": {
+    "suite": "GANNET"
+  },
   "version": "0.1.6_3.0",
   "custom": {
     "docker-image": "scitran/gannet:0.1.6_3.0"
