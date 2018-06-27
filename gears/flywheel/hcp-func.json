@@ -4,12 +4,16 @@
   "description": "Runs the functional preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. Currently, this Gear includes v4.0-alpha release of fMRIVolume and fMRISurface, as well as generating some helpful QC images. Note this Gear requires that the HCP structural preprocessing pipeline has been run, as the output of that pipeline must be provided as input.",
   "author": "Human Connectome Project",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "license": "Apache-2.0",
+  "license": "Other",
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-func",
-  "version": "0.1.0",
+  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+  "version": "0.1.2",
   "custom": {
-    "docker-image": "flywheel/hcp-func:0.1.0"
+    "docker-image": "flywheel/hcp-func:0.1.2"
+  },
+  "flywheel": {
+    "suite": "Human Connectome Project"
   },
   "inputs": {
     "StructZip": {
