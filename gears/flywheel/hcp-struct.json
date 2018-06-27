@@ -4,12 +4,16 @@
   "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images.",
   "author": "Human Connectome Project",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "license": "Apache-2.0",
+  "license": "Other",
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-struct",
-  "version": "0.1.3",
+  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+  "version": "0.1.5",
   "custom": {
-    "docker-image": "flywheel/hcp-struct:0.1.3"
+    "docker-image": "flywheel/hcp-struct:0.1.5"
+  },
+  "flywheel": {
+    "suite": "Human Connectome Project"
   },
   "inputs": {
     "T1": {
@@ -86,6 +90,11 @@
       "type": "string",
       "default": "000000",
       "description": "Subject ID (Default = 000000)"
+    },
+    "RegName": {
+      "type": "string",
+      "default": "MSMSulc",
+      "description": "Surface registration type: either 'FS' (freesurfer) or 'MSMSulc' (HCP default)"
     },
     "BrainSize": {
       "type": "integer",
