@@ -9,9 +9,9 @@
   "source": "https://github.com/scitran-apps/afq-pipline",
   "license": "GPL-2.0",
   "flywheel": "0",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "custom": {
-    "docker-image": "scitran/afq-pipeline:1.0.2"
+    "docker-image": "scitran/afq-pipeline:1.0.3"
   },
   "inputs": {
     "anatomical": {
