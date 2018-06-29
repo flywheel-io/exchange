@@ -1,16 +1,18 @@
 {
   "name": "bxh-xcede-tools-qa",
   "label": "BXH-XCEDE-TOOLS: fMRI QA (v1.11.14)",
-  "description": "These tools perform QA (quality assurance) calculations and produce images, graphs, and/or XML data as output. fmriqa_phantomqa.pl and fmriqa_generate.pl produce an HTML report with various QA measures. fmriqa_phantomqa.pl was designed for fMRI images of the BIRN stability phantom, and fmriqa_generate.pl has been used for human fMRI data.",
+  "description": "Use BXH/XCEDE Tools to perform QA (quality assurance) calculations and produce images, graphs, and/or XML data as output. fmriqa_phantomqa.pl and fmriqa_generate.pl produce an HTML report with various QA measures. fmriqa_phantomqa.pl was designed for fMRI images of the BIRN stability phantom, and fmriqa_generate.pl has been used for human fMRI data.",
   "author": "Syam Gadde <gadde@biac.duke.edu>",
   "maintainer": "Michael Perry <support@flywheel.io>",
   "url": "https://www.nitrc.org/projects/bxh_xcede_tools/",
   "source": "https://github.com/flywheel-apps/bxh-xcede-tools-qa/",
   "license": "Other",
-  "flywheel": "0",
-  "version": "1.0.1_1.11.14",
+  "flywheel": {
+    "suite": "BXH/XCEDE Tools"
+  },
+  "version": "1.0.2_1.11.14",
   "custom": {
-    "docker-image": "flywheel/bxh-xcede-tools-qa:1.0.1_1.11.14"
+    "docker-image": "flywheel/bxh-xcede-tools-qa:1.0.2_1.11.14"
   },
   "config": {
     "birn_phantom": {
