@@ -2,7 +2,7 @@
   "name": "dicom-send",
   "label": "DCMTK: DICOM Send - storescu",
   "description": "The DICOM Send Gear uses DCMTK storescu to send DICOM data from a Flywheel instance to a DICOM server. The DICOM server must be reachable from the host of the Flywheel instance.",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "inputs": {
     "file": {
       "base": "file",
@@ -11,7 +11,11 @@
         "enum": [
           "dicom"
         ]
-      }
+      },
+      "optional": true
+    },
+    "api_key": {
+      "base": "api-key"
     }
   },
   "config": {
@@ -40,7 +44,7 @@
   "source": "https://flywheel.io",
   "url": "http://support.dcmtk.org/docs/storescu.html",
   "custom": {
-    "docker-image": "flywheel/dicom-send:0.10.0"
+    "docker-image": "flywheel/dicom-send:0.11.0"
   },
   "flywheel": {
     "suite": "DCMTK"
