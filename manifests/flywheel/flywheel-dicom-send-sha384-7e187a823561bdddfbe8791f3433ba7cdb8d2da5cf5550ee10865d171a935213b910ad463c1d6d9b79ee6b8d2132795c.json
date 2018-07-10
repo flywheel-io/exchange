@@ -1,0 +1,117 @@
+{
+  "gear": {
+    "name": "dicom-send",
+    "label": "DCMTK: DICOM Send - storescu",
+    "description": "The DICOM Send Gear uses DCMTK storescu to send DICOM data from a Flywheel instance to a DICOM server. The DICOM server must be reachable from the host of the Flywheel instance.",
+    "version": "0.11.0",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Any DICOM file(s), or an archive containing DICOM file(s). Non DICOM files will be ignored.",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "optional": true
+      },
+      "api_key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "destination": {
+        "description": "The IP address or hostname of the destination DICOM server. Note: The server must be reachable from the host of the Flywheel instance.",
+        "type": "string"
+      },
+      "called_ae": {
+        "description": "The Called AE title of the receiving DICOM server.",
+        "type": "string"
+      },
+      "calling_ae": {
+        "description": "The Calling AE title, DEFAULT=flywheel",
+        "default": "flywheel",
+        "type": "string"
+      },
+      "port": {
+        "default": "104",
+        "description": "Port number of the listening DICOM service. DEFAULT=104",
+        "type": "number"
+      }
+    },
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "source": "https://flywheel.io",
+    "url": "http://support.dcmtk.org/docs/storescu.html",
+    "custom": {
+      "docker-image": "flywheel/dicom-send:0.11.0"
+    },
+    "flywheel": {
+      "suite": "DCMTK"
+    }
+  },
+  "exchange": {
+    "git-commit": "b35c1be68939051b0fbd57ab6561d74c73eb252f",
+    "rootfs-hash": "sha384:7e187a823561bdddfbe8791f3433ba7cdb8d2da5cf5550ee10865d171a935213b910ad463c1d6d9b79ee6b8d2132795c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-send-sha384-7e187a823561bdddfbe8791f3433ba7cdb8d2da5cf5550ee10865d171a935213b910ad463c1d6d9b79ee6b8d2132795c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key"
+        ],
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object",
+            "properties": {}
+          },
+          "file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "destination",
+          "called_ae",
+          "calling_ae",
+          "port"
+        ],
+        "type": "object",
+        "properties": {
+          "destination": {
+            "type": "string"
+          },
+          "called_ae": {
+            "type": "string"
+          },
+          "calling_ae": {
+            "default": "flywheel",
+            "type": "string"
+          },
+          "port": {
+            "default": "104",
+            "type": "number"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for DCMTK: DICOM Send - storescu"
+  }
+}
