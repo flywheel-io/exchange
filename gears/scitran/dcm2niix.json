@@ -1,4 +1,3 @@
-
 {
   "name": "dcm2niix",
   "label": "DCM2NIIX: dcm2nii DICOM to NIfTI converter",
@@ -9,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.5.4_1.0.20180328",
+  "version": "0.6.0_1.0.20180622",
   "custom": {
-    "docker-image": "scitran/dcm2niix:0.5.4_1.0.20180328"
+    "docker-image": "scitran/dcm2niix:0.6.0_1.0.20180622"
   },
   "config": {
     "decompress_dicoms": {
@@ -84,17 +83,17 @@
       "type": "boolean",
       "default": false
     },
-    "sort_diffusion_volumes": {
-      "description": "diffusion volumes sorted by b-value (y/n, default n)",
-      "type": "string",
-      "default": "n",
-      "id": "-d"
-    },
     "convert_only_series": {
       "description": "only convert this series number - can be used up to 16 times (default convert all). Provide series numbers in a space-separated list e.g., '12 13'",
       "type": "string",
       "default": "all",
       "id": "-n"
+    },
+    "lossless_scaling": {
+      "description": "losslessly scale 16-bit integers to use dynamic range (y/n, default n)",
+      "type": "string",
+      "default": "n",
+      "id": "-l"
     }
   },
   "inputs": {
