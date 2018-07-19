@@ -1,0 +1,93 @@
+{
+  "gear": {
+    "name": "fsl-fslhd",
+    "label": "FSL: FSLHD - NIfTI File Header Extraction",
+    "description": "FSL's fslhd reads fields from a NIfTI file header. This Gear takes that header and generates metadata that is placed upon the input file's info field in the Flywheel database. FSLHD reports every field of an Analyze or Nifti header (note that the fields are different although some are common, e.g. pixdims). The reported values are those used internally in FSL programs and are sometimes different from the raw values stored in the file to avoid incorrect settings (e.g. dimN has a minimum value of 1, not 0).",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+    "source": "https://github.com/flywheel-apps/fsl-fslhd",
+    "license": "Other",
+    "flywheel": {
+      "suite": "FSL"
+    },
+    "version": "1.0.0",
+    "custom": {
+      "docker-image": "flywheel/fsl-fslhd:1.0.0"
+    },
+    "config": {
+      "output_json": {
+        "description": "Default = false. If selected, in addition to adding fslhd info to the input file's info object, the Gear will output a json file (<inputfile>_fslhd.json) that consists of the fslhd info.",
+        "type": "boolean",
+        "default": false
+      },
+      "parse_descrip": {
+        "description": "Default = true. Attempt to parse the 'descrip' field in the fslhd to generate an object from '<key>=<value>;' style entries.",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "Input NIfTI file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "4b6f07aae876b33d36d632e9f4d444f130871646",
+    "rootfs-hash": "sha384:a118de1bd20196f2cceaff13a9f12f0d0fe26c56e36ad7250b620a1439044a141a6eebf00c1fdc83ea66ffc3f1d849dc",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-fslhd-sha384-a118de1bd20196f2cceaff13a9f12f0d0fe26c56e36ad7250b620a1439044a141a6eebf00c1fdc83ea66ffc3f1d849dc.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "output_json",
+          "parse_descrip"
+        ],
+        "type": "object",
+        "properties": {
+          "output_json": {
+            "default": false,
+            "type": "boolean"
+          },
+          "parse_descrip": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL: FSLHD - NIfTI File Header Extraction"
+  }
+}
