@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.6.0_1.0.20180622",
+  "version": "0.6.1_1.0.20180622",
   "custom": {
-    "docker-image": "scitran/dcm2niix:0.6.0_1.0.20180622"
+    "docker-image": "scitran/dcm2niix:0.6.1_1.0.20180622"
   },
   "config": {
     "decompress_dicoms": {
@@ -90,10 +90,15 @@
       "id": "-n"
     },
     "lossless_scaling": {
-      "description": "losslessly scale 16-bit integers to use dynamic range (y/n, default n)",
+      "description": "Losslessly scale 16-bit integers to use dynamic range (y/n, default n)",
       "type": "string",
       "default": "n",
       "id": "-l"
+    },
+    "ignore_errors": {
+      "description": "Ignore dcm2niix errors and exit status (default=false). By default, when dcm2niix exits non-zero, outputs are not preserved. With this option=true, outputs are preserved regardless of dcm2niix exit status.",
+      "type": "boolean",
+      "default": false
     }
   },
   "inputs": {
