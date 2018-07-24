@@ -1,0 +1,35 @@
+{
+  "name": "fsl-fslreorient2std",
+  "label": "FSL: fslreorient2std - Reorient Image to Standard Template",
+  "description": "fslreorient2std is a tool for reorienting the image to match the approximate orientation of the standard template images (MNI152). It only applies 0, 90, 180 or 270 degree rotations. It is not a registration tool. It requires NIfTI images with valid orientation information in them (seen by valid labels in FSLView).  This tool assumes the labels are correct - if not, fix that before using this Gear.",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "author": "Analysis Group, FMRIB, Oxford, UK.",
+  "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+  "source": "https://github.com/flywheel-apps/fsl-fslreorient2std",
+  "license": "Other",
+  "flywheel": {
+    "suite": "FSL"
+  },
+  "version": "1.0.0",
+  "custom": {
+    "docker-image": "flywheel/fsl-fslreorient2std:1.0.0"
+  },
+  "config": {
+    "output_name": {
+      "description": "Name to be used for the output NIfTI file. OPTIONAL: By default the gear will use <inputfile>_std.nii.gz.",
+      "type": "string",
+      "optional": true
+    }
+  },
+  "inputs": {
+    "nifti": {
+      "description": "Input NIfTI file.",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  }
+}
