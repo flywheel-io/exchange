@@ -1,0 +1,79 @@
+{
+  "gear": {
+    "name": "fsl-fslreorient2std",
+    "label": "FSL: fslreorient2std - Reorient Image to Standard Template",
+    "description": "fslreorient2std is a tool for reorienting the image to match the approximate orientation of the standard template images (MNI152). It only applies 0, 90, 180 or 270 degree rotations. It is not a registration tool. It requires NIfTI images with valid orientation information in them (seen by valid labels in FSLView).  This tool assumes the labels are correct - if not, fix that before using this Gear.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+    "source": "https://github.com/flywheel-apps/fsl-fslreorient2std",
+    "license": "Other",
+    "flywheel": {
+      "suite": "FSL"
+    },
+    "version": "1.0.0",
+    "custom": {
+      "docker-image": "flywheel/fsl-fslreorient2std:1.0.0"
+    },
+    "config": {
+      "output_name": {
+        "description": "Name to be used for the output NIfTI file. OPTIONAL: By default the gear will use <inputfile>_std.nii.gz.",
+        "type": "string",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "Input NIfTI file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "91389212ca5d71bea7d2faeb28c2e178a2db2806",
+    "rootfs-hash": "sha384:99c477f1f22c139d835a8c32b06de574793999873927d5b9e9e271c6b627637f7c39e5723bf9826c0ac7568a20e13714",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-fslreorient2std-sha384-99c477f1f22c139d835a8c32b06de574793999873927d5b9e9e271c6b627637f7c39e5723bf9826c0ac7568a20e13714.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "type": "object",
+        "properties": {
+          "output_name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL: fslreorient2std - Reorient Image to Standard Template"
+  }
+}
