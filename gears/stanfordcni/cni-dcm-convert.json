@@ -8,9 +8,9 @@
   "source": "https://github.com/cni/cni-dcm-convert",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "custom": {
-    "docker-image": "stanfordcni/cni-dcm-convert:2.1.0"
+    "docker-image": "stanfordcni/cni-dcm-convert:2.1.1"
   },
   "config": {
     "convert_montage": {
