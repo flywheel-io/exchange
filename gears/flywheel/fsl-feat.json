@@ -10,9 +10,9 @@
   "flywheel": {
     "suite": "FSL"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "custom": {
-    "docker-image": "flywheel/fsl-feat:0.1.3"
+    "docker-image": "flywheel/fsl-feat:0.1.4"
   },
   "config": {
     "BB_THRESH": {
@@ -78,6 +78,13 @@
       "maximum": 1,
       "type": "integer"
     },
+    "LPF": {
+      "description": "RUN LOWPASS FILTERING [1=yes, 0=no. default=0]",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 1,
+      "type": "integer"
+    },
     "REG_STANDARD_IMAGE": {
       "description": "REGISTER TO STANDARD IMAGE (MNI152_T1_2mm_brain) [1=yes, 0=no. default=0]",
       "default": 0,
@@ -88,7 +95,7 @@
   },
   "inputs": {
     "NIFTI": {
-      "description": "Anatomical NIfTI image, or multi-channel set of images, to be segmented.",
+      "description": "FUNCTIONAL NIfTI file to be processed.",
       "base": "file",
       "type": {
         "enum": [
