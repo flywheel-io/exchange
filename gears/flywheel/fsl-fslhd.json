@@ -10,9 +10,9 @@
   "flywheel": {
     "suite": "FSL"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "custom": {
-    "docker-image": "flywheel/fsl-fslhd:1.0.0"
+    "docker-image": "flywheel/fsl-fslhd:1.0.1"
   },
   "config": {
     "output_json": {
