@@ -8,9 +8,9 @@
   "source": "https://github.com/cni/cni-dcm-convert",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "custom": {
-    "docker-image": "stanfordcni/cni-dcm-convert:2.1.2"
+    "docker-image": "stanfordcni/cni-dcm-convert:2.2.0"
   },
   "config": {
     "convert_montage": {
@@ -25,7 +25,7 @@
     },
     "convert_png": {
       "description": "Convert screenshot acquisitions to PNG. (Default=false)",
-      "default": true,
+      "default": false,
       "type": "boolean"
     },
     "convert_mux": {
