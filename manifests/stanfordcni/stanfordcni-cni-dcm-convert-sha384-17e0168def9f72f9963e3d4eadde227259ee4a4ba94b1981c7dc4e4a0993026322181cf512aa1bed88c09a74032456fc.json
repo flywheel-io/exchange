@@ -1,0 +1,119 @@
+{
+  "gear": {
+    "name": "cni-dcm-convert",
+    "label": "CNI: DCM-CONVERT - DICOM conversion tool",
+    "description": "CNI-DCM-CONVERT uses SciTran's data library (https://github.com/scitran/data) to convert raw DICOM data (within a zip archive) to NIfTI, Montage, and PNG (screenshot acquisitions) formats. DCM-CONVERT supports Siemens and GE DICOM data.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Scientific Transparency (RF Dougherty, K Hahn, R Bowen, G Schaefer, LM Perry)",
+    "url": "https://github.com/scitran/data",
+    "source": "https://github.com/cni/cni-dcm-convert",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "2.2.0",
+    "custom": {
+      "docker-image": "stanfordcni/cni-dcm-convert:2.2.0"
+    },
+    "config": {
+      "convert_montage": {
+        "description": "Convert DICOM archive to MONTAGE format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_nifti": {
+        "description": "Convert DICOM archive to NIfTI format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_png": {
+        "description": "Convert screenshot acquisitions to PNG. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "convert_mux": {
+        "description": "By default we do not convert DICOMs which are acquired with a muxarcepi* psd or have 'mux' in the series description. This flag forces the reconstruction of those data as well. *CAUTION* If the NIfTI file created here will have the same name as the reconstructed MUX file the existing will be overwritten! (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "output_name": {
+        "description": "Name to be used for the output NIfTI file. OPTIONAL: By default the gear will use <Study_ID>_<Series_Num>_<Acq_num>.nii.gz.",
+        "type": "string",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "dicom": {
+        "description": "DICOM archive (.zip file)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "db202e359b7b9ed0e907d9bc9b1f4391db55d7dc",
+    "rootfs-hash": "sha384:17e0168def9f72f9963e3d4eadde227259ee4a4ba94b1981c7dc4e4a0993026322181cf512aa1bed88c09a74032456fc",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/stanfordcni-cni-dcm-convert-sha384-17e0168def9f72f9963e3d4eadde227259ee4a4ba94b1981c7dc4e4a0993026322181cf512aa1bed88c09a74032456fc.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "dicom"
+        ],
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "convert_montage",
+          "convert_mux",
+          "convert_png",
+          "convert_nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "convert_montage": {
+            "default": true,
+            "type": "boolean"
+          },
+          "output_name": {
+            "type": "string"
+          },
+          "convert_mux": {
+            "default": false,
+            "type": "boolean"
+          },
+          "convert_png": {
+            "default": false,
+            "type": "boolean"
+          },
+          "convert_nifti": {
+            "default": true,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for CNI: DCM-CONVERT - DICOM conversion tool"
+  }
+}
