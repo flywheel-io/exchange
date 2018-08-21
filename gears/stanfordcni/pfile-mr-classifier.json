@@ -11,15 +11,15 @@
   "flywheel": {
     "suite": "Stanford CNI"
   },
-  "version": "1.3.2",
+  "version": "1.4.0",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.3.2"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.4.0"
   },
   "config": {
     "timezone": {
-      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
+      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
       "type": "string",
-      "default": "UTC"
+      "default": "America/Los_Angeles"
     },
     "sync": {
       "description": "Synchronize classification definitions with the latest known updates found at scitran-apps/dicom-mr-classifier [default = true].",
