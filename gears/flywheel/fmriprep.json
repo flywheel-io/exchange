@@ -6,10 +6,10 @@
   "cite": "Esteban O, Blair R, Markiewicz CJ, Berleant SL, Moodie C, Ma F, Isik AI, Erramuzpe A, Kent JD, Goncalves M, Poldrack RA, Gorgolewski KJ; poldracklab/fmriprep: 1.0.0-rc9. Zenodo; 2017. doi:10.5281/zenodo.1041020  FOR MORE INFORMATION SEE: http://fmriprep.readthedocs.io/en/stable/citing.html.",
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
-  "url": "https://github.com/poldracklab/fmriprep",
-  "version": "5.4.2_1.1.2",
+  "url": "https://fmriprep.readthedocs.io/en/1.1.4/",
+  "version": "5.5.0_1.1.4",
   "custom": {
-    "docker-image": "flywheel/fmriprep:5.4.2_1.1.2"
+    "docker-image": "flywheel/fmriprep:5.5.0_1.1.4"
   },
   "license": "Other",
   "inputs": {
@@ -42,10 +42,10 @@
     }
   },
   "config": {
-    "freesurfer": {
-      "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If enabled, several steps in the fmriprep pipeline are added or replaced. [default=true]",
+    "fs_no_reconall": {
+      "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If disabled, several steps in the fmriprep pipeline are added or replaced. [default=false]",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "save_outputs": {
       "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
@@ -58,8 +58,8 @@
       "default": false
     },
     "intermediate_files": {
-      "description": "Space separated list of FILES to retain from the intermediate work directory. By default we save the reference corrected brain image.",
-      "default": "ref_image_corrected_brain.nii.gz",
+      "description": "Space separated list of FILES to retain from the intermediate work directory.",
+      "default": "",
       "type": "string"
     },
     "intermediate_folders": {
@@ -134,6 +134,60 @@
       "description": "Volume and surface spaces to resample functional series into. Possible choices (space separated list): T1w, template, fsnative, fsaverage, fsaverage6, fsaverage5. T1w: subject anatomical volume. template: normalization target specified by –template. fsnative: individual subject surface. fsaverage*: FreeSurfer average meshes. [default='template fsaverage5']",
       "type": "string",
       "default": "template fsaverage5"
+    },
+    "use_aroma": {
+      "description": "add ICA_AROMA to your preprocessing stream [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "aroma_melodic_dimensionality": {
+      "description": "set the dimensionality of MELODIC before runningICA-AROMA [ default = 'None' ]",
+      "type": "string",
+      "default": "None"
+    },
+    "skull_strip_template": {
+      "description": "Possible choices: OASIS, NKI. select ANTs skull-stripping template (default: OASIS))",
+      "type": "string",
+      "enum": [
+        "NKI",
+        "OASIS"
+      ],
+      "default": "OASIS"
+    },
+    "skull_strip_fixed_seed": {
+      "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1 [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "fmap_bspline": {
+      "description": "fit a B-Spline field using least-squares (experimental)",
+      "type": "boolean",
+      "default": false
+    },
+    "fmap_no_demean": {
+      "description": "do not remove median (within mask) from fieldmap [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "use_syn_sdc": {
+      "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "force_syn": {
+      "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available. [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "no_submm_recon": {
+      "description": "disable sub-millimeter (hires) reconstruction. [ default = false ]",
+      "type": "boolean",
+      "default": false
+    },
+    "cifti_output": {
+      "description": "output BOLD files as CIFTI dtseries. [ default = false ]",
+      "type": "boolean",
+      "default": false
     }
   }
 }
