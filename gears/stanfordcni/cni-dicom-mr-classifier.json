@@ -8,9 +8,9 @@
   "source": "https://github.com/cni/cni-dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "custom": {
-    "docker-image": "stanfordcni/cni-dicom-mr-classifier:1.0.1"
+    "docker-image": "stanfordcni/cni-dicom-mr-classifier:1.0.2"
   },
   "config": {
     "timezone": {
