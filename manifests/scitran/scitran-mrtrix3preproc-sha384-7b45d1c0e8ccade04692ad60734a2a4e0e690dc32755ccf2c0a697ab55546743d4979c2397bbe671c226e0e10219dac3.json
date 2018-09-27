@@ -1,0 +1,302 @@
+{
+  "gear": {
+    "name": "mrtrix3preproc",
+    "label": "MRtrix3: Preprocessing Pipeline",
+    "description": "mrtrix3preproc runs the MRtrix3 preprocessing pipeline. It uses FSL's topup when the optional inverse phase encoded data are provided, otherwise the pipeline uses FSL's eddy tool. The pipeline can also perform de-noising, reslicing, and alignment to an anatomical image. Required inputs are diffusion NIfTI, BVEC, BVAL, and Anatomical (ACPC aligned) NIfTI.",
+    "maintainer": "Garikoitz Lerma-Usabiaga <glerma@stanford.edu>",
+    "author": "MRtrix, FSL, and Brain-Life teams.",
+    "url": "https://mrtrix.readthedocs.io/en/latest/reference/scripts/dwipreproc.html#dwipreproc",
+    "source": "https://github.com/scitran-apps/mrtrix3preproc",
+    "license": "Other",
+    "cite": "Gear adapted from https://github.com/brain-life/app-mrtrix3-preproc. Ref: https://mrtrix.readthedocs.io/en/latest/reference/scripts/dwipreproc.html#references",
+    "flywheel": {
+      "suite": "MRtrix"
+    },
+    "version": "1.0.0",
+    "custom": {
+      "docker-image": "scitran/mrtrix3preproc:1.0.0"
+    },
+    "config": {
+      "rpe": {
+        "description": "Specify if there are reverse phase encoded data. Options are 'none', 'header', 'pairs', 'all'. [default=none]",
+        "default": "none",
+        "type": "string"
+      },
+      "acqd": {
+        "description": "Acquisition phase encoding direction [default=PA]",
+        "default": "PA",
+        "type": "string"
+      },
+      "denoise": {
+        "description": "Denoise data using PCA [default=true]",
+        "default": true,
+        "type": "boolean"
+      },
+      "degibbs": {
+        "description": "Perform Gibbs ringing correction  [default=true]",
+        "default": true,
+        "type": "boolean"
+      },
+      "eddy": {
+        "description": "Perform eddy current correction. If inverted phase encoding direction files are found, eddy will be done as part of topup. [default=true]",
+        "default": true,
+        "type": "boolean"
+      },
+      "bias": {
+        "description": "Compute bias correction with ANTs on dwi data [default=true]",
+        "default": true,
+        "type": "boolean"
+      },
+      "ricn": {
+        "description": "Perform Rician background noise removal [default=true]",
+        "default": true,
+        "type": "boolean"
+      },
+      "norm": {
+        "description": "Perform intensity normalization of dwi data [default=false]",
+        "default": false,
+        "type": "boolean"
+      },
+      "nval": {
+        "description": "Normalize the intensity of the FA white matter mask to this number [default=1000]",
+        "default": 1000,
+        "type": "number"
+      },
+      "acpc": {
+        "description": "Align dwi data with AC-PC anatomy [default=false]",
+        "default": false,
+        "type": "boolean"
+      },
+      "reslice": {
+        "description": "Optional. By default reslicing is not done. If you want it done, set a number (e.g., 1) here to reslice the dwi data to this isotropic voxel size (in mm).",
+        "optional": true,
+        "type": "number"
+      }
+    },
+    "inputs": {
+      "DIFF": {
+        "description": "Diffusion NIfTI image.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "BVAL": {
+        "description": "BVAL file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "BVEC": {
+        "description": "BVEC file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      },
+      "ANAT": {
+        "description": "Anatomical T1w NIfTI image.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "RDIF": {
+        "description": "Optional reverse phase encoded (rpe) diffusion NIfTI image.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "RBVL": {
+        "description": "Optional reverse phase encoded (rpe) BVAL file.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "RBVC": {
+        "description": "Optional reverse phase encoded (rpe) BVEC file.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "530d05bee5f09da01c69403af8974c85e63da50f",
+    "rootfs-hash": "sha384:7b45d1c0e8ccade04692ad60734a2a4e0e690dc32755ccf2c0a697ab55546743d4979c2397bbe671c226e0e10219dac3",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-mrtrix3preproc-sha384-7b45d1c0e8ccade04692ad60734a2a4e0e690dc32755ccf2c0a697ab55546743d4979c2397bbe671c226e0e10219dac3.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "ANAT",
+          "BVEC",
+          "DIFF",
+          "BVAL"
+        ],
+        "type": "object",
+        "properties": {
+          "ANAT": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "RBVL": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "DIFF": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "BVEC": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "RBVC": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "BVAL": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "RDIF": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "degibbs",
+          "denoise",
+          "acpc",
+          "ricn",
+          "eddy",
+          "bias",
+          "rpe",
+          "nval",
+          "acqd",
+          "norm"
+        ],
+        "type": "object",
+        "properties": {
+          "degibbs": {
+            "default": true,
+            "type": "boolean"
+          },
+          "denoise": {
+            "default": true,
+            "type": "boolean"
+          },
+          "nval": {
+            "default": 1000,
+            "type": "number"
+          },
+          "ricn": {
+            "default": true,
+            "type": "boolean"
+          },
+          "eddy": {
+            "default": true,
+            "type": "boolean"
+          },
+          "bias": {
+            "default": true,
+            "type": "boolean"
+          },
+          "rpe": {
+            "default": "none",
+            "type": "string"
+          },
+          "acpc": {
+            "default": false,
+            "type": "boolean"
+          },
+          "reslice": {
+            "type": "number"
+          },
+          "acqd": {
+            "default": "PA",
+            "type": "string"
+          },
+          "norm": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for MRtrix3: Preprocessing Pipeline"
+  }
+}
