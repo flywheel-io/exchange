@@ -1,0 +1,712 @@
+{
+  "gear": {
+    "name": "afq-pipeline",
+    "label": "AFQ Pipeline: Automated Fiber Quantification Pipeline (DTIInit + MRtrix3 + ET + LiFE + AFQ)",
+    "description": "This gear contains a multi-step pipeline designed to run DTIInit, MRtrix3, LiFE, ET, and AFQ. DTIInit runs preprocessing steps, MRTrix3 + Ensemble Tractography + LiFE generate a connectome which is then run through Automated Fiber Quantification (AFQ). AFQ generates tract profiles of tissue properties for major fiber tracts in the brain. This gear also generates AFQ Browser outputs for visualization. Required inputs are (1) DWI NIfTI image, (2) BVEC file, (3) BVAL file, and (4) and Anatomical NIfTI file - which is optional and will be used to align the DWI data, if provided.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Yeatman et al., Stanford VISTA Lab, FMRIB Software Lab, MRTrix, Pestilli et al., Takemura et al.",
+    "cite": "Yeatman J.D., Dougherty R.F., Myall N.J., Wandell B.A., Feldman H.M. (2012). Tract Profiles of White Matter Properties: Automating Fiber-Tract Quantification. PLoS One.; M. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012.  Evaluation and statistical inference for human connectomes. F. Pestilli, J.D. Yeatman, A. Rokem, K.N. Kay & B.A. Wandell (2014) Nature Methods doi:10.1038/nmeth.3098 Published online 07 September 2014. https://mrtrix.readthedocs.io/en/latest/reference/references.html.  Takemura H, Caiafa CF, Wandell BA, Pestilli F (2016) Ensemble Tractography. PLoS Comput Biol 12(2): e1004692. https://doi.org/10.1371/journal.pcbi.1004692",
+    "url": "https://github.com/yeatmanlab/afq",
+    "source": "https://github.com/scitran-apps/afq-pipline",
+    "license": "Other",
+    "flywheel": "0",
+    "version": "3.0.0",
+    "custom": {
+      "docker-image": "scitran/afq-pipeline:3.0.0"
+    },
+    "inputs": {
+      "anatomical": {
+        "description": "OPTIONAL: Anatomical (e.g., t1-weighted) NIfTI file. During the initial phase of processing the diffusion data (b=0 images) will be aligned to this image. By default the DWI data will be aligned to the MNI_EPI template.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "dwi": {
+        "description": "DWI NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "bval": {
+        "description": "BVAL file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "bval"
+          ]
+        }
+      },
+      "bvec": {
+        "description": "BVEC file.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      }
+    },
+    "config": {
+      "flipLrApFlag": {
+        "description": "DTIINIT: This flag will signal dtiRawBuildBvecs to reorient the gradient directions specified in the dwepi.grads file to logical space rather than keeping the directions in scanner space. Thus, the bvecs do not need to be reoriented for oblique prescriptions as with some other DTI sequences. However, this sequence assumes that the 2nd column in dwepi.grads is the phase-encode dim. If your phase-encode is the usual '2', then this is fine. But, if you run ASSET and change the phase encode to L-R (dim 1), you need to swap the first and second columns of dwepi.grads. Also, there appears to be a flip in the phase-encode dim, so you also need to flip the sign on the phase-encode column. DEFAULT=0",
+        "default": 0,
+        "type": "integer"
+      },
+      "numBootStrapSamples": {
+        "description": "DTIINIT: Number of bootstrap iterations. DEFAULT=500",
+        "default": 500,
+        "type": "integer"
+      },
+      "fitMethod": {
+        "description": "DTIINIT: Fit-method for tensor fitting. Options are ['ls', 'rt', 'lsrt']: 'ls': least-squares (default) 'rt': RESTORE robust tensor fitting and outlier rejection (Chang, Jones & Pierpaoli (2005) RESTORE: Robust Estimation of Tensors by Outlier Rejection. Magnetic Resonance in Medicine, v53). 'lsrt': does least-squares and robust tensor fitting in one go. DEFAULT='ls'",
+        "default": "ls",
+        "type": "string"
+      },
+      "nStep": {
+        "description": "DTIINIT: The number of steps for the restore algorithm in the robust tensor fitting case. (dtiRawFitTensorRobust). DEFAULT=50",
+        "default": 50,
+        "type": "integer"
+      },
+      "eddyCorrect": {
+        "description": "DTIINIT: Motion and eddy-current correction. Options 0, 1, -1. 0=Only motion correction is done. 1=Do eddy-current and motion correction. -1=No motion or eddy correction. DEFAULT=1",
+        "default": 1,
+        "type": "integer"
+      },
+      "bsplineInterpFlag": {
+        "description": "DTIINIT: Method used for interpolation during resampling (dtiRawResample). 1=bspline. 0=trilinear. DEFAULT=0",
+        "default": 0,
+        "type": "integer"
+      },
+      "phaseEncodeDir": {
+        "description": "DTIINIT: Phase encoding direction. (1=L/R='row', 2=A/P='col'). This value is read from the raw dti nifti field, you should specify it here if it does not exist. If you collected your DTI data using GE's ASSET, you should provide the phase-encode direction (1=L/R='row', 2=A/P='col'). Information about this, as well as the b-value and gradient code, can be found in the DICOM file header. DEFAULT=2",
+        "type": "integer",
+        "default": 2
+      },
+      "dwOutMm_1": {
+        "description": "DTIINIT: Resolution of the output in mm. DEFAULT=2",
+        "type": "number",
+        "default": 2
+      },
+      "dwOutMm_2": {
+        "description": "DTIINIT: Resolution of the output in mm. DEFAULT=2",
+        "type": "number",
+        "default": 2
+      },
+      "dwOutMm_3": {
+        "description": "DTIINIT: Resolution of the output in mm. DEFAULT=2",
+        "type": "number",
+        "default": 2
+      },
+      "rotateBvecsWithRx": {
+        "description": "DTIINIT: Rotate the b-vectors according to the scanner prescription. 0=false, 1=true. DEFAULT=0",
+        "default": 0,
+        "type": "integer"
+      },
+      "rotateBvecsWithCanXform": {
+        "description": "DTIINIT: Rotate the b-vectors according to the canonical xForm. 0=false, 1=true. DEFAULT=1",
+        "default": 1,
+        "type": "integer"
+      },
+      "noiseCalcMethod": {
+        "description": "DTIINIT: Noise calculation method for robust tensor fitting. Options are 'corner' or 'b0' (default). There are 2 ways to calculate the noise. The first is based on the standard deviation of the signal in the corner of the image (noiseCalcMethod = 'corner'). This method works well as long as the corner of the image has not been padded with zeros. Currently GE zeros out the pixel intensity outside of the brain. So for new GE data we calculate the noise by taking the standard deviation of the b=0 images (noiseCalcMethod = 'b0') which means that we need a number of b0 acquisitions. If you are using robust tensor fitting you must decide how to calculate the image noise. If the corner of the image is padded with zeros then you should use the 'b0' method which calculates the noise based on the std of the b0 image. DEFAULT='b0'",
+        "type": "string",
+        "default": "b0"
+      },
+      "cutoffLower": {
+        "description": "AFQ: The lower percentile cutoff to be used to determine what is 'abnormal'  The default is cutoff = [10 90] meaning that subjects who fall below the  10th percentile or above the 90th percentile will be considered  'abnormal' and their data will be plotted with respect to the control population.",
+        "default": 10,
+        "type": "integer"
+      },
+      "cutoffUpper": {
+        "description": "AFQ: The upper percentile cutoff to be used to determine what is 'abnormal'  The default is cutoff = [10 90] meaning that subjects who fall below the  10th percentile or above the 90th percentile will be considered 'abnormal' and their data will be plotted with respect to the control population.",
+        "default": 90,
+        "type": "integer"
+      },
+      "cleanFibers": {
+        "description": "AFQ: cleanFibers == 1 (default) means that once all the fiber groups have been segmented they will be cleaned such that any fiber that (1) is more than params.maxLen standard deviations above the mean fiber length will be removed and (2) any fiber that is more than params.maxDist standard deviations from the core of the tract will be removed.  this means that fibers groups will be forced to be a compact bundle. (1 = YES, 0 = NO)",
+        "default": 1,
+        "type": "integer"
+      },
+      "cleanIter": {
+        "description": "AFQ: Maximum number of iterations of the cleaning algorithm.",
+        "default": 5,
+        "type": "integer"
+      },
+      "maxDist": {
+        "description": "AFQ: Remove fibers that are more than 'maxDist' standard deviations from the core of the tract. (Default = 5 standard deviations). cleanFibers must be set to 1.",
+        "default": 5,
+        "type": "integer"
+      },
+      "maxLen": {
+        "description": "AFQ: Remove fibers that are more than 'maxLen' standard deviations from the mean fiber length. (Default = 4 standard deviations). cleanFibers must be set to 1.",
+        "default": 4,
+        "type": "integer"
+      },
+      "numberOfNodes": {
+        "description": "AFQ: The number of nodes to represent each fiber.",
+        "default": 100,
+        "type": "integer"
+      },
+      "clip2rois": {
+        "description": "AFQ: Should we analyze the whole length of the fiber group or just the central portion spanning between 2 ROIs. (1=YES, 0=NO)",
+        "default": 1,
+        "type": "integer"
+      },
+      "fiberWeighting": {
+        "description": "AFQ: Set the amount of weighting that will be applied when calculating tract profiles. 0 means that each fiber contributes equally. 1 means that we apply gaussian weighting where each fibers contribution to the measurement at a node is weighted by its gaussian distance from the tract core. Values greater than 1 mean that the core of the tract is weighted more heavily and fibers further from the core are weighted less heavily (faster fall off than a gaussian).  See ComputeTractProperties.",
+        "default": 1,
+        "type": "integer"
+      },
+      "cleanClippedFibers": {
+        "description": "AFQ: If cleanFibers == 1, then this will indicate whether to perform the cleaning on just the clipped portion of the tract or on the full tract. This may be helpful for tracts like the ILF that are extremely messy with looping fibers etc.",
+        "default": 0,
+        "type": "integer"
+      },
+      "savefigs": {
+        "description": "AFQ: Save figures of fiber groups. (1=yes, 0=no)",
+        "default": 0,
+        "type": "integer"
+      },
+      "computeCSD": {
+        "description": "AFQ: Whether or not to compute constrained spherical deconvolution using mrtrix. 0 means don't use mrtrix. 1 means use mrtrix with the default lmax (4). Otherwise you can set the lmax by with a scaler.",
+        "default": 1,
+        "type": "integer"
+      },
+      "computenorms": {
+        "description": "AFQ: Whether or not to compute control group norms.",
+        "default": 1,
+        "type": "integer"
+      },
+      "normalization": {
+        "description": "AFQ: Which software package to use for normalization. ('spm', 'ants')",
+        "type": "string",
+        "default": "spm"
+      },
+      "imresample": {
+        "description": "AFQ: For additional images that are passed into AFQ you can set a resolution to resample those images to before computing tract profiles (e.g., [2 2 2])",
+        "default": 0,
+        "type": "integer"
+      },
+      "track_algorithm": {
+        "description": "AFQ: Do fiber tracking with 'mrdiffusion' or 'mrtrix' if it is installed and the data is HARDI.",
+        "type": "string",
+        "default": "mrtrix"
+      },
+      "track_stepSizeMm": {
+        "description": "AFQ: Distance between steps in the tractography algorithm.",
+        "default": 1,
+        "type": "integer"
+      },
+      "track_faThresh": {
+        "description": "AFQ: Stopping criteria FA<0.2",
+        "default": 0.2,
+        "type": "number"
+      },
+      "track_minLengthThreshMm": {
+        "description": "AFQ: Discard Fibers shorter than this threshold in mm.",
+        "default": 50,
+        "type": "integer"
+      },
+      "track_maxLengthThreshMm": {
+        "description": "AFQ: Discard Fibers longer than this threshold in mm.",
+        "default": 250,
+        "type": "integer"
+      },
+      "track_angleThresh": {
+        "description": "AFQ: Stopping criteria angle between steps >30 degrees.",
+        "default": 30,
+        "type": "integer"
+      },
+      "track_wPuncture": {
+        "description": "AFQ: This coefficient can take on values from 0 to 1, and affects how much the propagation should be encouraged to “puncture” through planar tensors oriented normal to its path, versus turning into the plane.",
+        "default": 0.2,
+        "type": "number"
+      },
+      "track_whichAlgorithm": {
+        "description": "AFQ: Algorithm type for tractography (0=STT Euler, 1=STT RK4, 2=TEND Euler, 3=TEND RK4). Default is STT. See: Basser PJ, Pajevic S, Pierpaoli C, Duda J, Aldroubi A. 2000. In vivo fiber tractography using DT-MRI data. Magnetic Resonance in Medicine 44(4):625-32.",
+        "default": 1,
+        "type": "integer"
+      },
+      "track_whichInterp": {
+        "description": "AFQ: Interpolation Type (0=NN, 1=linear): After each step we interpolate the tensor at that point. Trilinear interpolation works well.",
+        "default": 1,
+        "type": "integer"
+      },
+      "track_offsetJitter": {
+        "description": "AFQ: Offset Jitter is the standard deviation of a a random jitter applied to the seeds (in voxel units). E.g., offsetJitter=0.1 will jitter each seedVoxelOffset by a random amount with mean 0 and sigma 0.1. This adds some randomness to each seed point. Each seed point is move randomly by randn*.1mm",
+        "default": 0,
+        "type": "number"
+      },
+      "track_seedVoxelOffset_1": {
+        "description": "AFQ: seedVoxelOffsets is the relative position of the seed(s) within each seed voxel. E.g., seedVoxelOffsets = [0.5] will put one seed at the center of each voxel, while [0.25 0.75] will place 8 seeds in each voxel. Note that every seed voxel gets at least one seed.",
+        "default": 0.25,
+        "type": "number"
+      },
+      "track_seedVoxelOffset_2": {
+        "description": "AFQ: seedVoxelOffsets is the relative position of the seed(s) within each seed voxel. E.g., seedVoxelOffsets = [0.5] will put one seed at the center of each voxel, while [0.25 0.75] will place 8 seeds in each voxel. Note that every seed voxel gets at least one seed.",
+        "default": 0.75,
+        "type": "number"
+      },
+      "track_faMaskThresh": {
+        "description": "AFQ: FA mask threshold from which to initialize tracking.",
+        "default": 0.3,
+        "type": "number"
+      },
+      "track_nfibers": {
+        "description": "AFQ: Number of fibers to track. This parameter is only relevant for mrTrix.",
+        "default": 500000,
+        "type": "integer"
+      },
+      "mrtrix_mrTrixAlgo": {
+        "description": "MRTRIX: Tracking algorithm for mrTrix's tckgen. Options are: FACT, iFOD1, iFOD2, NullDits1/NullDist2, SD_STREAM, SpeedTest, Tensor_Det, Tensor_prob. DEFAULT='iFOD2'",
+        "default": "iFOD2",
+        "type": "string"
+      },
+      "mrtrix_multishell": {
+        "description": "MRTRIX: Set to true if this is multi-shell input data. DEFAULT=False",
+        "default": false,
+        "type": "boolean"
+      },
+      "mrtrix_tool": {
+        "description": "MRTRIX: The algorithm to be used to complete the script operation; additional details and options become available once an algorithm is nominated. Options are: freesurfer, fsl DEFAULT='freesurfer'",
+        "default": "freesurfer",
+        "type": "string"
+      },
+      "life_runLife": {
+        "description": "LiFE: Run LiFE algorithm. DEFAULT=true",
+        "default": true,
+        "type": "boolean"
+      },
+      "life_saveOutput": {
+        "description": "LiFE: Save outputs from LiFE algorithm. DEFAULT=true",
+        "default": true,
+        "type": "boolean"
+      },
+      "life_discretization": {
+        "description": "LiFE: Discretization parameter (this parameter defines the resolution of the Phi tensor in describing the orientation of the fascicles in the connectome (number of orientations encoded in Phi, more specifically the size of Phi in mode 1) DEFAULT=360",
+        "default": 360,
+        "type": "number"
+      },
+      "life_num_iterations": {
+        "description": "LiFE: Number of iterations for LiFE algorithm. DEFAULT=100",
+        "default": 100,
+        "type": "number"
+      },
+      "life_test": {
+        "description": "LiFE: Run LiFE in test mode. DEFAULT=False",
+        "default": false,
+        "type": "boolean"
+      },
+      "life_writePDB": {
+        "description": "LiFE: Write fibers out in PDB. DEFAULT=False",
+        "default": false,
+        "type": "boolean"
+      },
+      "AFQ_Output_Name": {
+        "default": "afq_output",
+        "type": "string",
+        "description": "AFQ: Output base name for AFQ Results. DEFAULT='afq_output'"
+      },
+      "AFQ_Browser_Title": {
+        "default": "AFQ_Browser",
+        "type": "string",
+        "description": "AFQ: Title for the AFQ-browser web-page. DEFAULT='AFQ_Browser'"
+      },
+      "ET_runET": {
+        "description": "ET: Run Ensemble Tractography. DEFAULT=False",
+        "default": true,
+        "type": "boolean"
+      },
+      "ET_numberFibers": {
+        "description": "ET: Number of fibers to generate. DEFAULT=500000",
+        "default": 500000,
+        "type": "number"
+      },
+      "ET_minlength": {
+        "description": "ET: Minimum fiber length (in mm). DEFAULT=10",
+        "default": 10,
+        "type": "number"
+      },
+      "ET_maxlength": {
+        "description": "ET: Maximum fiber length (in mm). DEFAULT=250",
+        "default": 250,
+        "type": "number"
+      },
+      "ET_angleValues": {
+        "description": "ET: Angle cutoff values to use during ET tracking (comma-separated list). DEFAULT='47.2, 23.1, 11.5, 5.7, 2.9'",
+        "default": "47.2, 23.1, 11.5, 5.7, 2.9",
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "f515efdb310c65bd2fcb6fe2665da81ca492d4e8",
+    "rootfs-hash": "sha384:865c4fb383eecbc88d69041a5a1383313de82cc74965f3542106874ddbd75bc76b573bd62053898e75a194857276ba0d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-afq-pipeline-sha384-865c4fb383eecbc88d69041a5a1383313de82cc74965f3542106874ddbd75bc76b573bd62053898e75a194857276ba0d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bval",
+          "bvec",
+          "dwi"
+        ],
+        "type": "object",
+        "properties": {
+          "bvec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          },
+          "bval": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bval"
+                ]
+              }
+            }
+          },
+          "dwi": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "cleanIter",
+          "imresample",
+          "track_algorithm",
+          "computeCSD",
+          "fiberWeighting",
+          "life_saveOutput",
+          "track_minLengthThreshMm",
+          "savefigs",
+          "rotateBvecsWithRx",
+          "AFQ_Browser_Title",
+          "life_runLife",
+          "bsplineInterpFlag",
+          "mrtrix_multishell",
+          "track_faThresh",
+          "maxDist",
+          "track_whichAlgorithm",
+          "mrtrix_tool",
+          "life_writePDB",
+          "clip2rois",
+          "phaseEncodeDir",
+          "ET_maxlength",
+          "track_offsetJitter",
+          "track_nfibers",
+          "cutoffUpper",
+          "cleanClippedFibers",
+          "ET_numberFibers",
+          "numberOfNodes",
+          "track_maxLengthThreshMm",
+          "AFQ_Output_Name",
+          "numBootStrapSamples",
+          "flipLrApFlag",
+          "track_faMaskThresh",
+          "life_test",
+          "eddyCorrect",
+          "track_wPuncture",
+          "maxLen",
+          "computenorms",
+          "track_angleThresh",
+          "track_seedVoxelOffset_1",
+          "ET_angleValues",
+          "life_num_iterations",
+          "normalization",
+          "cutoffLower",
+          "ET_minlength",
+          "mrtrix_mrTrixAlgo",
+          "noiseCalcMethod",
+          "rotateBvecsWithCanXform",
+          "track_stepSizeMm",
+          "nStep",
+          "track_whichInterp",
+          "cleanFibers",
+          "ET_runET",
+          "track_seedVoxelOffset_2",
+          "life_discretization",
+          "fitMethod",
+          "dwOutMm_3",
+          "dwOutMm_2",
+          "dwOutMm_1"
+        ],
+        "type": "object",
+        "properties": {
+          "cleanIter": {
+            "default": 5,
+            "type": "integer"
+          },
+          "imresample": {
+            "default": 0,
+            "type": "integer"
+          },
+          "track_algorithm": {
+            "default": "mrtrix",
+            "type": "string"
+          },
+          "computeCSD": {
+            "default": 1,
+            "type": "integer"
+          },
+          "fiberWeighting": {
+            "default": 1,
+            "type": "integer"
+          },
+          "life_saveOutput": {
+            "default": true,
+            "type": "boolean"
+          },
+          "track_minLengthThreshMm": {
+            "default": 50,
+            "type": "integer"
+          },
+          "track_angleThresh": {
+            "default": 30,
+            "type": "integer"
+          },
+          "savefigs": {
+            "default": 0,
+            "type": "integer"
+          },
+          "rotateBvecsWithRx": {
+            "default": 0,
+            "type": "integer"
+          },
+          "AFQ_Browser_Title": {
+            "default": "AFQ_Browser",
+            "type": "string"
+          },
+          "life_runLife": {
+            "default": true,
+            "type": "boolean"
+          },
+          "bsplineInterpFlag": {
+            "default": 0,
+            "type": "integer"
+          },
+          "mrtrix_multishell": {
+            "default": false,
+            "type": "boolean"
+          },
+          "track_faThresh": {
+            "default": 0.2,
+            "type": "number"
+          },
+          "maxDist": {
+            "default": 5,
+            "type": "integer"
+          },
+          "mrtrix_tool": {
+            "default": "freesurfer",
+            "type": "string"
+          },
+          "life_writePDB": {
+            "default": false,
+            "type": "boolean"
+          },
+          "clip2rois": {
+            "default": 1,
+            "type": "integer"
+          },
+          "phaseEncodeDir": {
+            "default": 2,
+            "type": "integer"
+          },
+          "ET_maxlength": {
+            "default": 250,
+            "type": "number"
+          },
+          "track_offsetJitter": {
+            "default": 0,
+            "type": "number"
+          },
+          "track_nfibers": {
+            "default": 500000,
+            "type": "integer"
+          },
+          "cutoffUpper": {
+            "default": 90,
+            "type": "integer"
+          },
+          "cleanClippedFibers": {
+            "default": 0,
+            "type": "integer"
+          },
+          "numberOfNodes": {
+            "default": 100,
+            "type": "integer"
+          },
+          "cleanFibers": {
+            "default": 1,
+            "type": "integer"
+          },
+          "AFQ_Output_Name": {
+            "default": "afq_output",
+            "type": "string"
+          },
+          "numBootStrapSamples": {
+            "default": 500,
+            "type": "integer"
+          },
+          "flipLrApFlag": {
+            "default": 0,
+            "type": "integer"
+          },
+          "track_faMaskThresh": {
+            "default": 0.3,
+            "type": "number"
+          },
+          "life_test": {
+            "default": false,
+            "type": "boolean"
+          },
+          "eddyCorrect": {
+            "default": 1,
+            "type": "integer"
+          },
+          "track_wPuncture": {
+            "default": 0.2,
+            "type": "number"
+          },
+          "maxLen": {
+            "default": 4,
+            "type": "integer"
+          },
+          "computenorms": {
+            "default": 1,
+            "type": "integer"
+          },
+          "track_whichAlgorithm": {
+            "default": 1,
+            "type": "integer"
+          },
+          "track_seedVoxelOffset_1": {
+            "default": 0.25,
+            "type": "number"
+          },
+          "ET_angleValues": {
+            "default": "47.2, 23.1, 11.5, 5.7, 2.9",
+            "type": "string"
+          },
+          "life_num_iterations": {
+            "default": 100,
+            "type": "number"
+          },
+          "normalization": {
+            "default": "spm",
+            "type": "string"
+          },
+          "ET_numberFibers": {
+            "default": 500000,
+            "type": "number"
+          },
+          "ET_minlength": {
+            "default": 10,
+            "type": "number"
+          },
+          "mrtrix_mrTrixAlgo": {
+            "default": "iFOD2",
+            "type": "string"
+          },
+          "cutoffLower": {
+            "default": 10,
+            "type": "integer"
+          },
+          "rotateBvecsWithCanXform": {
+            "default": 1,
+            "type": "integer"
+          },
+          "track_stepSizeMm": {
+            "default": 1,
+            "type": "integer"
+          },
+          "dwOutMm_2": {
+            "default": 2,
+            "type": "number"
+          },
+          "track_whichInterp": {
+            "default": 1,
+            "type": "integer"
+          },
+          "track_maxLengthThreshMm": {
+            "default": 250,
+            "type": "integer"
+          },
+          "ET_runET": {
+            "default": true,
+            "type": "boolean"
+          },
+          "track_seedVoxelOffset_2": {
+            "default": 0.75,
+            "type": "number"
+          },
+          "life_discretization": {
+            "default": 360,
+            "type": "number"
+          },
+          "fitMethod": {
+            "default": "ls",
+            "type": "string"
+          },
+          "dwOutMm_3": {
+            "default": 2,
+            "type": "number"
+          },
+          "nStep": {
+            "default": 50,
+            "type": "integer"
+          },
+          "dwOutMm_1": {
+            "default": 2,
+            "type": "number"
+          },
+          "noiseCalcMethod": {
+            "default": "b0",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for AFQ Pipeline: Automated Fiber Quantification Pipeline (DTIInit + MRtrix3 + ET + LiFE + AFQ)"
+  }
+}
