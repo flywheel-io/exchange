@@ -8,9 +8,9 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-struct",
   "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "custom": {
-    "docker-image": "flywheel/hcp-struct:0.1.7"
+    "docker-image": "flywheel/hcp-struct:0.1.8"
   },
   "flywheel": {
     "suite": "Human Connectome Project"
