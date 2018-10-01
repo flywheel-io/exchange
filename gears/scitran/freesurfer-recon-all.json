@@ -9,7 +9,10 @@
   "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.1.3",
+  "version": "0.1.4",
+  "custom": {
+    "docker-image": "scitran/freesurfer-recon-all:0.1.4"
+  },
   "inputs": {
     "anatomical": {
       "description": "Anatomical NIfTI file or DICOM archive.",
@@ -24,8 +27,7 @@
   },
   "config": {
     "subject_id": {
-      "description": "Desired subject ID (Default='s000'). Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory.",
-      "default": "s000",
+      "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory.",
       "type": "string"
     },
     "reconall_options": {
@@ -45,7 +47,7 @@
     },
     "register_surfaces": {
       "description": "Runs the xhemireg and surfreg scripts on your subject after having run recon-all in order to register the subject's left and inverted-right hemispheres to the fsaverage_sym subject. (The fsaverage_sym subject is a version of the fsaverage subject with a single the left-right symmetric pseudo-hemisphere.) (Default=true)",
-      "default": false,
+      "default": true,
       "type": "boolean"
     },
     "convert_surfaces": {
@@ -65,26 +67,19 @@
     },
     "license_email": {
       "description": "Email address used during FreeSurfer registration (1st line of 'license')",
-      "default": "",
       "type": "string"
     },
     "license_number": {
       "description": "FreeSurfer License Number (2nd line of 'license')",
-      "default": "",
       "type": "string"
     },
     "license_key": {
       "description": "FreeSurfer License Key (3rd line of 'license')",
-      "default": "",
       "type": "string"
     },
     "license_reference": {
       "description": "FreeSurfer License Reference (4th line of 'license')",
-      "default": "",
       "type": "string"
     }
-  },
-  "custom": {
-    "docker-image": "scitran/freesurfer-recon-all:0.1.3"
   }
 }
