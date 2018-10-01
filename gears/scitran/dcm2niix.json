@@ -8,9 +8,9 @@
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.7.3_1.0.20180622",
+  "version": "0.7.4_1.0.20180622_5af76a9",
   "custom": {
-    "docker-image": "scitran/dcm2niix:0.7.3_1.0.20180622",
+    "docker-image": "scitran/dcm2niix:0.7.4_1.0.20180622_5af76a9",
     "flywheel": {
       "uid": 1000,
       "gid": 1000
