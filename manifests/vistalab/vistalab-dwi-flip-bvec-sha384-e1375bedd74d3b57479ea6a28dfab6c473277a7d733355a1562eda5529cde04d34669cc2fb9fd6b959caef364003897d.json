@@ -1,0 +1,103 @@
+{
+  "gear": {
+    "name": "dwi-flip-bvec",
+    "label": "VISTA Lab: DWI Flip BVEC",
+    "description": "Flips the sign of the the specified B-vector(s).",
+    "author": "GLU <glerma@stanford.edu>",
+    "maintainer": "GLU <glerma@stanford.edu>",
+    "url": "https://github.com/vistalab/dwi-flip-bvec",
+    "source": "https://github.com/vistalab/dwi-flip-bvec",
+    "license": "MIT",
+    "flywheel": {
+      "suite": "VISTA Lab"
+    },
+    "version": "1.0.0",
+    "custom": {
+      "docker-image": "vistalab/dwi-flip-bvec:1.0.0"
+    },
+    "config": {
+      "xFlip": {
+        "default": false,
+        "type": "boolean",
+        "description": "Flip the x axis of the bvec (true/false, default=false)"
+      },
+      "yFlip": {
+        "default": false,
+        "type": "boolean",
+        "description": "Flip the y axis of the bvec (true/false, default=false)"
+      },
+      "zFlip": {
+        "default": false,
+        "type": "boolean",
+        "description": "Flip the z axis of the bvec (true/false, default=false)"
+      }
+    },
+    "inputs": {
+      "bvec": {
+        "base": "file",
+        "description": "BVEC text file.",
+        "type": {
+          "enum": [
+            "bvec"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "60ed4d341c49fa2f8a96ac875f8fc42b540727f0",
+    "rootfs-hash": "sha384:e1375bedd74d3b57479ea6a28dfab6c473277a7d733355a1562eda5529cde04d34669cc2fb9fd6b959caef364003897d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/vistalab-dwi-flip-bvec-sha384-e1375bedd74d3b57479ea6a28dfab6c473277a7d733355a1562eda5529cde04d34669cc2fb9fd6b959caef364003897d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bvec"
+        ],
+        "type": "object",
+        "properties": {
+          "bvec": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "bvec"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "zFlip",
+          "xFlip",
+          "yFlip"
+        ],
+        "type": "object",
+        "properties": {
+          "zFlip": {
+            "default": false,
+            "type": "boolean"
+          },
+          "xFlip": {
+            "default": false,
+            "type": "boolean"
+          },
+          "yFlip": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for VISTA Lab: DWI Flip BVEC"
+  }
+}
