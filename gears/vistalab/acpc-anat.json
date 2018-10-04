@@ -1,0 +1,50 @@
+{
+  "name": "acpc-anat",
+  "label": "VISTA Lab: ACPC-ANAT Normalize",
+  "description": "Normalize anatomical NIfTI with the MNI template or with AC-PC coordinates provided by the user.",
+  "author": "GLU <glerma@stanford.edu>",
+  "maintainer": "GLU <glerma@stanford.edu>",
+  "url": "https://github.com/vistalab/acpc-anat",
+  "source": "https://github.com/vistalab/acpc-anat",
+  "license": "MIT",
+  "flywheel": {
+    "suite": "VISTA Lab"
+  },
+  "version": "1.0.0",
+  "custom": {
+    "docker-image": "vistalab/acpc-anat:1.0.0"
+  },
+  "config": {
+    "userProvidedAcpc": {
+      "default": false,
+      "type": "boolean",
+      "description": "Use AC-PC coordinates provided by the user in the fields here (true/false, default=false)"
+    },
+    "AC": {
+      "default": "128, 140, 60",
+      "type": "string",
+      "description": "Anterior Commissure coordinates (DEFAULT='[128, 140, 60]')."
+    },
+    "PC": {
+      "default": "128, 110, 60",
+      "type": "string",
+      "description": "Posterior Commissure coordinates (DEFAULT='[128, 110, 60]')'."
+    },
+    "MS": {
+      "default": "128, 135, 85",
+      "type": "string",
+      "description": "Mid Sagittal coordinates (DEFAULT='[128, 135, 85]')'."
+    }
+  },
+  "inputs": {
+    "anatomical": {
+      "base": "file",
+      "description": "Anatomical T1w NIfTI file.",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  }
+}
