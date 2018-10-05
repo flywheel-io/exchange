@@ -1,0 +1,113 @@
+{
+  "gear": {
+    "name": "acpc-anat",
+    "label": "VISTA Lab: ACPC-ANAT Normalize",
+    "description": "Normalize anatomical NIfTI with the MNI template or with AC-PC coordinates provided by the user.",
+    "author": "GLU <glerma@stanford.edu>",
+    "maintainer": "GLU <glerma@stanford.edu>",
+    "url": "https://github.com/vistalab/acpc-anat",
+    "source": "https://github.com/vistalab/acpc-anat",
+    "license": "MIT",
+    "flywheel": {
+      "suite": "VISTA Lab"
+    },
+    "version": "1.0.2",
+    "custom": {
+      "docker-image": "vistalab/acpc-anat:1.0.2"
+    },
+    "config": {
+      "userProvidedAcpc": {
+        "default": false,
+        "type": "boolean",
+        "description": "Use AC-PC coordinates provided by the user in the fields here (true/false, default=false)"
+      },
+      "AC": {
+        "default": "128, 140, 60",
+        "type": "string",
+        "description": "Anterior Commissure coordinates (DEFAULT='[128, 140, 60]')."
+      },
+      "PC": {
+        "default": "128, 110, 60",
+        "type": "string",
+        "description": "Posterior Commissure coordinates (DEFAULT='[128, 110, 60]')'."
+      },
+      "MS": {
+        "default": "128, 135, 85",
+        "type": "string",
+        "description": "Mid Sagittal coordinates (DEFAULT='[128, 135, 85]')'."
+      }
+    },
+    "inputs": {
+      "anatomical": {
+        "base": "file",
+        "description": "Anatomical T1w NIfTI file.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "ccd6020bb6483c8e4f8a77cc638f1ba4e026a418",
+    "rootfs-hash": "sha384:d9b70872de9a6f3263ffa1b825de6b3596515378d51fa040c4d988edac9910ad704f1238914bd9974a37d3b1ab050297",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/vistalab-acpc-anat-sha384-d9b70872de9a6f3263ffa1b825de6b3596515378d51fa040c4d988edac9910ad704f1238914bd9974a37d3b1ab050297.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "anatomical"
+        ],
+        "type": "object",
+        "properties": {
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "PC",
+          "AC",
+          "userProvidedAcpc",
+          "MS"
+        ],
+        "type": "object",
+        "properties": {
+          "PC": {
+            "default": "128, 110, 60",
+            "type": "string"
+          },
+          "AC": {
+            "default": "128, 140, 60",
+            "type": "string"
+          },
+          "userProvidedAcpc": {
+            "default": false,
+            "type": "boolean"
+          },
+          "MS": {
+            "default": "128, 135, 85",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for VISTA Lab: ACPC-ANAT Normalize"
+  }
+}
