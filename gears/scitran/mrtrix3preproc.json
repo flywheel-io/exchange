@@ -11,9 +11,9 @@
   "flywheel": {
     "suite": "MRtrix"
   },
-  "version": "1.0.0",
+  "version": "1.0.2",
   "custom": {
-    "docker-image": "scitran/mrtrix3preproc:1.0.0"
+    "docker-image": "scitran/mrtrix3preproc:1.0.2"
   },
   "config": {
     "rpe": {
@@ -66,8 +66,14 @@
       "default": false,
       "type": "boolean"
     },
+    "doreslice": {
+      "description": "Do reslicing [default=false]",
+      "default": false,
+      "type": "boolean",
+      "id": "-doreslice"
+    },
     "reslice": {
-      "description": "Optional. By default reslicing is not done. If you want it done, set a number (e.g., 1) here to reslice the dwi data to this isotropic voxel size (in mm).",
+      "description": "Optional. By default reslicing is not done. If you want it done, set doreslice=true and set a number (e.g., 1) here to reslice the dwi data to this isotropic voxel size (in mm).",
       "optional": true,
       "type": "number"
     }
@@ -101,8 +107,9 @@
       }
     },
     "ANAT": {
-      "description": "Anatomical T1w NIfTI image.",
+      "description": "Optional anatomical T1w NIfTI image. Required only if acpc=true",
       "base": "file",
+      "optional": true,
       "type": {
         "enum": [
           "nifti"
