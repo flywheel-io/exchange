@@ -5,7 +5,7 @@
   "maintainer": "Garikoitz Lerma-Usabiaga <glerma@stanford.edu>",
   "author": "MRtrix, FSL, and Brain-Life teams.",
   "url": "https://mrtrix.readthedocs.io/en/latest/reference/scripts/dwipreproc.html#dwipreproc",
-  "source": "https://github.com/scitran/mrtrix3preproc",
+  "source": "https://github.com/scitran-apps/mrtrix3preproc",
   "license": "Other",
   "cite": "Gear adapted from https://github.com/brain-life/app-mrtrix3-preproc. Ref: https://mrtrix.readthedocs.io/en/latest/reference/scripts/dwipreproc.html#references",
   "flywheel": {
