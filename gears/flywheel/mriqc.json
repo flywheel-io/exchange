@@ -8,9 +8,9 @@
   "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
   "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
   "license": "BSD-3-Clause",
-  "version": "0.6.2_0.11.0",
+  "version": "0.6.3_0.11.0",
   "custom": {
-    "docker-image": "flywheel/mriqc:0.6.2_0.11.0"
+    "docker-image": "flywheel/mriqc:0.6.3_0.11.0"
   },
   "inputs": {
     "nifti": {
