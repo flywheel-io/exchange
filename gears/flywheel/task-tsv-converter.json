@@ -2,8 +2,8 @@
 	"name": "task-tsv-converter",
 	"label": "Task tsv Converter",
 	"description": "Converts log files to tsv task files as per bids specs",
-	"version": "0.1.4",
-	"flywheel": "0.1.4",
+	"version": "0.1.5",
+	"flywheel": "0.1.5",
 	"inputs": {
 		"file": {
 			"base": "file",
@@ -21,7 +21,7 @@
 	},
 	"config": {
 		"Filename": {
-			"default": false,
+			"optional": true,
 			"description": "Override tsv filename from {filename}[_run-#].tsv, please include ext",
 			"type": "string"
 		}
