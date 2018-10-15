@@ -4,7 +4,7 @@
   "author": "Yaroslav O. Halchenko",
   "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
   "license": "BSD-3-Clause",
-  "version": "0.0.2.nipype.1.0.3.1",
+  "version": "0.1.dev.nipype.1.0.3.3",
   "config": {
     "dimension": {
       "type": "integer",
@@ -18,8 +18,8 @@
     },
     "initialization": {
       "type": "string",
-      "description": "Initialization [default=Random]",
-      "default": "Random",
+      "description": "Initialization [default=KMeans]",
+      "default": "KMeans",
       "enum": [
         "Random",
         "Otsu",
@@ -71,14 +71,6 @@
       "type": "integer",
       "description": "Maximum number of icm terations",
       "optional": true
-    },
-    "mrf_radius": {
-      "type": "array",
-      "description": "Mrf radius",
-      "optional": true,
-      "items": {
-        "type": "integer"
-      }
     },
     "mrf_smoothing_factor": {
       "type": "number",
@@ -155,9 +147,9 @@
       "suite": "ANTS 2"
     },
     "gear-builder": {
-      "image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.0.2.nipype.1.0.3.1"
+      "image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.1.dev.nipype.1.0.3.3"
     },
-    "docker-image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.0.2.nipype.1.0.3.1"
+    "docker-image": "gearificator/nipype-interfaces-ants-segmentation-atropos:0.1.dev.nipype.1.0.3.3"
   },
   "label": "Atropos"
 }
