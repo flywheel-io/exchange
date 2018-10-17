@@ -7,12 +7,12 @@
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
   "source": "https://github.com/scitran-apps/fslmerge",
   "license": "Apache-2.0",
-  "flywheel": {
-    "suite": "FSL"
-  },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "custom": {
-    "docker-image": "scitran/fslmerge:0.1.1"
+    "docker-image": "scitran/fslmerge:0.1.2",
+    "flywheel": {
+      "suite": "FSL"
+    }
   },
   "config": {
     "catTime": {
@@ -40,13 +40,13 @@
       "id": "-z"
     },
     "auto": {
-      "description": "auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
+      "description": "auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
       "default": true,
       "type": "boolean",
       "id": "-a"
     },
     "catTR": {
-      "description": "concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
+      "description": "concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
       "default": 0,
       "type": "number",
       "id": "-tr"
