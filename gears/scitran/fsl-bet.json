@@ -7,12 +7,12 @@
   "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET",
   "source": "https://github.com/scitran-apps/fsl-bet",
   "license": "Apache-2.0",
-  "flywheel": {
-    "suite": "FSL"
-  },
-  "version": "0.2.0",
+  "version": "0.2.1",
   "custom": {
-    "docker-image": "scitran/fsl-bet:0.2.0"
+      "flywheel": {
+        "suite": "FSL"
+      },
+    "docker-image": "scitran/fsl-bet:0.2.1"
   },
   "config": {
     "fractional_intensity_threshold": {
