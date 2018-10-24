@@ -8,21 +8,21 @@
   "source": "https://github.com/cni/cni-qa-report-fmri",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "custom": {
-    "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.1",
+    "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.2",
     "flywheel": {
       "suite": "Stanford CNI"
     }
   },
   "config": {
     "spike_thresh": {
-      "descriptiion": "z-score threshold for spike detector. DEFAULT=6.0",
+      "description": "Z-score threshold for spike detector. [ DEFAULT = 6.0 ]",
       "default": 6,
       "type": "number"
     },
     "nskip": {
-      "descriptiion": "number of initial time-points to skip. DEFAULT=6",
+      "description": "Number of initial time-points to skip. [ DEFAULT = 6 ]",
       "default": 6,
       "type": "integer"
     }
