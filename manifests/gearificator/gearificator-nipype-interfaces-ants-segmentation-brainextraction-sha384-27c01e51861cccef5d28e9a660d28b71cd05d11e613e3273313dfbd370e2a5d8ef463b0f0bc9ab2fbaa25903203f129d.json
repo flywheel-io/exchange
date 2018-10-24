@@ -1,0 +1,256 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-brainextraction",
+    "description": "",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.1.dev.nipype.1.0.3.3",
+    "config": {
+      "dimension": {
+        "type": "integer",
+        "description": "image dimension (2 or 3) [default=3]",
+        "default": 3,
+        "enum": [
+          3,
+          2
+        ]
+      },
+      "image_suffix": {
+        "type": "string",
+        "description": "any of standard ITK formats, nii.gz is default [default=nii.gz]",
+        "default": "nii.gz"
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "out_prefix": {
+        "type": "string",
+        "description": "Prefix that is prepended to all output files (default = highress001_) [default=highres001_]",
+        "default": "highres001_"
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "debug": {
+        "type": "boolean",
+        "description": "If > 0, runs a faster version of the script. Only for testing. Implies -u 0. Requires single thread computation for complete reproducibility.",
+        "optional": true
+      },
+      "keep_temporary_files": {
+        "type": "integer",
+        "description": "Keep brain extraction/segmentation warps, etc (default = 0).",
+        "optional": true
+      },
+      "use_floatingpoint_precision": {
+        "type": "integer",
+        "description": "Use floating point precision in registrations (default = 0)",
+        "optional": true,
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "use_random_seeding": {
+        "type": "integer",
+        "description": "Use random number generated from system clock in Atropos (default = 1)",
+        "optional": true,
+        "enum": [
+          0,
+          1
+        ]
+      }
+    },
+    "inputs": {
+      "anatomical_image": {
+        "description": "Structural image, typically T1.  If more than one anatomical image is specified, subsequently specified images are used during the segmentation process.  However, only the first image is used in the registration of priors. Our suggestion would be to specify the T1 as the first image. Anatomical template created using e.g. LPBA40 data set with buildtemplateparallel.sh in ANTs.",
+        "base": "file"
+      },
+      "brain_probability_mask": {
+        "description": "Brain probability mask created using e.g. LPBA40 data set which have brain masks defined, and warped to anatomical template and averaged resulting in a probability image.",
+        "base": "file"
+      },
+      "brain_template": {
+        "description": "Anatomical template created using e.g. LPBA40 data set with buildtemplateparallel.sh in ANTs.",
+        "base": "file"
+      },
+      "extraction_registration_mask": {
+        "description": "Mask (defined in the template space) used during registration for brain extraction. To limit the metric computation to a specific region.",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:BrainExtraction",
+        "outputs": {
+          "BrainExtractionBrain": {
+            "description": "brain extraction image"
+          },
+          "BrainExtractionCSF": {
+            "description": "segmentation mask with only CSF"
+          },
+          "BrainExtractionGM": {
+            "description": "segmentation mask with only grey matter"
+          },
+          "BrainExtractionInitialAffine": {
+            "description": "Brainextractioninitialaffine"
+          },
+          "BrainExtractionInitialAffineFixed": {
+            "description": "Brainextractioninitialaffinefixed"
+          },
+          "BrainExtractionInitialAffineMoving": {
+            "description": "Brainextractioninitialaffinemoving"
+          },
+          "BrainExtractionLaplacian": {
+            "description": "Brainextractionlaplacian"
+          },
+          "BrainExtractionMask": {
+            "description": "brain extraction mask"
+          },
+          "BrainExtractionPrior0GenericAffine": {
+            "description": "Brainextractionprior0genericaffine"
+          },
+          "BrainExtractionPrior1InverseWarp": {
+            "description": "Brainextractionprior1inversewarp"
+          },
+          "BrainExtractionPrior1Warp": {
+            "description": "Brainextractionprior1warp"
+          },
+          "BrainExtractionPriorWarped": {
+            "description": "Brainextractionpriorwarped"
+          },
+          "BrainExtractionSegmentation": {
+            "description": "segmentation mask with CSF, GM, and WM"
+          },
+          "BrainExtractionTemplateLaplacian": {
+            "description": "Brainextractiontemplatelaplacian"
+          },
+          "BrainExtractionTmp": {
+            "description": "Brainextractiontmp"
+          },
+          "BrainExtractionWM": {
+            "description": "segmenration mask with only white matter"
+          },
+          "N4Corrected0": {
+            "description": "N4 bias field corrected image"
+          },
+          "N4Truncated0": {
+            "description": "N4truncated0"
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "ANTS 2"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-brainextraction:0.1.dev.nipype.1.0.3.3"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-brainextraction:0.1.dev.nipype.1.0.3.3"
+    },
+    "label": "BrainExtraction"
+  },
+  "exchange": {
+    "git-commit": "cac4647e9010b3fd2659b728d4c439de47dd3a87",
+    "rootfs-hash": "sha384:27c01e51861cccef5d28e9a660d28b71cd05d11e613e3273313dfbd370e2a5d8ef463b0f0bc9ab2fbaa25903203f129d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-brainextraction-sha384-27c01e51861cccef5d28e9a660d28b71cd05d11e613e3273313dfbd370e2a5d8ef463b0f0bc9ab2fbaa25903203f129d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "brain_template",
+          "brain_probability_mask",
+          "anatomical_image"
+        ],
+        "type": "object",
+        "properties": {
+          "extraction_registration_mask": {
+            "type": "object",
+            "properties": {}
+          },
+          "brain_template": {
+            "type": "object",
+            "properties": {}
+          },
+          "brain_probability_mask": {
+            "type": "object",
+            "properties": {}
+          },
+          "anatomical_image": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "num_threads",
+          "out_prefix",
+          "image_suffix",
+          "dimension"
+        ],
+        "type": "object",
+        "properties": {
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "use_floatingpoint_precision": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "args": {
+            "type": "string"
+          },
+          "keep_temporary_files": {
+            "type": "integer"
+          },
+          "out_prefix": {
+            "default": "highres001_",
+            "type": "string"
+          },
+          "image_suffix": {
+            "default": "nii.gz",
+            "type": "string"
+          },
+          "debug": {
+            "type": "boolean"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              3,
+              2
+            ],
+            "type": "integer"
+          },
+          "use_random_seeding": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for BrainExtraction"
+  }
+}
