@@ -1,0 +1,254 @@
+{
+  "gear": {
+    "name": "nipype-interfaces-ants-segmentation-kellykapowski",
+    "description": " Nipype Interface to ANTs' KellyKapowski, also known as DiReCT.",
+    "author": "Yaroslav O. Halchenko",
+    "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
+    "license": "BSD-3-Clause",
+    "version": "0.1.dev.nipype.1.0.3.3",
+    "config": {
+      "dimension": {
+        "type": "integer",
+        "description": "image dimension (2 or 3) [default=3]",
+        "default": 3,
+        "enum": [
+          3,
+          2
+        ]
+      },
+      "gradient_step": {
+        "type": "number",
+        "description": "Gradient step size for the optimization. [default=0.025]",
+        "default": 0.025
+      },
+      "gray_matter_label": {
+        "type": "integer",
+        "description": "The label value for the gray matter label in the segmentation_image. [default=2]",
+        "default": 2
+      },
+      "max_invert_displacement_field_iters": {
+        "type": "integer",
+        "description": "Maximum number of iterations for estimating the invertdisplacement field. [default=20]",
+        "default": 20
+      },
+      "num_threads": {
+        "type": "integer",
+        "description": "Number of ITK threads to use [default=1]",
+        "default": 1
+      },
+      "number_integration_points": {
+        "type": "integer",
+        "description": "Number of compositions of the diffeomorphism per iteration. [default=10]",
+        "default": 10
+      },
+      "smoothing_variance": {
+        "type": "number",
+        "description": "Defines the Gaussian smoothing of the hit and total images. [default=1.0]",
+        "default": 1
+      },
+      "smoothing_velocity_field": {
+        "type": "number",
+        "description": "Defines the Gaussian smoothing of the velocity field (default = 1.5). If the b-spline smoothing option is chosen, then this defines the isotropic mesh spacing for the smoothing spline (default = 15). [default=1.5]",
+        "default": 1.5
+      },
+      "thickness_prior_estimate": {
+        "type": "number",
+        "description": "Provides a prior constraint on the final thickness measurement in mm. [default=10]",
+        "default": 10
+      },
+      "white_matter_label": {
+        "type": "integer",
+        "description": "The label value for the white matter label in the segmentation_image. [default=3]",
+        "default": 3
+      },
+      "args": {
+        "type": "string",
+        "description": "Additional parameters to the command",
+        "optional": true
+      },
+      "convergence": {
+        "type": "string",
+        "description": "Convergence is determined by fitting a line to the normalized energy profile of the last N iterations (where N is specified by the window size) and determining the slope which is then compared with the convergence threshold.",
+        "optional": true
+      },
+      "use_bspline_smoothing": {
+        "type": "boolean",
+        "description": "Sets the option for B-spline smoothing of the velocity field.",
+        "optional": true
+      }
+    },
+    "inputs": {
+      "segmentation_image": {
+        "description": "A segmentation image must be supplied labeling the gray and white matters. Default values = 2 and 3, respectively.",
+        "base": "file"
+      },
+      "gray_matter_prob_image": {
+        "description": "In addition to the segmentation image, a gray matter probability image can be used. If no such image is supplied, one is created using the segmentation image and a variance of 1.0 mm.",
+        "optional": true,
+        "base": "file"
+      },
+      "thickness_prior_image": {
+        "description": "An image containing spatially varying prior thickness values.",
+        "optional": true,
+        "base": "file"
+      },
+      "white_matter_prob_image": {
+        "description": "In addition to the segmentation image, a white matter probability image can be used. If no such image is supplied, one is created using the segmentation image and a variance of 1.0 mm.",
+        "optional": true,
+        "base": "file"
+      },
+      "cortical_thickness": {
+        "description": "Filename for the cortical thickness.",
+        "optional": true,
+        "base": "file"
+      },
+      "warped_white_matter": {
+        "description": "Filename for the warped white matter file.",
+        "optional": true,
+        "base": "file"
+      }
+    },
+    "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+    "source": "https://github.com/yarikoptic/gearificator",
+    "custom": {
+      "gearificator": {
+        "interface": "nipype.interfaces.ants.segmentation:KellyKapowski",
+        "outputs": {
+          "cortical_thickness": {
+            "description": "A thickness map defined in the segmented gray matter."
+          },
+          "warped_white_matter": {
+            "description": "A warped white matter image."
+          }
+        },
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "ANTS 2"
+      },
+      "gear-builder": {
+        "image": "gearificator/nipype-interfaces-ants-segmentation-kellykapowski:0.1.dev.nipype.1.0.3.3"
+      },
+      "docker-image": "gearificator/nipype-interfaces-ants-segmentation-kellykapowski:0.1.dev.nipype.1.0.3.3"
+    },
+    "label": "KellyKapowski"
+  },
+  "exchange": {
+    "git-commit": "f64bd0d1a6e77e99feb3de7df1d1b838f9e7a266",
+    "rootfs-hash": "sha384:81b1135ed08ba9d3acc267a89bfbc661e913cf082380d8dd7084b60c409854b3152cd7c7790302b8c889a4663cfca195",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/gearificator-nipype-interfaces-ants-segmentation-kellykapowski-sha384-81b1135ed08ba9d3acc267a89bfbc661e913cf082380d8dd7084b60c409854b3152cd7c7790302b8c889a4663cfca195.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "segmentation_image"
+        ],
+        "type": "object",
+        "properties": {
+          "white_matter_prob_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "cortical_thickness": {
+            "type": "object",
+            "properties": {}
+          },
+          "gray_matter_prob_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "warped_white_matter": {
+            "type": "object",
+            "properties": {}
+          },
+          "thickness_prior_image": {
+            "type": "object",
+            "properties": {}
+          },
+          "segmentation_image": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "gradient_step",
+          "num_threads",
+          "white_matter_label",
+          "thickness_prior_estimate",
+          "gray_matter_label",
+          "smoothing_velocity_field",
+          "smoothing_variance",
+          "max_invert_displacement_field_iters",
+          "dimension",
+          "number_integration_points"
+        ],
+        "type": "object",
+        "properties": {
+          "gradient_step": {
+            "default": 0.025,
+            "type": "number"
+          },
+          "num_threads": {
+            "default": 1,
+            "type": "integer"
+          },
+          "white_matter_label": {
+            "default": 3,
+            "type": "integer"
+          },
+          "args": {
+            "type": "string"
+          },
+          "thickness_prior_estimate": {
+            "default": 10,
+            "type": "number"
+          },
+          "gray_matter_label": {
+            "default": 2,
+            "type": "integer"
+          },
+          "dimension": {
+            "default": 3,
+            "enum": [
+              3,
+              2
+            ],
+            "type": "integer"
+          },
+          "number_integration_points": {
+            "default": 10,
+            "type": "integer"
+          },
+          "convergence": {
+            "type": "string"
+          },
+          "smoothing_variance": {
+            "default": 1,
+            "type": "number"
+          },
+          "max_invert_displacement_field_iters": {
+            "default": 20,
+            "type": "integer"
+          },
+          "smoothing_velocity_field": {
+            "default": 1.5,
+            "type": "number"
+          },
+          "use_bspline_smoothing": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for KellyKapowski"
+  }
+}
