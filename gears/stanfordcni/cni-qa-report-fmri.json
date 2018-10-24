@@ -1,0 +1,41 @@
+{
+  "name": "cni-qa-report-fmri",
+  "label": "CNI: Quality Assurance Report (fMRI)",
+  "description": "Run QA metrics (displacement, signal spikes) to create a quality assurance report (png) for an fMRI NIfTI using CNI/NIMS code.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Robert F. Dougherty, Hua Wu",
+  "url": "https://cni.stanford.edu/wiki/QA",
+  "source": "https://github.com/cni/cni-qa-report-fmri",
+  "license": "Apache-2.0",
+  "flywheel": "0",
+  "version": "1.0.1",
+  "custom": {
+    "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.1",
+    "flywheel": {
+      "suite": "Stanford CNI"
+    }
+  },
+  "config": {
+    "spike_thresh": {
+      "descriptiion": "z-score threshold for spike detector. DEFAULT=6.0",
+      "default": 6,
+      "type": "number"
+    },
+    "nskip": {
+      "descriptiion": "number of initial time-points to skip. DEFAULT=6",
+      "default": 6,
+      "type": "integer"
+    }
+  },
+  "inputs": {
+    "nifti": {
+      "base": "file",
+      "description": "Functional NIfTI data file.",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  }
+}
