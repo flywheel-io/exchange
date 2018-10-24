@@ -1,0 +1,96 @@
+{
+  "gear": {
+    "name": "cni-qa-report-fmri",
+    "label": "CNI: Quality Assurance Report (fMRI)",
+    "description": "Run QA metrics (displacement, signal spikes) to create a quality assurance report (png) for an fMRI NIfTI using CNI/NIMS code.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Robert F. Dougherty, Hua Wu",
+    "url": "https://cni.stanford.edu/wiki/QA",
+    "source": "https://github.com/cni/cni-qa-report-fmri",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "1.0.1",
+    "custom": {
+      "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.1",
+      "flywheel": {
+        "suite": "Stanford CNI"
+      }
+    },
+    "config": {
+      "spike_thresh": {
+        "descriptiion": "z-score threshold for spike detector. DEFAULT=6.0",
+        "default": 6,
+        "type": "number"
+      },
+      "nskip": {
+        "descriptiion": "number of initial time-points to skip. DEFAULT=6",
+        "default": 6,
+        "type": "integer"
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "base": "file",
+        "description": "Functional NIfTI data file.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "be415c17f04650a052d95cbd6b34338c13e30447",
+    "rootfs-hash": "sha384:480e911ecd40cffaccd204178ce6f9fa469ea51cfe924c21209173aa86d9189c9081522b229bf8c12ccfa5957e42a67c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/stanfordcni-cni-qa-report-fmri-sha384-480e911ecd40cffaccd204178ce6f9fa469ea51cfe924c21209173aa86d9189c9081522b229bf8c12ccfa5957e42a67c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "spike_thresh",
+          "nskip"
+        ],
+        "type": "object",
+        "properties": {
+          "spike_thresh": {
+            "default": 6,
+            "type": "number",
+            "descriptiion": "z-score threshold for spike detector. DEFAULT=6.0"
+          },
+          "nskip": {
+            "default": 6,
+            "type": "integer",
+            "descriptiion": "number of initial time-points to skip. DEFAULT=6"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for CNI: Quality Assurance Report (fMRI)"
+  }
+}
