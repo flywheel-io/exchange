@@ -8,9 +8,9 @@
   "source": "https://github.com/cni/cni-qa-report-fmri",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "custom": {
-    "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.2",
+    "docker-image": "stanfordcni/cni-qa-report-fmri:1.0.3",
     "flywheel": {
       "suite": "Stanford CNI"
     }
@@ -25,6 +25,11 @@
       "description": "Number of initial time-points to skip. [ DEFAULT = 6 ]",
       "default": 6,
       "type": "integer"
+    },
+    "require_functional": {
+      "description": "Require that the dataset be classified as Intent==Functional. [ DEFAULT = true ]. If true, the gear will exit (0) without attempting to process the data.",
+      "default": true,
+      "type": "boolean"
     }
   },
   "inputs": {
