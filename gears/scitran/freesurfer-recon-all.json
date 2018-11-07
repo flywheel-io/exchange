@@ -9,13 +9,13 @@
   "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "custom": {
-    "docker-image": "scitran/freesurfer-recon-all:0.1.4"
+    "docker-image": "scitran/freesurfer-recon-all:0.2.0"
   },
   "inputs": {
     "anatomical": {
-      "description": "Anatomical NIfTI file or DICOM archive.",
+      "description": "Anatomical NIfTI file, DICOM archive, or previous freesurfer-recon-all zip archive. NOTE: A freesurfer-recon-all Gear output can be used provided the filename is preserved from its initial output (e.g., freesurfer-recon-all_<subject_code>*.zip)",
       "base": "file",
       "type": {
         "enum": [
@@ -27,7 +27,7 @@
   },
   "config": {
     "subject_id": {
-      "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory.",
+      "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory. NOTE: If using a previous Gear output as input the subject code will be parsed from the input archive, however it should still be provided here for good measure.",
       "type": "string"
     },
     "reconall_options": {
@@ -65,20 +65,8 @@
       "default": true,
       "type": "boolean"
     },
-    "license_email": {
-      "description": "Email address used during FreeSurfer registration (1st line of 'license')",
-      "type": "string"
-    },
-    "license_number": {
-      "description": "FreeSurfer License Number (2nd line of 'license')",
-      "type": "string"
-    },
-    "license_key": {
-      "description": "FreeSurfer License Key (3rd line of 'license')",
-      "type": "string"
-    },
-    "license_reference": {
-      "description": "FreeSurfer License Reference (4th line of 'license')",
+    "freesurfer_license": {
+      "description": "Text from license file generated during FreeSurfer registration. Entries should be space separated.",
       "type": "string"
     }
   }
