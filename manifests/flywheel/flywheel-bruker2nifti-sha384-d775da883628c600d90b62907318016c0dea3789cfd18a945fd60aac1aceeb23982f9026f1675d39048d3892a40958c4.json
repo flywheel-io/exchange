@@ -1,0 +1,184 @@
+{
+  "gear": {
+    "name": "bruker2nifti",
+    "label": "Bruker to NIfTI converter",
+    "description": "Bruker2nifti is an open source medical image format converter from raw Bruker ParaVision to NifTi, without any intermediate step through the DICOM standard formats.",
+    "version": "0.1.0",
+    "inputs": {
+      "bruker": {
+        "base": "file",
+        "description": "A zipped bruker file.",
+        "type": {
+          "enum": [
+            "ParaVision"
+          ]
+        }
+      }
+    },
+    "config": {
+      "Study Name": {
+        "type": "string",
+        "description": "Study name",
+        "default": ""
+      },
+      "Verbosity Level": {
+        "type": "integer",
+        "description": "The amount of output that will be visualised at conversion time (0 for minimal output, 1 for a fair amount, 2 for extra amount for debugging).",
+        "default": 1
+      },
+      "Correct Slope": {
+        "type": "boolean",
+        "description": "Grayscale intensity of each image will be corrected for the slope parameter stored in visu_pars (see this wiki-page). By default the slope correction factor is saved in an external file to make easier applying the slope correction after the conversion.",
+        "default": true
+      },
+      "Get ACQP": {
+        "type": "boolean",
+        "description": "Extra parameter file",
+        "default": false
+      },
+      "Get Method": {
+        "type": "boolean",
+        "description": "Extra parameter file",
+        "default": false
+      },
+      "Get Reco": {
+        "type": "boolean",
+        "description": "Extra parameter file",
+        "default": false
+      },
+      "Nifti Version": {
+        "type": "integer",
+        "description": "Nifti version of the output",
+        "default": 1
+      },
+      "Q-form Code": {
+        "type": "integer",
+        "description": "Q-form of the output nifti",
+        "default": 1
+      },
+      "S-form Code": {
+        "type": "integer",
+        "description": "S-form of the output nifti",
+        "default": 2
+      },
+      "Save Human Readable": {
+        "type": "boolean",
+        "description": "Store bruker parameter as a text file in addition to dictionary",
+        "default": true
+      },
+      "Save B0 if DWI": {
+        "type": "boolean",
+        "description": "Additionally the first time-point (first four-dimensional point) will be saved in another image",
+        "default": true
+      }
+    },
+    "command": "python run.py",
+    "author": "Flywheel",
+    "maintainer": "support@flywheel.io",
+    "license": "Other",
+    "source": "",
+    "url": "",
+    "custom": {
+      "docker-image": "flywheel/bruker2nifti:0.1.0",
+      "gear-builder": {
+        "image": "flywheel/bruker2nifti:0.1.0"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "f83b51fb89f39682bc454f632bc57c3fc3080dd1",
+    "rootfs-hash": "sha384:d775da883628c600d90b62907318016c0dea3789cfd18a945fd60aac1aceeb23982f9026f1675d39048d3892a40958c4",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bruker2nifti-sha384-d775da883628c600d90b62907318016c0dea3789cfd18a945fd60aac1aceeb23982f9026f1675d39048d3892a40958c4.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "bruker"
+        ],
+        "type": "object",
+        "properties": {
+          "bruker": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "ParaVision"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "Get Reco",
+          "Study Name",
+          "Get ACQP",
+          "Save B0 if DWI",
+          "Q-form Code",
+          "Correct Slope",
+          "Save Human Readable",
+          "Get Method",
+          "Verbosity Level",
+          "Nifti Version",
+          "S-form Code"
+        ],
+        "type": "object",
+        "properties": {
+          "Get Reco": {
+            "default": false,
+            "type": "boolean"
+          },
+          "Study Name": {
+            "default": "",
+            "type": "string"
+          },
+          "Get ACQP": {
+            "default": false,
+            "type": "boolean"
+          },
+          "Save B0 if DWI": {
+            "default": true,
+            "type": "boolean"
+          },
+          "Q-form Code": {
+            "default": 1,
+            "type": "integer"
+          },
+          "Correct Slope": {
+            "default": true,
+            "type": "boolean"
+          },
+          "Save Human Readable": {
+            "default": true,
+            "type": "boolean"
+          },
+          "Get Method": {
+            "default": false,
+            "type": "boolean"
+          },
+          "Verbosity Level": {
+            "default": 1,
+            "type": "integer"
+          },
+          "Nifti Version": {
+            "default": 1,
+            "type": "integer"
+          },
+          "S-form Code": {
+            "default": 2,
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for Bruker to NIfTI converter"
+  }
+}
