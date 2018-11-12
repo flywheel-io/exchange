@@ -1,0 +1,86 @@
+{
+    "name": "bruker2nifti",
+    "label": "Bruker to NIfTI converter",
+    "description": "Bruker2nifti is an open source medical image format converter from raw Bruker ParaVision to NifTi, without any intermediate step through the DICOM standard formats.",
+    "version": "0.1.0",
+    "inputs": {
+        "bruker": {
+            "base": "file",
+            "description": "A zipped bruker file.",
+            "type": {
+                "enum": [
+                    "ParaVision"
+                ]
+            }
+        }
+    },
+    "config": {
+        "Study Name": {
+            "type": "string",
+            "description": "Study name",
+            "default": ""
+        },
+        "Verbosity Level": {
+            "type": "integer",
+            "description": "The amount of output that will be visualised at conversion time (0 for minimal output, 1 for a fair amount, 2 for extra amount for debugging).",
+            "default": 1
+        },
+        "Correct Slope": {
+            "type": "boolean",
+            "description": "Grayscale intensity of each image will be corrected for the slope parameter stored in visu_pars (see this wiki-page). By default the slope correction factor is saved in an external file to make easier applying the slope correction after the conversion.",
+            "default": true
+        },
+        "Get ACQP": {
+            "type": "boolean",
+            "description": "Extra parameter file",
+            "default": false
+        },
+        "Get Method": {
+            "type": "boolean",
+            "description": "Extra parameter file",
+            "default": false
+        },
+        "Get Reco": {
+            "type": "boolean",
+            "description": "Extra parameter file",
+            "default": false
+        },
+        "Nifti Version": {
+            "type": "integer",
+            "description": "Nifti version of the output",
+            "default": 1
+        },
+        "Q-form Code": {
+            "type": "integer",
+            "description": "Q-form of the output nifti",
+            "default": 1
+        },
+        "S-form Code": {
+            "type": "integer",
+            "description": "S-form of the output nifti",
+            "default": 2
+        },
+        "Save Human Readable": {
+            "type": "boolean",
+            "description": "Store bruker parameter as a text file in addition to dictionary",
+            "default": true
+        },
+        "Save B0 if DWI": {
+            "type": "boolean",
+            "description": "Additionally the first time-point (first four-dimensional point) will be saved in another image",
+            "default": true
+        }
+    },
+    "command": "python run.py",
+    "author": "Flywheel",
+    "maintainer": "support@flywheel.io",
+    "license": "Other",
+    "source": "",
+    "url": "",
+    "custom": {
+        "docker-image": "flywheel/bruker2nifti:0.1.0",
+        "gear-builder": {
+            "image": "flywheel/bruker2nifti:0.1.0"
+        }
+    }
+}
