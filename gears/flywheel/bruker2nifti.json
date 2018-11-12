@@ -2,7 +2,7 @@
     "name": "bruker2nifti",
     "label": "Bruker to NIfTI converter",
     "description": "Bruker2nifti is an open source medical image format converter from raw Bruker ParaVision to NifTi, without any intermediate step through the DICOM standard formats.",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "inputs": {
         "bruker": {
             "base": "file",
@@ -78,9 +78,9 @@
     "source": "",
     "url": "",
     "custom": {
-        "docker-image": "flywheel/bruker2nifti",
+        "docker-image": "flywheel/bruker2nifti:0.1.0",
         "gear-builder": {
-            "image": "flywheel/bruker2nifti"
+            "image": "flywheel/bruker2nifti:0.1.0"
         }
     }
 }
