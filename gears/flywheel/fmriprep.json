@@ -7,9 +7,9 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://fmriprep.readthedocs.io/en/1.1.4/",
-  "version": "5.5.0_1.1.4",
+  "version": "5.6.0_1.1.4",
   "custom": {
-    "docker-image": "flywheel/fmriprep:5.5.0_1.1.4"
+    "docker-image": "flywheel/fmriprep:5.6.0_1.1.4"
   },
   "license": "Other",
   "inputs": {
@@ -38,7 +38,8 @@
     },
     "freesurfer_license": {
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
-      "base": "file"
+      "base": "file",
+      "optional": true
     }
   },
   "config": {
@@ -188,6 +189,15 @@
       "description": "output BOLD files as CIFTI dtseries. [ default = false ]",
       "type": "boolean",
       "default": false
+    },
+    "FREESURFER_LICENSE_PROVIDED": {
+      "description": "Verification that a license has been provided via one of three methods. (1) configuration settings (within this config), (2) input file, or (3) project info.",
+      "type": "boolean"
+    },
+    "FREESURFER_LICENSE": {
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+      "type": "string",
+      "optional": true
     }
   }
 }
