@@ -11,9 +11,9 @@
   "flywheel": {
     "suite": "Stanford CNI"
   },
-  "version": "1.5.2",
+  "version": "1.6.0",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.5.2"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.6.0"
   },
   "config": {
     "timezone": {
@@ -35,7 +35,7 @@
           "pfile"
         ]
       },
-      "description": "Archive (.zip) containing gzipped P-File"
+      "description": "Input GE P-File for classification. Input can be .7.zip, .7.gz, or .7."
     }
   }
 }
