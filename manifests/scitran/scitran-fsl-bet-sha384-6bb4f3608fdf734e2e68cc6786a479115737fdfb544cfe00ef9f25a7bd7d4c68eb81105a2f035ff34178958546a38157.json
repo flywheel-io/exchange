@@ -1,0 +1,195 @@
+{
+  "gear": {
+    "name": "fsl-bet",
+    "label": "FSL: Brain Extraction Tool (BET2)",
+    "description": "Brain Extraction Tool (BET2) from FMRIB Software Library (FSL) v5.0. BET (Brain Extraction Tool) deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET",
+    "source": "https://github.com/scitran-apps/fsl-bet",
+    "license": "Apache-2.0",
+    "version": "0.2.2",
+    "custom": {
+      "flywheel": {
+        "suite": "FSL"
+      },
+      "docker-image": "scitran/fsl-bet:0.2.2"
+    },
+    "config": {
+      "fractional_intensity_threshold": {
+        "description": "Fractional intensity threshold (0->1); default=0.5; smaller values give larger brain outline estimates. Changing Fractional intensity threshold from its default value of 0.5 will cause the overall segmented brain to become larger (<0.5) or smaller (>0.5). This threshold must lie between 0 and 1.",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "id": "-f"
+      },
+      "brain_surf_outline": {
+        "description": "Generate brain surface outline overlaid onto original image.",
+        "default": false,
+        "type": "boolean",
+        "id": "-o"
+      },
+      "binary_brain_mask": {
+        "description": "Generate binary brain mask.",
+        "default": false,
+        "type": "boolean",
+        "id": "-m"
+      },
+      "skull_image": {
+        "description": "Generate rough skull image.",
+        "default": false,
+        "type": "boolean",
+        "id": "-s"
+      },
+      "vertical_gradient_intensity_threshold": {
+        "description": "Vertical gradient in fractional intensity threshold (-1->1); default=0; positive values give larger brain outline at bottom, smaller at top.",
+        "default": 0,
+        "minimum": -1,
+        "maximum": 1,
+        "type": "number",
+        "id": "-g"
+      },
+      "apply_mask_thresholding": {
+        "description": "Apply thresholding to segmented brain image and mask.",
+        "default": false,
+        "type": "boolean",
+        "id": "-t"
+      },
+      "vtk_surface_mesh": {
+        "description": "Generates brain surface as mesh in .vtk format.",
+        "default": false,
+        "type": "boolean",
+        "id": "-e"
+      },
+      "function_option": {
+        "description": "Variations on default bet2 functionality (mutually exclusive). Valid options are: [-R, -S, -B, -Z, -F, -A, -A2].  { -R } robust brain centre estimation (iterates BET several times).  { -S } eye & optic nerve cleanup (can be useful in SIENA).  { -B } bias field & neck cleanup (can be useful in SIENA).  { -Z } improve BET if FOV is very small in Z (by temporarily padding end slices).  { -F } apply to 4D FMRI data (uses -f 0.3 and dilates brain mask slightly).  { -A } run bet2 and then betsurf to get additional skull and scalp surfaces (includes registrations).  { -A2 } as with -A, when also feeding in non-brain-extracted T2 (includes registrations).",
+        "default": "",
+        "type": "string",
+        "enum": [
+          "",
+          "-R",
+          "-S",
+          "-B",
+          "-Z",
+          "-F",
+          "-A",
+          "-A2"
+        ]
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "Input NIfTI file for BET algorithm.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "11d1c04e1e32da6d37bec34c63faa015faedff32",
+    "rootfs-hash": "sha384:6bb4f3608fdf734e2e68cc6786a479115737fdfb544cfe00ef9f25a7bd7d4c68eb81105a2f035ff34178958546a38157",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-fsl-bet-sha384-6bb4f3608fdf734e2e68cc6786a479115737fdfb544cfe00ef9f25a7bd7d4c68eb81105a2f035ff34178958546a38157.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "nifti"
+        ],
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "skull_image",
+          "binary_brain_mask",
+          "brain_surf_outline",
+          "fractional_intensity_threshold",
+          "apply_mask_thresholding",
+          "function_option",
+          "vertical_gradient_intensity_threshold",
+          "vtk_surface_mesh"
+        ],
+        "type": "object",
+        "properties": {
+          "vertical_gradient_intensity_threshold": {
+            "default": 0,
+            "maximum": 1,
+            "minimum": -1,
+            "type": "number",
+            "id": "-g"
+          },
+          "binary_brain_mask": {
+            "default": false,
+            "type": "boolean",
+            "id": "-m"
+          },
+          "brain_surf_outline": {
+            "default": false,
+            "type": "boolean",
+            "id": "-o"
+          },
+          "fractional_intensity_threshold": {
+            "default": 0.5,
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "id": "-f"
+          },
+          "apply_mask_thresholding": {
+            "default": false,
+            "type": "boolean",
+            "id": "-t"
+          },
+          "function_option": {
+            "default": "",
+            "enum": [
+              "",
+              "-R",
+              "-S",
+              "-B",
+              "-Z",
+              "-F",
+              "-A",
+              "-A2"
+            ],
+            "type": "string"
+          },
+          "skull_image": {
+            "default": false,
+            "type": "boolean",
+            "id": "-s"
+          },
+          "vtk_surface_mesh": {
+            "default": false,
+            "type": "boolean",
+            "id": "-e"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for FSL: Brain Extraction Tool (BET2)"
+  }
+}
