@@ -1,0 +1,122 @@
+{
+  "gear": {
+    "name": "me-ica",
+    "label": "ME-ICA: Multi-Echo Independent Components Analysis",
+    "description": "Multi-Echo Independent Components Analysis (ME-ICA) is a method for fMRI analysis and denoising based on the T2* decay of BOLD signals, as measured using multi-echo fMRI. ME-ICA decomposes multi-echo fMRI datasets into independent components (ICs) using FastICA, then categorizes ICs as BOLD or noise using their BOLD and non-BOLD weightings (measured as Kappa and Rho values, respectively). Removing non-BOLD weighted components robustly denoises data for motion, physiology and scanner artifacts, in a simple and physically principled way. Pipeline includes: 1. Preprocess multi-echo datasets and apply multi-echo ICA based on spatial concatenation. 2. Calculation of motion parameters based on images with highest contrast. 3. Application of motion correction and coregistration parameters. 4. EPI preprocessing (temporal alignment, smoothing, etc) in appropriate order. 5. Compute PCA and ICA in conjunction with TE-dependence analysis",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "author": "Prantik Kundu",
+    "url": "https://github.com/ME-ICA/me-ica/blob/master/README.meica",
+    "source": "https://github.com/flywheel-apps/me-ica",
+    "cite": "Kundu, P., Brenowitz, N.D., Voon, V., Worbe, Y., Vertes, P.E., Inati, S.J., Saad, Z.S., Bandettini, P.A. & Bullmore, E.T. Integrated strategy for improving functional connectivity mapping using multiecho fMRI. PNAS (2013). Kundu, P., Inati, S.J., Evans, J.W., Luh, W.M. & Bandettini, P.A. Differentiating BOLD and non-BOLD signals in fMRI time series using multi-echo EPI. NeuroImage (2011). http://dx.doi.org/10.1016/j.neuroimage.2011.12.028",
+    "license": "Other",
+    "flywheel": "0",
+    "version": "0.1.1",
+    "custom": {
+      "docker-image": "flywheel/me-ica:0.1.1",
+      "flywheel": {
+        "suite": "AFNI"
+      }
+    },
+    "config": {
+      "basetime": {
+        "description": "ex: -b 10s OR -b 10v  Time to steady-state equilibration in seconds(s) or volumes(v). Default 0. ",
+        "default": "0",
+        "type": "string"
+      },
+      "mni": {
+        "description": "Warp to MNI standard space using high-resolution template.",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      },
+      "functional": {
+        "description": "Functional DICOM dataset (Required).",
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "anatomical": {
+        "description": "Anatomical NIfTI file (Optional).",
+        "optional": true,
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "8e4ed9941999d2f282caaba51945372247368d86",
+    "rootfs-hash": "sha384:228c9692a0f6fac8e96e9c52fb2cfeb5b42f9b23d68f94041e06e0ed2d8ed5ece9e254c33753707b4f126498702ffab7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-me-ica-sha384-228c9692a0f6fac8e96e9c52fb2cfeb5b42f9b23d68f94041e06e0ed2d8ed5ece9e254c33753707b4f126498702ffab7.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key",
+          "functional"
+        ],
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object"
+          },
+          "functional": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "mni",
+          "basetime"
+        ],
+        "type": "object",
+        "properties": {
+          "mni": {
+            "default": false,
+            "type": "boolean"
+          },
+          "basetime": {
+            "default": "0",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for ME-ICA: Multi-Echo Independent Components Analysis"
+  }
+}
