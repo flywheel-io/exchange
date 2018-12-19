@@ -11,9 +11,9 @@
   "flywheel": {
     "suite": "Stanford CNI"
   },
-  "version": "1.6.0",
+  "version": "1.6.1",
   "custom": {
-    "docker-image": "stanfordcni/pfile-mr-classifier:1.6.0"
+    "docker-image": "stanfordcni/pfile-mr-classifier:1.6.1"
   },
   "config": {
     "timezone": {
