@@ -4,7 +4,7 @@
   "author": "Yaroslav O. Halchenko",
   "maintainer": "Yaroslav O. Halchenko <debian@onerussian.com>",
   "license": "BSD-3-Clause",
-  "version": "0.1.dev.nipype.1.0.3.2",
+  "version": "0.2.dev1.nipype.1.1.7",
   "config": {
     "num_threads": {
       "type": "integer",
@@ -57,7 +57,7 @@
       "base": "file"
     }
   },
-  "url": "http://nipype.readthedocs.io/en/1.0.3/interfaces/generated/interfaces.ants/registration.html",
+  "url": "http://nipype.readthedocs.io/en/1.1.7/interfaces/generated/interfaces.ants/registration.html",
   "source": "https://github.com/yarikoptic/gearificator",
   "custom": {
     "gearificator": {
@@ -73,9 +73,9 @@
       "suite": "ANTS 2"
     },
     "gear-builder": {
-      "image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.1.dev.nipype.1.0.3.2"
+      "image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.2.dev1.nipype.1.1.7"
     },
-    "docker-image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.1.dev.nipype.1.0.3.2"
+    "docker-image": "gearificator/nipype-interfaces-ants-segmentation-laplacianthickness:0.2.dev1.nipype.1.1.7"
   },
   "label": "LaplacianThickness"
 }
