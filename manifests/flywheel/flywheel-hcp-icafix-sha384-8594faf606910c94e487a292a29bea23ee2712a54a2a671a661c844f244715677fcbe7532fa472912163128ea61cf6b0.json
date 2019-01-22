@@ -1,0 +1,316 @@
+{
+  "gear": {
+    "name": "hcp-icafix",
+    "label": "HCP: ICAFIX Functional Pipeline",
+    "description": "Runs ICA-FIX denoising on functional data preprocessed according to the HCP Minimal Preprocessing Pipeline. This Gear is based on scripts from the v4.0-alpha release of the ICAFIX, PostFix, and RestingStateStats pipelines. NOTE: This Gear requires that HCP-STRUCT and HCP-FUNC Gears have been run, as the outputs of those gears are required inputs here. Also note that more than 1 HCP-FUNC output can be provided as input.",
+    "author": "Human Connectome Project",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "source": "https://github.com/flywheel-apps/hcp-icafix",
+    "cite": "(1) G. Salimi-Khorshidi, G. Douaud, C.F. Beckmann, M.F. Glasser, L. Griffanti S.M. Smith. Automatic denoising of functional MRI data: Combining independent component analysis and hierarchical fusion of classifiers. NeuroImage, 90:449-68, 2014 (2) L. Griffanti, G. Salimi-Khorshidi, C.F. Beckmann, E.J. Auerbach, G. Douaud, C.E. Sexton, E. Zsoldos, K. Ebmeier, N. Filippini, C.E. Mackay, S. Moeller, J.G. Xu, E. Yacoub, G. Baselli, K. Ugurbil, K.L. Miller, and S.M. Smith. ICA-based artefact removal and accelerated fMRI acquisition for improved resting state network imaging. NeuroImage, 95:232-47, 2014",
+    "version": "0.1.6",
+    "custom": {
+      "docker-image": "flywheel/hcp-icafix:0.1.6",
+      "flywheel": {
+        "suite": "Human Connectome Project"
+      }
+    },
+    "flywheel": "0",
+    "config": {
+      "FIXClassifier": {
+        "type": "string",
+        "default": "HCP_hp2000",
+        "description": "Name of FIX training file to use for classification. 'Standard', 'HCP_hp2000', 'HCP7T_hp2000', 'WhII_MB6', 'WhII_Standard', 'UKBiobank'. See https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX/UserGuide#Trained-weights_files for details."
+      },
+      "RegName": {
+        "type": "string",
+        "default": "Empty",
+        "description": "Surface registration to use during CIFTI resampling: either 'FS' (freesurfer) or 'MSMSulc'. ('Empty'=gear uses RegName from HCP-Structural )"
+      },
+      "HighPassFilter": {
+        "type": "integer",
+        "default": 2000,
+        "description": "Cutoff of temporal highpass full-width (2*sigma) in seconds"
+      }
+    },
+    "inputs": {
+      "CustomClassifier": {
+        "description": "User-supplied .RData file for FIX component classification. If provide, pipeline overrides FIXClassifier config param",
+        "base": "file",
+        "optional": true
+      },
+      "StructZip": {
+        "description": "Zipped output from HCP-Struct pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": false
+      },
+      "FuncZip": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": false
+      },
+      "FuncZip2": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip3": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip4": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip5": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip6": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip7": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip8": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip9": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      },
+      "FuncZip10": {
+        "description": "Zipped output from HCP-Func pipeline",
+        "base": "file",
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "optional": true
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "a7f39e7e3dd3e2ab70411088394c9b2a2fb940c3",
+    "rootfs-hash": "sha384:8594faf606910c94e487a292a29bea23ee2712a54a2a671a661c844f244715677fcbe7532fa472912163128ea61cf6b0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hcp-icafix-sha384-8594faf606910c94e487a292a29bea23ee2712a54a2a671a661c844f244715677fcbe7532fa472912163128ea61cf6b0.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "StructZip",
+          "FuncZip"
+        ],
+        "type": "object",
+        "properties": {
+          "CustomClassifier": {
+            "type": "object",
+            "properties": {}
+          },
+          "FuncZip10": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "StructZip": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip9": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip8": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip5": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip4": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip7": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip6": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip3": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "FuncZip2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "HighPassFilter",
+          "RegName",
+          "FIXClassifier"
+        ],
+        "type": "object",
+        "properties": {
+          "HighPassFilter": {
+            "default": 2000,
+            "type": "integer"
+          },
+          "RegName": {
+            "default": "Empty",
+            "type": "string"
+          },
+          "FIXClassifier": {
+            "default": "HCP_hp2000",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for HCP: ICAFIX Functional Pipeline"
+  }
+}
