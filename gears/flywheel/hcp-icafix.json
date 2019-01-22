@@ -8,11 +8,11 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-icafix",
   "cite": "(1) G. Salimi-Khorshidi, G. Douaud, C.F. Beckmann, M.F. Glasser, L. Griffanti S.M. Smith. Automatic denoising of functional MRI data: Combining independent component analysis and hierarchical fusion of classifiers. NeuroImage, 90:449-68, 2014 (2) L. Griffanti, G. Salimi-Khorshidi, C.F. Beckmann, E.J. Auerbach, G. Douaud, C.E. Sexton, E. Zsoldos, K. Ebmeier, N. Filippini, C.E. Mackay, S. Moeller, J.G. Xu, E. Yacoub, G. Baselli, K. Ugurbil, K.L. Miller, and S.M. Smith. ICA-based artefact removal and accelerated fMRI acquisition for improved resting state network imaging. NeuroImage, 95:232-47, 2014",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "custom": {
-    "docker-image": "flywheel/hcp-icafix:0.1.5",
+    "docker-image": "flywheel/hcp-icafix:0.1.6",
     "flywheel": {
-        "suite": "Human Connectome Project"
+      "suite": "Human Connectome Project"
     }
   },
   "flywheel": "0",
