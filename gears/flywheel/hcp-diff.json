@@ -8,13 +8,14 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-diff",
   "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "custom": {
-    "docker-image": "flywheel/hcp-diff:0.1.4"
+    "docker-image": "flywheel/hcp-diff:0.1.5",
+    "flywheel": {
+      "suite": "Human Connectome Project"
+    }
   },
-  "flywheel": {
-    "suite": "Human Connectome Project"
-  },
+  "flywheel": "0",
   "inputs": {
     "StructZip": {
       "description": "Zipped output from HCP-Struct pipeline",
@@ -274,7 +275,7 @@
     "DWIName": {
       "type": "string",
       "default": "Diffusion",
-      "description": "Output name for preprocessed data"
+      "description": "Output name for preprocessed data. *Note: Spaces will be replaced with '_'."
     },
     "AnatomyRegDOF": {
       "type": "integer",
