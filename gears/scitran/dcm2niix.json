@@ -1,23 +1,24 @@
 {
   "name": "dcm2niix",
   "label": "DCM2NIIX: dcm2nii DICOM to NIfTI converter",
-  "description": "Chris Rorden's dcm2niiX (OpenJPEG build, 64-bit Linux). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+  "description": "Chris Rorden's dcm2niix (OpenJPEG build, 64-bit Linux). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Chris Rorden (@neurolabusc)",
   "url": "https://github.com/rordenlab/dcm2niix",
   "source": "https://github.com/scitran-apps/dcm2niix",
   "license": "BSD-2-Clause",
   "flywheel": "0",
-  "version": "0.7.7_1.0.20181114",
+  "version": "0.7.8_1.0.20181114",
   "custom": {
-    "docker-image": "scitran/dcm2niix:0.7.7_1.0.20181114",
+    "docker-image": "scitran/dcm2niix:0.7.8_1.0.20181114",
     "flywheel": {
       "uid": 1000,
-      "gid": 1000
+      "gid": 1000,
+      "suite": "SciTran"
     },
     "gear-builder": {
       "category": "converter",
-      "image": "scitran/dcm2niix:0.7.7_1.0.20181114"
+      "image": "scitran/dcm2niix:0.7.8_1.0.20181114"
     }
   },
   "config": {
@@ -105,6 +106,11 @@
     },
     "ignore_errors": {
       "description": "Ignore dcm2niix errors and exit status (default=false). By default, when dcm2niix exits non-zero, outputs are not preserved. With this option=true, outputs are preserved regardless of dcm2niix exit status.",
+      "type": "boolean",
+      "default": false
+    },
+    "coil_combine": {
+      "description": "For sequences with individual coil data, saved as individual volumes, this option will save a NIfTI file with ONLY the combined coil data (i.e., the last volume). Default=False. Warning: We make no effort to check for independent coil data, we simply trust that if you have selcted this option you know what you are asking for.",
       "type": "boolean",
       "default": false
     }
