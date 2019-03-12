@@ -9,9 +9,13 @@
   "cite": "Kundu, P., Brenowitz, N.D., Voon, V., Worbe, Y., Vertes, P.E., Inati, S.J., Saad, Z.S., Bandettini, P.A. & Bullmore, E.T. Integrated strategy for improving functional connectivity mapping using multiecho fMRI. PNAS (2013). Kundu, P., Inati, S.J., Evans, J.W., Luh, W.M. & Bandettini, P.A. Differentiating BOLD and non-BOLD signals in fMRI time series using multi-echo EPI. NeuroImage (2011). http://dx.doi.org/10.1016/j.neuroimage.2011.12.028",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "custom": {
-    "docker-image": "flywheel/me-ica:0.2.0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/me-ica:0.2.4"
+    },
+    "docker-image": "flywheel/me-ica:0.2.4",
     "flywheel": {
       "suite": "AFNI"
     }
@@ -28,7 +32,7 @@
       "type": "boolean"
     },
     "tr": {
-      "description": "The TR. Default read from input dataset header.",
+      "description": "The TR. Optional. The default is to read this value from input dataset header.",
       "optional": true,
       "type": "number"
     },
@@ -44,6 +48,16 @@
     },
     "keep_int": {
       "description": "Keep preprocessing intermediates. Default delete.",
+      "default": false,
+      "type": "boolean"
+    },
+    "tpattern_gen": {
+      "description": "Use generated tpattern file from NIfTI header information in Flywheel. If a slice_timing file is not provided, this option will use the generated 'slicetimes.txt' file generated from the NIfTI metadata in Flywheel. Default=true",
+      "default": true,
+      "type": "boolean"
+    },
+    "native": {
+      "description": "Output native space results in addition to standard space results",
       "default": false,
       "type": "boolean"
     }
@@ -68,6 +82,16 @@
       "type": {
         "enum": [
           "nifti"
+        ]
+      }
+    },
+    "slice_timing": {
+      "description": "Text file containing slice timing (Optional).",
+      "optional": true,
+      "base": "file",
+      "type": {
+        "enum": [
+          "text"
         ]
       }
     }
