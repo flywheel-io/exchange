@@ -1,0 +1,471 @@
+{
+  "gear": {
+    "name": "fmriprep",
+    "label": "fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data",
+    "description": "fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "author": "Poldrack Lab, Stanford University",
+    "cite": "Esteban O, Markiewicz CJ, Blair RW, Moodie CA, Isik AI, Erramuzpe A, Kent JD, Goncalves M, DuPre E, Snyder M, Oya H, Ghosh SS, Wright J, Durnez J, Poldrack RA, Gorgolewski KJ. fMRIPrep: a robust preprocessing pipeline for functional MRI. Nat Meth. 2018; doi:10.1038/s41592-018-0235-4. FOR MORE INFORMATION SEE: http://fmriprep.readthedocs.io/en/stable/citing.html.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/fmriprep",
+    "url": "https://fmriprep.readthedocs.io/en/1.2.6-1/",
+    "version": "5.6.3_1.2.6-1",
+    "custom": {
+      "docker-image": "flywheel/fmriprep:5.6.3_1.2.6-1"
+    },
+    "license": "Other",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      },
+      "t1w_anatomy": {
+        "description": "T1 weighted anatomical NIfTI file. When provided this file will be used in place of any T1w images found in the current session.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t2w_anatomy": {
+        "description": "T2 weighted anatomical NIfTI file. When provided this file will be used in place of any T2w images found in the current session.",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "freesurfer_license": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "config": {
+      "skip_bids_validation": {
+        "description": "Assume the input dataset is BIDS compliant and skip the validation [ default = true ]",
+        "type": "boolean",
+        "default": true
+      },
+      "task_id": {
+        "description": "Specific task to be processed",
+        "type": "string",
+        "default": ""
+      },
+      "echo_idx": {
+        "description": "Specific echo to be processed in a multiecho series",
+        "type": "string",
+        "default": ""
+      },
+      "anat_only": {
+        "description": "Run anatomical workflows only",
+        "type": "boolean",
+        "default": false
+      },
+      "ignore_aroma_denoising_errors": {
+        "description": "ignores the errors ICA_AROMA returns when there are no components classified as either noise or signal",
+        "type": "boolean",
+        "default": false
+      },
+      "ignore": {
+        "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow. Possible choices: fieldmaps, slicetiming, sbref [space delimeted list. default='']",
+        "type": "string",
+        "enum": [
+          "",
+          "fieldmaps",
+          "slicetiming",
+          "sbref"
+        ],
+        "default": ""
+      },
+      "longitudinal": {
+        "description": "Treat dataset as longitudinal - may increase runtime [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "t2s_coreg": {
+        "description": "If provided with multi-echo BOLD dataset, create T2*-map and perform T2*-driven coregistration. When multi-echo data is provided and this option is not enabled, standard EPI-T1 coregistration is performed using the middle echo. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "bold2t1w_dof": {
+        "description": "Degrees of freedom when registering BOLD to T1w images. 6 degrees (rotation and translation) are used by default.",
+        "type": "integer",
+        "enum": [
+          6,
+          9,
+          12
+        ],
+        "default": 6
+      },
+      "output_space": {
+        "description": "Volume and surface spaces to resample functional series into. Possible choices (space separated list): T1w, template, fsnative, fsaverage, fsaverage6, fsaverage5. T1w: subject anatomical volume. template: normalization target specified by –template. fsnative: individual subject surface. fsaverage*: FreeSurfer average meshes. [default='template fsaverage5']",
+        "type": "string",
+        "default": "template fsaverage5"
+      },
+      "force_bbr": {
+        "description": "Always use boundary-based registration (no goodness-of-fit checks) [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "force_no_bbr": {
+        "description": "Do not use boundary-based registration (no goodness-of-fit checks) [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "template": {
+        "description": "Volume template space (default: MNI152NLin2009cAsym). This is currently the only choice.",
+        "type": "string",
+        "enum": [
+          "MNI152NLin2009cAsym"
+        ],
+        "default": "MNI152NLin2009cAsym"
+      },
+      "template_resampling_grid": {
+        "description": "Keyword ('native' [default], '1mm', or '2mm'). Allows to define a reference grid for the resampling of BOLD images in template space. Keyword 'native' will use the original BOLD grid as reference. Keywords '1mm' and '2mm' will use the corresponding isotropic template resolutions. It determines the field of view and resolution of the output images, but is not used in normalization. (default: 'native')",
+        "type": "string",
+        "enum": [
+          "native",
+          "1mm",
+          "2mm"
+        ],
+        "default": "native"
+      },
+      "medial_surface_nan": {
+        "description": "Replace medial wall values with NaNs on functional GIFTI files. Only performed for GIFTI files mapped to a freesurfer subject (fsaverage or fsnative). [default: false]",
+        "type": "boolean",
+        "default": false
+      },
+      "use_aroma": {
+        "description": "add ICA_AROMA to your preprocessing stream [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "aroma_melodic_dimensionality": {
+        "description": "Exact or maximum number of MELODIC components to estimate (positive = exact, negative = maximum)",
+        "type": "integer",
+        "default": 200
+      },
+      "skull_strip_template": {
+        "description": "Possible choices: OASIS, NKI. select ANTs skull-stripping template (default: OASIS))",
+        "type": "string",
+        "enum": [
+          "NKI",
+          "OASIS"
+        ],
+        "default": "OASIS"
+      },
+      "skull_strip_fixed_seed": {
+        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1 [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "fmap_bspline": {
+        "description": "fit a B-Spline field using least-squares (experimental)",
+        "type": "boolean",
+        "default": false
+      },
+      "fmap_no_demean": {
+        "description": "do not remove median (within mask) from fieldmap [ default = true ]",
+        "type": "boolean",
+        "default": true
+      },
+      "use_syn_sdc": {
+        "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "force_syn": {
+        "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available. [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "no_submm_recon": {
+        "description": "disable sub-millimeter (hires) reconstruction. [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "cifti_output": {
+        "description": "output BOLD files as CIFTI dtseries. [ default = false ]",
+        "type": "boolean",
+        "default": false
+      },
+      "fs_no_reconall": {
+        "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If disabled, several steps in the fmriprep pipeline are added or replaced. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "no_track": {
+        "description": "Opt-out of sending tracking information of this run to the FMRIPREP developers. This information helps to improve FMRIPREP and provides an indicator of real world usage crucial for obtaining funding. [default=true]",
+        "type": "boolean",
+        "default": false
+      },
+      "save_outputs": {
+        "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "save_intermediate_work": {
+        "description": "Zip and save working directory with intermediate files. [default=false]",
+        "type": "boolean",
+        "default": false
+      },
+      "intermediate_files": {
+        "description": "Space separated list of FILES to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      },
+      "intermediate_folders": {
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      },
+      "FREESURFER_LICENSE": {
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "type": "string",
+        "optional": true
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "2fdf48285aa3a21d4e8663ad1cef3116b81e570e",
+    "rootfs-hash": "sha384:7a7b540b7406c9042e0e0228b6838ae0b62c46e26ae95cbd5f44343ea261964a50761ced262244b7b46b8d6f5ccfd69c",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fmriprep-sha384-7a7b540b7406c9042e0e0228b6838ae0b62c46e26ae95cbd5f44343ea261964a50761ced262244b7b46b8d6f5ccfd69c.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "api_key"
+        ],
+        "type": "object",
+        "properties": {
+          "t1w_anatomy": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "api_key": {
+            "type": "object"
+          },
+          "t2w_anatomy": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "freesurfer_license": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "ignore_aroma_denoising_errors",
+          "bold2t1w_dof",
+          "intermediate_files",
+          "skull_strip_fixed_seed",
+          "use_syn_sdc",
+          "t2s_coreg",
+          "no_submm_recon",
+          "longitudinal",
+          "intermediate_folders",
+          "echo_idx",
+          "force_syn",
+          "skip_bids_validation",
+          "fs_no_reconall",
+          "template",
+          "anat_only",
+          "force_bbr",
+          "output_space",
+          "save_outputs",
+          "aroma_melodic_dimensionality",
+          "medial_surface_nan",
+          "no_track",
+          "template_resampling_grid",
+          "fmap_no_demean",
+          "task_id",
+          "ignore",
+          "skull_strip_template",
+          "cifti_output",
+          "use_aroma",
+          "fmap_bspline",
+          "force_no_bbr",
+          "save_intermediate_work"
+        ],
+        "type": "object",
+        "properties": {
+          "ignore_aroma_denoising_errors": {
+            "default": false,
+            "type": "boolean"
+          },
+          "bold2t1w_dof": {
+            "default": 6,
+            "enum": [
+              6,
+              9,
+              12
+            ],
+            "type": "integer"
+          },
+          "intermediate_folders": {
+            "default": "",
+            "type": "string"
+          },
+          "force_syn": {
+            "default": false,
+            "type": "boolean"
+          },
+          "use_syn_sdc": {
+            "default": false,
+            "type": "boolean"
+          },
+          "t2s_coreg": {
+            "default": false,
+            "type": "boolean"
+          },
+          "no_submm_recon": {
+            "default": false,
+            "type": "boolean"
+          },
+          "longitudinal": {
+            "default": false,
+            "type": "boolean"
+          },
+          "echo_idx": {
+            "default": "",
+            "type": "string"
+          },
+          "skip_bids_validation": {
+            "default": true,
+            "type": "boolean"
+          },
+          "fs_no_reconall": {
+            "default": false,
+            "type": "boolean"
+          },
+          "template": {
+            "default": "MNI152NLin2009cAsym",
+            "enum": [
+              "MNI152NLin2009cAsym"
+            ],
+            "type": "string"
+          },
+          "anat_only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "force_bbr": {
+            "default": false,
+            "type": "boolean"
+          },
+          "output_space": {
+            "default": "template fsaverage5",
+            "type": "string"
+          },
+          "template_resampling_grid": {
+            "default": "native",
+            "enum": [
+              "native",
+              "1mm",
+              "2mm"
+            ],
+            "type": "string"
+          },
+          "intermediate_files": {
+            "default": "",
+            "type": "string"
+          },
+          "aroma_melodic_dimensionality": {
+            "default": 200,
+            "type": "integer"
+          },
+          "medial_surface_nan": {
+            "default": false,
+            "type": "boolean"
+          },
+          "no_track": {
+            "default": false,
+            "type": "boolean"
+          },
+          "FREESURFER_LICENSE": {
+            "type": "string"
+          },
+          "save_outputs": {
+            "default": false,
+            "type": "boolean"
+          },
+          "fmap_no_demean": {
+            "default": true,
+            "type": "boolean"
+          },
+          "task_id": {
+            "default": "",
+            "type": "string"
+          },
+          "ignore": {
+            "default": "",
+            "enum": [
+              "",
+              "fieldmaps",
+              "slicetiming",
+              "sbref"
+            ],
+            "type": "string"
+          },
+          "skull_strip_template": {
+            "default": "OASIS",
+            "enum": [
+              "NKI",
+              "OASIS"
+            ],
+            "type": "string"
+          },
+          "skull_strip_fixed_seed": {
+            "default": false,
+            "type": "boolean"
+          },
+          "cifti_output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "use_aroma": {
+            "default": false,
+            "type": "boolean"
+          },
+          "fmap_bspline": {
+            "default": false,
+            "type": "boolean"
+          },
+          "force_no_bbr": {
+            "default": false,
+            "type": "boolean"
+          },
+          "save_intermediate_work": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for fMRIPREP: A Robust Preprocessing Pipeline for fMRI Data"
+  }
+}
