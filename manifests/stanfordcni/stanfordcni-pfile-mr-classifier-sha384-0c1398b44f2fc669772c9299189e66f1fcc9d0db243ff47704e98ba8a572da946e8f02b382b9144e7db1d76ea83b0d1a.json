@@ -1,0 +1,99 @@
+{
+  "gear": {
+    "name": "pfile-mr-classifier",
+    "label": "CNI: GE P-File Classifier",
+    "description": "Extracts GE P-File header and generates JSON metadata (.metadata.json) which is saved in Flywheel on the P-File's info object. This gear also attempts to determine the P-File's classification (measurement, intent, etc.).",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://cni.stanford.edu",
+    "source": "https://github.com/cni/pfile-mr-classifier",
+    "cite": "pfile-tools: GE P-File Utilities (https://github.com/njvack/pfile-tools)",
+    "license": "BSD-2-Clause",
+    "flywheel": "0",
+    "version": "1.8.0",
+    "custom": {
+      "docker-image": "stanfordcni/pfile-mr-classifier:1.8.0",
+      "gear-builder": {
+        "image": "stanfordcni/pfile-mr-classifier:1.8.0",
+        "category": "converter"
+      },
+      "flywheel": {
+        "suite": "Stanford CNI"
+      }
+    },
+    "config": {
+      "timezone": {
+        "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
+        "type": "string",
+        "default": "America/Los_Angeles"
+      },
+      "sync": {
+        "description": "Synchronize classification definitions with the latest known updates found at scitran-apps/dicom-mr-classifier [default = true].",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "inputs": {
+      "pfile": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "pfile"
+          ]
+        },
+        "description": "Input GE P-File for classification. Input can be .7.zip, .7.gz, or .7."
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "80a7d6af0155b82d4bf7eb1a8f22070491a8a2d7",
+    "rootfs-hash": "sha384:0c1398b44f2fc669772c9299189e66f1fcc9d0db243ff47704e98ba8a572da946e8f02b382b9144e7db1d76ea83b0d1a",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/stanfordcni-pfile-mr-classifier-sha384-0c1398b44f2fc669772c9299189e66f1fcc9d0db243ff47704e98ba8a572da946e8f02b382b9144e7db1d76ea83b0d1a.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for CNI: GE P-File Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "default": "America/Los_Angeles"
+          },
+          "sync": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "timezone",
+          "sync"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "pfile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "pfile"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "pfile"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
