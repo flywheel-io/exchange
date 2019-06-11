@@ -9,9 +9,12 @@
   "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "custom": {
-    "docker-image": "scitran/freesurfer-recon-all:0.2.0"
+    "docker-image": "scitran/freesurfer-recon-all:0.3.0",
+    "flywheel": {
+      "suite": "FreeSurfer"
+    }
   },
   "inputs": {
     "anatomical": {
@@ -20,7 +23,58 @@
       "type": {
         "enum": [
           "nifti",
-          "dicom"
+          "dicom",
+          "archive"
+        ]
+      }
+    },
+    "t1w_anatomical_2": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_3": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_4": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_5": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t2w_anatomical": {
+      "description": "T2w Anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
         ]
       }
     }
