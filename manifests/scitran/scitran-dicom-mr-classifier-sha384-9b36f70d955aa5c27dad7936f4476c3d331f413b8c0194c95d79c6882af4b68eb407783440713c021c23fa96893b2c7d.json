@@ -1,0 +1,111 @@
+{
+  "gear": {
+    "name": "dicom-mr-classifier",
+    "label": "SciTran: DICOM MR Classifier",
+    "description": "Extract metadata and determine classification from raw DICOM data. Compatible with Siemens, Philips, and GE DICOMs.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://scitran.github.io",
+    "source": "https://github.com/scitran-apps/dicom-mr-classifier",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "1.1.0",
+    "custom": {
+      "docker-image": "scitran/dicom-mr-classifier:1.1.0",
+      "gear-builder": {
+        "image": "scitran/dicom-mr-classifier:1.1.0",
+        "category": "converter"
+      },
+      "flywheel": {
+        "suite": "SciTran",
+        "uid": 1000,
+        "gid": 1000
+      }
+    },
+    "config": {
+      "timezone": {
+        "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
+        "type": "string",
+        "default": "UTC"
+      }
+    },
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "description": "Archive (.zip) containing DICOM files."
+      },
+      "classifications": {
+        "base": "context"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "05635eab53bdbf79ea4905bc6fefe9bc4e948412",
+    "rootfs-hash": "sha384:9b36f70d955aa5c27dad7936f4476c3d331f413b8c0194c95d79c6882af4b68eb407783440713c021c23fa96893b2c7d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dicom-mr-classifier-sha384-9b36f70d955aa5c27dad7936f4476c3d331f413b8c0194c95d79c6882af4b68eb407783440713c021c23fa96893b2c7d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for SciTran: DICOM MR Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "default": "UTC"
+          }
+        },
+        "required": [
+          "timezone"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "classifications": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string"
+              },
+              "found": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "base",
+              "found",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "dicom",
+          "classifications"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
