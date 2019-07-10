@@ -8,10 +8,15 @@
   "source": "https://github.com/scitran-apps/dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "0.8.2",
+  "version": "1.0.0",
   "custom": {
-    "docker-image": "scitran/dicom-mr-classifier:0.8.2",
+    "docker-image": "scitran/dicom-mr-classifier:1.0.0",
+    "gear-builder": {
+      "image": "scitran/dicom-mr-classifier:1.0.0",
+      "category": "converter"
+    },
     "flywheel": {
+      "suite": "SciTran",
       "uid": 1000,
       "gid": 1000
     }
@@ -21,11 +26,6 @@
       "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
       "type": "string",
       "default": "UTC"
-    },
-    "sync": {
-      "description": "Synchronize classification definitions with the latest known updates found at scitran-apps/dicom-mr-classifier [default = true].",
-      "type": "boolean",
-      "default": true
     }
   },
   "inputs": {
