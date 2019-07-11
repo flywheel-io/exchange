@@ -8,9 +8,9 @@
   "source": "https://github.com/cni/cni-dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "custom": {
-    "docker-image": "stanfordcni/cni-dicom-mr-classifier:2.1.0",
+    "docker-image": "stanfordcni/cni-dicom-mr-classifier:3.0.0",
     "flywheel": {
       "suite": "Stanford CNI"
     }
@@ -20,11 +20,6 @@
       "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
       "type": "string",
       "default": "America/Los_Angeles"
-    },
-    "sync": {
-      "description": "Synchronize classification definitions with the latest known updates found at cni/cni-dicom-mr-classifier [default = true].",
-      "type": "boolean",
-      "default": true
     }
   },
   "inputs": {
