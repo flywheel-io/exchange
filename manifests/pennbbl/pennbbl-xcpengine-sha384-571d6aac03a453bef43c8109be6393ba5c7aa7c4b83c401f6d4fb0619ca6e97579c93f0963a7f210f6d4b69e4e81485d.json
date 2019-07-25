@@ -1,0 +1,148 @@
+{
+  "gear": {
+    "name": "xcpengine-fw",
+    "label": "XCPENGINE: pipeline for processing of  structural and functional data.",
+    "description": " The XCP imaging pipeline (XCP system) for  preprocessing of structural and functional data.",
+    "version": "1.0631",
+    "inputs": {
+      "antsct": {
+        "base": "file",
+        "description": "Structural output directory",
+        "optional": true
+      },
+      "api_key": {
+        "base": "api-key"
+      },
+      "contrast": {
+        "base": "file",
+        "description": " json file of contrasts",
+        "optional": true
+      },
+      "designfile": {
+        "base": "file",
+        "description": "designfile: list all modules to run"
+      },
+      "eventfile": {
+        "base": "file",
+        "description": "event times files ",
+        "optional": true
+      },
+      "fmriprepdir": {
+        "base": "file",
+        "description": "FMRIprep output directory",
+        "optional": true
+      },
+      "img": {
+        "base": "file",
+        "description": "asl or structural image ",
+        "optional": true
+      },
+      "m0": {
+        "base": "file",
+        "description": "M0 images for cbf calibration",
+        "optional": true
+      }
+    },
+    "config": {
+      "analysis_type": {
+        "default": "xcp",
+        "description": " analysis type: [fc,struc,task,cbf]",
+        "type": "string"
+      },
+      "task_name": {
+        "default": "",
+        "description": " name of the task to perform either task regression or task ",
+        "type": "string"
+      }
+    },
+    "author": "Ted Satterthwaite",
+    "maintainer": "Ted Satterthwaite",
+    "cite": "Ciric, Rastko and Rosen, Adon F. G. and Erus, Guray and Cieslak, Matthew and Adebimpe, Azeez and Cook, Philip A. and Bassett, Danielle S. and Davatzikos, Christos and Wolf, Daniel H. and Satterthwaite, Theodore D., Mitigating head motion artifact in functional connectivity MRI",
+    "license": "Other",
+    "source": "https://github.com/PennBBL/xcpEngine",
+    "url": "https://xcpengine.readthedocs.io/",
+    "custom": {
+      "flywheel": {
+        "suite": "PennBBL"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "pennbbl/xcpengine"
+      },
+      "docker-image": "pennbbl/xcpengine:1.0"
+    }
+  },
+  "exchange": {
+    "git-commit": "40885656755fafd03e02363322f7a9158166ed19",
+    "rootfs-hash": "sha384:571d6aac03a453bef43c8109be6393ba5c7aa7c4b83c401f6d4fb0619ca6e97579c93f0963a7f210f6d4b69e4e81485d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/pennbbl-xcpengine-sha384-571d6aac03a453bef43c8109be6393ba5c7aa7c4b83c401f6d4fb0619ca6e97579c93f0963a7f210f6d4b69e4e81485d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for XCPENGINE: pipeline for processing of structural and functional data.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "analysis_type": {
+            "default": "xcp",
+            "type": "string"
+          },
+          "task_name": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "analysis_type",
+          "task_name"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "antsct": {
+            "type": "object",
+            "properties": {}
+          },
+          "api_key": {
+            "type": "object"
+          },
+          "contrast": {
+            "type": "object",
+            "properties": {}
+          },
+          "designfile": {
+            "type": "object",
+            "properties": {}
+          },
+          "eventfile": {
+            "type": "object",
+            "properties": {}
+          },
+          "fmriprepdir": {
+            "type": "object",
+            "properties": {}
+          },
+          "img": {
+            "type": "object",
+            "properties": {}
+          },
+          "m0": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api_key",
+          "designfile"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
