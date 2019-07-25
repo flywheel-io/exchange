@@ -68,6 +68,6 @@
 			"category": "analysis",
 			"image": "pennbbl/xcpengine"
 		},
-    		"docker-image": "pennbbl/xcpengine:latest"
+    		"docker-image": "pennbbl/xcpengine:1.0"
 	}
 }
