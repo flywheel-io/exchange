@@ -1,0 +1,125 @@
+{
+  "gear": {
+    "name": "fw-heudiconv",
+    "label": "Flywheel HeuDiConv",
+    "description": "HeuDiConv-style BIDS curation on Flywheel. Flywheel HeuDiConv (or fw-heudiconv, pronounced /fwuː di kɑː n(v)/) is a Python-based toolkit that leverages the flexibility and comprehensiveness of HeuDiConv to curate neuroimaging data on Flywheel into a BIDS-valid format.",
+    "version": "0.1.15_0.1.0",
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "heuristic": {
+        "base": "file",
+        "description": "Python file implementing a heudiconv heuristic",
+        "optional": true
+      }
+    },
+    "config": {
+      "action": {
+        "default": "Curate",
+        "description": "Curate: Apply heuristic to project. Export: Create zip of BIDS tree. Tabulate: Create a table of sequence information in a project.",
+        "type": "string",
+        "enum": [
+          "Curate",
+          "Export",
+          "Tabulate"
+        ]
+      },
+      "dry_run": {
+        "default": true,
+        "description": "Run without applying changes",
+        "type": "boolean"
+      },
+      "do_whole_project": {
+        "default": false,
+        "description": "Run on whole project",
+        "type": "boolean"
+      },
+      "extended_bids": {
+        "default": true,
+        "description": "Export/Curate all files instead of just func/fmap/anat/dwi",
+        "type": "boolean"
+      }
+    },
+    "command": "./fw_heudiconv_run.py",
+    "author": "Tinashe Michael Tapera",
+    "maintainer": "Tinashe Michael Tapera",
+    "cite": "",
+    "license": "Other",
+    "source": "",
+    "url": "https://github.com/PennBBL/fw-heudiconv/wiki",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "pennbbl/fw-heudiconv:latest"
+      },
+      "flywheel": {
+        "suite": "PennBBL"
+      },
+      "docker-image": "pennbbl/fw-heudiconv:0.1.23"
+    }
+  },
+  "exchange": {
+    "git-commit": "bb2bdd37752029584e2255226c0af5e50149fa18",
+    "rootfs-hash": "sha384:bc2e9ada43b32eb55d064d2ece2fcca54f25212764858da6c99312d016f3d331d43dc98490b7a09ffab5f1eb841b4f6e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/pennbbl-fw-heudiconv-sha384-bc2e9ada43b32eb55d064d2ece2fcca54f25212764858da6c99312d016f3d331d43dc98490b7a09ffab5f1eb841b4f6e.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Flywheel HeuDiConv",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "default": "Curate",
+            "type": "string",
+            "enum": [
+              "Curate",
+              "Export",
+              "Tabulate"
+            ]
+          },
+          "dry_run": {
+            "default": true,
+            "type": "boolean"
+          },
+          "do_whole_project": {
+            "default": false,
+            "type": "boolean"
+          },
+          "extended_bids": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "action",
+          "dry_run",
+          "do_whole_project",
+          "extended_bids"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "heuristic": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
