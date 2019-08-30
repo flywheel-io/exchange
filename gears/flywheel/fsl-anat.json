@@ -8,13 +8,13 @@
   "license": "Other",
   "source": "https://github.com/flywheel-apps/fsl-anat",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/fsl_anat",
-  "version": "1.0.0_6.0.1",
+  "version": "1.1.0_6.0.1",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-anat:1.0.0_6.0.1"
+      "image": "flywheel/fsl-anat:1.1.0_6.0.1"
     },
-    "docker-image": "flywheel/fsl-anat:1.0.0_6.0.1",
+    "docker-image": "flywheel/fsl-anat:1.1.0_6.0.1",
     "flywheel": {
       "suite": "FSL"
     }
@@ -32,9 +32,11 @@
   },
   "config": {
     "betfparam": {
-      "default": 0,
+      "default": 0.1,
       "description": "Specify f parameter for BET (only used if not running non-linear reg and also wanting brain extraction done).",
-      "type": "number"
+      "type": "number",
+      "minimum": 0.01,
+      "maximum": 1.0
     },
     "clobber": {
       "default": true,
@@ -87,9 +89,10 @@
       "type": "boolean"
     },
     "s": {
-      "default": 0,
+      "default": 10,
       "description": "Specify the value for bias field smoothing (the -l option in FAST).",
-      "type": "integer"
+      "type": "integer",
+      "minimum": 2
     },
     "t": {
       "default": "T1",
@@ -98,14 +101,14 @@
     },
     "weakbias": {
       "default": false,
-      "description": "Used for images with little and/or smooth bias fields.",
+      "description": "Used for images with little and/or smooth bias fields. Sets the smoothing parameter (s) to 20 internally.",
       "type": "boolean"
     }
   },
   "environment": {
     "DEBIAN_FRONTEND": "noninteractive",
     "FLYWHEEL": "/flywheel/v0",
-    "FSLDIR": "/usr/share/fsl/6.0",
+    "FSLDIR": "/usr/share/fsl/5.0",
     "FSLMULTIFILEQUIT": "TRUE",
     "FSLOUTPUTTYPE": "NIFTI_GZ",
     "FSLTCLSH": "/usr/bin/tclsh",
@@ -113,9 +116,9 @@
     "FSL_DIR": "/usr/share/fsl/5.0",
     "GPG_KEY": "0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D",
     "LANG": "C.UTF-8",
-    "LD_LIBRARY_PATH": "/usr/share/fsl/6.0/lib",
-    "PATH": "/usr/share/fsl/6.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "POSSUMDIR": "/usr/share/fsl/6.0",
+    "LD_LIBRARY_PATH": "/usr/share/fsl/5.0/lib",
+    "PATH": "/usr/share/fsl/5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "POSSUMDIR": "/usr/share/fsl/5.0",
     "PYTHON_PIP_VERSION": "19.1.1",
     "PYTHON_VERSION": "3.7.3",
     "TZ": "Etc/UTC"
