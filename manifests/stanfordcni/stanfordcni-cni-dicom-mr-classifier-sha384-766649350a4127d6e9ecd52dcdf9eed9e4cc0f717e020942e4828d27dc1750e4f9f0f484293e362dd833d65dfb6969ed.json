@@ -1,0 +1,105 @@
+{
+  "gear": {
+    "name": "cni-dicom-mr-classifier",
+    "label": "CNI: DICOM MR Classifier",
+    "description": "Extract metadata and determine classification from GE DICOM data.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://cni.stanford.edu",
+    "source": "https://github.com/cni/cni-dicom-mr-classifier",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "3.1.2",
+    "custom": {
+      "docker-image": "stanfordcni/cni-dicom-mr-classifier:3.1.2",
+      "flywheel": {
+        "suite": "Stanford CNI"
+      }
+    },
+    "config": {
+      "timezone": {
+        "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
+        "type": "string",
+        "default": "America/Los_Angeles"
+      }
+    },
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "description": "Archive (.zip) containing DICOM files."
+      },
+      "classifications": {
+        "base": "context"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "180dfb8aac27c93435fa3e2c8ee9c41fd933bcf0",
+    "rootfs-hash": "sha384:766649350a4127d6e9ecd52dcdf9eed9e4cc0f717e020942e4828d27dc1750e4f9f0f484293e362dd833d65dfb6969ed",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/stanfordcni-cni-dicom-mr-classifier-sha384-766649350a4127d6e9ecd52dcdf9eed9e4cc0f717e020942e4828d27dc1750e4f9f0f484293e362dd833d65dfb6969ed.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for CNI: DICOM MR Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "default": "America/Los_Angeles"
+          }
+        },
+        "required": [
+          "timezone"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "classifications": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string"
+              },
+              "found": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "base",
+              "found",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "dicom",
+          "classifications"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
