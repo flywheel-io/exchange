@@ -287,7 +287,7 @@ publish_global_manifest() {
     find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
     git checkout gh-pages-json
     mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
-    git add $EXCHANGE_JSON && git checkout origin/gh-pages -- .travis.yml
+    git add $EXCHANGE_JSON
     git commit --amend --reset-author -m "Add exchange.json"
     git push -f $GIT_REMOTE  gh-pages-json
     git checkout $GIT_BRANCH
