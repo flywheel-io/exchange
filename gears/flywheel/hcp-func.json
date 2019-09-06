@@ -8,12 +8,12 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-func",
   "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "custom": {
-    "docker-image": "flywheel/hcp-func:0.1.6",
+    "docker-image": "flywheel/hcp-func:0.1.7",
     "gear-builder": {
         "category": "analysis",
-        "image": "flywheel/hcp-func:0.1.6"
+        "image": "flywheel/hcp-func:0.1.7"
     },
     "flywheel": {
       "suite": "Human Connectome Project"
