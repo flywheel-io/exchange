@@ -1,0 +1,250 @@
+{
+  "gear": {
+    "name": "fsl-siena",
+    "label": "FSL: SIENA - Longitudinal analysis of brain change",
+    "description": "Siena estimates percentage brain volume change (PBVC) betweem two input images, taken of the same subject, at different points in time. It calls a series of FSL programs to strip the non-brain tissue from the two images, register the two brains (under the constraint that the skulls are used to hold the scaling constant during the registration) and analyse the brain change between the two time points. As implemented in this Gear Siena allows for analysis of 14 subcortical regions as well as the Brain-Stem/4th Ventricle (with VENT option). Inputs should be structural images (T1-weighted, T2-weighted, PD, etc) where the in-plane resolution is better than 2mm (ideally 1mm). Outputs consist of an archive containing the results of the analysis, as well as an HTML report summarizing the analysis findings.",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Apache-2.0",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/SIENA",
+    "source": "https://github.com/flywheel-apps/fsl-siena-sienax",
+    "cite": "S.M. Smith, Y. Zhang, M. Jenkinson, J. Chen, P.M. Matthews, A. Federico, and N. De Stefano. Accurate, robust and automated longitudinal and cross-sectional brain change analysis. NeuroImage, 17(1):479-489, 2002.  S.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johansen-Berg, P.R. Bannister, M. De Luca, I. Drobnjak, D.E. Flitney, R. Niazy, J. Saunders, J. Vickers, Y. Zhang, N. De Stefano, J.M. Brady, and P.M. Matthews. Advances in functional and structural MR image analysis and implementation as FSL. NeuroImage, 23(S1):208-219, 2004.",
+    "version": "1.0.1_5.0",
+    "custom": {
+      "flywheel": {
+        "suite": "FSL"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fsl-siena:1.0.1_5.0"
+      },
+      "docker-image": "flywheel/fsl-siena:1.0.1_5.0"
+    },
+    "inputs": {
+      "key": {
+        "base": "api-key"
+      },
+      "NIFTI_1": {
+        "base": "file",
+        "optional": false,
+        "description": "Structural NIfTI file to be processed.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "NIFTI_2": {
+        "base": "file",
+        "optional": false,
+        "description": "Structural NIfTI file to be processed.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "ventricle_mask": {
+        "base": "file",
+        "optional": true,
+        "description": "Optional user-supplied ventricle mask (default is $FSLDIR/bin/MNI152_T1_2mm_VentricleMask)",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "BET": {
+        "default": "",
+        "description": "bet options",
+        "id": "-B",
+        "type": "string"
+      },
+      "BOTTOM": {
+        "default": "",
+        "description": "ignore from b (mm) upwards in MNI152/Talairach space [default=false]",
+        "id": "-b",
+        "type": "string"
+      },
+      "DEBUG": {
+        "default": false,
+        "description": "debug (don't delete intermediate files) [default=false]",
+        "id": "-d",
+        "type": "boolean"
+      },
+      "SEG": {
+        "default": false,
+        "description": "two-class segmentation (don't segment grey and white matter separately) - use this if there is poor grey/white contrast [default=false]",
+        "id": "-2",
+        "type": "boolean"
+      },
+      "SS_BET": {
+        "default": false,
+        "description": "use standard-space masking as well as BET [default=false]",
+        "id": "-m",
+        "type": "boolean"
+      },
+      "S_DIFF": {
+        "default": "",
+        "description": "siena_diff options",
+        "id": "-S",
+        "type": "string"
+      },
+      "T2": {
+        "default": false,
+        "description": "tell FAST that the input images are T2-weighted and not T1 [default=false]",
+        "id": "-t2",
+        "type": "boolean"
+      },
+      "TOP": {
+        "default": "",
+        "description": "ignore from t (mm) upwards in MNI152/Talairach space [default=false]",
+        "id": "-t",
+        "type": "string"
+      },
+      "VENT": {
+        "default": false,
+        "description": "run ventricle analysis VIENA [default=false]",
+        "id": "-V",
+        "type": "boolean"
+      }
+    },
+    "environment": {
+      "FSLBROWSER": "/etc/alternatives/x-www-browser",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLLOCKDIR": "",
+      "FSLMACHINELIST": "",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLREMOTECALL": "",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+      "PATH": "/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/5.0"
+    },
+    "command": "python3 run.py"
+  },
+  "exchange": {
+    "git-commit": "c3b663d77ae9795c9c21bdf71d000c7f9ee9193c",
+    "rootfs-hash": "sha384:a38dece5755ba665bbc97c095df4218c5475dc1ff7c3735b8274b5d0671dbfb05bff7599f94abb9973555eb299df5bbb",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-siena-sha384-a38dece5755ba665bbc97c095df4218c5475dc1ff7c3735b8274b5d0671dbfb05bff7599f94abb9973555eb299df5bbb.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FSL: SIENA - Longitudinal analysis of brain change",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "BET": {
+            "default": "",
+            "id": "-B",
+            "type": "string"
+          },
+          "BOTTOM": {
+            "default": "",
+            "id": "-b",
+            "type": "string"
+          },
+          "DEBUG": {
+            "default": false,
+            "id": "-d",
+            "type": "boolean"
+          },
+          "SEG": {
+            "default": false,
+            "id": "-2",
+            "type": "boolean"
+          },
+          "SS_BET": {
+            "default": false,
+            "id": "-m",
+            "type": "boolean"
+          },
+          "S_DIFF": {
+            "default": "",
+            "id": "-S",
+            "type": "string"
+          },
+          "T2": {
+            "default": false,
+            "id": "-t2",
+            "type": "boolean"
+          },
+          "TOP": {
+            "default": "",
+            "id": "-t",
+            "type": "string"
+          },
+          "VENT": {
+            "default": false,
+            "id": "-V",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "BET",
+          "BOTTOM",
+          "DEBUG",
+          "SEG",
+          "SS_BET",
+          "S_DIFF",
+          "T2",
+          "TOP",
+          "VENT"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "object"
+          },
+          "NIFTI_1": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "NIFTI_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "ventricle_mask": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "NIFTI_1",
+          "NIFTI_2"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
