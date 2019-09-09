@@ -7,13 +7,13 @@
     "url": "https://github.com/BIDS-Apps/CPAC",
     "source": "https://github.com/flywheel-apps/c-pac",
     "license": "Apache-2.0",
-    "version": "0.1.1_v1.4.1",
+    "version": "0.1.2_v1.4.1",
     "custom": {
-        "docker-image": "flywheel/c-pac:0.1.1_v1.4.1",
+        "docker-image": "flywheel/c-pac:0.1.2_v1.4.1",
         "flywheel": {"suite": "BIDS Apps"},
         "gear-builder": {
                 "category": "analysis",
-                "image": "flywheel/c-pac:0.1.1_v1.4.1"
+                "image": "flywheel/c-pac:0.1.2_v1.4.1"
         }
     },
     "inputs": {
