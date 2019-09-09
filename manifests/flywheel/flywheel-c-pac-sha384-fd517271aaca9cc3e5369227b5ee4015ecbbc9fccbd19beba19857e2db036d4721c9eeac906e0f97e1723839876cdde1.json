@@ -1,0 +1,165 @@
+{
+  "gear": {
+    "name": "c-pac",
+    "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "author": "Craddock C, Sikka S, Cheung B, et al.",
+    "url": "https://github.com/BIDS-Apps/CPAC",
+    "source": "https://github.com/flywheel-apps/c-pac",
+    "license": "Apache-2.0",
+    "version": "0.1.2_v1.4.1",
+    "custom": {
+      "docker-image": "flywheel/c-pac:0.1.2_v1.4.1",
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/c-pac:0.1.2_v1.4.1"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "pipeline_file": {
+        "base": "file",
+        "optional": true,
+        "description": "An optional custom pipeline file"
+      }
+    },
+    "config": {
+      "anat_only": {
+        "default": false,
+        "description": "Only run anatomical preprocessing.",
+        "type": "boolean"
+      },
+      "n_cpus": {
+        "default": 0,
+        "description": "Number of execution resources available for the pipeline(==0: Use default).",
+        "type": "integer"
+      },
+      "mem_mb": {
+        "default": 0,
+        "description": "Amount of RAM available to the pipeline in megabytes. Included for compatibility with BIDS-Apps standard, but mem_gb is preferred (==0: Use default of 6 GB).",
+        "type": "number"
+      },
+      "mem_gb": {
+        "default": 0,
+        "description": "Amount of RAM available to the pipeline in megabytes. If this is specified along with mem_mb, this flag will take precedence.d (==0: Use default of 6 GB).",
+        "type": "number"
+      },
+      "save_working_dir": {
+        "default": false,
+        "description": "Save the contents of the working directory.",
+        "type": "boolean"
+      },
+      "gear-save-output-on-error": {
+        "default": false,
+        "description": "Save the contents of the working directory to output on failure (can be large).",
+        "type": "boolean"
+      },
+      "gear-run-bids-validation": {
+        "default": true,
+        "description": "Run bids-validator on a the gear bids directory.",
+        "type": "boolean"
+      },
+      "gear-abort-on-bids-error": {
+        "default": false,
+        "description": "If bids-validator returns an error, abort gear execution.",
+        "type": "boolean"
+      }
+    },
+    "command": "/flywheel/v0/run.py",
+    "environment": {
+      "C3DPATH": "/opt/c3d/",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:",
+      "PATH": "/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/fsl/5.0:/opt/afni:/opt/c3d//bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/5.0"
+    }
+  },
+  "exchange": {
+    "git-commit": "9db8e81dd646ac21048339a88c64d02a7e3e8ba2",
+    "rootfs-hash": "sha384:fd517271aaca9cc3e5369227b5ee4015ecbbc9fccbd19beba19857e2db036d4721c9eeac906e0f97e1723839876cdde1",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-c-pac-sha384-fd517271aaca9cc3e5369227b5ee4015ecbbc9fccbd19beba19857e2db036d4721c9eeac906e0f97e1723839876cdde1.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "anat_only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "n_cpus": {
+            "default": 0,
+            "type": "integer"
+          },
+          "mem_mb": {
+            "default": 0,
+            "type": "number"
+          },
+          "mem_gb": {
+            "default": 0,
+            "type": "number"
+          },
+          "save_working_dir": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-save-output-on-error": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-run-bids-validation": {
+            "default": true,
+            "type": "boolean"
+          },
+          "gear-abort-on-bids-error": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "anat_only",
+          "n_cpus",
+          "mem_mb",
+          "mem_gb",
+          "save_working_dir",
+          "gear-save-output-on-error",
+          "gear-run-bids-validation",
+          "gear-abort-on-bids-error"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "pipeline_file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
