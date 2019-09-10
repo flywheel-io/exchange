@@ -8,13 +8,13 @@
   "license": "Other",
   "source": "https://github.com/flywheel-apps/fsl-anat",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/fsl_anat",
-  "version": "1.1.0_6.0.1",
+  "version": "1.1.1_6.0.1",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-anat:1.1.0_6.0.1"
+      "image": "flywheel/fsl-anat:1.1.1_6.0.1"
     },
-    "docker-image": "flywheel/fsl-anat:1.1.0_6.0.1",
+    "docker-image": "flywheel/fsl-anat:1.1.1_6.0.1",
     "flywheel": {
       "suite": "FSL"
     }
