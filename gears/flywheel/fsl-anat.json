@@ -8,13 +8,13 @@
   "license": "Other",
   "source": "https://github.com/flywheel-apps/fsl-anat",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/fsl_anat",
-  "version": "1.1.0_6.0.1",
+  "version": "1.1.1_5.0.9",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-anat:1.1.0_6.0.1"
+      "image": "flywheel/fsl-anat:1.1.1_5.0.9"
     },
-    "docker-image": "flywheel/fsl-anat:1.1.0_6.0.1",
+    "docker-image": "flywheel/fsl-anat:1.1.1_5.0.9",
     "flywheel": {
       "suite": "FSL"
     }
@@ -108,17 +108,17 @@
   "environment": {
     "DEBIAN_FRONTEND": "noninteractive",
     "FLYWHEEL": "/flywheel/v0",
-    "FSLDIR": "/usr/share/fsl/6.0",
+    "FSLDIR": "/usr/share/fsl/5.0",
     "FSLMULTIFILEQUIT": "TRUE",
     "FSLOUTPUTTYPE": "NIFTI_GZ",
     "FSLTCLSH": "/usr/bin/tclsh",
     "FSLWISH": "/usr/bin/wish",
-    "FSL_DIR": "/usr/share/fsl/6.0",
+    "FSL_DIR": "/usr/share/fsl/5.0",
     "GPG_KEY": "0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D",
     "LANG": "C.UTF-8",
-    "LD_LIBRARY_PATH": "/usr/share/fsl/6.0/lib",
-    "PATH": "/usr/share/fsl/6.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "POSSUMDIR": "/usr/share/fsl/6.0",
+    "LD_LIBRARY_PATH": "/usr/share/fsl/5.0/lib",
+    "PATH": "/usr/share/fsl/5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "POSSUMDIR": "/usr/share/fsl/5.0",
     "PYTHON_PIP_VERSION": "19.1.1",
     "PYTHON_VERSION": "3.7.3",
     "TZ": "Etc/UTC"
