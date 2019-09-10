@@ -1,0 +1,243 @@
+{
+  "gear": {
+    "name": "fsl-anat",
+    "label": "FSL-ANAT - Anatomical Processing Pipeline",
+    "description": "This tool provides a general pipeline for processing anatomical images (e.g. T1-weighted scans).",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "M.W. Woolrich, S. Jbabdi, B. Patenaude, M. Chappell, S. Makni, T. Behrens, C. Beckmann, M. Jenkinson, S.M. Smith. Bayesian analysis of neuroimaging data in FSL. NeuroImage, 45:S173-86, 2009.",
+    "license": "Other",
+    "source": "https://github.com/flywheel-apps/fsl-anat",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/fsl_anat",
+    "version": "1.1.1_6.0.1",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fsl-anat:1.1.1_6.0.1"
+      },
+      "docker-image": "flywheel/fsl-anat:1.1.1_6.0.1",
+      "flywheel": {
+        "suite": "FSL"
+      }
+    },
+    "inputs": {
+      "Image": {
+        "base": "file",
+        "description": "T1-weighted, T2-weighted, or Proton-Density-weighted anatomical NIfTI file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "betfparam": {
+        "default": 0.1,
+        "description": "Specify f parameter for BET (only used if not running non-linear reg and also wanting brain extraction done).",
+        "type": "number",
+        "minimum": 0.01,
+        "maximum": 1
+      },
+      "clobber": {
+        "default": true,
+        "description": "If .anat directory exist (as specified by -o or default from -i) then delete it and make a new one.",
+        "type": "boolean"
+      },
+      "nobias": {
+        "default": false,
+        "description": "Turn off steps that do bias field correction (via FAST).",
+        "type": "boolean"
+      },
+      "nocleanup": {
+        "default": false,
+        "description": "Do not remove intermediate files.",
+        "type": "boolean"
+      },
+      "nocrop": {
+        "default": false,
+        "description": "Turn off step that does automated cropping (robustfov).",
+        "type": "boolean"
+      },
+      "nononlinreg": {
+        "default": false,
+        "description": "Turn off step that does non-linear registration (FNIRT).",
+        "type": "boolean"
+      },
+      "noreg": {
+        "default": false,
+        "description": "Turn off steps that do registration to standard (FLIRT and FNIRT).",
+        "type": "boolean"
+      },
+      "noreorient": {
+        "default": false,
+        "description": "Turn off step that does reorientation 2 standard (fslreorient2std).",
+        "type": "boolean"
+      },
+      "nosearch": {
+        "default": false,
+        "description": "Specify that linear registration uses the -nosearch option (FLIRT).",
+        "type": "boolean"
+      },
+      "noseg": {
+        "default": false,
+        "description": "Turn off step that does tissue-type segmentation (FAST).",
+        "type": "boolean"
+      },
+      "nosubcortseg": {
+        "default": false,
+        "description": "Turn off step that does sub-cortical segmentation (FIRST).",
+        "type": "boolean"
+      },
+      "s": {
+        "default": 10,
+        "description": "Specify the value for bias field smoothing (the -l option in FAST).",
+        "type": "integer",
+        "minimum": 2
+      },
+      "t": {
+        "default": "T1",
+        "description": "Specify the type of image (choose one of T1 T2 PD - default is T1).",
+        "type": "string"
+      },
+      "weakbias": {
+        "default": false,
+        "description": "Used for images with little and/or smooth bias fields. Sets the smoothing parameter (s) to 20 internally.",
+        "type": "boolean"
+      }
+    },
+    "environment": {
+      "DEBIAN_FRONTEND": "noninteractive",
+      "FLYWHEEL": "/flywheel/v0",
+      "FSLDIR": "/usr/share/fsl/6.0",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "FSL_DIR": "/usr/share/fsl/6.0",
+      "GPG_KEY": "0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D",
+      "LANG": "C.UTF-8",
+      "LD_LIBRARY_PATH": "/usr/share/fsl/6.0/lib",
+      "PATH": "/usr/share/fsl/6.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/6.0",
+      "PYTHON_PIP_VERSION": "19.1.1",
+      "PYTHON_VERSION": "3.7.3",
+      "TZ": "Etc/UTC"
+    },
+    "command": "/flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "53b16baa75024bf6d6144dad347e7fdc6b76244b",
+    "rootfs-hash": "sha384:2c5aa6f98097417f921d390fd0402aea71180cfd1be01a3b0c473fecb2bd5c41e73e304a7c17a02c532657c0b22c2f92",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-anat-sha384-2c5aa6f98097417f921d390fd0402aea71180cfd1be01a3b0c473fecb2bd5c41e73e304a7c17a02c532657c0b22c2f92.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FSL-ANAT - Anatomical Processing Pipeline",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "betfparam": {
+            "default": 0.1,
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 1
+          },
+          "clobber": {
+            "default": true,
+            "type": "boolean"
+          },
+          "nobias": {
+            "default": false,
+            "type": "boolean"
+          },
+          "nocleanup": {
+            "default": false,
+            "type": "boolean"
+          },
+          "nocrop": {
+            "default": false,
+            "type": "boolean"
+          },
+          "nononlinreg": {
+            "default": false,
+            "type": "boolean"
+          },
+          "noreg": {
+            "default": false,
+            "type": "boolean"
+          },
+          "noreorient": {
+            "default": false,
+            "type": "boolean"
+          },
+          "nosearch": {
+            "default": false,
+            "type": "boolean"
+          },
+          "noseg": {
+            "default": false,
+            "type": "boolean"
+          },
+          "nosubcortseg": {
+            "default": false,
+            "type": "boolean"
+          },
+          "s": {
+            "default": 10,
+            "type": "integer",
+            "minimum": 2
+          },
+          "t": {
+            "default": "T1",
+            "type": "string"
+          },
+          "weakbias": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "betfparam",
+          "clobber",
+          "nobias",
+          "nocleanup",
+          "nocrop",
+          "nononlinreg",
+          "noreg",
+          "noreorient",
+          "nosearch",
+          "noseg",
+          "nosubcortseg",
+          "s",
+          "t",
+          "weakbias"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "Image": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "Image"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
