@@ -1,0 +1,217 @@
+{
+  "gear": {
+    "name": "fsl-sienax",
+    "label": "FSL: SIENAX - Brain tissue volume, normalised for subject head size",
+    "description": "FSL's SIENAX. Sienax estimates total brain tissue volume, from a single image, normalised for skull size. It calls a series of FSL programs: It first strips non-brain tissue, and then uses the brain and skull images to estimate the scaling between the subject's image and standard space. It then runs tissue segmentation to estimate the volume of brain tissue, and multiplies this by the estimated scaling factor, to reduce head-size-related variability between subjects. Inputs should be structural image (T1-weighted, T2-weighted, PD, etc) where the in-plane resolution is better than 2mm (ideally 1mm). Outputs consist of an archive containing the results of the analysis, as well as an HTML report summarizing the analysis findings.",
+    "author": "Analysis Group, FMRIB, Oxford, UK.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Apache-2.0",
+    "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/SIENA",
+    "source": "https://github.com/flywheel-apps/fsl-siena-sienax",
+    "cite": "S.M. Smith, Y. Zhang, M. Jenkinson, J. Chen, P.M. Matthews, A. Federico, and N. De Stefano. Accurate, robust and automated longitudinal and cross-sectional brain change analysis. NeuroImage, 17(1):479-489, 2002.  S.M. Smith, M. Jenkinson, M.W. Woolrich, C.F. Beckmann, T.E.J. Behrens, H. Johansen-Berg, P.R. Bannister, M. De Luca, I. Drobnjak, D.E. Flitney, R. Niazy, J. Saunders, J. Vickers, Y. Zhang, N. De Stefano, J.M. Brady, and P.M. Matthews. Advances in functional and structural MR image analysis and implementation as FSL. NeuroImage, 23(S1):208-219, 2004.",
+    "version": "1.0.2_5.0",
+    "custom": {
+      "flywheel": {
+        "suite": "FSL"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fsl-sienax:1.0.2_5.0"
+      },
+      "docker-image": "flywheel/fsl-sienax:1.0.2_5.0"
+    },
+    "inputs": {
+      "key": {
+        "base": "api-key"
+      },
+      "NIFTI": {
+        "base": "file",
+        "optional": false,
+        "description": "Structural NIfTI file to be processed.",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "lesion_mask": {
+        "base": "file",
+        "optional": true,
+        "description": "an optional lesion (or lesion+CSF) mask to remove incorrectly labelled \"grey matter\" voxels",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "BET": {
+        "default": "",
+        "description": "bet options",
+        "id": "-B",
+        "type": "string"
+      },
+      "BOTTOM": {
+        "default": "",
+        "description": "ignore from b (mm) upwards in MNI152/Talairach space [default=false]",
+        "id": "-b",
+        "type": "string"
+      },
+      "DEBUG": {
+        "default": false,
+        "description": "debug (don't delete intermediate files) [default=false]",
+        "id": "-d",
+        "type": "boolean"
+      },
+      "SEG": {
+        "default": false,
+        "description": "two-class segmentation (don't segment grey and white matter separately) - use this if there is poor grey/white contrast [default=false]",
+        "id": "-2",
+        "type": "boolean"
+      },
+      "S_FAST": {
+        "default": "",
+        "description": "if you want to change the segmentation defaults, put FAST options inside double-quotes after using the -S flag. For example, to increase the number of segmentation iterations use: -S \"-i 20\"",
+        "id": "-S",
+        "type": "string"
+      },
+      "T2": {
+        "default": false,
+        "description": "tell FAST that the input images are T2-weighted and not T1 [default=false]",
+        "id": "-t2",
+        "type": "boolean"
+      },
+      "TOP": {
+        "default": "",
+        "description": "ignore from t (mm) upwards in MNI152/Talairach space [default=false]",
+        "id": "-t",
+        "type": "string"
+      },
+      "REGIONAL": {
+        "default": false,
+        "description": "tell SIENAX to estimate \"regional\" volumes as well as global; this produces peripheral cortex GM volume (3-class segmentation only) and ventricular CSF volume [default=false]",
+        "id": "-r",
+        "type": "boolean"
+      }
+    },
+    "environment": {
+      "FSLBROWSER": "/etc/alternatives/x-www-browser",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLLOCKDIR": "",
+      "FSLMACHINELIST": "",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLREMOTECALL": "",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+      "PATH": "/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/5.0"
+    },
+    "command": "python3 run.py"
+  },
+  "exchange": {
+    "git-commit": "fb5ef2a080cd1b1cf84a5689e9cbc945385890b7",
+    "rootfs-hash": "sha384:7c9ee16f1be21368b9a68915a0e065782d8a81d8d08ca4cbc254872d4175d3e76a98987bee1d03519235b527796abece",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-sienax-sha384-7c9ee16f1be21368b9a68915a0e065782d8a81d8d08ca4cbc254872d4175d3e76a98987bee1d03519235b527796abece.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FSL: SIENAX - Brain tissue volume, normalised for subject head size",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "BET": {
+            "default": "",
+            "id": "-B",
+            "type": "string"
+          },
+          "BOTTOM": {
+            "default": "",
+            "id": "-b",
+            "type": "string"
+          },
+          "DEBUG": {
+            "default": false,
+            "id": "-d",
+            "type": "boolean"
+          },
+          "SEG": {
+            "default": false,
+            "id": "-2",
+            "type": "boolean"
+          },
+          "S_FAST": {
+            "default": "",
+            "id": "-S",
+            "type": "string"
+          },
+          "T2": {
+            "default": false,
+            "id": "-t2",
+            "type": "boolean"
+          },
+          "TOP": {
+            "default": "",
+            "id": "-t",
+            "type": "string"
+          },
+          "REGIONAL": {
+            "default": false,
+            "id": "-r",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "BET",
+          "BOTTOM",
+          "DEBUG",
+          "SEG",
+          "S_FAST",
+          "T2",
+          "TOP",
+          "REGIONAL"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "object"
+          },
+          "NIFTI": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "lesion_mask": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "NIFTI"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
