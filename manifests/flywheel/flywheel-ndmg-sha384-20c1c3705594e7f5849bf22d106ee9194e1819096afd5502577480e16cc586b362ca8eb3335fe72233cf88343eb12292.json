@@ -1,0 +1,294 @@
+{
+  "gear": {
+    "name": "ndmg",
+    "label": "NDMG (NeuroData's MR Graphs Package)",
+    "description": "NeuroData's MR Graphs package, ndmg (pronounced \"nutmeg\"), is a turn-key pipeline which uses structural and diffusion MRI data to estimate multi-resolution connectomes reliably and scalably.",
+    "maintainer": "Derek Pisner <dpisner@utexas.edu>",
+    "author": "Gregory Kiar, Eric W. Bridgeford, Joshua T. Vogelstein, et al.",
+    "url": "https://github.com/neurodata/ndmg",
+    "source": "https://github.com/flywheel-apps/ndmg",
+    "license": "Apache-2.0",
+    "version": "0.1.0_staging",
+    "custom": {
+      "docker-image": "flywheel/ndmg:0.1.0_staging",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/ndmg:0.1.0_staging"
+      },
+      "flywheel": {
+        "suite": "NeuroData"
+      }
+    },
+    "inputs": {
+      "t1w": {
+        "base": "file",
+        "description": "T1-weighted anatomical NIfTI file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": false
+      },
+      "dwi": {
+        "base": "file",
+        "description": "Diffusion-Weighted NIfTI file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": false
+      },
+      "bvecs": {
+        "base": "file",
+        "description": "A text file that defines the gradient vectors created by a DWI scan.",
+        "optional": false
+      },
+      "bvals": {
+        "base": "file",
+        "description": "A text file that defines magnitudes for the gradient vectors created by a DWI scan.",
+        "optional": false
+      }
+    },
+    "config": {
+      "atlas": {
+        "default": "desikan",
+        "description": "The atlas that defines the node location of the graph you create.",
+        "type": "string",
+        "enum": [
+          "desikan",
+          "CPAC200",
+          "DKT",
+          "HarvardOxfordcort",
+          "HarvardOxfordsub",
+          "JHU",
+          "Schaefer2018-200",
+          "Talairach",
+          "aal",
+          "brodmann",
+          "glasser",
+          "yeo-7-liberal",
+          "yeo-17-liberal"
+        ]
+      },
+      "mod_type": {
+        "default": "det",
+        "description": "Deterministic or probablistic tractography.",
+        "type": "string",
+        "enum": [
+          "det",
+          "prob"
+        ]
+      },
+      "track_type": {
+        "default": "local",
+        "description": "Local or particle tracking.",
+        "type": "string",
+        "enum": [
+          "local",
+          "particle"
+        ]
+      },
+      "mod_func": {
+        "default": "csa",
+        "description": "Constant Solid Angle or Constrained Spherical Deconvolution.",
+        "type": "string",
+        "enum": [
+          "csa",
+          "csd"
+        ]
+      },
+      "reg_style": {
+        "default": "native",
+        "description": "Registration style. If native, do all registration in each scan's space; if mni, register scans to the MNI atlas; if native_dsn, do registration in native space, and then fit the streamlines to MNI space.",
+        "type": "string",
+        "enum": [
+          "native",
+          "native_dsn",
+          "mni"
+        ]
+      },
+      "vox_size": {
+        "default": "1mm",
+        "description": "Whether our voxels are 1mm or 2mm. ",
+        "type": "string",
+        "enum": [
+          "local",
+          "particle"
+        ]
+      },
+      "seeds": {
+        "default": 1,
+        "description": "Seeding density for tractography. More seeds generally results in a better graph, but at a much higher computational cost.",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 21
+      }
+    },
+    "command": "/flywheel/v0/run.py",
+    "environment": {
+      "TERM": "xterm",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "POSSUMDIR": "/usr/share/fsl/5.0",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+      "PYTHONWARNINGS": "ignore",
+      "MPLCONFIGDIR": "/tmp/",
+      "PATH": "/usr/lib/fsl/5.0:/opt/afni:/usr/share/fsl/5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "NDMG_URL": "https://github.com/neurodata/ndmg.git",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLMACHINELIST": "",
+      "CRAN_URL": "https://cran.rstudio.com/",
+      "FSLREMOTECALL": "",
+      "FSLWISH": "/usr/bin/wish",
+      "FSLBROWSER": "/etc/alternatives/x-www-browser",
+      "SHLVL": "1",
+      "HOME": "/root",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "NDMG_ATLASES": "https://github.com/neurodata/neuroparc.git",
+      "LESSOPEN": "| /usr/bin/lesspipe %s",
+      "FSLLOCKDIR": "",
+      "AFNI_URL": "https://files.osf.io/v1/resources/fvuh8/providers/osfstorage/5a0dd9a7b83f69027512a12b",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+      "NDEB_URL": "http://neuro.debian.net/lists/xenial.us-ca.full",
+      "_": "/usr/local/bin/ipython",
+      "KMP_DUPLICATE_LIB_OK": "True"
+    }
+  },
+  "exchange": {
+    "git-commit": "9aab3ed614793d533cc00a317cff30c1191cf03d",
+    "rootfs-hash": "sha384:20c1c3705594e7f5849bf22d106ee9194e1819096afd5502577480e16cc586b362ca8eb3335fe72233cf88343eb12292",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-ndmg-sha384-20c1c3705594e7f5849bf22d106ee9194e1819096afd5502577480e16cc586b362ca8eb3335fe72233cf88343eb12292.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for NDMG (NeuroData's MR Graphs Package)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "atlas": {
+            "default": "desikan",
+            "type": "string",
+            "enum": [
+              "desikan",
+              "CPAC200",
+              "DKT",
+              "HarvardOxfordcort",
+              "HarvardOxfordsub",
+              "JHU",
+              "Schaefer2018-200",
+              "Talairach",
+              "aal",
+              "brodmann",
+              "glasser",
+              "yeo-7-liberal",
+              "yeo-17-liberal"
+            ]
+          },
+          "mod_type": {
+            "default": "det",
+            "type": "string",
+            "enum": [
+              "det",
+              "prob"
+            ]
+          },
+          "track_type": {
+            "default": "local",
+            "type": "string",
+            "enum": [
+              "local",
+              "particle"
+            ]
+          },
+          "mod_func": {
+            "default": "csa",
+            "type": "string",
+            "enum": [
+              "csa",
+              "csd"
+            ]
+          },
+          "reg_style": {
+            "default": "native",
+            "type": "string",
+            "enum": [
+              "native",
+              "native_dsn",
+              "mni"
+            ]
+          },
+          "vox_size": {
+            "default": "1mm",
+            "type": "string",
+            "enum": [
+              "local",
+              "particle"
+            ]
+          },
+          "seeds": {
+            "default": 1,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 21
+          }
+        },
+        "required": [
+          "atlas",
+          "mod_type",
+          "track_type",
+          "mod_func",
+          "reg_style",
+          "vox_size",
+          "seeds"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "t1w": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "dwi": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "bvecs": {
+            "type": "object",
+            "properties": {}
+          },
+          "bvals": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "t1w",
+          "dwi",
+          "bvecs",
+          "bvals"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
