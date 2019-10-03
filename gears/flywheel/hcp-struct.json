@@ -8,14 +8,21 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-struct",
   "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.1.8",
+  "version": "1.0.0_4.0.0",
   "custom": {
-    "docker-image": "flywheel/hcp-struct:0.1.8"
-  },
-  "flywheel": {
-    "suite": "Human Connectome Project"
+    "docker-image": "flywheel/hcp-struct:1.0.0_4.0.0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/hcp-struct:1.0.0_4.0.0"
+    },
+    "flywheel": {
+      "suite": "Human Connectome Project"
+    }
   },
   "inputs": {
+    "api-key": {
+        "base": "api-key"
+    },
     "T1": {
       "description": "T1-weighted anatomical NIfTI file",
       "base": "file",
@@ -86,13 +93,19 @@
     }
   },
   "config": {
+    "save-on-error": {
+        "type":"boolean",
+        "default": false,
+        "description": "Set to 'True' to save output on error."
+    },
     "Subject": {
       "type": "string",
-      "default": "000000",
-      "description": "Subject ID (Default = 000000)"
+      "description": "Subject ID (use to override session subject id)",
+      "optional": true
     },
     "RegName": {
       "type": "string",
+      "enum":["MSMSulc","FS"],
       "default": "MSMSulc",
       "description": "Surface registration type: either 'FS' (freesurfer) or 'MSMSulc' (HCP default)"
     },
@@ -109,7 +122,19 @@
     "StructuralUnwarpDirection": {
       "description": "Readout direction for structural scans ( 'x', 'x-', 'y', 'y-', 'z', 'z-' ). HCP default = 'z'",
       "default": "z",
-      "type": "string"
+      "type": "string",
+      "enum": ["x", "x-", "y", "y-", "z", "z-"]
+    },
+    "aseg_csv": {
+        "type":"boolean",
+        "default": true,
+        "description": "Write aseg stats to a csv file and analysis metadata."
+    },
+    "Dry-Run": {
+        "type":"boolean",
+        "default": false,
+        "description": "Log all commands, but do not execute."
     }
-  }
+  },
+  "command": "/flywheel/v0/run.py"
 }
