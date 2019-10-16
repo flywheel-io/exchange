@@ -1,0 +1,121 @@
+{
+  "gear": {
+    "name": "dicom-mr-classifier",
+    "label": "SciTran: DICOM MR Classifier",
+    "description": "Extract metadata and determine classification from raw DICOM data. Compatible with Siemens, Philips, and GE DICOMs.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://github.com/scitran-apps/dicom-mr-classifier",
+    "source": "https://github.com/scitran-apps/dicom-mr-classifier/releases/tag/1.3.0",
+    "license": "Apache-2.0",
+    "flywheel": "0",
+    "version": "1.3.0",
+    "custom": {
+      "docker-image": "scitran/dicom-mr-classifier:1.3.0",
+      "gear-builder": {
+        "image": "scitran/dicom-mr-classifier:1.3.0",
+        "category": "converter"
+      },
+      "flywheel": {
+        "suite": "SciTran",
+        "uid": 1000,
+        "gid": 1000
+      }
+    },
+    "config": {
+      "timezone": {
+        "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
+        "type": "string",
+        "default": "UTC"
+      },
+      "force": {
+        "description": "Force pydicom to read the input file. This option allows files that do not adhere to the DICOM standard to be read and parsed. (Default=False)",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "description": "Archive (.zip) containing DICOM files."
+      },
+      "classifications": {
+        "base": "context"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "3d6a34b0e579a7697e6c03a085a2aef9458a0c88",
+    "rootfs-hash": "sha384:d87b4e7790171866e1d17c57f46032ffaf5ba077509e90ecb0794fd67c8153968742ce60e05e4077dbefe66820c764e1",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-dicom-mr-classifier-sha384-d87b4e7790171866e1d17c57f46032ffaf5ba077509e90ecb0794fd67c8153968742ce60e05e4077dbefe66820c764e1.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for SciTran: DICOM MR Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "default": "UTC"
+          },
+          "force": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "timezone",
+          "force"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "classifications": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string"
+              },
+              "found": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "base",
+              "found",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "dicom",
+          "classifications"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
