@@ -1,0 +1,42 @@
+{
+	"name": "openslide-to-png",
+	"label": "OpenSlide to PNG file converter",
+	"description": "OpenSlide: Uses the OpenSlide library to convert whole-slide image files to .png for viewing in Flywheel. Supported file types include Aperio (.svs, .tif), Hamamatsu (.ndpi, .vms, .vmu), Leica (.scn), MIRAX (.mrxs), Philips (.tiff), Sakura (.svslide), Trestle (.tif), Ventana (.bif, .tif), Generic tiled TIFF (.tif)",
+	"version": "0.0.1_1.1.1",
+	"inputs": {
+		"image": {
+			"base": "file",
+			"optional": false,
+			"description": "slide image file (.svs .tif .tiff .ndpi .vms .vmu .scn .mrxs .svslide .bif)"
+		}
+	},
+	"config": {
+		"gear-log-level": {
+			"default": "INFO",
+			"description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+			"type": "string",
+			"enum": [
+				"ERROR",
+				"WARNING",
+				"INFO",
+				"DEBUG"
+			]
+		}
+	},
+	"command": "python run.py",
+	"author": "Adam Goode, M. Satyanarayanan, Carnegie Mellon University <https://openslide.org/>",
+	"maintainer": "Flywheel <support@flywheel.io>",
+	"license": "MIT",
+	"source": "https://github.com/flywheel-apps/openslide-to-png",
+	"url": "https://github.com/openslide/openslide-python",
+	"custom": {
+		"gear-builder": {
+			"category": "converter",
+			"image": "flywheel/openslide-to-png:0.0.1_1.1.1"
+		},
+    "docker-image": "flywheel/openslide-to-png:0.0.1_1.1.1",
+		"flywheel":{
+			"suite": "OpenSlide"
+		}
+	}
+}
