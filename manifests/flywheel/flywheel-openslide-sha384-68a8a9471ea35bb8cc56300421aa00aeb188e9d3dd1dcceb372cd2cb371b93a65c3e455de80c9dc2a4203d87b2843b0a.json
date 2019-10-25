@@ -1,0 +1,90 @@
+{
+  "gear": {
+    "name": "openslide-to-png",
+    "label": "OpenSlide to PNG file converter",
+    "description": "OpenSlide: Uses the OpenSlide library to convert whole-slide image files to .png for viewing in Flywheel. Supported file types include Aperio (.svs, .tif), Hamamatsu (.ndpi, .vms, .vmu), Leica (.scn), MIRAX (.mrxs), Philips (.tiff), Sakura (.svslide), Trestle (.tif), Ventana (.bif, .tif), Generic tiled TIFF (.tif)",
+    "version": "0.0.1_1.1.1",
+    "inputs": {
+      "image": {
+        "base": "file",
+        "optional": false,
+        "description": "slide image file (.svs .tif .tiff .ndpi .vms .vmu .scn .mrxs .svslide .bif)"
+      }
+    },
+    "config": {
+      "gear-log-level": {
+        "default": "INFO",
+        "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+        "type": "string",
+        "enum": [
+          "ERROR",
+          "WARNING",
+          "INFO",
+          "DEBUG"
+        ]
+      }
+    },
+    "command": "python run.py",
+    "author": "Adam Goode, M. Satyanarayanan, Carnegie Mellon University <https://openslide.org/>",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "source": "https://github.com/flywheel-apps/openslide-to-png",
+    "url": "https://github.com/openslide/openslide-python",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/openslide-to-png:0.0.1_1.1.1"
+      },
+      "docker-image": "flywheel/openslide-to-png:0.0.1_1.1.1",
+      "flywheel": {
+        "suite": "OpenSlide"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "5086869d12a84b39243ee4399c8fb12356d1da1a",
+    "rootfs-hash": "sha384:68a8a9471ea35bb8cc56300421aa00aeb188e9d3dd1dcceb372cd2cb371b93a65c3e455de80c9dc2a4203d87b2843b0a",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-openslide-sha384-68a8a9471ea35bb8cc56300421aa00aeb188e9d3dd1dcceb372cd2cb371b93a65c3e455de80c9dc2a4203d87b2843b0a.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for OpenSlide to PNG file converter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "gear-log-level": {
+            "default": "INFO",
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "DEBUG"
+            ]
+          }
+        },
+        "required": [
+          "gear-log-level"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "image"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
