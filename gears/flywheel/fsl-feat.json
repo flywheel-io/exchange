@@ -1,18 +1,24 @@
 {
   "name": "fsl-feat",
-  "label": "FSL: FEAT - fMRI preprocessing (v6.0)",
+  "label": "FSL: FEAT - fMRI preprocessing (v5.0)",
   "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).",
   "maintainer": "Flywheel <support@flywheel.io>",
   "author": "Analysis Group, FMRIB, Oxford, UK.",
   "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT",
   "source": "https://github.com/flywheel-apps/fsl-feat",
   "license": "Apache-2.0",
-  "flywheel": {
-    "suite": "FSL"
-  },
-  "version": "0.1.4",
+
+  "version": "0.1.6",
   "custom": {
-    "docker-image": "flywheel/fsl-feat:0.1.4"
+    "docker-image": "flywheel/fsl-feat:0.1.6",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/fsl-feat:0.1.6"
+    },
+
+  "flywheel": {
+      "suite": "FSL"
+    }
   },
   "config": {
     "BB_THRESH": {
