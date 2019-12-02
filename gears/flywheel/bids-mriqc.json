@@ -2,12 +2,12 @@
   "name": "bids-mriqc",
   "label": "MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
   "description": "MRIQC (v0.15.1) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data.",
-  "version": "1.0.0_0.15.1",
+  "version": "1.0.8_0.15.1",
   "custom": {
-    "docker-image": "flywheel/bids-mriqc:1.0.0_0.15.1",
+    "docker-image": "flywheel/bids-mriqc:1.0.8_0.15.1",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-mriqc:1.0.0_0.15.1"
+      "image": "flywheel/bids-mriqc:1.0.8_0.15.1"
     },
     "flywheel": {
       "suite": "BIDS Apps"
@@ -41,14 +41,24 @@
     }
   },
   "config": {
+    "participant_label": {
+      "description": "space-separated subjects (without 'sub-') [PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]",
+      "optional": true,
+      "type": "string"
+    },
+    "session-id": {
+      "description": "space-separated sessions (without 'ses-') [SESSION_ID [SESSION_ID ...]]",
+      "optional": true,
+      "type": "string"
+    },
     "ants-float": {
-      "default": false,
       "description": "use float number precision on ANTs computations",
+      "optional": true,
       "type": "boolean"
     },
     "ants-nthreads": {
-      "default": 1,
       "description": "number of threads that will be set in ANTs processes",
+      "optional": true,
       "type": "integer"
     },
     "ants-settings": {
@@ -57,23 +67,23 @@
       "type": "string"
     },
     "correct-slice-timing": {
-      "default": false,
       "description": "Perform slice timing correction",
+      "optional": true,
       "type": "boolean"
     },
     "deoblique": {
-      "default": false,
       "description": "Deoblique the functional scans during head motion correction preprocessing",
+      "optional": true,
       "type": "boolean"
     },
     "despike": {
-      "default": false,
       "description": "Despike the functional scans during head motion correction preprocessing",
+      "optional": true,
       "type": "boolean"
     },
     "dry-run": {
-      "default": false,
-      "description": "Do not run the workflow",
+      "description": "Run mriqc, but do not run the workflow inside",
+      "optional": true,
       "type": "boolean"
     },
     "email": {
@@ -82,18 +92,18 @@
       "type": "string"
     },
     "fd_thres": {
-      "default": 0.2,
       "description": "motion threshold for FD computation",
+      "optional": true,
       "type": "number"
     },
     "fft-spikes-detector": {
-      "default": false,
       "description": "Turn on FFT based spike detector (slow)",
+      "optional": true,
       "type": "boolean"
     },
     "float32": {
-      "default": false,
       "description": "Cast the input data to float32 if it’s represented in higher precision (saves space and improves perfomance)",
+      "optional": true,
       "type": "boolean"
     },
     "gear-abort-on-bids-error": {
@@ -117,34 +127,49 @@
       "description": "Gear will run BIDS validation before mriqc.  If validation fails and gear-abort-on-bids-error is true, mriq will NOT be run.",
       "type": "boolean"
     },
-    "gear-save-intermediate-work": {
+    "gear-save-intermediate-output": {
       "default": false,
       "description": "Gear will save ALL intermediate output into mriqc_work.zip",
       "type": "boolean"
     },
-    "gear-zip-html": {
+    "gear-intermediate-files": {
+      "description": "Space separated list of FILES to retain from the intermediate work directory.",
+      "default": "",
+      "type": "string"
+    },
+    "gear-intermediate-folders": {
+      "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+      "default": "",
+      "type": "string"
+    },
+    "gear-dry-run": {
       "default": false,
-      "description": "Gear will save each html file as a zip archive for easy on-platform viewing",
+      "description": "Do everything except actually executing the command line",
+      "type": "boolean"
+    },
+    "gear-keep-output": {
+      "default": false,
+      "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
       "type": "boolean"
     },
     "hmc-afni": {
-      "default": true,
       "description": "Use ANFI 3dvolreg for head motion correction (HMC) - default",
+      "optional": true,
       "type": "boolean"
     },
     "hmc-fsl": {
-      "default": false,
       "description": "Use FSL MCFLIRT instead of AFNI for head motion correction (HMC)",
+      "optional": true,
       "type": "boolean"
     },
     "ica": {
-      "default": false,
       "description": "Run ICA on the raw data and include the componentsin the individual reports (slow but potentially very insightful)",
+      "optional": true,
       "type": "boolean"
     },
     "mem_gb": {
-      "default": 0,
       "description": "Memory to use (default is 90% of total available)",
+      "optional": true,
       "type": "integer"
     },
     "modalities": {
@@ -162,8 +187,8 @@
       "type": "string"
     },
     "n_procs": {
-      "default": 1,
       "description": "number of threads",
+      "optional": true,
       "type": "integer"
     },
     "no-sub": {
@@ -172,8 +197,8 @@
       "type": "boolean"
     },
     "profile": {
-      "default": false,
       "description": "hook up the resource profiler callback to nipype",
+      "optional": true,
       "type": "boolean"
     },
     "run-id": {
@@ -208,8 +233,8 @@
       "type": "string"
     },
     "verbose-reports": {
-      "default": true,
       "description": "increase verbosity of report",
+      "optional": true,
       "type": "boolean"
     },
     "webapi-port": {
@@ -223,8 +248,8 @@
       "type": "string"
     },
     "write-graph": {
-      "default": false,
       "description": "Write workflow graph",
+      "optional": true,
       "type": "boolean"
     }
   },
@@ -251,6 +276,7 @@
     "PYTHONNOUSERSITE": "1",
     "TEMPLATEFLOW_HOME": "/opt/templateflow"
   },
+  "command": "python run.py",
   "author": "Poldrack Lab, Stanford University",
   "maintainer": "Flywheel <support@flywheel.io>",
   "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
