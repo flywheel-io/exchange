@@ -5,7 +5,7 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "author": "E. Auerbach, CMRR, 2016",
   "url": "https://github.com/CMRR-C2P/MB",
-  "source": "https://github.com/flywheel-apps/extract-cmrr-physio/releases/tag/1.1.0",
+  "source": "https://github.com/flywheel-apps/extract-cmrr-physio/releases/tag/1.2.1",
   "license": "MIT",
   "flywheel": "0",
   "version": "1.2.1",
