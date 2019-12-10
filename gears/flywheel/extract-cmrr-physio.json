@@ -5,15 +5,15 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "author": "E. Auerbach, CMRR, 2016",
   "url": "https://github.com/CMRR-C2P/MB",
-  "source": "https://github.com/flywheel-apps/extract-cmrr-physio/releases/tag/1.1.0",
+  "source": "https://github.com/flywheel-apps/extract-cmrr-physio/releases/tag/1.2.2",
   "license": "MIT",
   "flywheel": "0",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "custom": {
-    "docker-image": "flywheel/extract-cmrr-physio:1.2.1",
+    "docker-image": "flywheel/extract-cmrr-physio:1.2.2",
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/extract-cmrr-physio:1.2.1"
+      "image": "flywheel/extract-cmrr-physio:1.2.2"
 
     }
   },
