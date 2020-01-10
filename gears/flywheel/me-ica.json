@@ -9,13 +9,13 @@
   "cite": "Kundu, P., Brenowitz, N.D., Voon, V., Worbe, Y., Vertes, P.E., Inati, S.J., Saad, Z.S., Bandettini, P.A. & Bullmore, E.T. Integrated strategy for improving functional connectivity mapping using multiecho fMRI. PNAS (2013). Kundu, P., Inati, S.J., Evans, J.W., Luh, W.M. & Bandettini, P.A. Differentiating BOLD and non-BOLD signals in fMRI time series using multi-echo EPI. NeuroImage (2011). http://dx.doi.org/10.1016/j.neuroimage.2011.12.028",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.2.4",
+  "version": "0.3.4_3.2beta1",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/me-ica:0.2.4"
+      "image": "flywheel/me-ica:0.3.4_3.2beta1"
     },
-    "docker-image": "flywheel/me-ica:0.2.4",
+    "docker-image": "flywheel/me-ica:0.3.4_3.2beta1",
     "flywheel": {
       "suite": "AFNI"
     }
@@ -53,13 +53,18 @@
     },
     "tpattern_gen": {
       "description": "Use generated tpattern file from NIfTI header information in Flywheel. If a slice_timing file is not provided, this option will use the generated 'slicetimes.txt' file generated from the NIfTI metadata in Flywheel. Default=true",
-      "default": true,
+      "default": false,
       "type": "boolean"
     },
     "native": {
       "description": "Output native space results in addition to standard space results",
       "default": false,
       "type": "boolean"
+    },
+    "daw": {
+      "description": "Daw is a weight use to control ICA dimensionality. It may be raised (e.g., from 10 to 20) to account for a low number of timepoints or lowered (e.g., from 10 to 5) if meica does not converge.",
+      "default": 10,
+      "type": "integer"
     }
   },
   "inputs": {
