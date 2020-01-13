@@ -1,0 +1,76 @@
+{
+	"name": "miccai-brats17-demo",
+	"label": "MICCAI Tumor Segmentation 2017 Taigw",
+	"description": "This gear wraps the source code and pre-trained models for brain tumor segmentation with BraTS dataset. The method is detailed in [1], and it won the 2nd place of MICCAI 2017 BraTS Challenge. In addition, it is adapted to deal with BraTS 2015 dataset.",
+	"author": "Guotai Wang",
+	"maintainer": "Flywheel <support@flywheel.io>",
+	"license": "Other",
+	"cite": "Guotai Wang, Wenqi Li, Sebastien Ourselin, Tom Vercauteren. \"Automatic Brain Tumor Segmentation using Cascaded Anisotropic Convolutional Neural Networks.\" In Brainlesion: Glioma, Multiple Sclerosis, Stroke and Traumatic Brain Injuries. Pages 179-190. Springer, 2018. https://arxiv.org/abs/1709.00382",
+	"url": "https://github.com/taigw/brats17",
+	"source": "https://github.com/taigw/brats17",
+	"version": "0.1.0",
+	"custom": {
+        "docker-image": "flywheel/miccai-brats17:0.1.0",
+		"gear-builder": {
+			"category": "analysis",
+			"image": "flywheel/miccai-brats17:0.1.0"
+		}
+	},
+	"inputs": {
+		"t1": {
+			"base": "file",
+			"description": "T1-weighted anatomical NIfTI file from a single subject",
+			"optional": false,
+			"type": {
+				"enum": [
+					"nifti"
+				]
+			}
+		},
+		"t1ce": {
+			"base": "file",
+			"description": "T1-weighted anatomical NIfTI file with contrast enhancement from a single subject",
+			"optional": false,
+			"type": {
+				"enum": [
+					"nifti"
+				]
+			}
+		},
+		"t2": {
+			"base": "file",
+			"description": "T2-weighted anatomical NIfTI file from a single subject",
+			"optional": false,
+			"type": {
+				"enum": [
+					"nifti"
+				]
+			}
+		},
+		"flair": {
+			"base": "file",
+			"description": "FLAIR (FLuid-Attenuated Inversion Recovery) anatomical NIfTI file from a single subject",
+			"optional": false,
+			"type": {
+				"enum": [
+					"nifti"
+				]
+			}
+		}
+	},
+	"config": {
+      "Subject": {
+        "type": "string",
+        "default": "000000",
+        "description": "Subject ID (Default = 000000)"
+      }
+    },
+	"environment": {
+		"GPG_KEY": "0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D",
+		"LANG": "C.UTF-8",
+		"PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+		"PYTHON_PIP_VERSION": "19.1.1",
+		"PYTHON_VERSION": "3.7.3"
+	},
+	"command": "./run.py"
+}
