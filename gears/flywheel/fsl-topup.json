@@ -15,6 +15,7 @@
       "category": "analysis",
       "image": "flywheel/fsl-topup:0.0.2"
     },
+    "docker-image": "flywheel/fsl-topup:0.0.2",
     "flywheel": {
       "suite": "FSL"
     }
