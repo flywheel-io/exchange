@@ -1,0 +1,127 @@
+{
+  "name": "fsl-topup",
+  "label": "FSL: TOPUP correction for susceptibility induced distortions",
+  "description": "Estimates a distortion correction field given one or more pairs of images with opposite PE directions",
+  "author": "FSL",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "license": "MIT",
+  "source": "https://github.com/flywheel-apps/fsl-topup",
+  "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup",
+  "version": "0.0.2",
+  "environment": {
+  },
+  "custom": {
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/fsl-topup:0.0.2"
+    },
+    "flywheel": {
+      "suite": "FSL"
+    }
+  },
+  "inputs": {
+    "image_1": {
+
+      "base": "file",
+      "description": "first image in an pair of images with opposite phase encoding direction",
+      "optional": false,
+      "type": { "enum": [ "nifti" ] }
+    },
+    "image_2": {
+      "base": "file",
+      "description": "second image in an pair of images with opposite phase encoding direction",
+      "optional": false,
+      "type": { "enum": [ "nifti" ] }
+    },
+    "apply_to_1": {
+      "base": "file",
+      "description": "an image to apply the TOPUP correction to using this fieldmap.  Should have the same PE direction as image 1",
+      "optional": true,
+      "type": { "enum": [ "nifti" ] }
+    },
+    "apply_to_2": {
+      "base": "file",
+      "description": "an image to apply the TOPUP correction to using this fieldmap.  Should have the same PE direction as image 2",
+      "optional": true,
+      "type": { "enum": [ "nifti" ] }
+    },
+
+    "config_file": {
+      "base": "file",
+      "description": "A configuration file is a text file containing some or all of the parameters that can be specified for topup. The name of the file should be passed as argument to the --config parameter. It should be an ascii-file with one row for each parameter, and where comments (ignored by topup) are preceeded by a #.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "text",""
+        ]
+      }
+    },
+
+    "acquisition_parameters": {
+      "base": "file",
+      "description": "This parameter specifies a text-file that contains information about how the volumes were acquired.  Row 1 is for image 1, row 2 is for image 2",
+      "optional": true,
+      "type": {
+        "enum": [
+          "text",""
+        ]
+      }
+    }
+  },
+  "config": {
+    "gear-log-level": {
+      "default": "INFO",
+      "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+      "type": "string",
+      "enum": [
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "DEBUG"
+      ]
+    },
+    "topup_only": {
+      "default": false,
+      "description": "only run topup and get fieldmaps (do no correct images)",
+      "type": "boolean"
+    },
+    "displacement_field": {
+      "default": false,
+      "description": "save displacement fields",
+      "type": "boolean"
+    },
+    "jacobian_determinants": {
+      "default": false,
+      "description": "save jacobian determinants",
+      "type": "boolean"
+    },
+    "rigid_body_matrix": {
+      "default": true,
+      "description": "save rigid body transformation matricies to align volumes",
+      "type": "boolean"
+    },
+    "verbose": {
+      "default": false,
+      "description": "output verbose information to the log",
+      "type": "boolean"
+    },
+    "topup_debug_level": {
+      "default": "0",
+      "description": "Topup Log verbosity level (0|1|2|3)",
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+
+     "QA": {
+      "default": true,
+      "description": "Save a topup QA image comparing distorted to corrected images",
+      "type": "boolean"
+    }
+  },
+  "command": "python3 run.py"
+}
