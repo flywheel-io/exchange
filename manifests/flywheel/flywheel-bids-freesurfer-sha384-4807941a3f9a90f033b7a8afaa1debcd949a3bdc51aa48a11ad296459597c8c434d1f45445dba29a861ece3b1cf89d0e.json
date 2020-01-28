@@ -1,0 +1,352 @@
+{
+  "gear": {
+    "name": "bids-freesurfer",
+    "label": "BIDS Freesurfer: Freesurfer recon-all BIDS App",
+    "description": "BIDS-Apps/Freesurfer (6.0.1-5) This app implements surface reconstruction using Freesurfer. It reconstructs the surface for each subject individually and then creates a study specific template. In case there are multiple sessions the Freesurfer longitudinal pipeline is used (creating subject specific templates) unless instructed to combine data across sessions.  The current Freesurfer version is based on: freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz.",
+    "version": "1.0.1_6.0.1-5",
+    "custom": {
+      "docker-image": "flywheel/bids-freesurfer:1.0.1_6.0.1-5",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-freesurfer:1.0.1_6.0.1-5"
+      },
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "license": {
+        "non-commercial-use-only": false,
+        "main": {
+          "name": "Apache-2.0",
+          "url": "https://github.com/BIDS-Apps/freesurfer/blob/master/LICENSE"
+        }
+      }
+    },
+    "inputs": {
+      "key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "freesurfer_license": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      },
+      "bids_validator_config": {
+        "description": "JSON file specifying the configuration of bids-validator: See https://github.com/bids-standard/bids-validator#configuration for more info",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "config": {
+      "participant_label": {
+        "description": "The label of the participant that should be analyzed. The label corresponds to sub-<participant_label> from the BIDS spec (so it does not include 'sub-'). If this parameter is not provided all subjects should be analyzed. Multiple participants can be specified with a space separated list.",
+        "optional": true,
+        "type": "string"
+      },
+      "session_label": {
+        "description": "The label of the session that should be analyzed. The label corresponds to ses-<session_label> from the BIDS spec (so it does not include 'ses-'). If this parameter is not provided all sessions should be analyzed. Multiple sessions can be specified with a space separated list.",
+        "optional": true,
+        "type": "string"
+      },
+      "n_cpus": {
+        "description": "Number of of CPUs/cores to use. Default is all available.",
+        "optional": true,
+        "type": "integer"
+      },
+      "stages": {
+        "default": "autorecon-all",
+        "description": "{autorecon1,autorecon2,autorecon2-cp,autorecon2-wm,autorecon-pial,autorecon3,autorecon-all,all} [{autorecon1,autorecon2,autorecon2-cp,autorecon2-wm,autorecon-pial,autorecon3,autorecon-all,all} ...] Autorecon stages to run (space separated list).",
+        "type": "string"
+      },
+      "steps": {
+        "description": "{cross-sectional,template,longitudinal} [{cross-sectional,template,longitudinal} ...] Longitudinal pipeline steps to run (space separated list).",
+        "optional": true,
+        "type": "string"
+      },
+      "template_name": {
+        "default": "average",
+        "description": "TEMPLATE_NAME Name for the custom group level template generated for this dataset",
+        "type": "string"
+      },
+      "acquisition_label": {
+        "description": "ACQUISITION_LABEL If the dataset contains multiple T1 weighted images from different acquisitions which one should be used?  Corresponds to 'acq-<acquisition_label>'",
+        "optional": true,
+        "type": "string"
+      },
+      "refine_pial_acquisition_label": {
+        "description": "REFINE_PIAL_ACQUISITION_LABEL If the dataset contains multiple T2 or FLAIR weighted images from different acquisitions which one should be used? Corresponds to 'acq-<acquisition_label>'",
+        "optional": true,
+        "type": "string"
+      },
+      "multiple_sessions": {
+        "default": "longitudinal",
+        "description": "{longitudinal,multiday} For datasets with multiday sessions where you do not want to use the longitudinal pipeline, i.e., sessions were back-to-back, set this to multiday, otherwise sessions with T1w data will be considered independent sessions for longitudinal analysis.",
+        "enum": [
+          "longitudinal",
+          "multiday"
+        ],
+        "type": "string"
+      },
+      "refine_pial": {
+        "default": "T2",
+        "description": "{T2,FLAIR,None,T1only} If the dataset contains 3D T2 or T2 FLAIR weighted images (~1x1x1), these can be used to refine the pial surface. If you want to ignore these, specify None or T1only to base surfaces on the T1 alone.",
+        "enum": [
+          "T2",
+          "FLAIR",
+          "None",
+          "T1only"
+        ],
+        "type": "string"
+      },
+      "hires_mode": {
+        "default": "auto",
+        "description": "{auto,enable,disable} Submilimiter (high resolution) processing. 'auto' - use only if <1.0mm data detected, 'enable' - force on, 'disable' - force off",
+        "enum": [
+          "auto",
+          "enable",
+          "disable"
+        ],
+        "type": "string"
+      },
+      "parcellations": {
+        "default": "aparc",
+        "description": "{aparc,aparc.a2009s} [{aparc,aparc.a2009s} ...] Group2 option: cortical parcellation(s) to extract stats from (space separated list).",
+        "type": "string"
+      },
+      "measurements": {
+        "default": "thickness",
+        "description": "{area,volume,thickness,thicknessstd,meancurv,gauscurv,foldind,curvind} [{area,volume,thickness,thicknessstd,meancurv,gauscurv,foldind,curvind} ...] Group2 option: cortical measurements to extract stats for (space separated list).",
+        "type": "string"
+      },
+      "skip_bids_validator": {
+        "default": false,
+        "description": "skips bids validation",
+        "type": "boolean"
+      },
+      "3T": {
+        "description": "enables the two 3T specific options that recon-all supports: nu intensity correction params, and the special schwartz atlas",
+        "optional": true,
+        "type": "boolean"
+      },
+      "gear-analysis-level": {
+        "default": "participant",
+        "description": "Level of the analysis that will be performed. Multiple participant level analyses can be run independently (in parallel) using the same output_dir. 'group1' creates study specific group template. 'group2' exports group stats tables for cortical parcellation, subcortical segmentation a table with euler numbers.",
+        "type": "string",
+        "enum": [
+          "participant",
+          "group1",
+          "group2"
+        ]
+      },
+      "gear-abort-on-bids-error": {
+        "default": false,
+        "description": "Gear will not run if there are any BIDS errors detected",
+        "type": "boolean"
+      },
+      "gear-log-level": {
+        "default": "INFO",
+        "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+        "type": "string",
+        "enum": [
+          "ERROR",
+          "WARNING",
+          "INFO",
+          "DEBUG"
+        ]
+      },
+      "gear-run-bids-validation": {
+        "default": true,
+        "description": "Gear will run BIDS validation before Freesurfer.  If validation fails and gear-abort-on-bids-error is true, Freesurfer will NOT be run.",
+        "type": "boolean"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Do everything except actually executing the command line",
+        "type": "boolean"
+      },
+      "gear-keep-output": {
+        "default": false,
+        "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
+        "type": "boolean"
+      },
+      "gear-FREESURFER_LICENSE": {
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "type": "string",
+        "optional": true
+      }
+    },
+    "environment": {
+      "PYTHONUNBUFFERED": "1",
+      "PATH": "PATH=/usr/local/miniconda/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "command": "/usr/local/miniconda/bin/python3 run.py",
+    "author": "http://surfer.nmr.mgh.harvard.edu/",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation",
+    "license": "Apache-2.0",
+    "source": "https://github.com/flywheel-apps/bids-freesurfer",
+    "url": "https://github.com/BIDS-Apps/freesurfer"
+  },
+  "exchange": {
+    "git-commit": "0c8930885ff7c68018cc984f44c5a95ed89bf3f4",
+    "rootfs-hash": "sha384:4807941a3f9a90f033b7a8afaa1debcd949a3bdc51aa48a11ad296459597c8c434d1f45445dba29a861ece3b1cf89d0e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bids-freesurfer-sha384-4807941a3f9a90f033b7a8afaa1debcd949a3bdc51aa48a11ad296459597c8c434d1f45445dba29a861ece3b1cf89d0e.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS Freesurfer: Freesurfer recon-all BIDS App",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "participant_label": {
+            "type": "string"
+          },
+          "session_label": {
+            "type": "string"
+          },
+          "n_cpus": {
+            "type": "integer"
+          },
+          "stages": {
+            "default": "autorecon-all",
+            "type": "string"
+          },
+          "steps": {
+            "type": "string"
+          },
+          "template_name": {
+            "default": "average",
+            "type": "string"
+          },
+          "acquisition_label": {
+            "type": "string"
+          },
+          "refine_pial_acquisition_label": {
+            "type": "string"
+          },
+          "multiple_sessions": {
+            "default": "longitudinal",
+            "enum": [
+              "longitudinal",
+              "multiday"
+            ],
+            "type": "string"
+          },
+          "refine_pial": {
+            "default": "T2",
+            "enum": [
+              "T2",
+              "FLAIR",
+              "None",
+              "T1only"
+            ],
+            "type": "string"
+          },
+          "hires_mode": {
+            "default": "auto",
+            "enum": [
+              "auto",
+              "enable",
+              "disable"
+            ],
+            "type": "string"
+          },
+          "parcellations": {
+            "default": "aparc",
+            "type": "string"
+          },
+          "measurements": {
+            "default": "thickness",
+            "type": "string"
+          },
+          "skip_bids_validator": {
+            "default": false,
+            "type": "boolean"
+          },
+          "3T": {
+            "type": "boolean"
+          },
+          "gear-analysis-level": {
+            "default": "participant",
+            "type": "string",
+            "enum": [
+              "participant",
+              "group1",
+              "group2"
+            ]
+          },
+          "gear-abort-on-bids-error": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-log-level": {
+            "default": "INFO",
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "DEBUG"
+            ]
+          },
+          "gear-run-bids-validation": {
+            "default": true,
+            "type": "boolean"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-keep-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-FREESURFER_LICENSE": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "stages",
+          "template_name",
+          "multiple_sessions",
+          "refine_pial",
+          "hires_mode",
+          "parcellations",
+          "measurements",
+          "skip_bids_validator",
+          "gear-analysis-level",
+          "gear-abort-on-bids-error",
+          "gear-log-level",
+          "gear-run-bids-validation",
+          "gear-dry-run",
+          "gear-keep-output"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "object"
+          },
+          "freesurfer_license": {
+            "type": "object",
+            "properties": {}
+          },
+          "bids_validator_config": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
