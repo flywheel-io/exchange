@@ -1,0 +1,191 @@
+{
+  "gear": {
+    "name": "quicknat-gear",
+    "label": "QuickNAT Pytorch",
+    "description": "Flywheel gear wrapper for QuickNAT_pytorch",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Apache-2.0",
+    "url": "https://github.com/flywheel-apps/quicknat-gear",
+    "source": "https://github.com/ai-med/quickNAT_pytorch",
+    "cite": "Roy, A.G., Conjeti, S., Navab, N. and Wachinger, C., 2018. QuickNAT: Segmenting\nMRI Neuroanatomy in 20 seconds. arXiv:1801.04161",
+    "version": "0.1.0",
+    "custom": {
+      "docker-image": "flywheel/quicknat-gear:0.1.0",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/quicknat-gear:0.1.0"
+      }
+    },
+    "inputs": {
+      "T1W": {
+        "base": "file",
+        "description": "T1-Weighted MRI Image",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "coronal_model_path": {
+        "base": "file",
+        "description": "Pytorch model file trained to evaluate coronal slices through an image.",
+        "optional": true
+      },
+      "axial_model_path": {
+        "base": "file",
+        "description": "Pytorch model file trained to evaluate axial slices through an image.",
+        "optional": true
+      },
+      "FreeSurferLicense": {
+        "description": "FreeSurfer license.txt file",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "config": {
+      "FREESURFER_LICENSE": {
+        "description": "FreeSurfer license as space-separated string.",
+        "type": "string",
+        "optional": true
+      },
+      "device": {
+        "description": "Run on CPU or GPU hardware. GPU needs CUDA 8 or greater installed.",
+        "default": "CPU",
+        "type": "string",
+        "enum": [
+          "GPU",
+          "CPU"
+        ]
+      },
+      "device_num": {
+        "type": "integer",
+        "description": "Selects which GPU to use. Only effective if GPU hardware selected and CUDA 8 or greater are installed.",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 7
+      },
+      "batch_size": {
+        "type": "integer",
+        "description": "Controls how many layers of an image get processed at once.  Higher numbers are possible with more memory.  A batch_size of 5 is used on a GPU with 12GB.",
+        "default": 32,
+        "maximum": 128,
+        "minimum": 2
+      },
+      "view_agg": {
+        "type": "boolean",
+        "default": false,
+        "description": "Aggregate predictions from Coronal and Axial Models."
+      },
+      "estimate_uncertainty": {
+        "type": "boolean",
+        "default": false,
+        "description": "Indicates if you want to estimate the structure-wise uncertainty for segmentation Quality control. Refer to \"Bayesian QuickNAT\" paper for more details."
+      },
+      "mc_samples": {
+        "type": "integer",
+        "description": "Active only if estimate_uncertainty flag is \"True\". Indicates the number of Monte-Carlo samples used for uncertainty estimation.",
+        "default": 10
+      }
+    },
+    "command": "/flywheel/v0/run.py",
+    "environment": {
+      "PYTHONPATH": "/opt/quickNAT_pytorch/"
+    }
+  },
+  "exchange": {
+    "git-commit": "be0110c0313d3ae271d242424686e3e7e25bc639",
+    "rootfs-hash": "sha384:935b58712e4622f1b725fe671237e65c7bd0f8da30e2ef95ad32be2f9264136ee917f26b57e529fe5484f44e7870a6f5",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-quicknat-sha384-935b58712e4622f1b725fe671237e65c7bd0f8da30e2ef95ad32be2f9264136ee917f26b57e529fe5484f44e7870a6f5.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for QuickNAT Pytorch",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "FREESURFER_LICENSE": {
+            "type": "string"
+          },
+          "device": {
+            "default": "CPU",
+            "type": "string",
+            "enum": [
+              "GPU",
+              "CPU"
+            ]
+          },
+          "device_num": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 7
+          },
+          "batch_size": {
+            "type": "integer",
+            "default": 32,
+            "maximum": 128,
+            "minimum": 2
+          },
+          "view_agg": {
+            "type": "boolean",
+            "default": false
+          },
+          "estimate_uncertainty": {
+            "type": "boolean",
+            "default": false
+          },
+          "mc_samples": {
+            "type": "integer",
+            "default": 10
+          }
+        },
+        "required": [
+          "device",
+          "device_num",
+          "batch_size",
+          "view_agg",
+          "estimate_uncertainty",
+          "mc_samples"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "T1W": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "coronal_model_path": {
+            "type": "object",
+            "properties": {}
+          },
+          "axial_model_path": {
+            "type": "object",
+            "properties": {}
+          },
+          "FreeSurferLicense": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "T1W"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
