@@ -6,17 +6,22 @@
   "cite": "Esteban O, Markiewicz CJ, Blair RW, Moodie CA, Isik AI, Erramuzpe A, Kent JD, Goncalves M, DuPre E, Snyder M, Oya H, Ghosh SS, Wright J, Durnez J, Poldrack RA, Gorgolewski KJ. fMRIPrep: a robust preprocessing pipeline for functional MRI. Nat Meth. 2018; doi:10.1038/s41592-018-0235-4. FOR MORE INFORMATION SEE: http://fmriprep.readthedocs.io/en/stable/citing.html.",
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
-  "url": "https://fmriprep.readthedocs.io/en/1.2.6-1/",
-  "version": "5.7.1_1.2.6-1",
+  "url": "https://fmriprep.readthedocs.io/en/1.5.5/",
+  "version": "6.0.0_1.5.5",
   "custom": {
-    "docker-image": "flywheel/fmriprep:5.7.1_1.2.6-1"
+    "docker-image": "flywheel/fmriprep:6.0.0_1.5.5",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/fmriprep:6.0.0_1.5.5"
+    }
   },
+
   "license": "Other",
   "inputs": {
     "api_key": {
       "base": "api-key"
     },
-    "t1w_anatomy": {
+    "t1w-anatomy": {
       "description": "T1 weighted anatomical NIfTI file. When provided this file will be used in place of any T1w images found in the current session.",
       "base": "file",
       "optional": true,
@@ -26,7 +31,7 @@
         ]
       }
     },
-    "t2w_anatomy": {
+    "t2w-anatomy": {
       "description": "T2 weighted anatomical NIfTI file. When provided this file will be used in place of any T2w images found in the current session.",
       "base": "file",
       "optional": true,
@@ -36,35 +41,36 @@
         ]
       }
     },
-    "freesurfer_license": {
+    "freesurfer-license": {
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
       "base": "file",
       "optional": true
     }
+
   },
   "config": {
-    "skip_bids_validation": {
+    "skip-bids-validation": {
       "description": "Assume the input dataset is BIDS compliant and skip the validation [ default = true ]",
       "type": "boolean",
       "default": true
     },
-    "task_id": {
+    "task-id": {
       "description": "Specific task to be processed",
       "type": "string",
       "default": ""
     },
-    "echo_idx": {
+    "echo-idx": {
       "description": "Specific echo to be processed in a multiecho series",
       "type": "string",
       "default": ""
     },
-    "anat_only": {
+    "anat-only": {
       "description": "Run anatomical workflows only",
       "type": "boolean",
       "default": false
     },
-    "ignore_aroma_denoising_errors": {
-      "description": "ignores the errors ICA_AROMA returns when there are no components classified as either noise or signal",
+    "error-on-aroma-warnings": {
+      "description": "Raise an error if ICA-AROMA does not produce sensible output (e.g., if all the components are classified as signal or noise)",
       "type": "boolean",
       "default": false
     },
@@ -84,12 +90,12 @@
       "type": "boolean",
       "default": false
     },
-    "t2s_coreg": {
+    "t2s-coreg": {
       "description": "If provided with multi-echo BOLD dataset, create T2*-map and perform T2*-driven coregistration. When multi-echo data is provided and this option is not enabled, standard EPI-T1 coregistration is performed using the middle echo. [default=false]",
       "type": "boolean",
       "default": false
     },
-    "bold2t1w_dof": {
+    "bold2t1w-dof": {
       "description": "Degrees of freedom when registering BOLD to T1w images. 6 degrees (rotation and translation) are used by default.",
       "type": "integer",
       "enum": [
@@ -99,132 +105,186 @@
       ],
       "default": 6
     },
-    "output_space": {
-      "description": "Volume and surface spaces to resample functional series into. Possible choices (space separated list): T1w, template, fsnative, fsaverage, fsaverage6, fsaverage5. T1w: subject anatomical volume. template: normalization target specified by –template. fsnative: individual subject surface. fsaverage*: FreeSurfer average meshes. [default='template fsaverage5']",
+    "output-spaces": {
+      "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/1.5.0/spaces.html",
       "type": "string",
-      "default": "template fsaverage5"
+      "default": "MNI152NLin2009cAsym",
+      "enum": [
+        "OASIS30ANTs",
+        "NKI",
+        "MNI152NLin2009cAsym"
+      ]
     },
-    "force_bbr": {
+    "force-bbr": {
       "description": "Always use boundary-based registration (no goodness-of-fit checks) [default=false]",
       "type": "boolean",
       "default": false
     },
-    "force_no_bbr": {
+    "force-no-bbr": {
       "description": "Do not use boundary-based registration (no goodness-of-fit checks) [default=false]",
       "type": "boolean",
       "default": false
     },
-    "template": {
-      "description": "Volume template space (default: MNI152NLin2009cAsym). This is currently the only choice.",
-      "type": "string",
-      "enum": [
-        "MNI152NLin2009cAsym"
-      ],
-      "default": "MNI152NLin2009cAsym"
-    },
-    "template_resampling_grid": {
-      "description": "Keyword ('native' [default], '1mm', or '2mm'). Allows to define a reference grid for the resampling of BOLD images in template space. Keyword 'native' will use the original BOLD grid as reference. Keywords '1mm' and '2mm' will use the corresponding isotropic template resolutions. It determines the field of view and resolution of the output images, but is not used in normalization. (default: 'native')",
-      "type": "string",
-      "enum": [
-        "native",
-        "1mm",
-        "2mm"
-      ],
-      "default": "native"
-    },
-    "medial_surface_nan": {
+
+    "medial-surface-nan": {
       "description": "Replace medial wall values with NaNs on functional GIFTI files. Only performed for GIFTI files mapped to a freesurfer subject (fsaverage or fsnative). [default: false]",
       "type": "boolean",
       "default": false
     },
-    "use_aroma": {
-      "description": "add ICA_AROMA to your preprocessing stream [ default = false ]",
+
+    "dummy-scans": {
+      "description": "Number of non steady state volumes.",
+      "type": "integer",
+      "default": 0
+    },
+
+    "use-aroma": {
+      "description": "add ICA-AROMA to your preprocessing stream [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "aroma_melodic_dimensionality": {
+    "aroma-melodic-dimensionality": {
       "description": "Exact or maximum number of MELODIC components to estimate (positive = exact, negative = maximum)",
       "type": "integer",
       "default": 200
     },
-    "skull_strip_template": {
-      "description": "Possible choices: OASIS, NKI. select ANTs skull-stripping template (default: OASIS))",
-      "type": "string",
-      "enum": [
-        "NKI",
-        "OASIS"
-      ],
-      "default": "OASIS"
+    "return-all-components": {
+      "description": "Include all components estimated in CompCor decomposition in the confounds file instead of only the components sufficient to explain 50 percent of BOLD variance in each CompCor mask",
+      "type": "boolean",
+      "default": false
     },
-    "skull_strip_fixed_seed": {
+    "fd-spike-threshold": {
+      "description": "Threshold for flagging a frame as an outlier on the basis of framewise displacement",
+      "type": "number",
+      "default": 2
+    },
+    "dvars-spike-threshold": {
+      "description": "Threshold for flagging a frame as an outlier on the basis of standardised DVARS",
+      "type": "number",
+      "default": 2
+    },
+
+
+    "skull-strip-fixed-seed": {
       "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1 [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "fmap_bspline": {
+
+    "skull-strip-template": {
+      "description": "select a template for skull-stripping with antsBrainExtraction",
+      "type": "string",
+      "enum": [
+        "",
+        "OASIS30ANTs",
+        "NKI"
+      ],
+      "default": "OASIS30ANTs"
+    },
+    "fmap-bspline": {
       "description": "fit a B-Spline field using least-squares (experimental)",
       "type": "boolean",
       "default": false
     },
-    "fmap_no_demean": {
+    "fmap-no-demean": {
       "description": "do not remove median (within mask) from fieldmap [ default = true ]",
       "type": "boolean",
       "default": true
     },
-    "use_syn_sdc": {
+    "use-syn-sdc": {
       "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "force_syn": {
+
+    "force-syn": {
       "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available. [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "no_submm_recon": {
+
+    "no-submm-recon": {
       "description": "disable sub-millimeter (hires) reconstruction. [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "cifti_output": {
+
+    "cifti-output": {
       "description": "output BOLD files as CIFTI dtseries. [ default = false ]",
       "type": "boolean",
       "default": false
     },
-    "fs_no_reconall": {
+
+    "fs-no-reconall": {
       "description": "Use FreeSurfer to reconstruct surfaces from T1w/T2w structural images. If disabled, several steps in the fmriprep pipeline are added or replaced. [default=false]",
       "type": "boolean",
       "default": false
     },
-    "no_track": {
+
+    "no-track": {
       "description": "Opt-out of sending tracking information of this run to the FMRIPREP developers. This information helps to improve FMRIPREP and provides an indicator of real world usage crucial for obtaining funding. [default=true]",
       "type": "boolean",
       "default": false
     },
-    "save_outputs": {
+    "save-outputs": {
       "description": "Zip and save output directory contents on an algorithm failure. [default=false]",
       "type": "boolean",
       "default": false
     },
-    "save_intermediate_work": {
+    "save-intermediate-work": {
       "description": "Zip and save working directory with intermediate files. [default=false]",
       "type": "boolean",
       "default": false
     },
-    "intermediate_files": {
+    "intermediate-files": {
       "description": "Space separated list of FILES to retain from the intermediate work directory.",
       "default": "",
       "type": "string"
     },
-    "intermediate_folders": {
+    "intermediate-folders": {
       "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
       "default": "",
       "type": "string"
     },
-    "FREESURFER_LICENSE": {
+    "FREESURFER-LICENSE": {
       "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "type": "string",
       "optional": true
+    },
+    "reports-only": {
+      "description": "only generate reports, don’t run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.",
+      "type": "boolean",
+      "default": false
+    },
+    "write-graph": {
+      "description": "write-graph.",
+      "type": "boolean",
+      "default": true
+    },
+    "sloppy": {
+      "description": "Use low-quality tools for speed - TESTING ONLY",
+      "type": "boolean",
+      "default": false
+    },
+    "gear-log-level": {
+      "default": "INFO",
+      "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+      "type": "string",
+      "enum": [
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "DEBUG"
+      ]
+    },
+    "gear-dry-run": {
+      "default": false,
+      "type": "boolean"
+    },
+    "gear-run-bids-validation": {
+      "default": false,
+      "type": "boolean"
     }
-  }
+  },
+   "command": "/usr/local/miniconda/bin/python3.7 /flywheel/v0/run.py"
 }
