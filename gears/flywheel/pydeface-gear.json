@@ -10,10 +10,10 @@
   "cite": "https://github.com/poldracklab/pydeface",
   "version": "1.0.0",
   "custom": {
-    "docker-image": "flywheel/pydeface-gear:1.0.0",
+    "docker-image": "flywheel/pydeface:1.0.0",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/pydeface-gear:1.0.0"
+      "image": "flywheel/pydeface:1.0.0"
     }
   },
   "inputs": {
