@@ -1,0 +1,196 @@
+{
+  "gear": {
+    "name": "pydeface-gear",
+    "label": "Pydeface Gear",
+    "description": "A gear to remove facial structure from MRI images.",
+    "author": "poldracklab",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "url": "https://github.com/flywheel-apps/pydeface-gear",
+    "source": "https://github.com/poldracklab/pydeface",
+    "cite": "https://github.com/poldracklab/pydeface",
+    "version": "1.0.0",
+    "custom": {
+      "docker-image": "flywheel/pydeface:1.0.0",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/pydeface:1.0.0"
+      }
+    },
+    "inputs": {
+      "infile": {
+        "base": "file",
+        "description": "input nifti",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "template": {
+        "base": "file",
+        "description": "Optional template image that will be used as the registration target instead of the default.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "facemask": {
+        "base": "file",
+        "description": "Optional face mask image that will be used instead of the default.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "cost": {
+        "type": "string",
+        "default": "mutualinfo",
+        "description": "FSL-FLIRT cost function",
+        "enum": [
+          "mutualinfo",
+          "corratio",
+          "normcorr",
+          "normmi",
+          "leastsq",
+          "labeldiff",
+          "bbr"
+        ]
+      },
+      "nocleanup": {
+        "type": "boolean",
+        "description": "Do not cleanup temporary files. True by default.",
+        "default": true
+      },
+      "verbose": {
+        "type": "boolean",
+        "description": "Show additional status prints. True by default.",
+        "default": true
+      }
+    },
+    "command": "/flywheel/v0/run.py",
+    "environment": {
+      "CONDA_SHLVL": "1",
+      "LC_ALL": "C.UTF-8",
+      "CONDA_EXE": "/opt/conda/bin/conda",
+      "FSLWISH": "/opt/fsl/bin/fslwish",
+      "FSLDIR": "/opt/fsl",
+      "LANG": "en_US.UTF-8",
+      "HOSTNAME": "d8012530f084",
+      "FSLMACHINELIST": "",
+      "CONDA_PREFIX": "/opt/conda/envs/neuro",
+      "CONDA_DIR": "/opt/conda",
+      "FSLTCLSH": "/opt/fsl/bin/fsltclsh",
+      "FSLREMOTECALL": "",
+      "_CE_M": "",
+      "PWD": "/flywheel/v0",
+      "HOME": "/root",
+      "CONDA_PYTHON_EXE": "/opt/conda/bin/python",
+      "FSLLOCKDIR": "",
+      "_CE_CONDA": "",
+      "FLYWHEEL": "/flywheel/v0",
+      "CONDA_PROMPT_MODIFIER": "(neuro) ",
+      "FSLGECUDAQ": "cuda.q",
+      "ND_ENTRYPOINT": "/neurodocker/startup.sh",
+      "TERM": "xterm",
+      "SHLVL": "1",
+      "PATH": "/opt/conda/envs/neuro/bin:/opt/conda/condabin:/opt/conda/bin:/opt/fsl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "CONDA_DEFAULT_ENV": "neuro",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "_": "/opt/conda/envs/neuro/bin/python"
+    }
+  },
+  "exchange": {
+    "git-commit": "6b5cdf4ae80bb5c660530585b4a8ae4fa96c0564",
+    "rootfs-hash": "sha384:17042ed84de67da3c8f893701ce0bb3ab6b08be353d598b6dfbc33d58d53967933a04de0867e017016935abc5c805e51",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-pydeface-gear-sha384-17042ed84de67da3c8f893701ce0bb3ab6b08be353d598b6dfbc33d58d53967933a04de0867e017016935abc5c805e51.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Pydeface Gear",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "cost": {
+            "type": "string",
+            "default": "mutualinfo",
+            "enum": [
+              "mutualinfo",
+              "corratio",
+              "normcorr",
+              "normmi",
+              "leastsq",
+              "labeldiff",
+              "bbr"
+            ]
+          },
+          "nocleanup": {
+            "type": "boolean",
+            "default": true
+          },
+          "verbose": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "cost",
+          "nocleanup",
+          "verbose"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "infile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "template": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "facemask": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "infile"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
