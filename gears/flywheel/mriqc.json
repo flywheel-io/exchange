@@ -8,14 +8,14 @@
   "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
   "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
   "license": "BSD-3-Clause",
-  "version": "0.6.4_0.15.1",
+  "version": "0.7.0_0.15.1",
   "custom": {
-    "docker-image": "flywheel/mriqc:0.6.4_0.15.1",
     "gear-builder": {
-      "category": "converter",
-      "image": "flywheel/mriqc:0.6.4_0.15.1"
-    }
-  },
+      "category": "qa",
+      "image": "flywheel/mriqc:0.7.0_0.15.1"
+    },
+    "docker-image": "flywheel/mriqc:0.7.0_0.15.1"
+},
   "inputs": {
     "nifti": {
       "description": "MRI NIfTI file. Input can be a structural image (T1, T2) or a Functional NIfTI file.",
@@ -52,6 +52,11 @@
     "verbose_reports": {
       "default": false,
       "description": "Produce verbose report outputs.",
+      "type": "boolean"
+    },
+    "include_rating_widget": {
+      "default": false,
+      "description": "Include the MRIQC built-in rating widget (does not function in flywheel)",
       "type": "boolean"
     }
   }
