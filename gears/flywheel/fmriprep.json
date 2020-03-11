@@ -7,12 +7,12 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://fmriprep.readthedocs.io/en/1.5.5/",
-  "version": "6.0.0_1.5.5",
+  "version": "6.1.1_1.5.5",
   "custom": {
-    "docker-image": "flywheel/fmriprep:6.0.0_1.5.5",
+    "docker-image": "flywheel/fmriprep:6.1.1_1.5.5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fmriprep:6.0.0_1.5.5"
+      "image": "flywheel/fmriprep:6.1.1_1.5.5"
     }
   },
 
@@ -108,12 +108,7 @@
     "output-spaces": {
       "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/1.5.0/spaces.html",
       "type": "string",
-      "default": "MNI152NLin2009cAsym",
-      "enum": [
-        "OASIS30ANTs",
-        "NKI",
-        "MNI152NLin2009cAsym"
-      ]
+      "default": "MNI152NLin2009cAsym"
     },
     "force-bbr": {
       "description": "Always use boundary-based registration (no goodness-of-fit checks) [default=false]",
