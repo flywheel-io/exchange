@@ -1,0 +1,305 @@
+{
+  "gear": {
+    "name": "freesurfer-recon-all",
+    "label": "FreeSurfer (v6.0.1): Recon-All",
+    "description": "This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Laboratory for Computational Neuroimaging <freesurfer@nmr.mgh.harvard.edu>",
+    "url": "https://surfer.nmr.mgh.harvard.edu",
+    "source": "https://github.com/scitran-apps/freesurfer-recon-all",
+    "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
+    "license": "Other",
+    "flywheel": "0",
+    "version": "0.4.0_6.0.1",
+    "custom": {
+      "docker-image": "scitran/freesurfer-recon-all:0.4.0_6.0.1",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "scitran/freesurfer-recon-all:0.4.0_6.0.1"
+      },
+      "flywheel": {
+        "suite": "FreeSurfer"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "freesurfer_license_file": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      },
+      "anatomical": {
+        "description": "Anatomical NIfTI file, DICOM archive, or previous freesurfer-recon-all zip archive. NOTE: A freesurfer-recon-all Gear output can be used provided the filename is preserved from its initial output (e.g., freesurfer-recon-all_<subject_code>*.zip)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom",
+            "archive"
+          ]
+        }
+      },
+      "t1w_anatomical_2": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_3": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_4": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_5": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t2w_anatomical": {
+        "description": "T2w Anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "subject_id": {
+        "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory. NOTE: If using a previous Gear output as input the subject code will be parsed from the input archive, however it should still be provided here for good measure.",
+        "type": "string",
+        "optional": true
+      },
+      "parallel": {
+        "type": "boolean",
+        "default": true,
+        "description": "Command line option to run recon-all in parallel. (Default=True). By default, it instructs the binaries to use 4 processors (cores), meaning, 4 threads will run in parallel in some operations. Adjust n_cpus for more (or less) than 4 cores."
+      },
+      "n_cpus": {
+        "type": "integer",
+        "optional": true,
+        "minimum": 1,
+        "description": "Command line option to set the number of processors to use in recon-all execution. (optional, defaults to 'core_count' within host). Overridden by including the flag -openmp <num> after -parallel, where <num> is the number of processors you'd like to use. Minimum of 1. If set greater than the cores available, that maximum will be used. If 'parallel' is False, this is disregarded."
+      },
+      "reconall_options": {
+        "description": "Command line options to the recon-all algorithm. (Default='-all -qcache'). By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm, which can speed later processing. Note that modification of these options may result in failure if the options are not recognized.",
+        "default": "-all -qcache",
+        "type": "string"
+      },
+      "hippocampal_subfields": {
+        "description": "Generates an automated segmentation of the hippocampal subfields based on a statistical atlas built primarily upon ultra-high resolution (~0.1 mm isotropic) ex vivo MRI data. Choosing this option will write <subject_id>_HippocampalSubfields.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields for more info. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "brainstem_structures": {
+        "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "register_surfaces": {
+        "description": "Runs the xhemireg and surfreg scripts on your subject after having run recon-all in order to register the subject's left and inverted-right hemispheres to the fsaverage_sym subject. (The fsaverage_sym subject is a version of the fsaverage subject with a single the left-right symmetric pseudo-hemisphere.) (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_surfaces": {
+        "description": "Convert selected FreeSurfer surface files to OBJ format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_volumes": {
+        "description": "Convert selected FreeSurfer volume files (mgz) to NIfTI format. (Default=true)",
+        "default": true,
+        "type": "boolean"
+      },
+      "convert_stats": {
+        "description": "Convert FreeSurfer stats files to CSV. (Default=true). Converts a subcortical stats file created by recon-all and/or mri_segstats (eg, aseg.stats) into a table in which each line is a subject and each column is a segmentation. The values are the volume of the segmentation in mm3 or the mean intensity over the structure. Also Converts a cortical stats file created by recon-all and or mris_anatomical_stats (eg, ?h.aparc.stats) into a table in which each line is a subject and each column is a parcellation. By default, the values are the area of the parcellation in mm2.",
+        "default": true,
+        "type": "boolean"
+      },
+      "freesurfer_license": {
+        "description": "Text from license file generated during FreeSurfer registration. Entries should be space separated.",
+        "type": "string",
+        "optional": true
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "8aba0b0f30e1d918ff305e7b27d07535a37b0739",
+    "rootfs-hash": "sha384:69d834ccf3925cab2168c1ef8c3eba91fa76d92b808ef5907b661e4a6cf25c0e70fad202b28b1a90f8622bbe458e3e7f",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/scitran-freesurfer-recon-all-sha384-69d834ccf3925cab2168c1ef8c3eba91fa76d92b808ef5907b661e4a6cf25c0e70fad202b28b1a90f8622bbe458e3e7f.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FreeSurfer (v6.0.1): Recon-All",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "subject_id": {
+            "type": "string"
+          },
+          "parallel": {
+            "type": "boolean",
+            "default": true
+          },
+          "n_cpus": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reconall_options": {
+            "default": "-all -qcache",
+            "type": "string"
+          },
+          "hippocampal_subfields": {
+            "default": true,
+            "type": "boolean"
+          },
+          "brainstem_structures": {
+            "default": true,
+            "type": "boolean"
+          },
+          "register_surfaces": {
+            "default": true,
+            "type": "boolean"
+          },
+          "convert_surfaces": {
+            "default": true,
+            "type": "boolean"
+          },
+          "convert_volumes": {
+            "default": true,
+            "type": "boolean"
+          },
+          "convert_stats": {
+            "default": true,
+            "type": "boolean"
+          },
+          "freesurfer_license": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "parallel",
+          "reconall_options",
+          "hippocampal_subfields",
+          "brainstem_structures",
+          "register_surfaces",
+          "convert_surfaces",
+          "convert_volumes",
+          "convert_stats"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "freesurfer_license_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom",
+                  "archive"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_3": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_4": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_5": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t2w_anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "anatomical"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
