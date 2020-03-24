@@ -115,7 +115,9 @@ function validate_manifest() {
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
 
         # Confirm the image is valid.
-        docker_image="$( jq -r '.custom."docker-image"' $2 )"
+        docker_image="$( jq -r '.custom."gear-builder".image' $2 )"
+        if [ -z "$docker_image" ]; then
+            docker_image="$( jq -r '.custom."docker-image"' $2 )"
 
         # Parse docker-image to extract image root and tag
         IFS=':' read -ra _docker_image <<< "${docker_image}"
@@ -223,7 +225,9 @@ function process_manifests() {
             tempfile=$tempdir/tempfile
 
             if [ "$manifest_type" == "gear" ]; then
-                docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
+                docker_image="$( jq -r '.custom."gear-builder".image' $manifest_path )"
+                if [ -z "$docker_image" ]; then
+                    docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
                 manifest_version="$( jq -r '.version' $manifest_path )"
             else
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
