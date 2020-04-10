@@ -118,6 +118,7 @@ function validate_manifest() {
         docker_image="$( jq -r '.custom."gear-builder".image' $2 )"
         if [ -z "$docker_image" ]; then
             docker_image="$( jq -r '.custom."docker-image"' $2 )"
+        fi
 
         # Parse docker-image to extract image root and tag
         IFS=':' read -ra _docker_image <<< "${docker_image}"
@@ -228,6 +229,7 @@ function process_manifests() {
                 docker_image="$( jq -r '.custom."gear-builder".image' $manifest_path )"
                 if [ -z "$docker_image" ]; then
                     docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
+                fi
                 manifest_version="$( jq -r '.version' $manifest_path )"
             else
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
