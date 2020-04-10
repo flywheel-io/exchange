@@ -116,7 +116,7 @@ function validate_manifest() {
 
         # Confirm the image is valid.
         docker_image="$( jq -r '.custom."gear-builder".image' $2 )"
-        if [ -z "$docker_image" ]; then
+        if [ "$docker_image" == 'null' ]; then
             docker_image="$( jq -r '.custom."docker-image"' $2 )"
         fi
 
@@ -227,7 +227,7 @@ function process_manifests() {
 
             if [ "$manifest_type" == "gear" ]; then
                 docker_image="$( jq -r '.custom."gear-builder".image' $manifest_path )"
-                if [ -z "$docker_image" ]; then
+                if [ "$docker_image" == 'null' ]; then
                     docker_image="$( jq -r '.custom."docker-image"' $manifest_path )"
                 fi
                 manifest_version="$( jq -r '.version' $manifest_path )"
