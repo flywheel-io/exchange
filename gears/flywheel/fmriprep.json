@@ -7,12 +7,12 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://fmriprep.readthedocs.io/en/1.5.5/",
-  "version": "6.1.1_1.5.5",
+  "version": "6.1.2_1.5.5",
   "custom": {
-    "docker-image": "flywheel/fmriprep:6.1.1_1.5.5",
+    "docker-image": "flywheel/fmriprep:6.1.2_1.5.5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fmriprep:6.1.1_1.5.5"
+      "image": "flywheel/fmriprep:6.1.2_1.5.5"
     }
   },
 
@@ -41,7 +41,7 @@
         ]
       }
     },
-    "freesurfer-license": {
+    "freesurfer_license": {
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
       "base": "file",
       "optional": true
@@ -241,7 +241,7 @@
       "default": "",
       "type": "string"
     },
-    "FREESURFER-LICENSE": {
+    "FREESURFER_LICENSE": {
       "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "type": "string",
       "optional": true
