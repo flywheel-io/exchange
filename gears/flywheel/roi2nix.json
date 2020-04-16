@@ -8,12 +8,12 @@
     "url": "",
     "source": "https://github.com/flywheel-apps/ROI2nix",
     "cite": "",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "custom": {
-        "docker-image": "flywheel/roi2nix:0.1.0",
+        "docker-image": "flywheel/roi2nix:0.1.1",
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/roi2nix:0.1.0"
+            "image": "flywheel/roi2nix:0.1.1"
         }
     },
     "inputs": {
@@ -41,6 +41,17 @@
             "default": false,
             "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
             "type": "boolean"
+        },
+        "combined_output_size": {
+            "default": "int32",
+            "description": "Bit depth of combined ROI bitmasked file.",
+            "enum": [
+                "int8",
+                "int16",
+                "int32",
+                "int64"
+              ],
+            "type": "string"
         },
         "save_slicer_color_table": {
             "default": false,
