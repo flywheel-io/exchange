@@ -1,0 +1,105 @@
+{
+  "gear": {
+    "name": "task-tsv-converter",
+    "label": "Task tsv Converter",
+    "description": "Converts log files to tsv task files as per bids specs",
+    "version": "0.1.9",
+    "flywheel": "0.1.9",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "text",
+            "tabular data"
+          ]
+        },
+        "description": "Log files"
+      },
+      "LogConfig": {
+        "base": "context"
+      }
+    },
+    "config": {
+      "Filename": {
+        "optional": true,
+        "description": "Override tsv filename from {filename}[_run-#].tsv, please include ext",
+        "type": "string"
+      }
+    },
+    "command": "python task_gen.py",
+    "author": "Harsha Kethineni",
+    "maintainer": "Harsha Kethineni",
+    "license": "Other",
+    "source": "",
+    "url": "",
+    "custom": {
+      "docker-image": "flywheel/task-tsv-converter:0.1.9",
+      "gear-builder": {
+        "image": "flywheel/task-tsv-converter:0.1.9",
+        "category": "converter"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "0e20b531f82ca3a4048cfa83842967b52920c3d1",
+    "rootfs-hash": "sha384:f352ba64b601644d9a34664f7d1c09c7aa233043c6864f30dbf7882b00ef3cf88ca50d572541e8671c77be647c9383ff",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-task-tsv-converter-sha384-f352ba64b601644d9a34664f7d1c09c7aa233043c6864f30dbf7882b00ef3cf88ca50d572541e8671c77be647c9383ff.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Task tsv Converter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "Filename": {
+            "type": "string"
+          }
+        }
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "text",
+                  "tabular data"
+                ]
+              }
+            }
+          },
+          "LogConfig": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string"
+              },
+              "found": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "base",
+              "found",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "file",
+          "LogConfig"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
