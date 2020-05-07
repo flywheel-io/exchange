@@ -8,28 +8,32 @@
   "url": "https://github.com/Washington-University/Pipelines",
   "source": "https://github.com/flywheel-apps/hcp-diff",
   "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.1.5",
+  "version": "0.2.0_4.0.1",
   "custom": {
-    "docker-image": "flywheel/hcp-diff:0.1.5",
+    "docker-image": "flywheel/hcp-diff:0.2.0_4.0.1",
+    "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/hcp-diff:0.2.0_4.0.1"
+    },
     "flywheel": {
       "suite": "Human Connectome Project"
     }
   },
-  "flywheel": "0",
+  "command": "/flywheel/v0/run.py",
   "inputs": {
     "StructZip": {
       "description": "Zipped output from HCP-Struct pipeline",
       "base": "file",
       "type": {
         "enum": [
-          "zip"
+          "archive"
         ]
       }
     },
     "FreeSurferLicense": {
-      "description": "FreeSurfer license.txt file (found in $FREESURFER_HOME/license.txt)",
+      "description": "FreeSurfer license.txt file",
       "base": "file",
-      "optional": false
+      "optional": true
     },
     "DWIPositiveData": {
       "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
@@ -277,10 +281,26 @@
       "default": "Diffusion",
       "description": "Output name for preprocessed data. *Note: Spaces will be replaced with '_'."
     },
+    "FREESURFER_LICENSE": {
+        "description": "FreeSurfer license as space-separated string.",
+        "type": "string",
+        "optional": true
+    },
     "AnatomyRegDOF": {
       "type": "integer",
       "default": 6,
+      "enum": [6,12],
       "description": "Degrees of freedom for Diffusion->Anat registration. 6 (default) = rigid body, when all data is from same scanner. 12 = full affine, recommended for 7T fMRI->3T anatomy"
+    },
+    "dry-run": {
+        "type":"boolean",
+        "default": false,
+        "description": "Log all commands, but do not execute."
+    },
+    "save-on-error": {
+        "type":"boolean",
+        "default": false,
+        "description": "Set to 'True' to save output on error."
     }
   }
 }
