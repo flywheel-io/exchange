@@ -13,7 +13,7 @@
            "image": "flywheel/curate-bids:1.0.0_0.9.0"
       },
       "flywheel": {
-          "suite": "Conversion"
+          "suite": "BIDS"
       }
   },
   "license": "BSD-3-Clause",
