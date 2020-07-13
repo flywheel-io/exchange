@@ -1,0 +1,84 @@
+{
+  "gear": {
+    "name": "curate-bids",
+    "label": "BIDS Curation",
+    "description": "Use this gear to initialize BIDS filenames and attributes on all files within a given project.",
+    "author": "Flywheel <support@flywheel.io>",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://github.com/flywheel-apps/curate-bids",
+    "url": "http://bids.neuroimaging.io/",
+    "version": "1.0.0_0.9.0",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/curate-bids:1.0.0_0.9.0"
+      },
+      "flywheel": {
+        "suite": "BIDS"
+      }
+    },
+    "license": "BSD-3-Clause",
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "reset": {
+        "description": "Remove all BIDS info from files before curating",
+        "type": "boolean",
+        "default": false
+      },
+      "entire_project": {
+        "description": "Run bids curation on the entire project",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "command": "python3 run.py"
+  },
+  "exchange": {
+    "git-commit": "01acf32ee03ae7f0c5cfac6ee90c4c4073bd03d6",
+    "rootfs-hash": "sha384:c40209cbe1b5117c29a52c699722732ed70e0bbf5b3493e4768a4a9ddbabbd20bdd3748e5abd4dc654e3d5a6d8fe9963",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-curate-bids-sha384-c40209cbe1b5117c29a52c699722732ed70e0bbf5b3493e4768a4a9ddbabbd20bdd3748e5abd4dc654e3d5a6d8fe9963.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS Curation",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "reset": {
+            "type": "boolean",
+            "default": false
+          },
+          "entire_project": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "reset",
+          "entire_project"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api_key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
