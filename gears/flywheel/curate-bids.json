@@ -6,9 +6,15 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/curate-bids",
   "url": "http://bids.neuroimaging.io/",
-  "version": "0.6.8",
+  "version": "1.0.0_0.9.0",
   "custom": {
-    "docker-image": "flywheel/curate-bids:v0.6.8"
+      "gear-builder": {
+           "category": "converter",
+           "image": "flywheel/curate-bids:1.0.0_0.9.0"
+      },
+      "flywheel": {
+          "suite": "BIDS"
+      }
   },
   "license": "BSD-3-Clause",
   "inputs": {
@@ -17,7 +23,7 @@
     }
   },
   "config": {
-    "reset" : {
+    "reset": {
       "description": "Remove all BIDS info from files before curating",
       "type": "boolean",
       "default": false
@@ -28,5 +34,5 @@
       "default": true
     }
   },
-  "command": "python run.py"
+  "command": "python3 run.py"
 }
