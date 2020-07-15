@@ -8,11 +8,11 @@
   "source": "https://github.com/cni/cni-dicom-mr-classifier",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "stanfordcni/cni-dicom-mr-classifier:3.2.0"
+      "image": "stanfordcni/cni-dicom-mr-classifier:3.2.1"
     },
     "flywheel": {
       "suite": "Stanford CNI"
