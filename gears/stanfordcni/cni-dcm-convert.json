@@ -1,21 +1,21 @@
 {
   "name": "cni-dcm-convert",
-  "label": "CNI-DCM-CONVERT - DICOM conversion tool",
-  "description": "CNI-DCM-CONVERT uses SciTran's data library (https://github.com/vistalab/scitran-data) to convert raw DICOM data (within a zip archive) to NIfTI, Montage, and PNG (screenshot acquisitions) formats. DCM-CONVERT supports Siemens and GE DICOM data.",
+  "label": "CNI-DCM-CONVERT - DICOM Conversion Utility",
+  "description": "CNI-DCM-CONVERT uses SciTran's data library (https://github.com/vistalab/scitran-data) to convert raw DICOM data (within a zip archive) to NIfTI, Montage, and PNG (screenshot acquisitions) formats. DCM-CONVERT supports Siemens and GE DICOM data. This gear will also use dcm2niix to generate bids-sidecar metadata. Those metadata will be added to the output NIfTI file's info object in Flywheel.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Scientific Transparency (RF Dougherty, K Hahn, R Bowen, G Schaefer, LM Perry, H Wu)",
   "url": "https://github.com/vistalab/scitran-data",
   "source": "https://github.com/cni/cni-dcm-convert",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "custom": {
     "flywheel": {
       "suite": "Stanford CNI"
     },
     "gear-builder": {
       "category": "converter",
-      "image": "stanfordcni/cni-dcm-convert:2.3.2"
+      "image": "stanfordcni/cni-dcm-convert:2.4.0"
     }
   },
   "config": {
