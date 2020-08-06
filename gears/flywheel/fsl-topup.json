@@ -7,15 +7,15 @@
   "license": "MIT",
   "source": "https://github.com/flywheel-apps/fsl-topup",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "environment": {
   },
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-topup:0.0.2"
+      "image": "flywheel/fsl-topup:0.0.3"
     },
-    "docker-image": "flywheel/fsl-topup:0.0.2",
+    "docker-image": "flywheel/fsl-topup:0.0.3",
     "flywheel": {
       "suite": "FSL"
     }
@@ -107,7 +107,7 @@
       "type": "boolean"
     },
     "topup_debug_level": {
-      "default": "0",
+      "default": 0,
       "description": "Topup Log verbosity level (0|1|2|3)",
       "type": "integer",
       "enum": [
