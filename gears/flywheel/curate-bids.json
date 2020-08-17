@@ -6,11 +6,11 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/curate-bids",
   "url": "http://bids.neuroimaging.io/",
-  "version": "1.0.0_0.9.0",
+  "version": "1.0.0_0.9.1",
   "custom": {
       "gear-builder": {
            "category": "converter",
-           "image": "flywheel/curate-bids:1.0.0_0.9.0"
+           "image": "flywheel/curate-bids:1.0.0_0.9.1"
       },
       "flywheel": {
           "suite": "BIDS"
