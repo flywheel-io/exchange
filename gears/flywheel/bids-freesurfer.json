@@ -2,12 +2,12 @@
   "name": "bids-freesurfer",
   "label": "BIDS Freesurfer: Freesurfer recon-all BIDS App",
   "description": "BIDS-Apps/Freesurfer (6.0.1-5) This app implements surface reconstruction using Freesurfer. It reconstructs the surface for each subject individually and then creates a study specific template. In case there are multiple sessions the Freesurfer longitudinal pipeline is used (creating subject specific templates) unless instructed to combine data across sessions.  The current Freesurfer version is based on: freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz.",
-  "version": "1.0.1_6.0.1-5",
+  "version": "1.0.3_6.0.1-5",
   "custom": {
-    "docker-image": "flywheel/bids-freesurfer:1.0.1_6.0.1-5",
+    "docker-image": "flywheel/bids-freesurfer:1.0.3_6.0.1-5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-freesurfer:1.0.1_6.0.1-5"
+      "image": "flywheel/bids-freesurfer:1.0.3_6.0.1-5"
     },
     "flywheel": {
       "suite": "BIDS Apps"
@@ -39,17 +39,17 @@
   "config": {
     "participant_label": {
       "description": "The label of the participant that should be analyzed. The label corresponds to sub-<participant_label> from the BIDS spec (so it does not include 'sub-'). If this parameter is not provided all subjects should be analyzed. Multiple participants can be specified with a space separated list.",
-      "optional": true,
+      "default": "",
       "type": "string"
     },
     "session_label": {
       "description": "The label of the session that should be analyzed. The label corresponds to ses-<session_label> from the BIDS spec (so it does not include 'ses-'). If this parameter is not provided all sessions should be analyzed. Multiple sessions can be specified with a space separated list.",
-      "optional": true,
+      "default": "",
       "type": "string"
     },
     "n_cpus": {
       "description": "Number of of CPUs/cores to use. Default is all available.",
-      "optional": true,
+      "default": 0,
       "type": "integer"
     },
     "stages": {
@@ -59,7 +59,7 @@
     },
     "steps": {
       "description": "{cross-sectional,template,longitudinal} [{cross-sectional,template,longitudinal} ...] Longitudinal pipeline steps to run (space separated list).",
-      "optional": true,
+      "default": "",
       "type": "string"
     },
     "template_name": {
@@ -69,12 +69,12 @@
     },
     "acquisition_label": {
       "description": "ACQUISITION_LABEL If the dataset contains multiple T1 weighted images from different acquisitions which one should be used?  Corresponds to 'acq-<acquisition_label>'",
-      "optional": true,
+      "default": "",
       "type": "string"
     },
     "refine_pial_acquisition_label": {
       "description": "REFINE_PIAL_ACQUISITION_LABEL If the dataset contains multiple T2 or FLAIR weighted images from different acquisitions which one should be used? Corresponds to 'acq-<acquisition_label>'",
-      "optional": true,
+      "default": "",
       "type": "string"
     },
     "multiple_sessions": {
@@ -124,7 +124,7 @@
     },
     "3T": {
       "description": "enables the two 3T specific options that recon-all supports: nu intensity correction params, and the special schwartz atlas",
-      "optional": true,
+      "default": false,
       "type": "boolean"
     },
     "gear-analysis-level": {
@@ -170,8 +170,8 @@
     },
     "gear-FREESURFER_LICENSE": {
       "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
-      "type": "string",
-      "optional": true
+      "default": "",
+      "type": "string"
     }   
   },
   "environment": {
