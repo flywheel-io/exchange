@@ -8,12 +8,12 @@
     "url": "",
     "source": "https://github.com/flywheel-apps/ROI2nix",
     "cite": "",
-    "version": "0.2.0",
+    "version": "0.2.3",
     "custom": {
-        "docker-image": "flywheel/roi2nix:0.2.0",
+        "docker-image": "flywheel/roi2nix:0.2.3",
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/roi2nix:0.2.0"
+            "image": "flywheel/roi2nix:0.2.3"
         }
     },
     "inputs": {
@@ -50,7 +50,7 @@
                 "int16",
                 "int32",
                 "int64"
-              ],
+            ],
             "type": "string"
         },
         "save_slicer_color_table": {
