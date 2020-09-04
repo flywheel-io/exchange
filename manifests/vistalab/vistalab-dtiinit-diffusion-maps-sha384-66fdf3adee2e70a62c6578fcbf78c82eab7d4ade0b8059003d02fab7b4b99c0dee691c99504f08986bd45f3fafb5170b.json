@@ -1,0 +1,78 @@
+{
+  "gear": {
+    "name": "dtiinit-diffusion-maps",
+    "label": "dtiInit: Diffusion Map Generation",
+    "description": "Generate diffusion maps, including Fractional Anisotropy (FA), Axial Diffusivity (AD), Mean Diffusivity (MD), and Radial Diffusivity (RD). The input to this Gear is a dtiInit archive, containing a 'dt6.mat' file. This archive is generated from either the dtiInit Flywheel Gear, or from the Flywheel Gear which executes the AFQ processing pipeline. Outputs are fa, md, rd, and ad files (in gzipped NIfTI format).",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Stanford VISTA Lab (vistalab.stanford.edu)",
+    "url": "https://github.com/vistalab/vistasoft/wiki",
+    "source": "https://github.com/vistalab/fw-gear-dtiinit-diffusion-maps",
+    "license": "GPL-2.0",
+    "flywheel": "0",
+    "version": "1.0.0",
+    "custom": {
+      "flywheel": {
+        "suite": "VISTA Lab"
+      },
+      "gear-builder": {
+        "image": "vistalab/dtiinit-diffusion-maps:1.0.0",
+        "category": "analysis"
+      }
+    },
+    "inputs": {
+      "dtiinit_archive": {
+        "base": "file",
+        "description": "Output archive (.zip) from dtiinit gear run, or AFQ.",
+        "type": {
+          "enum": [
+            "archive"
+          ]
+        }
+      }
+    },
+    "config": {},
+    "environment": {
+      "LD_LIBRARY_PATH": "/opt/mcr/v92/runtime/glnxa64:/opt/mcr/v92/bin/glnxa64:/opt/mcr/v92/sys/os/glnxa64",
+      "XAPPLRESDIR": "XAPPLRESDIR"
+    },
+    "command": "/usr/local/bin/run_dtiinitDiffusionMaps.sh /opt/mcr/v92 /flywheel/v0/config.json"
+  },
+  "exchange": {
+    "git-commit": "800e918b3acd0dd5627ca49f6cba329fd8219057",
+    "rootfs-hash": "sha384:66fdf3adee2e70a62c6578fcbf78c82eab7d4ade0b8059003d02fab7b4b99c0dee691c99504f08986bd45f3fafb5170b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/vistalab-dtiinit-diffusion-maps-sha384-66fdf3adee2e70a62c6578fcbf78c82eab7d4ade0b8059003d02fab7b4b99c0dee691c99504f08986bd45f3fafb5170b.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for dtiInit: Diffusion Map Generation",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {}
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dtiinit_archive": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "archive"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "dtiinit_archive"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
