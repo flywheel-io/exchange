@@ -1,0 +1,209 @@
+{
+  "name": "dcm2niix",
+  "label": "DICOM to NIfTI conversion using dcm2niix with an optional implementation of PyDeface.",
+  "description": "Implementation of Chris Rorden's dcm2niix for converting DICOM to NIfTI, with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
+  "version": "1.0.0_1.0.20200331",
+  "author": "Flywheel",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "url": "https://github.com/rordenlab/dcm2niix & https://github.com/poldracklab/pydeface",
+  "source": "https://github.com/flywheel-apps/dcm2niix",
+  "cite": "dcm2niix doi: 10.1016/j.jneumeth.2016.03.001 & PyDeface doi: 10.5281/zenodo.3524401",
+  "license": "Other",
+  "custom": {
+       "gear-builder": {
+           "category": "converter",
+           "image": "flywheel/dcm2niix:1.0.0_1.0.20200331"
+      },
+      "flywheel": {
+          "suite": "Conversion"
+      },
+      "license": {
+          "main": {
+              "name": "Other",
+              "url": "https://github.com/rordenlab/dcm2niix/blob/v1.0.20200331/license.txt"
+          },
+          "dependencies": [{
+              "name": "MIT",
+              "url": "https://github.com/poldracklab/pydeface/blob/v2.0.0/LICENSE.txt"
+          }]
+      }
+  },
+  "inputs": {
+      "dcm2niix_input": {
+          "base": "file",
+          "description": "Input file for dcm2niix. This can be either a DICOM archive ('.dicom.zip'), a PAR/REC archive ('.parrec.zip'), or a single PAR file ('image.PAR').",
+          "optional": false,
+          "type": {
+              "enum": [
+                  "dicom",
+                  "parrec"
+              ]
+          }
+      },
+      "rec_file_input": {
+          "base": "file",
+          "description": "If dcm2niix_input is a single PAR file, the corresponding REC file ('image.REC') for one par/rec file pair as inputs to dcm2niix.",
+          "optional": true,
+          "type": {
+              "enum": [
+                  "parrec"
+              ]
+          }
+      },
+      "pydeface_template": {
+          "base": "file",
+          "description": "If implementing PyDeface, optional template image that will be used as the registration target instead of the default.",
+          "optional": true,
+          "type": {
+              "enum": [
+                  "nifti"
+              ]
+          }
+      },
+      "pydeface_facemask": {
+          "base": "file",
+          "description": "If implementing PyDeface, optional face mask image that will be used instead of the default.",
+          "optional": true,
+          "type": {
+              "enum": [
+                  "nifti"
+              ]
+          }
+      }
+  },
+  "config": {
+      "anonymize_bids": {
+          "description": "Anonymize BIDS. Options: true (default), false. 'bids_sidecar' config option must be enabled (i.e., 'y' or 'o' options).",
+          "type": "boolean",
+          "default": true
+      },
+      "bids_sidecar": {
+          "description": "Output BIDS sidecar in JSON format. Options are 'y'=yes, 'n'=no (default), 'o'=only (whereby no NIfTI file will be generated).",
+          "type": "string",
+          "default": "n",
+          "enum": [
+              "y",
+              "n",
+              "o"
+          ]
+      },
+      "coil_combine": {
+          "description": "For sequences with individual coil data, saved as individual volumes, this option will save a NIfTI file with ONLY the combined coil data (i.e., the last volume). Options: true, false (default). WARNING: Expert Option. We make no effort to check for independent coil data; we trust that you know what you are asking for if you have selected this option.",
+          "type": "boolean",
+          "default": false
+      },
+      "compress_nifti": {
+          "description": "Compress output NIfTI file. Options: 'y'=yes (default), 'n'=no, '3'=no,3D. If option '3' is chosen, the filename flag will be set to '-f %p_%s' to prevent overwriting files.",
+          "type": "string",
+          "default": "y",
+          "enum": [
+              "y",
+              "n",
+              "3"
+          ]
+      },
+      "compression_level": {
+          "description": "Set the gz compression level. Options: 1 (fastest) to 9 (smallest), 6 (default).",
+          "type": "number",
+          "default": 6,
+          "minimum": 1,
+          "maximum": 9
+      },
+      "convert_only_series": {
+          "description": "Selectively convert by series number - can be used up to 16 times. Options: 'all' (default), space-separated list of series numbers (e.g., '2 12 20'). WARNING: Expert Option. We trust that if you have selected this option, you know what you are asking for.",
+          "type": "string",
+          "default": "all"
+      },
+      "crop": {
+          "description": "Crop 3D T1 images. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "decompress_dicoms": {
+          "description": "Decompress DICOM files before conversion. This will perform decompression using gdcmconv and then perform the conversion using dcm2niix. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "filename": {
+          "description": "Output filename template (%a=antenna (coil) number, %c=comments, %d=description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %p=protocol, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID; %z=sequence name). '%f' (default).",
+          "type": "string",
+          "default": "%f"
+      },
+      "ignore_derived": {
+          "description": "Ignore derived, localizer, and 2D images. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "ignore_errors": {
+          "description": "Ignore dcm2niix errors and the exit status, and preserve outputs. Options: true, false (default). By default, when dcm2niix exits non-zero, outputs are not preserved. WARNING: Expert Option. We trust that if you have selected this option, you know what you are asking for.",
+          "type": "boolean",
+          "default": false
+      },
+      "lossless_scaling": {
+          "description": "Losslessly scale 16-bit integers to use dynamic range. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "merge2d": {
+          "description": "Merge 2D slices from the same series regardless of study time, echo, coil, orientation, etc. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "philips_scaling": {
+          "description": "Philips precise float (not display) scaling. Options: true (default), false.",
+          "type": "boolean",
+          "default": true
+      },
+      "pydeface": {
+          "description": "Implement PyDeface to remove facial structures from NIfTI. Only defaced NIfTIs will be included in the output. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "pydeface_cost": {
+          "description": "If implementing PyDeface, the FSL-Flirt cost function. Options: 'mutualinfo' (default), 'corratio', 'normcorr', 'normal', 'leastsq', 'labeldiff', 'bbr'.",
+          "type": "string",
+          "default": "mutualinfo",
+          "enum": [
+              "mutualinfo",
+              "corratio",
+              "normcorr",
+              "normmi",
+              "leastsq",
+              "labeldiff",
+              "bbr"
+          ]
+      },
+      "pydeface_nocleanup": {
+          "description": "If implementing PyDeface, do not clean up temporary files. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "pydeface_verbose": {
+          "description": "If implementing PyDeface, show additional status prints. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "remove_incomplete_volumes": {
+          "description": "Remove incomplete trailing volumes for 4D scans aborted mid-acquisition before dcm2niix conversion. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "single_file_mode": {
+          "description": "Single file mode, do not convert other images in the folder. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      },
+      "text_notes_private": {
+          "description": "Text notes including private patient details. Options: true, false (default).",
+          "type": "boolean",
+          "default": false
+      }
+  },
+  "command": "python3 run.py",
+  "environment":{
+    "LD_LIBRARY_PATH":"/usr/lib/fsl/5.0",
+    "FSLDIR":"/usr/share/fsl/5.0",
+    "PATH":"/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "FSLOUTPUTTYPE":"NIFTI_GZ"
+  }
+}
