@@ -1,0 +1,171 @@
+{
+  "name": "freesurfer-recon-all",
+  "label": "FreeSurfer 7.1.1: run recon-all",
+  "description": "FreeSurfer version 7.1.1 Release (July 27, 2020). This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
+  "version": "0.1.0_7.1.1_rc0",
+  "custom": {
+    "docker-image": "flywheel/freesurfer-recon-all:0.1.0_7.1.1_rc0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/freesurfer-recon-all:0.1.0_7.1.1_rc0"
+    },
+    "flywheel": {
+      "suite": "FreeSurfer"
+    }
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "anatomical": {
+      "description": "Anatomical NIfTI file, DICOM archive, or previous freesurfer-recon-all zip archive. NOTE: A freesurfer-recon-all Gear output can be used provided the filename is preserved from its initial output (e.g., freesurfer-recon-all_<subject_code>*.zip)",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti",
+          "dicom",
+          "archive"
+        ]
+      }
+    },
+    "t1w_anatomical_2": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_3": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_4": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t1w_anatomical_5": {
+      "description": "Additional anatomical NIfTI file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "t2w_anatomical": {
+      "description": "T2w or FLAIR Anatomical NIfTI or DICOM file",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti",
+          "dicom"
+        ]
+      }
+    },
+    "freesurfer_license": {
+      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+      "base": "file",
+      "optional": true
+    }
+  },
+  "config": {
+    "subject_id": {
+      "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory. NOTE: If using a previous Gear output as input the subject code will be parsed from the input archive, however it should still be provided here for good measure.",
+      "type": "string",
+      "optional": true
+    },
+    "parallel": {
+      "type": "boolean",
+      "default": true,
+      "description": "Command line option to run recon-all in parallel. (Default=True). By default, it instructs the binaries to use 4 processors (cores), meaning, 4 threads will run in parallel in some operations. Adjust n_cpus for more (or less) than 4 cores."
+    },
+    "n_cpus": {
+      "optional": true,
+      "type": "integer",
+      "minimum": 0,
+      "description": "Command line option to set the number of processors to use in recon-all execution. (optional, defaults to 'core_count' within host). Overridden by including the flag -openmp <num> after -parallel, where <num> is the number of processors you'd like to use. Minimum of 1. If set greater than the cores available, that maximum will be used. If 'parallel' is False, this is disregarded."
+    },
+    "reconall_options": {
+      "description": "Command line options to the recon-all algorithm. (Default='-all -qcache'). By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm, which can speed later processing. Note that modification of these options may result in failure if the options are not recognized.",
+      "default": "-all -qcache",
+      "type": "string"
+    },
+    "gear-hippocampal_subfields": {
+      "description": "Generates an automated segmentation of the hippocampal subfields based on a statistical atlas built primarily upon ultra-high resolution (~0.1 mm isotropic) ex vivo MRI data. Choosing this option will write <subject_id>_HippocampalSubfields.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields for more info. (Default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-brainstem_structures": {
+      "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-register_surfaces": {
+      "description": "Runs the xhemireg and surfreg scripts on your subject after having run recon-all in order to register the subject's left and inverted-right hemispheres to the fsaverage_sym subject. (The fsaverage_sym subject is a version of the fsaverage subject with a single the left-right symmetric pseudo-hemisphere.) (Default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-convert_surfaces": {
+      "description": "Convert selected FreeSurfer surface files to OBJ format. (Default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-convert_volumes": {
+      "description": "Convert selected FreeSurfer volume files (mgz) to NIfTI format. (Default=true)",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-convert_stats": {
+      "description": "Convert FreeSurfer stats files to CSV. (Default=true). Converts a subcortical stats file created by recon-all and/or mri_segstats (eg, aseg.stats) into a table in which each line is a subject and each column is a segmentation. The values are the volume of the segmentation in mm3 or the mean intensity over the structure. Also Converts a cortical stats file created by recon-all and or mris_anatomical_stats (eg, ?h.aparc.stats) into a table in which each line is a subject and each column is a parcellation. By default, the values are the area of the parcellation in mm2.",
+      "default": true,
+      "type": "boolean"
+    },
+    "gear-log-level": {
+      "default": "INFO",
+      "description": "Gear Log verbosity level (INFO|DEBUG)",
+      "type": "string",
+      "enum": [
+        "INFO",
+        "DEBUG"
+      ]
+    },
+    "gear-dry-run": {
+      "default": false,
+      "description": "Do everything except actually executing recon-all",
+      "type": "boolean"
+    },
+    "gear-FREESURFER_LICENSE": {
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+      "type": "string",
+      "optional": true
+    }
+  },
+  "environment": {
+    "PYTHONUNBUFFERED": "1"
+  },
+  "command": "/root/miniconda3/bin/python3 run.py",
+  "author": "Laboratory for Computational Neuroimaging <freesurfer@nmr.mgh.harvard.edu>",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "cite": "For citation information, please visit: https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation.",
+  "license": "Other",
+  "source": "https://github.com/flywheel-apps/freesurfer-recon-all",
+  "url": "https://surfer.nmr.mgh.harvard.edu"
+}
