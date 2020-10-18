@@ -1,0 +1,88 @@
+{
+  "gear": {
+    "name": "pfile-mr-classifier",
+    "label": "Metadata Import and Classification for GE P-Files",
+    "description": "Extracts GE P-File header and generates JSON metadata (.metadata.json) which is saved in Flywheel on the P-File's info object. This gear also attempts to determine the P-File's classification (measurement, intent, etc.).",
+    "maintainer": "Michael Perry <lmperry@stanford.edu>",
+    "author": "Michael Perry <lmperry@stanford.edu>",
+    "url": "https://cni.stanford.edu",
+    "source": "https://github.com/cni/pfile-mr-classifier",
+    "cite": "pfile-tools: GE P-File Utilities (https://github.com/njvack/pfile-tools)",
+    "license": "BSD-2-Clause",
+    "flywheel": "0",
+    "version": "2.3.2",
+    "custom": {
+      "gear-builder": {
+        "image": "stanfordcni/pfile-mr-classifier:2.3.2",
+        "category": "converter"
+      },
+      "flywheel": {
+        "suite": "Stanford CNI"
+      }
+    },
+    "config": {
+      "timezone": {
+        "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'UTC', 'America/Los_Angeles', 'America/New_York'. [default = 'America/Los_Angeles'].",
+        "type": "string",
+        "default": "America/Los_Angeles"
+      }
+    },
+    "inputs": {
+      "pfile": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "pfile"
+          ]
+        },
+        "description": "Input GE P-File for classification. Input can be .7.zip, .7.gz, or .7."
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "0abf3bcd1a3488da7e2fdd293b1e67872890a8b1",
+    "rootfs-hash": "sha384:eb7f332709aeac0cb83e71bb18e1d5929cdf09b7c3ad7c6e8d715ab099a047c8ace7c331af6fcd946763956762997099",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/stanfordcni-pfile-mr-classifier-sha384-eb7f332709aeac0cb83e71bb18e1d5929cdf09b7c3ad7c6e8d715ab099a047c8ace7c331af6fcd946763956762997099.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Metadata Import and Classification for GE P-Files",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "default": "America/Los_Angeles"
+          }
+        },
+        "required": [
+          "timezone"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "pfile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "pfile"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "pfile"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
