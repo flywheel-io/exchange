@@ -1,0 +1,71 @@
+{
+  "name": "bids-pre-curate",
+  "label": "BIDS Pre-Curate: Project preparation for BIDS curation",
+  "description": "Re-naming of containers and modification of classification of data based on user-input on a bulk scale",
+  "version": "0.1.4",
+  "custom": {
+    "docker-image": "flywheel/bids-pre-curation:0.1.4",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/bids-pre-curation:0.1.4"
+    },
+    "flywheel": {
+        "suite": "BIDS Apps"
+    },
+    "license": {
+      "non-commercial-use-only": false,
+      "main": {
+        "name": "MIT",
+        "url": ""
+      },
+      "dependencies": []
+    }
+  },
+  "inputs": {
+    "key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "session_table": {
+      "description": "CSV file containing sessions.",
+      "base": "file",
+      "optional": true
+    },
+    "subject_table": {
+      "description": "CSV file containing subjects.",
+      "base": "file",
+      "optional": true
+    },
+    "acquisition_table": {
+      "description": "CSV file containing acquisitions.",
+      "base": "file",
+      "optional": true
+    }
+  },
+  "config": {
+    "dry_run": {
+      "default": false,
+      "description": "Whether or not to perform a dry run, logging what would be changed without actually changing it.",
+      "type": "boolean"
+    },
+    "suggest": {
+      "default": true,
+      "description": "Whether or not to suggest new names by removing spaces and special characters from names",
+      "type": "boolean"
+    },
+    "allows": {
+      "default": "_-",
+      "description": "Characters that will be allowed in names when suggesting new names",
+      "type": "string"
+    }
+  },
+  "environment": {
+    "PYTHONUNBUFFERED": "1"
+  },
+  "command": "pipenv run python3 /flywheel/v0/run.py",
+  "author": "Flywheel Exchange, LLC",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "license": "MIT",
+  "source": "https://github.com/flywheel-apps/bids-pre-curate",
+  "url": "https://github.com/flywheel-apps/bids-pre-curate"
+}
