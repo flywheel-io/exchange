@@ -1,13 +1,13 @@
 {
   "name": "bids-fmriprep",
   "label": "BIDS fMRIPrep: A Robust Preprocessing Pipeline for fMRI Data",
-  "description": "fMRIPrep (1.5.10 April 16, 2020) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
-  "version": "1.0.12_1.5.10",
+  "description": "fMRIPrep 20.2.0 (September 28, 2020) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+  "version": "1.1.9_20.2.0",
   "custom": {
-    "docker-image": "flywheel/bids-fmriprep:1.0.12_1.5.10",
+    "docker-image": "flywheel/bids-fmriprep:1.1.9_20.2.0",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-fmriprep:1.0.12_1.5.10"
+      "image": "flywheel/bids-fmriprep:1.1.9_20.2.0"
     },
     "flywheel": {
       "suite": "BIDS Apps"
@@ -84,7 +84,7 @@
       "default": false,
       "type": "boolean"
     },
-    "boilerplate": {
+    "boilerplate_only": {
       "description": "generate boilerplate only",
       "default": false,
       "type": "boolean"
@@ -120,14 +120,18 @@
       "default": false,
       "type": "boolean"
     },
-    "t2s-coreg": {
-      "description": "If provided with multi-echo BOLD dataset, create T2*-map and perform T2*-driven coregistration. When multi-echo data is provided and this option is not enabled, standard EPI-T1 coregistration is performed using the middle echo.",
-      "default": false,
-      "type": "boolean"
-    },
     "output-spaces": {
       "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/stable/spaces.html",
       "default": "MNI152NLin2009cAsym",
+      "type": "string"
+    },
+    "bold2t1w-init": {
+      "default": "register",
+      "description": "Either “register” (the default) to initialize volumes at center or “header” to use the header information when coregistering BOLD to T1w images.",
+      "enum": [
+        "register",
+        "header"
+      ],
       "type": "string"
     },
     "bold2t1w-dof": {
@@ -199,6 +203,16 @@
       "default": false,
       "type": "boolean"
     },
+    "skull-strip-t1w": {
+      "description": "Possible choices: auto, skip, force.  Determiner for T1-weighted skull stripping (‘force’ ensures skull stripping, ‘skip’ ignores skull stripping, and ‘auto’ applies brain extraction based on the outcome of a heuristic to check whether the brain is already masked).  Default is force.",
+      "enum": [
+        "auto",
+        "skip",
+        "force"
+      ],
+      "default": "force",
+      "type": "string"
+    },
     "fmap-bspline": {
       "description": "fit a B-Spline field using least-squares (experimental)",
       "default": false,
@@ -244,11 +258,6 @@
       "default": false,
       "type": "boolean"
     },
-    "run-uuid": {
-      "description": "Specify UUID of previous run, to include error logs in report. No effect without –reports-only",
-      "default": "",
-      "type": "string"
-    },
     "write-graph": {
       "description": "Write workflow graph",
       "default": false,
@@ -264,25 +273,28 @@
       "default": false,
       "type": "boolean"
     },
-    "gear-abort-on-bids-error": {
-      "default": false,
-      "description": "Gear will not run if there are any BIDS errors detected",
-      "type": "boolean"
+    "debug": {
+      "description": "Possible choices: compcor, all.  Debug mode(s) to enable. ‘all’ is alias for all available modes.",
+      "enum": [
+        "",
+        "compcor",
+        "all"
+      ],
+      "default": "",
+      "type": "string"
     },
     "gear-log-level": {
       "default": "INFO",
-      "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+      "description": "Gear Log verbosity level (INFO|DEBUG)",
       "type": "string",
                         "enum": [
-                                "ERROR",
-                                "WARNING",
                                 "INFO",
                                 "DEBUG"
                         ]
     },
     "gear-run-bids-validation": {
-      "default": true,
-      "description": "Gear will run BIDS validation before mriqc.  If validation fails and gear-abort-on-bids-error is true, mriq will NOT be run.",
+      "default": false,
+      "description": "Gear will run BIDS validation before running fMRIPrep and print out all warnings and errors.  fMRIPrep runs a version of the bids validator so having the gear run it is not necessary, but might be informative.  If validation fails and gear-abort-on-bids-error is true, mriq will NOT be run.",
       "type": "boolean"
     },
     "gear-save-intermediate-output": {
