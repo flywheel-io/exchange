@@ -1,7 +1,7 @@
 {
   "name": "bids-fmriprep",
   "label": "BIDS fMRIPrep: A Robust Preprocessing Pipeline for fMRI Data",
-  "description": "fMRIPrep 20.2.0 (September 28, 2020) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+  "description": "fMRIPrep Long-Term Support version 20.2.0 (September 28, 2020) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
   "version": "1.1.9_20.2.0",
   "custom": {
     "docker-image": "flywheel/bids-fmriprep:1.1.9_20.2.0",
