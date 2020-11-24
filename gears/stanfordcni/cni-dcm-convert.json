@@ -1,27 +1,27 @@
 {
   "name": "cni-dcm-convert",
-  "label": "CNI-DCM-CONVERT - DICOM Conversion Utility",
+  "label": "CNI-DCM-CONVERT: DICOM Conversion Utility",
   "description": "CNI-DCM-CONVERT uses SciTran's data library (https://github.com/vistalab/scitran-data) to convert raw DICOM data (within a zip archive) to NIfTI, Montage, and PNG (screenshot acquisitions) formats. DCM-CONVERT supports Siemens and GE DICOM data. This gear will also use dcm2niix to generate bids-sidecar metadata. Those metadata will be added to the output NIfTI file's info object in Flywheel.",
-  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "maintainer": "Michael Perry, Stanford CNI <lmperry@stanford.edu>",
   "author": "Scientific Transparency (RF Dougherty, K Hahn, R Bowen, G Schaefer, LM Perry, H Wu)",
   "url": "https://github.com/vistalab/scitran-data",
   "source": "https://github.com/cni/cni-dcm-convert",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "custom": {
     "flywheel": {
       "suite": "Stanford CNI"
     },
     "gear-builder": {
       "category": "converter",
-      "image": "stanfordcni/cni-dcm-convert:2.4.0"
+      "image": "stanfordcni/cni-dcm-convert:2.5.0"
     }
   },
   "config": {
     "convert_montage": {
-      "description": "Convert DICOM archive to MONTAGE format. (Default=true)",
-      "default": true,
+      "description": "Convert DICOM archive to MONTAGE format. (Default=false)",
+      "default": false,
       "type": "boolean"
     },
     "convert_nifti": {
@@ -40,7 +40,7 @@
       "type": "boolean"
     },
     "output_name": {
-      "description": "Name to be used for the output NIfTI file. OPTIONAL: By default the gear will use <Study_ID>_<Series_Num>_<Acq_num>.nii.gz.",
+      "description": "Name to be used for the output NIfTI file. OPTIONAL: By default the gear will use <Study_ID>_<Series_Num>_<Acq_Num>.nii.gz.",
       "type": "string",
       "optional": true
     }
