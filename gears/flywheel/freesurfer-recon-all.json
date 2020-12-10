@@ -2,12 +2,12 @@
   "name": "freesurfer-recon-all",
   "label": "FreeSurfer 7.1.1: run recon-all",
   "description": "FreeSurfer version 7.1.1 Release (July 27, 2020). This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
-  "version": "1.0.0_7.1.1_rc0",
+  "version": "1.0.0_7.1.1",
   "custom": {
-    "docker-image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1_rc0",
+    "docker-image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1_rc0"
+      "image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1"
     },
     "flywheel": {
       "suite": "FreeSurfer"
