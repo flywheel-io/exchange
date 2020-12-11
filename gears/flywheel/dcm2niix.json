@@ -1,8 +1,8 @@
 {
   "name": "dcm2niix",
-  "label": "DICOM to NIfTI conversion using dcm2niix with an optional implementation of PyDeface.",
-  "description": "Implementation of Chris Rorden's dcm2niix for converting DICOM to NIfTI, with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
-  "version": "1.1.0_1.0.20201102",
+  "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
+  "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
+  "version": "1.2.0_1.0.20201102",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
@@ -12,7 +12,7 @@
   "custom": {
        "gear-builder": {
            "category": "converter",
-           "image": "flywheel/dcm2niix:1.1.0_1.0.20201102"
+           "image": "flywheel/dcm2niix:1.2.0_1.0.20201102"
       },
       "flywheel": {
           "suite": "Conversion"
@@ -31,7 +31,7 @@
   "inputs": {
       "dcm2niix_input": {
           "base": "file",
-          "description": "Input file for dcm2niix. This can be either a DICOM archive ('.dicom.zip'), a PAR/REC archive ('.parrec.zip'), or a single PAR file ('image.PAR').",
+          "description": "Main input file for the Gear. This can be either a DICOM archive ('<dicom>.zip'), a PAR/REC archive ('<parrec>.zip'), or a single PAR file ('image.PAR' or 'image.par').",
           "optional": false,
           "type": {
               "enum": [
@@ -42,7 +42,7 @@
       },
       "rec_file_input": {
           "base": "file",
-          "description": "If dcm2niix_input is a single PAR file, the corresponding REC file ('image.REC') for one par/rec file pair as inputs to dcm2niix.",
+          "description": "If dcm2niix_input is a single PAR file, the corresponding REC file ('image.REC' or 'image.rec') for one PAR/REC file pair as inputs to the Gear.",
           "optional": true,
           "type": {
               "enum": [
@@ -78,7 +78,7 @@
           "default": true
       },
       "bids_sidecar": {
-          "description": "Output BIDS sidecar in JSON format. Options are 'y'=yes, 'n'=no (default), 'o'=only (whereby no NIfTI file will be generated).",
+          "description": "Output BIDS sidecar in JSON format. Options are 'y'=yes, 'n'=no (default), 'o'=only (whereby no NIfTI file will be generated). Note: bids_sidecar is always invoked when running dcm2niix to be used as metadata. User configuration preference is handled after acquiring metadata.",
           "type": "string",
           "default": "n",
           "enum": [
@@ -93,12 +93,12 @@
           "default": false
       },
       "comment": {
-          "description": "If non-empty, store comment as NIfTI aux_file. Options: non-empty string, 24 characters maximum.",
+          "description": "If non-empty, store comment as NIfTI aux_file. Options: non-empty string, 24 characters maximum. Note: The 24 character comment is placed in (1) all NIfTI output files in the aux_file variable. You can use fslhdr to access the NIfTI header data and see this comment; and (2) all JSON files (i.e., BIDS sidecars), which means the comment is stored as metadata for all associated output files and would be included in the 'bids_sidecar' file, if invoked.",
           "type": "string",
           "default": ""
       },
-      "compress_nifti": {
-          "description": "Compress output NIfTI file. Options: 'y'=yes (default), 'i'=internal, 'n'=no, '3'=no,3D. If option '3' is chosen, the filename flag will be set to '-f %p_%s' to prevent overwriting files.",
+      "compress_images": {
+          "description": "Gzip compress images. Options: 'y'=yes (default), 'i'=internal, 'n'=no, '3'=no,3D. Note: If option '3' is chosen, the filename flag will be set to '-f %p_%s' to prevent overwriting files. Tip: If desire .nrrd output, select 'n'.",
           "type": "string",
           "default": "y",
           "enum": [
@@ -136,7 +136,7 @@
           "default": false
       },
       "filename": {
-          "description": "Output filename template. Options: %a=antenna (coil) name, %b=basename, %c=comments, %d=series description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %o=mediaObjectInstanceUID, %p=protocol, %r=instance number, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID, %z=sequence name tag(0018,0024), %q sequence name tag(0018,1020). Defaults: dcm2niix tool `%f_%p_%t_%s` and dcm2niix Gear `%f`",
+          "description": "Output filename template. Options: %a=antenna (coil) name, %b=basename, %c=comments, %d=series description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %o=mediaObjectInstanceUID, %p=protocol, %r=instance number, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID, %z=sequence name tag(0018,0024), %q sequence name tag(0018,1020). Defaults: dcm2niix tool `%f_%p_%t_%s` and dcm2niix Gear `%f`. Tip: A more informative filename can be useful for downstream BIDS curation by simply accessing relevant information in the extracted filename. For example, including echo number or protocol.",
           "type": "string",
           "default": "%f"
       },
@@ -166,7 +166,7 @@
           "default": false
       },
       "output_nrrd": {
-          "description": "Export as NRRD instead of NIfTI. Options: true, false (default).",
+          "description": "Export as NRRD instead of NIfTI. Options: true, false (default). Tip: To export .nrrd, change the **compress_images** config option to 'n'; otherwise, the output will split into two files (.raw.gz and .nhdr).",
           "type": "boolean",
           "default": false
       },
@@ -215,7 +215,7 @@
           "default": false
       },
       "text_notes_private": {
-          "description": "Text notes including private patient details. Options: true, false (default).",
+          "description": "Text notes include private patient details. Options: true, false (default).",
           "type": "boolean",
           "default": false
       }
