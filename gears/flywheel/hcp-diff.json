@@ -1,306 +1,312 @@
 {
-  "name": "hcp-diff",
-  "label": "HCP: Diffusion Preprocessing Pipeline",
-  "description": "Runs the diffusion preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. This includes correction for EPI distortion (using FSL topup), correction for motion and eddy-current distortion (using FSL eddy), and registration to subject anatomy. In addition, this Gear generates a QC mosaic. NOTE: This Gear requires that the HCP-Structural Gear has been run - the output of which is used here. This Gear allows input of up to 4 diffusion acquisitions.",
-  "author": "Human Connectome Project",
-  "maintainer": "Flywheel <support@flywheel.io>",
-  "license": "Other",
-  "url": "https://github.com/Washington-University/Pipelines",
-  "source": "https://github.com/flywheel-apps/hcp-diff",
-  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "0.2.0_4.0.1",
-  "custom": {
-    "docker-image": "flywheel/hcp-diff:0.2.0_4.0.1",
-    "gear-builder": {
-        "category": "analysis",
-        "image": "flywheel/hcp-diff:0.2.0_4.0.1"
+    "name": "hcp-diff",
+    "label": "HCP: Diffusion Preprocessing Pipeline",
+    "description": "Runs the diffusion preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. This includes correction for EPI distortion (using FSL topup), correction for motion and eddy-current distortion (using FSL eddy), and registration to subject anatomy. In addition, this Gear generates a QC mosaic. NOTE: This Gear requires that the HCP-Structural Gear has been run - the output of which is used here. This Gear allows input of up to 4 diffusion acquisitions.",
+    "author": "Human Connectome Project",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "source": "https://github.com/flywheel-apps/hcp-diff",
+    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+    "version": "1.0.1_4.0.1",
+    "custom": {
+        "docker-image": "flywheel/hcp-diff:1.0.1_4.0.1",
+        "gear-builder": {
+            "category": "analysis",
+            "image": "flywheel/hcp-diff:1.0.1_4.0.1"
+        },
+        "flywheel": {
+            "suite": "Human Connectome Project"
+        }
     },
-    "flywheel": {
-      "suite": "Human Connectome Project"
+    "command": "/flywheel/v0/run.py",
+    "inputs": {
+        "api-key": {
+            "base": "api-key"
+        },
+        "StructZip": {
+            "description": "Zipped output from HCP-Struct pipeline",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "archive"
+                ]
+            }
+        },
+        "FreeSurferLicense": {
+            "description": "FreeSurfer license.txt file",
+            "base": "file",
+            "optional": true
+        },
+        "DWIPositiveData": {
+            "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "DWIPositiveBvec": {
+            "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            }
+        },
+        "DWIPositiveBval": {
+            "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            }
+        },
+        "DWINegativeData": {
+            "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "DWINegativeBvec": {
+            "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            }
+        },
+        "DWINegativeBval": {
+            "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            }
+        },
+        "DWIPositiveData2": {
+            "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBvec2": {
+            "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBval2": {
+            "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeData2": {
+            "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBvec2": {
+            "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBval2": {
+            "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveData3": {
+            "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBvec3": {
+            "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBval3": {
+            "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeData3": {
+            "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBvec3": {
+            "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBval3": {
+            "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveData4": {
+            "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBvec4": {
+            "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWIPositiveBval4": {
+            "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeData4": {
+            "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBvec4": {
+            "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bvec"
+                ]
+            },
+            "optional": true
+        },
+        "DWINegativeBval4": {
+            "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
+            "base": "file",
+            "type": {
+                "enum": [
+                    "bval"
+                ]
+            },
+            "optional": true
+        },
+        "GradientCoeff": {
+            "description": "Scanner gradient nonlinearity coefficient file",
+            "base": "file",
+            "optional": true
+        }
+    },
+    "config": {
+        "DWIName": {
+            "type": "string",
+            "default": "Diffusion",
+            "description": "Output name for preprocessed data. *Note: Spaces will be replaced with '_'."
+        },
+        "FREESURFER_LICENSE": {
+            "description": "FreeSurfer license as space-separated string.",
+            "type": "string",
+            "optional": true
+        },
+        "AnatomyRegDOF": {
+            "type": "integer",
+            "default": 6,
+            "enum": [
+                6,
+                12
+            ],
+            "description": "Degrees of freedom for Diffusion->Anat registration. 6 (default) = rigid body, when all data is from same scanner. 12 = full affine, recommended for 7T fMRI->3T anatomy"
+        },
+        "dry-run": {
+            "type": "boolean",
+            "default": false,
+            "description": "Log all commands, but do not execute."
+        },
+        "save-on-error": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to 'True' to save output on error."
+        }
     }
-  },
-  "command": "/flywheel/v0/run.py",
-  "inputs": {
-    "StructZip": {
-      "description": "Zipped output from HCP-Struct pipeline",
-      "base": "file",
-      "type": {
-        "enum": [
-          "archive"
-        ]
-      }
-    },
-    "FreeSurferLicense": {
-      "description": "FreeSurfer license.txt file",
-      "base": "file",
-      "optional": true
-    },
-    "DWIPositiveData": {
-      "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
-    },
-    "DWIPositiveBvec": {
-      "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      }
-    },
-    "DWIPositiveBval": {
-      "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      }
-    },
-    "DWINegativeData": {
-      "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
-    },
-    "DWINegativeBvec": {
-      "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      }
-    },
-    "DWINegativeBval": {
-      "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      }
-    },
-    "DWIPositiveData2": {
-      "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBvec2": {
-      "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBval2": {
-      "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeData2": {
-      "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBvec2": {
-      "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBval2": {
-      "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveData3": {
-      "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBvec3": {
-      "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBval3": {
-      "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeData3": {
-      "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBvec3": {
-      "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBval3": {
-      "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveData4": {
-      "description": "Diffusion time series (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBvec4": {
-      "description": "Diffusion .bvec file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWIPositiveBval4": {
-      "description": "Diffusion .bval file (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeData4": {
-      "description": "Diffusion time series (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBvec4": {
-      "description": "Diffusion .bvec file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bvec"
-        ]
-      },
-      "optional": true
-    },
-    "DWINegativeBval4": {
-      "description": "Diffusion .bval file (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "bval"
-        ]
-      },
-      "optional": true
-    },
-    "GradientCoeff": {
-      "description": "Scanner gradient nonlinearity coefficient file",
-      "base": "file",
-      "optional": true
-    }
-  },
-  "config": {
-    "DWIName": {
-      "type": "string",
-      "default": "Diffusion",
-      "description": "Output name for preprocessed data. *Note: Spaces will be replaced with '_'."
-    },
-    "FREESURFER_LICENSE": {
-        "description": "FreeSurfer license as space-separated string.",
-        "type": "string",
-        "optional": true
-    },
-    "AnatomyRegDOF": {
-      "type": "integer",
-      "default": 6,
-      "enum": [6,12],
-      "description": "Degrees of freedom for Diffusion->Anat registration. 6 (default) = rigid body, when all data is from same scanner. 12 = full affine, recommended for 7T fMRI->3T anatomy"
-    },
-    "dry-run": {
-        "type":"boolean",
-        "default": false,
-        "description": "Log all commands, but do not execute."
-    },
-    "save-on-error": {
-        "type":"boolean",
-        "default": false,
-        "description": "Set to 'True' to save output on error."
-    }
-  }
 }
