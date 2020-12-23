@@ -11,7 +11,7 @@
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fw-gear-deid-export:1.0.0"
+      "image": "flywheel/deid-export:1.0.0"
     }
   },
   "inputs": {
