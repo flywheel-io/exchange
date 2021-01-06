@@ -1,0 +1,59 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Curation"
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/file-curator:0.1.0"
+    }
+  },
+  "description": "Curates a given file, to be used as a gear rule",
+  "environment": {},
+  "inputs": {
+    "additional-input-one": {
+      "base": "file",
+      "description": "An optional input for curation.",
+      "optional": true
+    },
+    "additional-input-two": {
+      "base": "file",
+      "description": "An optional input for curation.",
+      "optional": true
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "curator": {
+      "base": "file",
+      "description": "A python implementation of the FileCurator class (see https://gear-toolkit.readthedocs.io/en/latest/utils.html#curator for more details).",
+      "type": {
+        "enum": [
+          "source code"
+        ]
+      }
+    },
+    "file-input": {
+      "base": "file",
+      "description": "File to curate"
+    }
+  },
+  "label": "File Curator",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "file-curator",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
+  "version": "0.1.0"
+}
