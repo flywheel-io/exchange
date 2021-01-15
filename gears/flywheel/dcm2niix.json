@@ -2,7 +2,7 @@
   "name": "dcm2niix",
   "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
   "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
-  "version": "1.2.0_1.0.20201102",
+  "version": "1.2.1_1.0.20201102",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
@@ -12,7 +12,7 @@
   "custom": {
        "gear-builder": {
            "category": "converter",
-           "image": "flywheel/dcm2niix:1.2.0_1.0.20201102"
+           "image": "flywheel/dcm2niix:1.2.1_1.0.20201102"
       },
       "flywheel": {
           "suite": "Conversion"
