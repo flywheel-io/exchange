@@ -2,12 +2,12 @@
   "name": "freesurfer-recon-all",
   "label": "FreeSurfer 7.1.1: run recon-all",
   "description": "FreeSurfer version 7.1.1 Release (July 27, 2020). This gear takes an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information.",
-  "version": "1.0.0_7.1.1",
+  "version": "1.1.0_7.1.1",
   "custom": {
-    "docker-image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1",
+    "docker-image": "flywheel/freesurfer-recon-all:1.1.0_7.1.1",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/freesurfer-recon-all:1.0.0_7.1.1"
+      "image": "flywheel/freesurfer-recon-all:1.1.0_7.1.1"
     },
     "flywheel": {
       "suite": "FreeSurfer"
@@ -84,6 +84,11 @@
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
       "base": "file",
       "optional": true
+    },
+    "expert": {
+      "description": "A user-created file containing special options to include in the command string. The file should contain as the first item the name of the command, and the items following it on rest of the line will be passed as the extra options.  See Freesurfer documentation https://surfer.nmr.mgh.harvard.edu/fswiki/recon-all#ExpertOptionsFile for more information and examples.",
+      "base": "file",
+      "optional": true
     }
   },
   "config": {
@@ -108,6 +113,11 @@
       "default": "-all -qcache",
       "type": "string"
     },
+    "gear-gtmseg": {
+      "type": "boolean",
+      "default": false,
+      "description": "After running recon-all run gtmseg on the subject. (Default=False)."
+    },
     "gear-hippocampal_subfields": {
       "description": "Generates an automated segmentation of the hippocampal subfields based on a statistical atlas built primarily upon ultra-high resolution (~0.1 mm isotropic) ex vivo MRI data. Choosing this option will write <subject_id>_HippocampalSubfields.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields for more info. (Default=true)",
       "default": true,
@@ -116,6 +126,11 @@
     "gear-brainstem_structures": {
       "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=true)",
       "default": true,
+      "type": "boolean"
+    },
+    "gear-thalamic_nuclei": {
+      "description": "Produce a parcellation of the thalamus into 25 different nuclei, using a probabilistic atlas built with histological data. Choosing this option will produce 3 files in the subject's mri directory: ThalamicNuclei.v12.T1.volumes.txt, ThalamicNuclei.v12.T1.mgz, and ThalamicNuclei.v12.T1.FSvoxelSpace.mgz, and 2 files in the stats directory: thalamic-nuclei.lh.v12.T1.stats and thalamic-nuclei.rh.v12.T1.stats. See: https://surfer.nmr.mgh.harvard.edu/fswiki/ThalamicNuclei for more info. (Default=false)",
+      "default": false,
       "type": "boolean"
     },
     "gear-register_surfaces": {
