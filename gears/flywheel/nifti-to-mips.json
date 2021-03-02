@@ -1,0 +1,52 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "threshold_percentile": {
+      "default": 98.5,
+      "description": "The percentile at which to threshold maximum values",
+      "type": "number"
+    },
+    "invert_image": {
+      "description": "Inversion of the output image.",
+      "type": "boolean",
+      "default": true
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Conversion"
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/nifti-to-mips:0.1.0"
+    }
+  },
+  "description": "Convert NIfTI file into PNG images using Maximum Intensity Projection(MIP) technique",
+  "environment": {},
+  "inputs": {
+    "nifti_input_file": {
+      "base": "file",
+      "description": "Any nifti file.",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  },
+  "label": "NIFTI to MIPS",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "nitfi-to-mips",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
+  "version": "0.1.0"
+}
