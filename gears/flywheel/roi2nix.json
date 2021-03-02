@@ -8,12 +8,12 @@
     "url": "",
     "source": "https://github.com/flywheel-apps/ROI2nix",
     "cite": "",
-    "version": "0.2.4",
+    "version": "0.3.2",
     "custom": {
-        "docker-image": "flywheel/roi2nix:0.2.4",
+        "docker-image": "flywheel/roi2nix:0.3.2",
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/roi2nix:0.2.4"
+            "image": "flywheel/roi2nix:0.3.2"
         }
     },
     "inputs": {
@@ -22,11 +22,12 @@
         },
         "Input_File": {
             "base": "file",
-            "description": "NIfTI file with ROI drawn in OHIF Viewer (Required).",
+            "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
             "optional": false,
             "type": {
                 "enum": [
-                    "nifti"
+                    "nifti",
+                    "dicom"
                 ]
             }
         }
