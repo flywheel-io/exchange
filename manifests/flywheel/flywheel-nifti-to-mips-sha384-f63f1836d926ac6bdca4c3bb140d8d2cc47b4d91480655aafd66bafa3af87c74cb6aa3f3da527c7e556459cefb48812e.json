@@ -1,0 +1,110 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "threshold_percentile": {
+        "default": 98.5,
+        "description": "The percentile at which to threshold maximum values",
+        "type": "number"
+      },
+      "invert_image": {
+        "description": "Inversion of the output image.",
+        "type": "boolean",
+        "default": true
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Conversion"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/nifti-to-mips:0.1.0"
+      }
+    },
+    "description": "Convert NIfTI file into PNG images using Maximum Intensity Projection(MIP) technique",
+    "environment": {},
+    "inputs": {
+      "nifti_input_file": {
+        "base": "file",
+        "description": "Any nifti file.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "label": "NIFTI to MIPS",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "nifti-to-mips",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
+    "version": "0.1.0"
+  },
+  "exchange": {
+    "git-commit": "98f18bacf880546ab5208a9480c6eed8eeea065e",
+    "rootfs-hash": "sha384:f63f1836d926ac6bdca4c3bb140d8d2cc47b4d91480655aafd66bafa3af87c74cb6aa3f3da527c7e556459cefb48812e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-nifti-to-mips-sha384-f63f1836d926ac6bdca4c3bb140d8d2cc47b4d91480655aafd66bafa3af87c74cb6aa3f3da527c7e556459cefb48812e.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for NIFTI to MIPS",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "threshold_percentile": {
+            "default": 98.5,
+            "type": "number"
+          },
+          "invert_image": {
+            "type": "boolean",
+            "default": true
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "threshold_percentile",
+          "invert_image",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "nifti_input_file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "nifti_input_file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
