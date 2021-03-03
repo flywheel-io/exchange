@@ -45,7 +45,7 @@
   "label": "NIFTI to MIPS",
   "license": "MIT",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "name": "nitfi-to-mips",
+  "name": "nifti-to-mips",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/nifti-to-mips/",
   "version": "0.1.0"
