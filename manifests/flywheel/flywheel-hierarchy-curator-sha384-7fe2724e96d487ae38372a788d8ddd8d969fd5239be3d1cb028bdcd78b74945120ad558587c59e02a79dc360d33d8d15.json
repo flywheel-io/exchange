@@ -1,0 +1,123 @@
+{
+  "gear": {
+    "name": "hierarchy-curator",
+    "label": "Hierarchy Curator",
+    "description": "Curates a container in the flywheel hierarchy given a python HierarchyCurator class. Using an implementation of the HierarchyCurator Class (provided as an input file (e.g., curator.py)) this gear is able to curate an entire project, walking down the hierarchy through project, subject, session, acquisition, analysis, and file containers.",
+    "version": "1.0.0",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/hierarchy-curator:1.0.0"
+      },
+      "flywheel": {
+        "suite": "Curation"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "curator": {
+        "base": "file",
+        "description": "A python implementation of the Curator class (see https://github.com/flywheel-apps/custom-curator for more details).",
+        "type": {
+          "enum": [
+            "source data"
+          ]
+        }
+      },
+      "additional-input-one": {
+        "base": "file",
+        "optional": true,
+        "description": "An optional input for curation."
+      },
+      "additional-input-two": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "additional-input-three": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      }
+    },
+    "config": {
+      "debug": {
+        "description": "Log debug messages",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "environment": {},
+    "command": "poetry run python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "license": "MIT",
+    "source": "https://github.com/flywheel-apps/custom-curator",
+    "url": "https://github.com/flywheel-apps/custom-curator"
+  },
+  "exchange": {
+    "git-commit": "2efcdf9f7e6ecfb83bf4fb7a9dc5abc32b16181a",
+    "rootfs-hash": "sha384:7fe2724e96d487ae38372a788d8ddd8d969fd5239be3d1cb028bdcd78b74945120ad558587c59e02a79dc360d33d8d15",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hierarchy-curator-sha384-7fe2724e96d487ae38372a788d8ddd8d969fd5239be3d1cb028bdcd78b74945120ad558587c59e02a79dc360d33d8d15.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Hierarchy Curator",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "curator": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source data"
+                ]
+              }
+            }
+          },
+          "additional-input-one": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-two": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-three": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "curator"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
