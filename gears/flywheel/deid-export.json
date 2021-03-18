@@ -5,13 +5,13 @@
   "author": "Flywheel, Inc.",
   "maintainer": "Flywheel <support@flywheel.io>",
   "license": "MIT",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-gear-deid-export",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-gear-deid-export/-/blob/master/README.md",
-  "version": "1.0.0",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export/-/blob/master/README.md",
+  "version": "1.2.0",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/deid-export:1.0.0"
+      "image": "flywheel/deid-export:1.2.0"
     }
   },
   "inputs": {
