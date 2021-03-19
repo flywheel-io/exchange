@@ -1,0 +1,46 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "Siemens CSA": {
+      "default": false,
+      "description": "Parse Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Utility"
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/file-metadata-importer:0.2.0"
+    }
+  },
+  "description": "Import file metadata into Flywheel.",
+  "environment": {},
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "input-file": {
+      "base": "file",
+      "description": "Input file.",
+      "optional": false
+    }
+  },
+  "label": "File metadata importer",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "file-metadata-importer",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+  "version": "0.2.0"
+}
