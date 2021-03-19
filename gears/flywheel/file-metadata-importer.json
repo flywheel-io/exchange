@@ -20,7 +20,7 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-metadata-importer:0.2.0"
+      "image": "flywheel/file-metadata-importer:0.2.1"
     }
   },
   "description": "Import file metadata into Flywheel.",
@@ -42,5 +42,5 @@
   "name": "file-metadata-importer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
