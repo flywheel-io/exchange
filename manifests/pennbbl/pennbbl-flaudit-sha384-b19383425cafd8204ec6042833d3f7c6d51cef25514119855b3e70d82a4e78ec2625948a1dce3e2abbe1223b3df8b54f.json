@@ -1,0 +1,74 @@
+{
+  "gear": {
+    "name": "flaudit",
+    "label": "Flaudit: Flywheel Audit",
+    "description": "Audit your Flywheel project for sequence completeness, BIDS curation summaries, gear and job runs, workflow completeness, and more.",
+    "version": "0.0.5_0.1.6",
+    "author": "Tinashe Michael Tapera",
+    "maintainer": "Tinashe Michael Tapera",
+    "cite": "",
+    "license": "BSD-3-Clause",
+    "source": "",
+    "url": "https://fw-heudiconv.readthedocs.io/en/latest/",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "pennbbl/flaudit:0.0.5_0.1.6"
+      },
+      "flywheel": {
+        "suite": "PennBBL"
+      }
+    },
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "Template": {
+        "description": "Subject to use as project template",
+        "type": "string",
+        "default": ""
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "48fd6b8b08444f55df37b94347866559d9e47cd5",
+    "rootfs-hash": "sha384:b19383425cafd8204ec6042833d3f7c6d51cef25514119855b3e70d82a4e78ec2625948a1dce3e2abbe1223b3df8b54f",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/pennbbl-flaudit-sha384-b19383425cafd8204ec6042833d3f7c6d51cef25514119855b3e70d82a4e78ec2625948a1dce3e2abbe1223b3df8b54f.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Flaudit: Flywheel Audit",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "Template": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "Template"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api_key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
