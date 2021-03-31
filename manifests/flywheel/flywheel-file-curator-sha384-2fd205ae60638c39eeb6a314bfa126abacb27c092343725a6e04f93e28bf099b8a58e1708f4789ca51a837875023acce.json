@@ -1,0 +1,126 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/file-curator:0.1.3"
+      }
+    },
+    "description": "Curates a given file, to be used as a gear rule",
+    "environment": {},
+    "inputs": {
+      "additional-input-one": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "additional-input-two": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "curator": {
+        "base": "file",
+        "description": "A python implementation of the FileCurator class (see https://gear-toolkit.readthedocs.io/en/latest/utils.html#curator for more details).",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      },
+      "file-input": {
+        "base": "file",
+        "description": "File to curate",
+        "optional": false
+      }
+    },
+    "label": "File Curator",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-curator",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
+    "version": "0.1.3"
+  },
+  "exchange": {
+    "git-commit": "20f085829b905a71239feb6b865e6c316d9ebcfc",
+    "rootfs-hash": "sha384:2fd205ae60638c39eeb6a314bfa126abacb27c092343725a6e04f93e28bf099b8a58e1708f4789ca51a837875023acce",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-curator-sha384-2fd205ae60638c39eeb6a314bfa126abacb27c092343725a6e04f93e28bf099b8a58e1708f4789ca51a837875023acce.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File Curator",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "additional-input-one": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-two": {
+            "type": "object",
+            "properties": {}
+          },
+          "api-key": {
+            "type": "object"
+          },
+          "curator": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          },
+          "file-input": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "curator",
+          "file-input"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
