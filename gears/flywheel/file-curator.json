@@ -15,7 +15,7 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-curator:0.1.0"
+      "image": "flywheel/file-curator:0.1.3"
     }
   },
   "description": "Curates a given file, to be used as a gear rule",
@@ -38,6 +38,7 @@
     "curator": {
       "base": "file",
       "description": "A python implementation of the FileCurator class (see https://gear-toolkit.readthedocs.io/en/latest/utils.html#curator for more details).",
+      "optional": false,
       "type": {
         "enum": [
           "source code"
@@ -46,7 +47,8 @@
     },
     "file-input": {
       "base": "file",
-      "description": "File to curate"
+      "description": "File to curate",
+      "optional": false
     }
   },
   "label": "File Curator",
@@ -55,5 +57,6 @@
   "name": "file-curator",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
-  "version": "0.1.0"
+  "version": "0.1.3"
 }
+
