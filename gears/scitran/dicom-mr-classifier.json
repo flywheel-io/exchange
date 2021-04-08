@@ -8,10 +8,10 @@
   "source": "https://github.com/scitran-apps/dicom-mr-classifier/releases",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "custom": {
     "gear-builder": {
-      "image": "scitran/dicom-mr-classifier:1.3.2",
+      "image": "scitran/dicom-mr-classifier:1.4.0",
       "category": "converter"
     },
     "flywheel": {
