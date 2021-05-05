@@ -1,0 +1,100 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation",
+        "classification": {
+          "type": [],
+          "modality": [],
+          "classification": [],
+          "dataset": [],
+          "keywords": [
+            "fixer",
+            "dicom"
+          ]
+        }
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/dicom-fixer:0.2.1"
+      }
+    },
+    "description": "Fixes various issues in dicoms.",
+    "environment": {},
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "description": "Input dicom.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "label": "Dicom Fixer",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "dicom-fixer",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
+    "version": "0.2.1"
+  },
+  "exchange": {
+    "git-commit": "4927b9a7c0a993cf959ba485a9e2b13b4db4e996",
+    "rootfs-hash": "sha384:074a74e51f12773b94ee9dab238501761958b44cddb1587c803c90a463ba84e17706d3876b923cf888f7b8a667e07890",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-fixer-sha384-074a74e51f12773b94ee9dab238501761958b44cddb1587c803c90a463ba84e17706d3876b923cf888f7b8a667e07890.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Dicom Fixer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "dicom"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
