@@ -1,0 +1,52 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Curation",
+      "classification": {
+        "type": [],
+        "modality": [],
+        "classification": [],
+        "dataset": [],
+        "keywords": [
+          "fixer",
+          "dicom"
+        ]
+      }
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/dicom-fixer:0.2.1"
+    }
+  },
+  "description": "Fixes various issues in dicoms.",
+  "environment": {},
+  "inputs": {
+    "dicom": {
+      "base": "file",
+      "description": "Input dicom.",
+      "optional": false,
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      }
+    }
+  },
+  "label": "Dicom Fixer",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "dicom-fixer",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
+  "version": "0.2.1"
+}
