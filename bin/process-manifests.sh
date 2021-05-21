@@ -56,7 +56,7 @@ if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
 fi
 
 if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD" ]; then
-    docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASSWORD" $DOCKERHUB_EMAIL
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
 fi
 
 
