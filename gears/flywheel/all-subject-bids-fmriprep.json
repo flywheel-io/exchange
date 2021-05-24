@@ -2,12 +2,12 @@
   "name": "all-subject-bids-fmriprep",
   "label": "All-Subject BIDS fMRIPrep: Run BIDS fMRIPrep on all subjects in the project",
   "description": "See the description of BIDS fMRIPrep for version information.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "custom": {
-    "docker-image": "flywheel/all-subject-bids-fmriprep:1.0.1",
+    "docker-image": "flywheel/all-subject-bids-fmriprep:1.0.2",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/all-subject-bids-fmriprep:1.0.1"
+      "image": "flywheel/all-subject-bids-fmriprep:1.0.2"
     },
     "flywheel": {
       "suite": "BIDS Apps"
@@ -297,6 +297,11 @@
       "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "type": "string",
       "default": ""
+    },
+    "gear-gear-to-run": {
+      "description": "Name of the gear to run.  Default 'bids-fmriprep'",
+      "type": "string",
+      "default": "bids-fmriprep"
     }
   },
   "environment": { },
