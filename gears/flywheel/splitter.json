@@ -1,0 +1,61 @@
+{
+  "name": "splitter",
+  "label": "DICOM splitter",
+  "description": "Metadata Import and Validation for DICOM files. This Gear will parse, import, and validate DICOM header metadata. Those metadata are added to the input file's metadata object (<inputFile>.info). A metadata validation template must be provided as input to the gear, which the gear will use to validate the DICOM metadata. Data which fail this validation will be tagged (with 'error') and an error file will be generated and written to the input container.",
+  "version": "1.1.0",
+  "custom": {
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/splitter:1.1.0"
+    },
+    "flywheel": {
+      "suite": "AEQC"
+    }
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "dicom": {
+      "base": "file",
+      "description": "Dicom Archive",
+      "optional": false,
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      }
+    }
+  },
+  "config": {
+    "extract_localizer": {
+      "default": true,
+      "type": "boolean",
+      "description": "If true and DICOM archive contains embedded localizer images (ImageType = Localizer), the embedded images will be saved as their own DICOM archive"
+    },
+    "group_by": {
+      "description": "Comma-separated tags to group dicom frames by",
+      "type": "string",
+      "default": "SeriesInstanceUID"
+    },
+    "tag": {
+      "default": "splitter",
+      "description": "The tag to be added on files upon run completion.",
+      "type": "string"
+    },
+    "debug": {
+      "description": "Include debug output",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "environment": {},
+  "command": "poetry run python run.py",
+  "author": "Flywheel",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "cite": "",
+  "license": "MIT",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/"
+}
