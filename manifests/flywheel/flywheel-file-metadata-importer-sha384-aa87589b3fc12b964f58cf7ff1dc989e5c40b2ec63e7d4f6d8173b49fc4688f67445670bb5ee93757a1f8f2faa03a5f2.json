@@ -1,0 +1,97 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "Siemens CSA": {
+        "default": false,
+        "description": "Parse Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Utility"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/file-metadata-importer:1.0.1"
+      }
+    },
+    "description": "Import file metadata into Flywheel.",
+    "environment": {},
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "input-file": {
+        "base": "file",
+        "description": "Input file.",
+        "optional": false
+      }
+    },
+    "label": "File metadata importer",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-metadata-importer",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+    "version": "1.0.1"
+  },
+  "exchange": {
+    "git-commit": "5b1280c81460263c03e4b738744faed220eca292",
+    "rootfs-hash": "sha384:aa87589b3fc12b964f58cf7ff1dc989e5c40b2ec63e7d4f6d8173b49fc4688f67445670bb5ee93757a1f8f2faa03a5f2",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-metadata-importer-sha384-aa87589b3fc12b964f58cf7ff1dc989e5c40b2ec63e7d4f6d8173b49fc4688f67445670bb5ee93757a1f8f2faa03a5f2.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File metadata importer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "Siemens CSA": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "Siemens CSA"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "input-file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
