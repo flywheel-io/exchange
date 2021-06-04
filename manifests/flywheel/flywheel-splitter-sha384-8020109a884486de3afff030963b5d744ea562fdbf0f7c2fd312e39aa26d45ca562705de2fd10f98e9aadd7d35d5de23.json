@@ -1,0 +1,128 @@
+{
+  "gear": {
+    "name": "splitter",
+    "label": "DICOM splitter",
+    "description": "Metadata Import and Validation for DICOM files. This Gear will parse, import, and validate DICOM header metadata. Those metadata are added to the input file's metadata object (<inputFile>.info). A metadata validation template must be provided as input to the gear, which the gear will use to validate the DICOM metadata. Data which fail this validation will be tagged (with 'error') and an error file will be generated and written to the input container.",
+    "version": "1.1.1",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/splitter:1.1.1"
+      },
+      "flywheel": {
+        "suite": "Conversion"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "dicom": {
+        "base": "file",
+        "description": "Dicom Archive",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "extract_localizer": {
+        "default": true,
+        "type": "boolean",
+        "description": "If true and DICOM archive contains embedded localizer images (ImageType = Localizer), the embedded images will be saved as their own DICOM archive"
+      },
+      "group_by": {
+        "description": "Comma-separated tags to group dicom frames by",
+        "type": "string",
+        "default": "SeriesInstanceUID"
+      },
+      "tag": {
+        "default": "splitter",
+        "description": "The tag to be added on files upon run completion.",
+        "type": "string"
+      },
+      "debug": {
+        "description": "Include debug output",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "environment": {},
+    "command": "poetry run python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "license": "MIT",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/"
+  },
+  "exchange": {
+    "git-commit": "cc22b71af04cc2284c289a022362acb67731e1d5",
+    "rootfs-hash": "sha384:8020109a884486de3afff030963b5d744ea562fdbf0f7c2fd312e39aa26d45ca562705de2fd10f98e9aadd7d35d5de23",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-splitter-sha384-8020109a884486de3afff030963b5d744ea562fdbf0f7c2fd312e39aa26d45ca562705de2fd10f98e9aadd7d35d5de23.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for DICOM splitter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "extract_localizer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "group_by": {
+            "type": "string",
+            "default": "SeriesInstanceUID"
+          },
+          "tag": {
+            "default": "splitter",
+            "type": "string"
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "extract_localizer",
+          "group_by",
+          "tag",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "dicom"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
