@@ -2,14 +2,14 @@
   "name": "splitter",
   "label": "DICOM splitter",
   "description": "Metadata Import and Validation for DICOM files. This Gear will parse, import, and validate DICOM header metadata. Those metadata are added to the input file's metadata object (<inputFile>.info). A metadata validation template must be provided as input to the gear, which the gear will use to validate the DICOM metadata. Data which fail this validation will be tagged (with 'error') and an error file will be generated and written to the input container.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/splitter:1.1.0"
+      "image": "flywheel/splitter:1.1.1"
     },
     "flywheel": {
-      "suite": "AEQC"
+      "suite": "Conversion"
     }
   },
   "inputs": {
