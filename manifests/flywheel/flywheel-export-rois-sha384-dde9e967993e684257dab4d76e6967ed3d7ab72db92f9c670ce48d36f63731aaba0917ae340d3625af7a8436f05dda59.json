@@ -1,0 +1,93 @@
+{
+  "gear": {
+    "name": "export-rois",
+    "label": "Export ROIs",
+    "description": "A gear for exporting ROI's saved in the OHIF viewer to CSV's",
+    "author": "Flywheel SSE",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "source": "https://github.com/flywheel-apps/ROI_export",
+    "url": "https://github.com/flywheel-apps/ROI_export",
+    "version": "1.1.1",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/export-rois:1.1.1"
+      },
+      "flywheel": {
+        "suite": "Metadata I/O"
+      }
+    },
+    "inputs": {
+      "key": {
+        "base": "api-key"
+      }
+    },
+    "config": {
+      "gear_log_level": {
+        "description": "The level at which the gear will log.",
+        "type": "string",
+        "enum": [
+          "INFO",
+          "DEBUG"
+        ],
+        "default": "INFO"
+      },
+      "dry_run": {
+        "description": "Only log what changes would be made, do not update anything.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "environment": {},
+    "command": "python3.7 /flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "cc22b71af04cc2284c289a022362acb67731e1d5",
+    "rootfs-hash": "sha384:dde9e967993e684257dab4d76e6967ed3d7ab72db92f9c670ce48d36f63731aaba0917ae340d3625af7a8436f05dda59",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-export-rois-sha384-dde9e967993e684257dab4d76e6967ed3d7ab72db92f9c670ce48d36f63731aaba0917ae340d3625af7a8436f05dda59.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Export ROIs",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "gear_log_level": {
+            "type": "string",
+            "enum": [
+              "INFO",
+              "DEBUG"
+            ],
+            "default": "INFO"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "gear_log_level",
+          "dry_run"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
