@@ -1,0 +1,217 @@
+{
+  "author": "Analysis Group, FMRIB, Oxford, UK",
+  "cite": "",
+  "command": "poetry run python3 run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "Split by timepoint": {
+      "id": "t",
+      "description": "Complete stats for each volume",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Mean intensity": {
+      "id": "m",
+      "description": "output mean",
+      "type": "boolean",
+      "default": true
+    },
+    "Mean intensity (nonzero)": {
+      "id": "M",
+      "description": "output mean (for nonzero voxels)",
+      "type": "boolean",
+      "default": true
+    },
+    "Stdev": {
+      "id": "s",
+      "description": "output standard deviation",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Stdev (nonzero)": {
+      "id": "S",
+      "description": "output standard deviation (for nonzero voxels)",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Lower threshold": {
+      "description": "set lower threshold",
+      "optional": true,
+      "type": "number",
+      "id": "l"
+    },
+    "Upper threshold": {
+      "description": "set upper threshold",
+      "optional": true,
+      "type": "number",
+      "id": "u"
+    },
+    "Percentile": {
+      "description": "output nth percentile (n between 0 and 100)",
+      "optional": true,
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "id": "p"
+    },
+    "Percentile (nonzero)": {
+      "description": "output nth percentile (for nonzero voxels)",
+      "optional": true,
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "id": "P"
+    },
+    "nbins for histogram": {
+      "description": "nbins for output a histogram (for the thresholded/masked voxels only) with nbins",
+      "optional": true,
+      "type": "number",
+      "minimum": 1,
+      "maximum": 100,
+      "id": "h"
+    },
+    "Windowed nbins for histogram": {
+      "description": "nbins, min, and max for output a histogram (for the thresholded/masked voxels only)\nwith nbins and histogram limits of min and max",
+      "optional": true,
+      "type": "string",
+      "id": "H",
+      "enum": [
+        ""
+      ]
+    },
+    "Robust min/max": {
+      "description": "output <robust min intensity> <robust max intensity>",
+      "id": "r",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Min/max": {
+      "id": "R",
+      "description": "output <min intensity> <max intensity>",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Entropy": {
+      "id": "e",
+      "description": "output mean entropy ; mean(-i*ln(i))",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Entropy (nonzero)": {
+      "id": "E",
+      "description": "output mean entropy (of nonzero voxels)",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Volume": {
+      "id": "v",
+      "description": "output <voxels> <volume>",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Volume (nonzero)": {
+      "id": "V",
+      "description": "output <voxels> <volume> (for nonzero voxels)",
+      "optional": true,
+      "type": "boolean"
+    },
+    "ROI stats": {
+      "id": "w",
+      "description": "output smallest ROI <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize>\n containing nonzero voxels",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Max voxel coords": {
+      "id": "x",
+      "description": "output co-ordinates of maximum voxel",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Min voxel coords": {
+      "id": "X",
+      "description": "output co-ordinates of minimum voxel",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Center of gravity (mm)": {
+      "id": "c",
+      "description": "output centre-of-gravity (cog) in mm coordinates",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Center of gravity (voxels)": {
+      "id": "C",
+      "description": "output centre-of-gravity (cog) in voxel coordinates",
+      "optional": true,
+      "type": "boolean"
+    },
+    "Absolute values?": {
+      "id": "a",
+      "description": "use absolute values of all image intensities",
+      "optional": true,
+      "type": "boolean"
+    },
+    "NaN/Inf as zero?": {
+      "id": "n",
+      "description": "treat NaN or Inf as zero for subsequent stats",
+      "optional": true,
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "docker-image": "flywheel/fsl-stats:0.1.5_5.0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/fsl-stats:0.1.5_5.0"
+    },
+    "flywheel": {
+      "suite": "FSL"
+    }
+  },
+  "description": "This gear returns statistical output for a given NIFTI image.",
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "inputs": {
+    "input_image": {
+      "description": "Main image for which stats will be generated",
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "mask_image": {
+      "description": "(-k): use the specified image (filename) for masking - overrides lower and upper thresholds",
+      "optional": true,
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "difference_image": {
+      "description": "(-d): take the difference between the base image and the image specified here",
+      "optional": true,
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  },
+  "label": "fsl-stats",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "fsl-stats",
+  "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/fsl-stats",
+  "version": "0.1.5_5.0"
+}
