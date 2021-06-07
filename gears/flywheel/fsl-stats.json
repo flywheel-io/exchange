@@ -163,18 +163,37 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/fsl-stats:0.1.5_5.0",
     "gear-builder": {
       "category": "analysis",
       "image": "flywheel/fsl-stats:0.1.5_5.0"
     },
     "flywheel": {
-      "suite": "FSL"
+      "suite": "Image Processing - Other",
+      "classification": {
+        "type": [
+          "NIFTI"
+        ],
+        "modality": [
+          "MR"
+        ],
+        "components": [
+          "FSL"
+        ],
+        "keywords": [
+          "Neuroimaging",
+          "Summary",
+          "Statistics"
+        ]
+      }
     }
   },
   "description": "This gear returns statistical output for a given NIFTI image.",
   "environment": {
-    "FLYWHEEL": "/flywheel/v0"
+    "FLYWHEEL": "/flywheel/v0",
+    "FSLDIR": "usr/share/fsl/5.0",
+    "PATH": "/usr/lib/fsl/5.0:$PATH",
+    "POSSUMDIR": "/usr/share/fsl/5.0",
+    "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:$LD_LIBRARY_PATH"
   },
   "inputs": {
     "input_image": {
@@ -207,7 +226,7 @@
       }
     }
   },
-  "label": "fsl-stats",
+  "label": "FSL fslstats",
   "license": "MIT",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "fsl-stats",
