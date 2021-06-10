@@ -165,7 +165,7 @@
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-stats:0.1.5_5.0"
+      "image": "flywheel/fsl-stats:0.1.5_5.0.9"
     },
     "flywheel": {
       "suite": "Image Processing - Other",
@@ -191,7 +191,6 @@
   "environment": {
     "FLYWHEEL": "/flywheel/v0",
     "FSLDIR": "usr/share/fsl/5.0",
-    "PATH": "/usr/lib/fsl/5.0:$PATH",
     "POSSUMDIR": "/usr/share/fsl/5.0",
     "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:$LD_LIBRARY_PATH"
   },
@@ -232,5 +231,5 @@
   "name": "fsl-stats",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/fsl-stats",
-  "version": "0.1.5_5.0"
+  "version": "0.1.5_5.0.9"
 }
