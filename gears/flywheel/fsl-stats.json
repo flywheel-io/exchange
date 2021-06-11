@@ -190,9 +190,9 @@
   "description": "This gear returns statistical output for a given NIFTI image.",
   "environment": {
     "FLYWHEEL": "/flywheel/v0",
-    "FSLDIR": "usr/share/fsl/5.0",
+    "PATH": "/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "POSSUMDIR": "/usr/share/fsl/5.0",
-    "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:$LD_LIBRARY_PATH"
+    "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0"
   },
   "inputs": {
     "input_image": {
