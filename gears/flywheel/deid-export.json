@@ -6,12 +6,12 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "license": "MIT",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export/-/blob/master/README.md",
-  "version": "1.2.1",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export/-/blob/main/README.md",
+  "version": "1.2.2",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/deid-export:1.2.1"
+      "image": "flywheel/deid-export:1.2.2"
     }
   },
   "inputs": {
