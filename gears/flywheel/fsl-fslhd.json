@@ -3,10 +3,19 @@
   "cite": "",
   "command": "poetry run python run.py",
   "config": {
+    "output_json": {
+      "default": false,
+      "description": "Default = false. If selected, in addition to adding fslhd info to the input file's info object, the Gear will output a json file (<inputfile>_fslhd.json) that consists of the fslhd info.",
+      "type": "boolean"
+    },
     "debug": {
       "default": false,
-      "description": "Extract nifti header using FSL's fslhd (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils) ",
       "type": "boolean"
+    },
+    "parse_descrip": {
+      "description": "Default = true. Attempt to parse the 'descrip' field in the fslhd to generate an object from '<key>=<value>;' style entries.",
+      "type": "boolean",
+      "default": true
     }
   },
   "custom": {
@@ -26,11 +35,11 @@
       ]
     },
     "gear-builder": {
-      "category": "analysis",
-      "image": "flywheel/fsl-fslhd:1.1.2_5.0"
+      "category": "converter",
+      "image": "flywheel/fsl-fslhd:1.1.3_5.0"
     }
   },
-  "description": "Extract nifti header using FSL's fslhd (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils)",
+  "description": "FSL's fslhd reads fields from a NIfTI file header. This Gear takes that header and generates metadata that is placed upon the input file's info field in the Flywheel database. FSLHD reports every field of an Analyze or Nifti header (note that the fields are different although some are common, e.g. pixdims). The reported values are those used internally in FSL programs and are sometimes different from the raw values stored in the file to avoid incorrect settings (e.g. dimN has a minimum value of 1, not 0).",
   "environment": {
     "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
     "FSLDIR": "/usr/share/fsl/5.0",
@@ -39,10 +48,14 @@
     "FSLOUTPUTTYPE": "NIFTI_GZ"
   },
   "inputs": {
-    "input-file": {
-      "base": "file",
+    "nifti": {
       "description": "Input NIfTI file.",
-      "optional": false
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     }
   },
   "label": "FSL fslhd",
@@ -51,5 +64,5 @@
   "name": "fsl-fslhd",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/fsl-fslhd",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/fsl-fslhd",
-  "version": "1.1.2_5.0"
+  "version": "1.1.3_5.0"
 }
