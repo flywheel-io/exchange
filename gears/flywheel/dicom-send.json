@@ -2,7 +2,7 @@
   "name": "dicom-send",
   "label": "DCMTK: DICOM Send",
   "description": "DICOM Send utilizes DCMTK's storescu to send DICOM data from a Flywheel instance to a destination DICOM server, hosted externally. This Gear supports the transmission of individual DICOM files and archives, as well as the transmission of an entire session when a specific input is not provided. Note that a private tag is added to each DICOM file to be transmitted (Flywheel:DICOM Send, at group 0x0021). Importantly, the external DICOM server must be reachable from the engine host of the Flywheel instance.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "inputs": {
       "file": {
           "base": "file",
@@ -47,7 +47,7 @@
   "custom": {
       "gear-builder": {
           "category": "converter",
-          "image": "flywheel/dicom-send:2.1.0"
+          "image": "flywheel/dicom-send:2.1.1"
       },
       "flywheel": {
           "suite": "DCMTK"
