@@ -1,6 +1,6 @@
 {
   "name": "dicom-mr-classifier",
-  "label": "DICOM MR Classifier",
+  "label": "SciTran: DICOM MR Classifier",
   "description": "Extract metadata and determine classification from raw DICOM data. Compatible with Siemens, Philips, and GE DICOMs.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Michael Perry <lmperry@stanford.edu>",
