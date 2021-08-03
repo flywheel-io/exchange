@@ -1,0 +1,49 @@
+{
+  "name": "dicom-mr-classifier",
+  "label": "SciTran: DICOM MR Classifier",
+  "description": "Extract metadata and determine classification from raw DICOM data. Compatible with Siemens, Philips, and GE DICOMs.",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Michael Perry <lmperry@stanford.edu>",
+  "url": "https://github.com/flywheel-apps/dicom-mr-classifier",
+  "source": "https://github.com/flywheel-apps/dicom-mr-classifier/releases",
+  "license": "Apache-2.0",
+  "flywheel": "0",
+  "version": "1.4.3",
+  "custom": {
+    "gear-builder": {
+      "image": "flywheel/dicom-mr-classifier:1.4.3",
+      "category": "converter"
+    },
+    "flywheel": {
+      "suite": "Curation",
+      "uid": 1000,
+      "gid": 1000
+    }
+  },
+  "config": {
+    "timezone": {
+      "description": "Time Zone to which all timestamps should be localized. This will set the default time zone in the Gear and thus localize the timestamps to that time zone. Examples: 'America/Los_Angeles', 'America/New_York'. [default = 'UTC'].",
+      "type": "string",
+      "default": "UTC"
+    },
+    "force": {
+      "description": "Force pydicom to read the input file. This option allows files that do not adhere to the DICOM standard to be read and parsed. (Default=False)",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "inputs": {
+    "dicom": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      },
+      "description": "Archive (.zip) containing DICOM files."
+    },
+    "classifications": {
+      "base": "context"
+    }
+  }
+}
