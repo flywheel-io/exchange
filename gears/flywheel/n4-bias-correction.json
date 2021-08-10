@@ -1,0 +1,53 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "dim": {
+      "default": 3,
+      "minimum": 2,
+      "maximum": 4,
+      "description": "Dimension",
+      "type": "integer"
+    },
+    "dist": {
+      "default": 300,
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "B-spline fitting distance isotropic mesh spacing for the smoothing",
+      "type": "integer"
+    },
+    "shrink_f": {
+      "default": 1,
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Shrink factor resampling for large images",
+      "type": "integer"
+    }
+  },
+  "custom": {
+    "gear-builder": {
+      "category": "utility",
+      "image": "flywheel/n4-bias-correction:0.1.0_2.3.5"
+    }
+  },
+  "description": "N4 Bias Field Correction.",
+  "inputs": {
+    "nifti-input": {
+      "base": "file",
+      "description": "A nifti file."
+    }
+  },
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "ANTSPATH": "/opt/ants/bin/"
+  },
+  "label": "N4 Bias Correction",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "n4-bias-correction",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/n4-bias-correction",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/n4-bias-correction",
+  "version": "0.1.0_2.3.5"
+}
