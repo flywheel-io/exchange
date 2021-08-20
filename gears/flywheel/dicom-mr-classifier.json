@@ -8,10 +8,10 @@
   "source": "https://github.com/flywheel-apps/dicom-mr-classifier/releases",
   "license": "Apache-2.0",
   "flywheel": "0",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "custom": {
     "gear-builder": {
-      "image": "flywheel/dicom-mr-classifier:1.4.4",
+      "image": "flywheel/dicom-mr-classifier:1.4.5",
       "category": "converter"
     },
     "flywheel": {
