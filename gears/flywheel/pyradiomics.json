@@ -1,0 +1,41 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Image Processing - Other"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/pyradiomics:1.0.0"
+    }
+  },
+  "description": "Uses pyRadiomics module to generate a .csv file of image features.",
+  "environment": {},
+  "inputs": {
+    "image": {
+      "base": "file",
+      "description": "A 2D image that is supported by SimpleITK."
+    },
+    "mask": {
+      "base": "file",
+      "description": "A mask to be used for extracting pyRadiomics features. If no mask is passed, then a mask will be created that uses the entire image except the top-left pixel that is located at (0,0).",
+      "optional": true
+    }
+  },
+  "label": "pyradiomics",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "pyradiomics",
+  "source": "https://pyradiomics.readthedocs.io/en/latest/index.html",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/pyradiomics",
+  "version": "1.0.0"
+}
