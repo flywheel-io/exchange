@@ -135,7 +135,7 @@
       "optional": true,
       "type": {
         "enum": [
-          "nii"
+          "nifti"
         ]
       }
     }
