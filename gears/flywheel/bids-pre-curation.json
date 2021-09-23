@@ -2,12 +2,12 @@
   "name": "bids-pre-curate",
   "label": "BIDS Pre-Curation",
   "description": "Prepare project for BIDS Curation. BIDS Pre-Curate offers a simple way to modify labels and classifications of project data to be compatible with the BIDS-spec. Running pre-curate on a given project (as a project-level analysis) will generate CSV files that will be populated with a unique list of container labels, as well as slots for the information needed for BIDS curation (classification, task, etc.). These CSV files can be downloaded and modified (outside of Flywheel) to provide missing or corrected information. The completed CSV file is then uploaded to the project (as an attachment) and provided as input to a run of this same gear to do on-the-fly mappings and metadata updates. For more information, please see the readme in the source repository.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "custom": {
-    "docker-image": "flywheel/bids-pre-curation:0.1.4",
+    "docker-image": "flywheel/bids-pre-curation:0.1.5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-pre-curation:0.1.4"
+      "image": "flywheel/bids-pre-curation:0.1.5"
     },
     "flywheel": {
         "suite": "BIDS"
