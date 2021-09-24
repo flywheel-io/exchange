@@ -1,0 +1,52 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "cond": {
+      "default": 0.3,
+      "minimum": 0.1,
+      "maximum": 1.0,
+      "description": "Conductance",
+      "type": "number"
+    },
+    "iters": {
+      "default": 3,
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Iterations",
+      "type": "integer"
+    },
+    "tstep": {
+      "default": 0.625,
+      "minimum": 0.1,
+      "maximum": 1.0,
+      "description": "Time Step",
+      "type": "number"
+    }
+  },
+  "custom": {
+    "gear-builder": {
+      "category": "utility",
+      "image": "flywheel/anisotropic-diffusion-denoising:0.1.1_4.13.0"
+    }
+  },
+  "description": "Gradient Anisotropic Diffusion denoising",
+  "inputs": {
+    "nifti-input": {
+      "base": "file",
+      "description": "A nifti file."
+    }
+  },
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "PATH": "/opt/qt/5.15.2/gcc_64/:/opt/rh/devtoolset-4/root/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/src/Slicer-build/Slicer-build/lib/Slicer-4.13/cli-modules"
+  },
+  "label": "Gradient Anisotropic Diffusion denoising",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "anisotropic-diffusion-denoising",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
+  "version": "0.1.1_4.13.0"
+}
