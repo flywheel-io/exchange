@@ -6,7 +6,7 @@
   "author": "Yeatman et al., Stanford VISTA Lab, FMRIB Software Lab, MRTrix, Pestilli et al., Takemura et al.",
   "cite": "Yeatman J.D., Dougherty R.F., Myall N.J., Wandell B.A., Feldman H.M. (2012). Tract Profiles of White Matter Properties: Automating Fiber-Tract Quantification. PLoS One.; M. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012.  Evaluation and statistical inference for human connectomes. F. Pestilli, J.D. Yeatman, A. Rokem, K.N. Kay & B.A. Wandell (2014) Nature Methods doi:10.1038/nmeth.3098 Published online 07 September 2014. https://mrtrix.readthedocs.io/en/latest/reference/references.html.  Takemura H, Caiafa CF, Wandell BA, Pestilli F (2016) Ensemble Tractography. PLoS Comput Biol 12(2): e1004692. https://doi.org/10.1371/journal.pcbi.1004692",
   "url": "https://github.com/yeatmanlab/afq",
-  "source": "https://github.com/scitran-apps/afq-pipline",
+  "source": "https://github.com/scitran-apps/afq-pipeline",
   "license": "Other",
   "flywheel": "0",
   "version": "3.0.0",
