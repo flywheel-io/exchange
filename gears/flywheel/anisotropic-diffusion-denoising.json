@@ -31,7 +31,7 @@
       "image": "flywheel/anisotropic-diffusion-denoising:0.1.1_4.13.0"
     }
   },
-  "description": "Gradient Anisotropic Diffusion denoising",
+  "description": "Gradient Anisotropic Diffusion denoising ",
   "inputs": {
     "nifti-input": {
       "base": "file",
