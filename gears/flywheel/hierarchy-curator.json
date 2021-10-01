@@ -2,11 +2,11 @@
   "name": "hierarchy-curator",
   "label": "Hierarchy Curator",
   "description": "Curates a container in the flywheel hierarchy given a python HierarchyCurator class. Using an implementation of the HierarchyCurator Class (provided as an input file (e.g., curator.py)) this gear is able to curate an entire project, walking down the hierarchy through project, subject, session, acquisition, analysis, and file containers.",
-  "version": "1.1.0",
+  "version": "2.1.0",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/hierarchy-curator:1.1.0"
+      "image": "flywheel/hierarchy-curator:2.1.0"
     },
     "flywheel": {
       "suite": "Curation"
@@ -54,6 +54,6 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "cite": "",
   "license": "MIT",
-  "source": "https://github.com/flywheel-apps/custom-curator",
-  "url": "https://github.com/flywheel-apps/custom-curator"
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/hierarchy-curator",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/hierarchy-curator"
 }
