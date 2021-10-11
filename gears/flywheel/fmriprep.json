@@ -7,15 +7,17 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://github.com/flywheel-apps/fmriprep",
   "url": "https://fmriprep.readthedocs.io/en/1.5.5/",
-  "version": "6.1.2_1.5.5",
+  "version": "6.1.3_1.5.5",
   "custom": {
-    "docker-image": "flywheel/fmriprep:6.1.2_1.5.5",
+    "docker-image": "flywheel/fmriprep:6.1.3_1.5.5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fmriprep:6.1.2_1.5.5"
+      "image": "flywheel/fmriprep:6.1.3_1.5.5"
     }
   },
-
+  "environment": {
+      "REQUESTS_CA_BUNDLE":"/etc/ssl/certs/ca-certificates.crt"
+  },
   "license": "Other",
   "inputs": {
     "api_key": {
