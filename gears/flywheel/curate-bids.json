@@ -4,7 +4,7 @@
   "description": "Use this gear to initialize BIDS filenames and attributes on all files within a given project.",
   "author": "Flywheel <support@flywheel.io>",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/curate-bids/-/tree/rc1",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/curate-bids",
   "url": "https://bids.neuroimaging.io/",
   "version": "2.1.1_1.0.0",
   "custom": {
