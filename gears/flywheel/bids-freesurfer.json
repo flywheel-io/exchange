@@ -2,12 +2,12 @@
   "name": "bids-freesurfer",
   "label": "BIDS Freesurfer: Freesurfer recon-all BIDS App",
   "description": "BIDS-Apps/Freesurfer (6.0.1-5) This app implements surface reconstruction using Freesurfer. It reconstructs the surface for each subject individually and then creates a study specific template. In case there are multiple sessions the Freesurfer longitudinal pipeline is used (creating subject specific templates) unless instructed to combine data across sessions.  The current Freesurfer version is based on: freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz.",
-  "version": "1.0.4_6.0.1-5",
+  "version": "1.0.5_6.0.1-5",
   "custom": {
-    "docker-image": "flywheel/bids-freesurfer:1.0.4_6.0.1-5",
+    "docker-image": "flywheel/bids-freesurfer:1.0.5_6.0.1-5",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-freesurfer:1.0.4_6.0.1-5"
+      "image": "flywheel/bids-freesurfer:1.0.5_6.0.1-5"
     },
     "flywheel": {
       "suite": "BIDS Apps"
@@ -175,6 +175,7 @@
     }   
   },
   "environment": {
+    "REQUESTS_CA_BUNDLE":"/etc/ssl/certs/ca-certificates.crt",
     "PYTHONUNBUFFERED": "1",
     "PATH": "PATH=/usr/local/miniconda/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   },
