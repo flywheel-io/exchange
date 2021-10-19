@@ -1,0 +1,137 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "file-classifier",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "classifier",
+        "image": "flywheel/file-classifier:0.2.0"
+      }
+    },
+    "description": "Generic file classifier",
+    "environment": {},
+    "inputs": {
+      "file-input": {
+        "base": "file",
+        "description": "File to classify"
+      },
+      "profile": {
+        "base": "file",
+        "description": "Optional classification profile.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "classifications": {
+        "base": "context"
+      }
+    },
+    "label": "File Classifier",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-classifier",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
+    "version": "0.2.0"
+  },
+  "exchange": {
+    "git-commit": "54d7c056aaa88ece7cee1025442bc926d4246188",
+    "rootfs-hash": "sha384:65b31667c39d4a61af94bf5b67645e6849c450ceefb6d532625f5d92d29c8341812fd28785b5e2e0311d1cbb2967eb2d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-classifier-sha384-65b31667c39d4a61af94bf5b67645e6849c450ceefb6d532625f5d92d29c8341812fd28785b5e2e0311d1cbb2967eb2d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "file-classifier",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "tag"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "file-input": {
+            "type": "object",
+            "properties": {}
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          },
+          "api-key": {
+            "type": "object"
+          },
+          "classifications": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "string"
+              },
+              "found": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "base",
+              "found",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "file-input",
+          "api-key",
+          "classifications"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
