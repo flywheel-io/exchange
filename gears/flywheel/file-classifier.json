@@ -1,0 +1,58 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "tag": {
+      "default": "file-classifier",
+      "description": "The tag to be added on input file upon run completion.",
+      "type": "string"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Curation"
+    },
+    "gear-builder": {
+      "category": "classifier",
+      "image": "flywheel/file-classifier:0.2.0"
+    }
+  },
+  "description": "Generic file classifier",
+  "environment": {},
+  "inputs": {
+    "file-input": {
+      "base": "file",
+      "description": "File to classify"
+    },
+    "profile": {
+      "base": "file",
+      "description": "Optional classification profile.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "source code"
+        ]
+      }
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "classifications": {
+      "base": "context"
+    }
+  },
+  "label": "File Classifier",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "file-classifier",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
+  "version": "0.2.0"
+}
