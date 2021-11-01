@@ -1,0 +1,132 @@
+{
+  "author": "Flywheel",
+  "cite": "A reproducible evaluation of ANTs similarity metric performance in brain image registration: Avants BB, Tustison NJ, Song G, Cook PA, Klein A, Gee JC. Neuroimage, 2011. http://www.ncbi.nlm.nih.gov/pubmed/20851191",
+  "command": "poetry run python run.py",
+  "config": {
+    "Image Dimension": {
+      "type": "integer",
+      "default": 3,
+      "description": "ImageDimension: 2 or 3 (for 2 or 3 dimensional registration of single volume)\nImageDimension: 4 (for template generation of time-series data)",
+      "minimum": 2,
+      "maximum": 4
+    },
+    "Max Iterations": {
+      "type": "string",
+      "default": "30x50x30",
+      "description": "Max-iterations\nMax-Iterations in form: JxKxL where\n  J = max iterations at coarsest resolution (here, reduce by power of 2^2)\n\tK = middle resolution iterations (here,reduce by power of 2)\n\tL = fine resolution iterations (here, full resolution) !!this level takes much more time per iteration!!\nAdding an extra value before JxKxL (i.e. resulting in IxJxKxL) would add another iteration level."
+    },
+    "N4 Bias Field Correction": {
+      "type": "boolean",
+      "default": true,
+      "description": "N4BiasFieldCorrection of moving image (default True) True == on, False == off. If True, will run N4 before each registration. It is\n          more efficient to run N4BiasFieldCorrection on the input images once, then build a template from the corrected images."
+    },
+    "Similarity Metric": {
+      "type": "string",
+      "default": "CC",
+      "enum": [
+        "CC",
+        "PR",
+        "MI",
+        "MSQ"
+      ],
+      "description": "Type of similarity metric used for registration.\nFor intramodal image registration, use:\n  CC = cross-correlation\n  MI = mutual information\n  PR = probability mapping\n  MSQ = mean square difference (Demons-like)\n  SSD = sum of squared differences\nFor intermodal image registration, use:\n  MI = mutual information\n  PR = probability mapping\n"
+    },
+    "Transformation Model": {
+      "type": "string",
+      "default": "GR",
+      "enum": [
+        "GR",
+        "EL",
+        "SY",
+        "S2",
+        "EX",
+        "DD",
+        "RI",
+        "RA"
+      ],
+      "description": "Type of transformation model used for registration (EL = elastic transformation model, SY = SyN with time, arbitrary number of time points, S2 =  SyN with time, optimized for 2 time points, GR = greedy SyN, EX = exponential, DD = diffeomorphic demons style exponential, mapping, RI = purely rigid, RA = Affine rigid)"
+    },
+    "Output File Prefix": {
+      "type": "string",
+      "default": "AntsTemplate",
+      "description": "A prefix that is prepended to all output files."
+    },
+    "Target Template": {
+      "type": "string",
+      "default": "MNI152_T1_1mm.nii.gz",
+      "enum": [
+        "None",
+        "MNI152_T1_1mm.nii.gz"
+      ],
+      "description": "Use this volume as the target of all inputs. When set to None, the script will create an unbiased starting point by averaging all inputs."
+    },
+    "Rigid-body Registration": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do rigid-body registration of inputs before creating template. Only useful when you do not have an initial template."
+    },
+    "Input Glob Pattern": {
+      "type": "string",
+      "default": "",
+      "description": "Glob pattern (Unix style pathname pattern expansion) that matches filename to be used as inputs. (Default ''). https://en.wikipedia.org/wiki/Glob_(programming)."
+    },
+    "Input Regex": {
+      "type": "string",
+      "default": ".*nii\\.gz",
+      "description": "Regular expression that matches filenames to be used as inputs. (Default '.*nii\\.gz'). https://en.wikipedia.org/wiki/Regular_expression."
+    },
+    "Input Tags": {
+      "type": "string",
+      "default": "",
+      "description": "Tag(s) that matches files to be used as inputs. When multiple tags are specified, they must be comma separated (e.g. T1template,ANTs)"
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "Log debug messages",
+      "default": false
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Image Processing - Structural",
+      "classification": {
+        "type": [
+          "nifti"
+        ],
+        "modality": [
+          "MR"
+        ],
+        "components": [
+          "ANTs"
+        ],
+        "keywords": [
+          "registration",
+          "template"
+        ]
+      }
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/ants-buildtemplateparallel:0.1.1_2.3.5"
+    }
+  },
+  "description": "ANTs based gear that run buildtemplateparallel.sh script and generate a template image by co-registering a set of inputs images",
+  "environment": {
+    "ANTSPATH": "/opt/ants/bin/",
+    "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    }
+  },
+  "label": "ANTs Build Template Parallel",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "ants-buildtemplateparallel",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/ants-buildtemplateparallel",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/ants-buildtemplateparallel",
+  "version": "0.1.1_2.3.5"
+}
