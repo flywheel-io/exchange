@@ -303,13 +303,13 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/bids-fmriprep:1.1.22_20.2.4",
+    "docker-image": "flywheel/bids-fmriprep:1.2.0_20.2.4",
     "flywheel": {
       "suite": "BIDS Apps"
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-fmriprep:1.1.22_20.2.4"
+      "image": "flywheel/bids-fmriprep:1.2.0_20.2.4"
     },
     "license": {
       "dependencies": [
@@ -368,5 +368,5 @@
   "name": "bids-fmriprep",
   "source": "https://github.com/nipreps/fmriprep",
   "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-  "version": "1.1.22_20.2.4"
+  "version": "1.2.0_20.2.4"
 }
