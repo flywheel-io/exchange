@@ -8,10 +8,20 @@
       "description": "Log debug messages",
       "type": "boolean"
     },
-    "Siemens CSA": {
+    "siemens CSA": {
       "default": false,
-      "description": "Parse Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
+      "description": "When enabled, parses Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
       "type": "boolean"
+    },
+    "derived metadata": {
+      "default": true,
+      "description": "When enabled, adds derived metadata under filer.info.header.derived (e.g. ScanCoverage for Dicom CT)",
+      "type": "boolean"
+    },
+    "tag": {
+      "default": "file-metadata-importer",
+      "description": "The tag to be added on input file upon run completion.",
+      "type": "string"
     }
   },
   "custom": {
@@ -20,7 +30,7 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-metadata-importer:1.0.1"
+      "image": "flywheel/file-metadata-importer:1.1.0"
     }
   },
   "description": "Import file metadata into Flywheel.",
@@ -42,5 +52,5 @@
   "name": "file-metadata-importer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
-  "version": "1.0.1"
+  "version": "1.1.0"
 }
