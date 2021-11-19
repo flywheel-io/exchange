@@ -1,145 +1,158 @@
 {
-  "name": "hcp-struct",
-  "label": "HCP: Structural Preprocessing Pipeline",
-  "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images. NOTE: This Gear is a prerequisite for other Gears in the HCP suite.",
-  "author": "Human Connectome Project",
-  "maintainer": "Flywheel <support@flywheel.io>",
-  "license": "Other",
-  "url": "https://github.com/Washington-University/Pipelines",
-  "source": "https://github.com/flywheel-apps/hcp-struct",
-  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-  "version": "1.0.2_4.3.0",
-  "custom": {
-    "docker-image": "flywheel/hcp-struct:1.0.2_4.3.0",
-    "gear-builder": {
-      "category": "analysis",
-      "image": "flywheel/hcp-struct:1.0.2_4.3.0"
+    "author": "Human Connectome Project",
+    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+    "command": "/flywheel/v0/run.py",
+    "config": {
+        "BrainSize": {
+            "default": 150,
+            "description": "Brain size in mm (in Superior-Inferior axis), typically 150 (default) for adults",
+            "type": "integer"
+        },
+        "FREESURFER_LICENSE": {
+            "description": "FreeSurfer license as space-separated string.",
+            "optional": true,
+            "type": "string"
+        },
+        "RegName": {
+            "default": "MSMSulc",
+            "description": "Surface registration type: either 'FS' (freesurfer) or 'MSMSulc' (HCP default)",
+            "enum": [
+                "MSMSulc",
+                "FS"
+            ],
+            "type": "string"
+        },
+        "StructuralUnwarpDirection": {
+            "default": "z",
+            "description": "Readout direction for structural scans ( 'x', 'x-', 'y', 'y-', 'z', 'z-' ). HCP default = 'z'",
+            "enum": [
+                "x",
+                "x-",
+                "y",
+                "y-",
+                "z",
+                "z-"
+            ],
+            "type": "string"
+        },
+        "Subject": {
+            "description": "Subject ID (use to override session subject id)",
+            "optional": true,
+            "type": "string"
+        },
+        "TemplateSize": {
+            "default": "0.8mm",
+            "description": "Voxel size of HCP anatomical template. Best if matches input. (Options = 0.7mm, 0.8mm (default), 1mm)",
+            "type": "string"
+        },
+        "aseg_csv": {
+            "default": true,
+            "description": "Write aseg stats to a csv file and analysis metadata.",
+            "type": "boolean"
+        },
+        "dry-run": {
+            "default": false,
+            "description": "Log all commands, but do not execute.",
+            "type": "boolean"
+        },
+        "save-on-error": {
+            "default": false,
+            "description": "Set to 'True' to save output on error.",
+            "type": "boolean"
+        }
     },
-    "flywheel": {
-      "suite": "Human Connectome Project"
-    }
-  },
-  "inputs": {
-    "api-key": {
-        "base": "api-key"
+    "custom": {
+        "docker-image": "flywheel/hcp-struct:1.0.4_4.3.0",
+        "flywheel": {
+            "suite": "Human Connectome Project"
+        },
+        "gear-builder": {
+            "category": "analysis",
+            "image": "flywheel/hcp-struct:1.0.4_4.3.0"
+        }
     },
-    "T1": {
-      "description": "T1-weighted anatomical NIfTI file",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
+    "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images. NOTE: This Gear is a prerequisite for other Gears in the HCP suite.",
+    "environment": {
+        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
     },
-    "T2": {
-      "description": "T2-weighted anatomical NIfTI file",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
+    "inputs": {
+        "FreeSurferLicense": {
+            "base": "file",
+            "description": "FreeSurfer license.txt file",
+            "optional": true
+        },
+        "GradientCoeff": {
+            "base": "file",
+            "description": "Scanner gradient nonlinearity coefficient file",
+            "optional": true
+        },
+        "SiemensGREMagnitude": {
+            "base": "file",
+            "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SiemensGREPhase": {
+            "base": "file",
+            "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SpinEchoNegative": {
+            "base": "file",
+            "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SpinEchoPositive": {
+            "base": "file",
+            "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "T1": {
+            "base": "file",
+            "description": "T1-weighted anatomical NIfTI file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "T2": {
+            "base": "file",
+            "description": "T2-weighted anatomical NIfTI file",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "api-key": {
+            "base": "api-key"
+        }
     },
-    "FreeSurferLicense": {
-      "description": "FreeSurfer license.txt file",
-      "base": "file",
-      "optional": true
-    },
-    "GradientCoeff": {
-      "description": "Scanner gradient nonlinearity coefficient file",
-      "base": "file",
-      "optional": true
-    },
-    "SpinEchoPositive": {
-      "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "SpinEchoNegative": {
-      "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "SiemensGREMagnitude": {
-      "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    },
-    "SiemensGREPhase": {
-      "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
-      "base": "file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": true
-    }
-  },
-  "config": {
-    "save-on-error": {
-        "type":"boolean",
-        "default": false,
-        "description": "Set to 'True' to save output on error."
-    },
-    "Subject": {
-      "type": "string",
-      "description": "Subject ID (use to override session subject id)",
-      "optional": true
-    },
-    "FREESURFER_LICENSE": {
-        "description": "FreeSurfer license as space-separated string.",
-        "type": "string",
-        "optional": true
-    },
-    "RegName": {
-      "type": "string",
-      "enum":["MSMSulc","FS"],
-      "default": "MSMSulc",
-      "description": "Surface registration type: either 'FS' (freesurfer) or 'MSMSulc' (HCP default)"
-    },
-    "BrainSize": {
-      "type": "integer",
-      "default": 150,
-      "description": "Brain size in mm (in Superior-Inferior axis), typically 150 (default) for adults"
-    },
-    "TemplateSize": {
-      "type": "string",
-      "default": "0.8mm",
-      "description": "Voxel size of HCP anatomical template. Best if matches input. (Options = 0.7mm, 0.8mm (default), 1mm)"
-    },
-    "StructuralUnwarpDirection": {
-      "description": "Readout direction for structural scans ( 'x', 'x-', 'y', 'y-', 'z', 'z-' ). HCP default = 'z'",
-      "default": "z",
-      "type": "string",
-      "enum": ["x", "x-", "y", "y-", "z", "z-"]
-    },
-    "aseg_csv": {
-        "type":"boolean",
-        "default": true,
-        "description": "Write aseg stats to a csv file and analysis metadata."
-    },
-    "dry-run": {
-        "type":"boolean",
-        "default": false,
-        "description": "Log all commands, but do not execute."
-    }
-  },
-  "command": "/flywheel/v0/run.py"
+    "label": "HCP: Structural Preprocessing Pipeline",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "hcp-struct",
+    "source": "https://github.com/flywheel-apps/hcp-struct",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "version": "1.0.4_4.3.0"
 }
