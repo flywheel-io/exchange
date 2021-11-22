@@ -303,13 +303,13 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/bids-fmriprep:1.2.0_20.2.4",
+    "docker-image": "flywheel/bids-fmriprep:1.2.1_20.2.6",
     "flywheel": {
       "suite": "BIDS Apps"
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-fmriprep:1.2.0_20.2.4"
+      "image": "flywheel/bids-fmriprep:1.2.1_20.2.6"
     },
     "license": {
       "dependencies": [
@@ -341,7 +341,7 @@
       "non-commercial-use-only": true
     }
   },
-  "description": "fMRIPrep 20.2.4 (Long-Term Support version) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+  "description": "fMRIPrep 20.2.6 (Long-Term Support version) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
   "environment": {
     "PATH": "/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/ants:/usr/lib/fsl/5.0:/usr/lib/afni/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
@@ -357,6 +357,11 @@
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
       "optional": true
     },
+    "fs-subjects-dir": {
+      "base": "file",
+      "description": "Zip file of existing FreeSurfer subject's directory to reuse.  If the output of FreeSurfer recon-all is provided to fMRIPrep, that output will be used rather than re-running recon-all.  Unzipping the file should produce a particular subject's directory which will be placed in the $FREESURFER_HOME/subjects directory.  The name of the directory must match the -subjid as passed to recon-all.  This version of fMRIPrep uses Freesurfer v6.0.1.",
+      "optional": true
+    },
     "key": {
       "base": "api-key",
       "read-only": true
@@ -368,5 +373,5 @@
   "name": "bids-fmriprep",
   "source": "https://github.com/nipreps/fmriprep",
   "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-  "version": "1.2.0_20.2.4"
+  "version": "1.2.1_20.2.6"
 }
