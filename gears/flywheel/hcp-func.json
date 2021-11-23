@@ -1,127 +1,59 @@
 {
-    "name": "hcp-func",
-    "label": "HCP: Functional Preprocessing Pipeline",
-    "description": "Runs the functional preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. Currently, this Gear includes v4.0-alpha release of fMRIVolume and fMRISurface, as well as generating some helpful QC images. NOTE: this Gear requires that the HCP structural preprocessing pipeline has been run, as the output of that pipeline must be provided as input to this Gear.",
     "author": "Human Connectome Project",
-    "maintainer": "Flywheel <support@flywheel.io>",
-    "license": "Other",
-    "url": "https://github.com/Washington-University/Pipelines",
-    "source": "https://github.com/flywheel-apps/hcp-func",
     "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
-    "version": "1.0.3_4.3.0_rc0",
-    "custom": {
-        "docker-image": "flywheel/hcp-func:1.0.3_4.3.0_rc0",
-        "gear-builder": {
-            "category": "analysis",
-            "image": "flywheel/hcp-func:1.0.3_4.3.0_rc0"
-        },
-        "flywheel": {
-            "suite": "Human Connectome Project"
-        }
-    },
     "command": "/flywheel/v0/run.py",
-    "inputs": {
-        "api-key": {
-            "base": "api-key"
-        },
-        "StructZip": {
-            "description": "Zipped output from HCP-Struct pipeline",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "archive"
-                ]
-            }
-        },
-        "fMRITimeSeries": {
-            "description": "Functional volume time-series",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            }
-        },
-        "fMRIScout": {
-            "description": "High-quality exemplar volume from fMRI time-series. If using Multi-Band for fMRI, and Single-Band reference volume is available, use SBRef.  Otherwise, leave empty.",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            },
-            "optional": true
-        },
-        "GradientCoeff": {
-            "description": "Scanner gradient nonlinearity coefficient file",
-            "base": "file",
-            "optional": true
-        },
-        "SpinEchoPositive": {
-            "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            },
-            "optional": true
-        },
-        "SpinEchoNegative": {
-            "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            },
-            "optional": true
-        },
-        "SiemensGREMagnitude": {
-            "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            },
-            "optional": true
-        },
-        "SiemensGREPhase": {
-            "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            },
-            "optional": true
-        },
-        "FreeSurferLicense": {
-            "description": "FreeSurfer license.txt file",
-            "base": "file",
-            "optional": true
-        }
-    },
     "config": {
-        "save-on-error": {
-            "type": "boolean",
-            "default": false,
-            "description": "Set to 'True' to save output on error."
+        "AnatomyRegDOF": {
+            "default": 6,
+            "description": "Degrees of freedom for fMRI->Anat registration. 6 (default) = rigid body, when all data is from same scanner. 12 = full affine, recommended for 7T fMRI->3T anatomy",
+            "enum": [
+                6,
+                12
+            ],
+            "type": "integer"
+        },
+        "BiasCorrection": {
+            "default": "NONE",
+            "description": "Bias-field estimation method. 'NONE'(default),'SEBased', or 'Legacy'. 'SEBased'=Estimate from SpinEchoFieldMap (only possible with both Pos and Neg SpinEcho), 'Legacy'=Estimate from structural scans (only valid if structural collected in the same session, and without any subject movement)",
+            "enum": [
+                "NONE",
+                "SEBased",
+                "Legacy"
+            ],
+            "type": "string"
         },
         "FREESURFER_LICENSE": {
             "description": "FreeSurfer license as space-separated string.",
-            "type": "string",
-            "optional": true
+            "optional": true,
+            "type": "string"
+        },
+        "MotionCorrection": {
+            "default": "MCFLIRT",
+            "description": "Use 'MCFLIRT' (standard FSL moco) for most acquisitions.  'FLIRT'=custom algorithm used by HCP3T internally, but not recommended for public use",
+            "enum": [
+                "MCFLIRT",
+                "FLIRT"
+            ],
+            "type": "string"
+        },
+        "RegName": {
+            "default": "Empty",
+            "description": "Surface registration to use during CIFTI resampling: either 'FS' (freesurfer) or 'MSMSulc'. ('Empty'=gear uses RegName from HCP-Structural )",
+            "enum": [
+                "Empty",
+                "FS",
+                "MSMSulc"
+            ],
+            "type": "string"
         },
         "dry-run": {
-            "type": "boolean",
             "default": false,
-            "description": "Log all commands, but do not execute."
+            "description": "Log all commands, but do not execute.",
+            "type": "boolean"
         },
         "fMRIName": {
-            "type": "string",
             "default": "rfMRI_REST1_RL",
+            "description": "Output name for preprocessed data. This is the type, objective, and configuration of the particular fMRI scan.",
             "enum": [
                 "rfMRI_REST1_RL",
                 "rfMRI_REST1_LR",
@@ -142,45 +74,116 @@
                 "tfMRI_EMOTION_RL",
                 "tfMRI_EMOTION_LR"
             ],
-            "description": "Output name for preprocessed data. This is the type, objective, and configuration of the particular fMRI scan."
+            "type": "string"
         },
-        "BiasCorrection": {
-            "type": "string",
-            "default": "NONE",
-            "enum": [
-                "NONE",
-                "SEBased",
-                "Legacy"
-            ],
-            "description": "Bias-field estimation method. 'NONE'(default),'SEBased', or 'Legacy'. 'SEBased'=Estimate from SpinEchoFieldMap (only possible with both Pos and Neg SpinEcho), 'Legacy'=Estimate from structural scans (only valid if structural collected in the same session, and without any subject movement)"
-        },
-        "MotionCorrection": {
-            "type": "string",
-            "default": "MCFLIRT",
-            "enum": [
-                "MCFLIRT",
-                "FLIRT"
-            ],
-            "description": "Use 'MCFLIRT' (standard FSL moco) for most acquisitions.  'FLIRT'=custom algorithm used by HCP3T internally, but not recommended for public use"
-        },
-        "AnatomyRegDOF": {
-            "type": "integer",
-            "default": 6,
-            "enum": [
-                6,
-                12
-            ],
-            "description": "Degrees of freedom for fMRI->Anat registration. 6 (default) = rigid body, when all data is from same scanner. 12 = full affine, recommended for 7T fMRI->3T anatomy"
-        },
-        "RegName": {
-            "type": "string",
-            "default": "Empty",
-            "enum": [
-                "Empty",
-                "FS",
-                "MSMSulc"
-            ],
-            "description": "Surface registration to use during CIFTI resampling: either 'FS' (freesurfer) or 'MSMSulc'. ('Empty'=gear uses RegName from HCP-Structural )"
+        "save-on-error": {
+            "default": false,
+            "description": "Set to 'True' to save output on error.",
+            "type": "boolean"
         }
-    }
+    },
+    "custom": {
+        "docker-image": "flywheel/hcp-func:1.0.4_4.3.0",
+        "flywheel": {
+            "suite": "Human Connectome Project"
+        },
+        "gear-builder": {
+            "category": "analysis",
+            "image": "flywheel/hcp-func:1.0.4_4.3.0"
+        }
+    },
+    "description": "Runs the functional preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. Currently, this Gear includes v4.0-alpha release of fMRIVolume and fMRISurface, as well as generating some helpful QC images. NOTE: this Gear requires that the HCP structural preprocessing pipeline has been run, as the output of that pipeline must be provided as input to this Gear.",
+    "environment": {
+        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
+    },
+    "inputs": {
+        "FreeSurferLicense": {
+            "base": "file",
+            "description": "FreeSurfer license.txt file",
+            "optional": true
+        },
+        "GradientCoeff": {
+            "base": "file",
+            "description": "Scanner gradient nonlinearity coefficient file",
+            "optional": true
+        },
+        "SiemensGREMagnitude": {
+            "base": "file",
+            "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SiemensGREPhase": {
+            "base": "file",
+            "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SpinEchoNegative": {
+            "base": "file",
+            "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "SpinEchoPositive": {
+            "base": "file",
+            "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "StructZip": {
+            "base": "file",
+            "description": "Zipped output from HCP-Struct pipeline",
+            "type": {
+                "enum": [
+                    "archive"
+                ]
+            }
+        },
+        "api-key": {
+            "base": "api-key"
+        },
+        "fMRIScout": {
+            "base": "file",
+            "description": "High-quality exemplar volume from fMRI time-series. If using Multi-Band for fMRI, and Single-Band reference volume is available, use SBRef.  Otherwise, leave empty.",
+            "optional": true,
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        },
+        "fMRITimeSeries": {
+            "base": "file",
+            "description": "Functional volume time-series",
+            "type": {
+                "enum": [
+                    "nifti"
+                ]
+            }
+        }
+    },
+    "label": "HCP: Functional Preprocessing Pipeline",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "hcp-func",
+    "source": "https://github.com/flywheel-apps/hcp-func",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "version": "1.0.4_4.3.0"
 }
