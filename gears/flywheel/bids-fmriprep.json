@@ -148,7 +148,7 @@
     },
     "gear-run-bids-validation": {
       "default": false,
-      "description": "Gear will run BIDS validation before running fMRIPrep and print out all warnings and errors.  fMRIPrep runs a version of the bids validator so having the gear run it is not necessary, but might be informative.  If validation fails and gear-abort-on-bids-error is true, mriq will NOT be run.",
+      "description": "Gear will run BIDS validation before running fMRIPrep and print out all warnings and errors.  fMRIPrep runs a version of the bids validator so having the gear run it is not necessary, but might be informative.  If validation fails and gear-abort-on-bids-error is true, fMRIPrep will NOT be run.",
       "type": "boolean"
     },
     "gear-save-intermediate-output": {
@@ -303,12 +303,13 @@
     }
   },
   "custom": {
+    "docker-image": "flywheel/bids-fmriprep:1.2.3_20.2.6",
     "flywheel": {
       "suite": "BIDS Apps"
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-fmriprep:1.2.2_20.2.6"
+      "image": "flywheel/bids-fmriprep:1.2.3_20.2.6"
     },
     "license": {
       "dependencies": [
@@ -351,6 +352,11 @@
       "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
       "optional": true
     },
+    "bids-filter-file": {
+      "base": "file",
+      "description": "a JSON file describing custom BIDS input filters using PyBIDS.",
+      "optional": true
+    },
     "freesurfer_license": {
       "base": "file",
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
@@ -359,6 +365,11 @@
     "fs-subjects-dir": {
       "base": "file",
       "description": "Zip file of existing FreeSurfer subject's directory to reuse.  If the output of FreeSurfer recon-all is provided to fMRIPrep, that output will be used rather than re-running recon-all.  Unzipping the file should produce a particular subject's directory which will be placed in the $FREESURFER_HOME/subjects directory.  The name of the directory must match the -subjid as passed to recon-all.  This version of fMRIPrep uses Freesurfer v6.0.1.",
+      "optional": true
+    },
+    "previous-results": {
+      "base": "file",
+      "description": "Provide previously calculated fMRIPrep output results as a zip file.  This file will be unzipped into the output directory so that previous results will be used instead of re-calculating them.  This input is provided so that bids-fmriprep can be run incrementally as new data is acquired.",
       "optional": true
     },
     "key": {
@@ -372,5 +383,5 @@
   "name": "bids-fmriprep",
   "source": "https://github.com/nipreps/fmriprep",
   "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-  "version": "1.2.2_20.2.6"
+  "version": "1.2.3_20.2.6"
 }
