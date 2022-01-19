@@ -7,11 +7,11 @@
   "license": "MIT",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export/-/blob/main/README.md",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/deid-export:1.2.3"
+      "image": "flywheel/deid-export:1.3.0"
     }
   },
   "inputs": {
@@ -62,3 +62,4 @@
   },
   "command": "poetry run python /flywheel/v0/run.py"
 }
+
