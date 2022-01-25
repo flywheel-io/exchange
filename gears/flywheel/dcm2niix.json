@@ -133,7 +133,7 @@
       "default": false
     },
     "decompress_dicoms": {
-      "description": "Decompress DICOM files before conversion. This will perform decompression using gdcmconv and then perform the conversion using dcm2niix. Options: true, false (default).",
+      "description": "Decompress DICOM files before conversion. This will perform decompression using gdcmconv, then perform the conversion using dcm2niix. Options: true, false (default).",
       "type": "boolean",
       "default": false
     },
