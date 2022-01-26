@@ -1,7 +1,7 @@
 {
   "name": "deid-export",
   "label": "De-identified Export",
-  "description": "Profile-based anonymization and export of files within a project. Files within the source project will be anonymized (according to a required template) and exported to a specified project. Output is a csv file reporting the status of all exported items.",
+  "description": "Profile-based anonymization and export of files from a project to another. Files within the source project will be anonymized (according to a required template) and exported to a specified project. Output is a csv file reporting the status of all exported items.",
   "author": "Flywheel, Inc.",
   "maintainer": "Flywheel <support@flywheel.io>",
   "license": "MIT",
