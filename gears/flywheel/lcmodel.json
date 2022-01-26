@@ -1,6 +1,6 @@
 {
-  "author": "Stephen Provencher",
-  "cite": "Estimation of metabolite concentrations from localized in vivo proton NMR spectra. Magn Reson Med 30, 672 (1993)",
+  "author": "Flywheel",
+  "cite": "Estimation of metabolite concentrations from localized in vivo proton NMR spectra. Magn Reson Med 30, 672 (1993). Stephen Provencher",
   "command": "poetry run python run.py",
   "config": {
     "Bruker": {
