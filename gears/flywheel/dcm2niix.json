@@ -2,7 +2,7 @@
   "name": "dcm2niix",
   "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
   "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
-  "version": "1.3.4_1.0.20211006",
+  "version": "1.4.0_1.0.20211006",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
@@ -12,7 +12,7 @@
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dcm2niix:1.3.4_1.0.20211006"
+      "image": "flywheel/dcm2niix:1.4.0_1.0.20211006"
     },
     "flywheel": {
       "suite": "Conversion"
@@ -138,9 +138,9 @@
       "default": false
     },
     "filename": {
-      "description": "Output filename template. Options: %a=antenna (coil) name, %b=basename, %c=comments, %d=series description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %o=mediaObjectInstanceUID, %p=protocol, %r=instance number, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID, %z=sequence name tag(0018,0024), %q sequence name tag(0018,1020). Defaults: dcm2niix tool `%f_%p_%t_%s` and dcm2niix Gear `%f`. Tip: A more informative filename can be useful for downstream BIDS curation by simply accessing relevant information in the extracted filename. For example, including echo number or protocol.",
+      "description": "Output filename template. Options: %a=antenna (coil) name, %b=basename, %c=comments, %d=series description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %o=mediaObjectInstanceUID, %p=protocol, %r=instance number, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID, %z=sequence name tag(0018,0024), %q sequence name tag(0018,1020). Defaults: dcm2niix tool `%f_%p_%t_%s`. Tip: A more informative filename can be useful for downstream BIDS curation by simply accessing relevant information in the extracted filename. For example, including echo number or protocol.",
       "type": "string",
-      "default": "%f"
+      "default": "%f_%p_%t_%s"
     },
     "ignore_derived": {
       "description": "Ignore derived, localizer, and 2D images. Options: true, false (default).",
@@ -153,9 +153,9 @@
       "default": false
     },
     "lossless_scaling": {
-      "description": "Losslessly scale 16-bit integers to use dynamic range. Options: 'y'=scale, 'n'=no, but unit16->int16 (default), 'o'=original.",
+      "description": "Losslessly scale 16-bit integers to use dynamic range. Options: 'y'=scale, 'n'=no, but unit16->int16, 'o'=original (default).",
       "type": "string",
-      "default": "n",
+      "default": "o",
       "enum": [
         "y",
         "n",
