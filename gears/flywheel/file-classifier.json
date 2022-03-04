@@ -20,7 +20,7 @@
     },
     "gear-builder": {
       "category": "classifier",
-      "image": "flywheel/file-classifier:0.2.0"
+      "image": "flywheel/file-classifier:0.4.6"
     }
   },
   "description": "Generic file classifier",
@@ -43,9 +43,6 @@
     "api-key": {
       "base": "api-key",
       "read-only": true
-    },
-    "classifications": {
-      "base": "context"
     }
   },
   "label": "File Classifier",
@@ -54,5 +51,5 @@
   "name": "file-classifier",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
-  "version": "0.2.0"
+  "version": "0.4.6"
 }
