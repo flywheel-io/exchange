@@ -26,7 +26,7 @@
   "custom": {
     "gear-builder": {
       "category": "utility",
-      "image": "flywheel/intensity-standardization:0.1.0_4.13.0"
+      "image": "flywheel/intensity-standardization:0.2.0_4.13.0"
     }
   },
   "description": "Histogram Matching Intensity Standardization",
@@ -50,5 +50,5 @@
   "name": "intensity-standardization",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/intensity-standardization",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/intensity-standardization",
-  "version": "0.1.0_4.13.0"
+  "version": "0.2.0_4.13.0"
 }
