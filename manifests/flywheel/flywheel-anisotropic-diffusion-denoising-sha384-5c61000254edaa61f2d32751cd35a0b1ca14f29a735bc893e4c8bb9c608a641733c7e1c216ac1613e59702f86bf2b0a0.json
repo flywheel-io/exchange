@@ -1,0 +1,110 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "cond": {
+        "default": 0.3,
+        "minimum": 0.1,
+        "maximum": 1,
+        "description": "Conductance",
+        "type": "number"
+      },
+      "iters": {
+        "default": 3,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Iterations",
+        "type": "integer"
+      },
+      "tstep": {
+        "default": 0.625,
+        "minimum": 0.1,
+        "maximum": 1,
+        "description": "Time Step",
+        "type": "number"
+      }
+    },
+    "custom": {
+      "gear-builder": {
+        "category": "utility",
+        "image": "flywheel/anisotropic-diffusion-denoising:0.2.0_4.13.0"
+      }
+    },
+    "description": "Gradient Anisotropic Diffusion denoising ",
+    "inputs": {
+      "nifti-input": {
+        "base": "file",
+        "description": "A nifti file."
+      }
+    },
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "PATH": "/opt/qt/5.15.2/gcc_64/:/opt/rh/devtoolset-4/root/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/src/Slicer-build/Slicer-build/lib/Slicer-4.13/cli-modules"
+    },
+    "label": "Gradient Anisotropic Diffusion denoising",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "anisotropic-diffusion-denoising",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
+    "version": "0.2.0_4.13.0"
+  },
+  "exchange": {
+    "git-commit": "4e42bb2e312710de8c623d2cf9250a44682103fa",
+    "rootfs-hash": "sha384:5c61000254edaa61f2d32751cd35a0b1ca14f29a735bc893e4c8bb9c608a641733c7e1c216ac1613e59702f86bf2b0a0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-anisotropic-diffusion-denoising-sha384-5c61000254edaa61f2d32751cd35a0b1ca14f29a735bc893e4c8bb9c608a641733c7e1c216ac1613e59702f86bf2b0a0.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Gradient Anisotropic Diffusion denoising",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "cond": {
+            "default": 0.3,
+            "minimum": 0.1,
+            "maximum": 1,
+            "type": "number"
+          },
+          "iters": {
+            "default": 3,
+            "minimum": 1,
+            "maximum": 10,
+            "type": "integer"
+          },
+          "tstep": {
+            "default": 0.625,
+            "minimum": 0.1,
+            "maximum": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "cond",
+          "iters",
+          "tstep"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "nifti-input": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "nifti-input"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
