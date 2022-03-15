@@ -161,7 +161,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-hcp:0.2.5_4.3.0_rc1"
+      "image": "flywheel/bids-hcp:1.2.5_4.3.0_rc1"
     }
   },
   "description": "Runs the preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.3.0 release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images.",
@@ -243,5 +243,5 @@
   "name": "bids-hcp",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-hcp",
   "url": "https://github.com/Washington-University/Pipelines",
-  "version": "0.2.5_4.3.0_rc1"
+  "version": "1.2.5_4.3.0_rc1"
 }
