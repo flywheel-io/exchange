@@ -28,7 +28,7 @@
   "custom": {
     "gear-builder": {
       "category": "utility",
-      "image": "flywheel/anisotropic-diffusion-denoising:0.1.1_4.13.0"
+      "image": "flywheel/anisotropic-diffusion-denoising:0.2.0_4.13.0"
     }
   },
   "description": "Gradient Anisotropic Diffusion denoising ",
@@ -48,5 +48,5 @@
   "name": "anisotropic-diffusion-denoising",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/anisotropic-diffusion-denoising",
-  "version": "0.1.1_4.13.0"
+  "version": "0.2.0_4.13.0"
 }
