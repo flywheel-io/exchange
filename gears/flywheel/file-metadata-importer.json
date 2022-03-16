@@ -30,10 +30,10 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-metadata-importer:1.2.0"
+      "image": "flywheel/file-metadata-importer:1.2.1"
     }
   },
-  "description": "Parse and import file metadata into Flywheel.",
+  "description": "Import file metadata into Flywheel.",
   "environment": {},
   "inputs": {
     "api-key": {
@@ -52,5 +52,5 @@
   "name": "file-metadata-importer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
-  "version": "1.2.0"
+  "version": "1.2.1"
 }
