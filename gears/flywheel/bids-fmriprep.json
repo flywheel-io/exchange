@@ -156,6 +156,11 @@
       "description": "Gear will save ALL intermediate output into fmriprep_work_*.zip",
       "type": "boolean"
     },
+    "gear-writable-dir": {
+      "default": "/var/tmp",
+      "description": "Gears expect to be able to write temporary files in /flywheel/v0/.  If this location is not writable (such as when running in Singularity), this path will be used instead.  fMRIPrep creates a large number of files so this disk space should be fast and local.",
+      "type": "string"
+    },
     "ignore": {
       "default": "",
       "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)  Possible choices: fieldmaps, slicetiming, sbref",
@@ -303,13 +308,13 @@
     }
   },
   "custom": {
-    "docker-image": "flywheel/bids-fmriprep:1.2.4_20.2.6",
+    "docker-image": "flywheel/bids-fmriprep:1.2.8_20.2.6",
     "flywheel": {
       "suite": "BIDS Apps"
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-fmriprep:1.2.4_20.2.6"
+      "image": "flywheel/bids-fmriprep:1.2.8_20.2.6"
     },
     "license": {
       "dependencies": [
@@ -383,5 +388,5 @@
   "name": "bids-fmriprep",
   "source": "https://github.com/nipreps/fmriprep",
   "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-  "version": "1.2.4_20.2.6"
+  "version": "1.2.8_20.2.6"
 }
