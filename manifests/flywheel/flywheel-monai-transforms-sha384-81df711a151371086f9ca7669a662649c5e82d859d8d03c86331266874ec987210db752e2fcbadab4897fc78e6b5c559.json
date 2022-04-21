@@ -1,0 +1,114 @@
+{
+  "gear": {
+    "author": "Flywheel, Inc",
+    "cite": "https://doi.org/10.5281/zenodo.4323058",
+    "command": "poetry run ./run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "description": "Apply the MONAI tranforms as specified by the user script and save output in the destination container",
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.8.13",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/38e54e5de07c66e875c11a1ebbdb938854625dd8/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "e235c437e5c7d7524fbce3880ca39b917a73dc565e0c813465b7a7a329bb279a",
+      "FLYWHEEL": "/flywheel/v0"
+    },
+    "custom": {
+      "gear-builder": {
+        "image": "flywheel/monai-transforms:0.1.0",
+        "category": "converter"
+      },
+      "flywheel": {
+        "show-job": true,
+        "suite": "Conversion"
+      }
+    },
+    "inputs": {
+      "input-file": {
+        "base": "file",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom",
+            "image"
+          ]
+        },
+        "description": "Input NIfTI file for the transform"
+      },
+      "transform-script": {
+        "base": "file",
+        "optional": false,
+        "description": "Python module containing the definition of the transforms to apply."
+      }
+    },
+    "label": "MONAI Transforms",
+    "name": "monai-transforms",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/monai-transforms",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/monai-transforms",
+    "license": "MIT",
+    "version": "0.1.0"
+  },
+  "exchange": {
+    "git-commit": "2f9c1fdeb9995bc736cf7d0a823ef7c110da23f7",
+    "rootfs-hash": "sha384:81df711a151371086f9ca7669a662649c5e82d859d8d03c86331266874ec987210db752e2fcbadab4897fc78e6b5c559",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-monai-transforms-sha384-81df711a151371086f9ca7669a662649c5e82d859d8d03c86331266874ec987210db752e2fcbadab4897fc78e6b5c559.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for MONAI Transforms",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "input-file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom",
+                  "image"
+                ]
+              }
+            }
+          },
+          "transform-script": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "input-file",
+          "transform-script"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
