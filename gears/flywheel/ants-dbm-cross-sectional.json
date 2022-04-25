@@ -1,0 +1,114 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "dimension": {
+      "type": "number",
+      "default": 3,
+      "description": "Image dimension",
+      "enum": [
+        2,
+        3
+      ]
+    },
+    "denoise_anatomical_images": {
+      "type": "integer",
+      "default": 1,
+      "description": "Denoise anatomical images."
+    },
+    "max_iterations": {
+      "type": "string",
+      "description": "ANTS registration max iterations (default = 100x100x70x20).",
+      "default": "100x100x70x20"
+    },
+    "prior_segmentation_weight": {
+      "type": "number",
+      "default": 0.25,
+      "description": "Atropos spatial prior *probability* weight for the segmentation (default = 0.25)."
+    },
+    "segmentation_iterations": {
+      "type": "integer",
+      "default": 3,
+      "description": "N4 -> Atropos -> N4 iterations during segmentation (default = 3)."
+    },
+    "use_floatingpoint_precision": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use single float precision in registrations (default = False)."
+    },
+    "b_spline_smoothing": {
+      "type": "boolean",
+      "default": true,
+      "description": "Use B-spline SyN for registrations and B-spline exponential mapping in DiReCT. Default: True"
+    },
+    "atropos_iteration": {
+      "type": "integer",
+      "default": 5,
+      "description": "Number of iterations within Atropos (default 5)."
+    },
+    "atlases_template": {
+      "type": "string",
+      "default": "OASIS-30_Atropos_template",
+      "enum": [
+        "OASIS-30_Atropos_template"
+      ],
+      "description": "If registered predefined template are not provided as an input, the gear will use this as the default predefined template."
+    },
+    "args": {
+      "description": "Additional arguments",
+      "type": "string",
+      "optional": true
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "ANTs"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/ants-dbm-cross-sectional:0.1.0_2.3.5"
+    }
+  },
+  "description": "A Flywheel gear wrapping ANTs antsCorticalThickness.sh script. Within the antsCorticalThickness.sh pipeline, it performs bias correction using the N4 algorithm, segmentation using ANTs Atropos algorithm and cortical thickness calculation using these segmentations as input.",
+  "environment": {
+    "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.8.11",
+    "ANTSPATH": "/opt/ants/bin/",
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "inputs": {
+    "anatomical_image": {
+      "base": "file",
+      "description": "Structural *intensity* image, typically T1.  If more than one anatomical image is specified, subsequently specified images are used during the segmentation process. However, only the first image is used in the registration of priors.  We recommend using the T1 as the first image.",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "registered_predefined_template": {
+      "base": "file",
+      "description": "A zip archive that contains brain segmentation template, brain extraction probability mask, extraction registration mask, T1 registration template and brain segmentation priors.",
+      "optional": true
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    }
+  },
+  "label": "ANTs DBM Cross Sectional",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "ants-dbm-cross-sectional",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/ants-dbm-cross-sectional",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/ants-dbm-cross-sectional",
+  "version": "0.1.0_2.3.5"
+}
