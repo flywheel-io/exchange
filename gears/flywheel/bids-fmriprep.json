@@ -346,13 +346,13 @@
         }
     },
     "custom": {
-        "docker-image": "flywheel/bids-fmriprep:1.3.1_21.0.1",
+        "docker-image": "flywheel/bids-fmriprep:1.3.2_21.0.1",
         "flywheel": {
             "suite": "BIDS Apps"
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/bids-fmriprep:1.3.1_21.0.1"
+            "image": "flywheel/bids-fmriprep:1.3.2_21.0.1"
         },
         "license": {
             "dependencies": [
@@ -477,11 +477,11 @@
             "read-only": true
         }
     },
-    "label": "BIDS fMRIPrep 12.0.1: A Robust Preprocessing Pipeline for fMRI Data",
+    "label": "BIDS fMRIPrep 21.0.1: A Robust Preprocessing Pipeline for fMRI Data",
     "license": "BSD-3-Clause",
     "maintainer": "Flywheel <support@flywheel.io>",
     "name": "bids-fmriprep",
     "source": "https://github.com/nipreps/fmriprep",
     "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-    "version": "1.3.1_21.0.1"
+    "version": "1.3.2_21.0.1"
 }
