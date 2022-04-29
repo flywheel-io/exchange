@@ -6,11 +6,11 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/curate-bids",
   "url": "https://bids.neuroimaging.io/",
-  "version": "2.1.3_1.0.4",
+  "version": "2.1.3_1.0.7",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/curate-bids:2.1.3_1.0.4"
+      "image": "flywheel/curate-bids:2.1.3_1.0.7"
     },
     "flywheel": {
       "suite": "BIDS"
@@ -49,7 +49,7 @@
       ]
     },
     "intendedfor_regexes": {
-      "description": "A list of pairs of regular expressions.  The first regex matches the field map acquisition label and the second matches the IntendedFor BIDS path.  Initial processing sets the list of IntendedFor paths to all files in the different 'anat', 'func', and 'dwi' BDIS folders.  These regex pairs should be used to filter that list so that only the appropriate IntendedFor paths remain.",
+      "description": "A list of pairs of regular expressions.  The first regex matches the field map acquisition label and the second matches the IntendedFor BIDS path.  Initial processing sets the list of IntendedFor paths to all files in the different 'anat', 'func', and 'dwi' BIDS folders.  These regex pairs should be used to filter that list so that only the appropriate IntendedFor paths remain.",
       "type": "string",
       "default": ""
     },
@@ -74,5 +74,5 @@
       ]
     }
   },
-  "command": "python3 run.py"
+  "command": "poetry run python run.py"
 }
