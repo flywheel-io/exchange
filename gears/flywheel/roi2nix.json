@@ -8,14 +8,38 @@
     "url": "",
     "source": "https://github.com/flywheel-apps/ROI2nix",
     "cite": "",
-    "version": "0.3.4",
+    "version": "1.0.0",
+
     "custom": {
-        "docker-image": "flywheel/roi2nix:0.3.4",
+        "docker-image": "flywheel/roi2nix:1.0.0",
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/roi2nix:0.3.4"
+            "image": "flywheel/roi2nix:1.0.0"
         }
     },
+    "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "CONVERTER_DIR": "/flywheel/v0/converters",
+        "SCRIPT_DIR": "/flywheel/v0/converters/scripts",
+        "SLICER_DIR": "/flywheel/v0/converters/slicer",
+        "SLICER_DOCKER_DIR": "/flywheel/v0/converters/slicer_docker",
+        "PLASTIMATCH_DIR": "/flywheel/v0/converters/plastimatch",
+        "DCM2NIIX_DIR": "/flywheel/v0/converters/dcm2niix",
+        "DICOM2NIFTI_DIR": "/flywheel/v0/converters/dicom2nifti",
+        "DCMHEAT_DIR": "/flywheel/v0/dcmheat",
+        "CXX": "/usr/bin/gcc",
+        "HOME": "/root",
+        "TERM": "xterm",
+        "SHLVL": "1",
+        "XDG_RUNTIME_DIR":"/tmp/runtime-sliceruser",
+        "PATH": "/flywheel/v0/converters/slicer/slicer:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "DEBIAN_FRONTEND":"noninteractive",
+        "_":"/usr/bin/env",
+        "OPENJPEGDIR":"/flywheel/v0/openjpeg"
+
+
+    },
+
     "inputs": {
         "api-key": {
             "base": "api-key"
@@ -33,6 +57,11 @@
         }
     },
     "config": {
+        "save_NRRD": {
+            "default": false,
+            "description": "Saves the ROI's as output Type NRRD instead of Nifti.  Default False",
+            "type": "boolean"
+        },
         "save_binary_masks": {
             "default": true,
             "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
@@ -43,22 +72,24 @@
             "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
             "type": "boolean"
         },
-        "combined_output_size": {
-            "default": "int32",
-            "description": "Bit depth of combined ROI bitmasked file.",
-            "enum": [
-                "int8",
-                "int16",
-                "int32",
-                "int64"
-            ],
-            "type": "string"
-        },
+
         "save_slicer_color_table": {
             "default": false,
             "description": "Saves a 3D Slicer colortable file for 3D Slicer integration. Default is False.",
             "type": "boolean"
+        },
+        "conversion_method": {
+            "default": "dcm2niix",
+            "type": "string",
+            "enum": [
+                "dcm2niix",
+                "slicer-dcmtk",
+                "slicer-gdcm",
+                "slicer-arch",
+                "plastimatch",
+                "dicom2nifti"
+            ]
         }
     },
-    "command": "/flywheel/v0/run.py"
+    "command": "poetry run python3 /flywheel/v0/run.py"
 }
