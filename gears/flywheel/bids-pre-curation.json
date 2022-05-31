@@ -29,7 +29,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-pre-curation:0.3.2"
+      "image": "flywheel/bids-pre-curation:0.4.0"
     },
     "license": {
       "dependencies": [],
@@ -71,5 +71,5 @@
   "name": "bids-pre-curate",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-  "version": "0.3.2"
+  "version": "0.4.0"
 }
