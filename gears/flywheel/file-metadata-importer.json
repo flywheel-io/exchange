@@ -34,7 +34,7 @@
       "image": "flywheel/file-metadata-importer:1.2.5"
     }
   },
-  "description": "Import file metadata into Flywheel. Metadata is stored under file.info.header. Supports DICOM and DICOM Zip Archives, PTD (Siemens PT format), NIfTI. ParaVision (Bruker format). PAR/REC (Philips format)",
+  "description": "Import file metadata into Flywheel. Metadata is stored under file.info.header. Supports DICOM and DICOM Zip Archives, PTD (Siemens PT format), NIfTI, ParaVision (Bruker format), PAR/REC (Philips format)",
   "environment": {
     "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
