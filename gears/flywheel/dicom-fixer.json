@@ -13,6 +13,21 @@
       "description": "Decompress dicom's if possible and adjust TransferSyntaxUID to ExplicitVRLittleEndian",
       "type": "boolean"
     },
+    "unique": {
+      "default": true,
+      "description": "Enforce dicom uniqueness by SOPInstanceUID or file hash. Remove duplicate dicoms",
+      "type": "boolean"
+    },
+    "zip-single-dicom": {
+      "default": "match",
+      "description": "Output a single dicom as zip (.dcm.zip) instead of as a dicom (.dcm) or match input.",
+      "type": "string",
+      "enum": [
+        "match",
+        "yes",
+        "no"
+      ]
+    },
     "debug": {
       "default": false,
       "description": "Log debug messages",
@@ -31,11 +46,12 @@
           "fixer",
           "dicom"
         ]
-      }
+      },
+      "show-job": true
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dicom-fixer:0.4.0"
+      "image": "flywheel/dicom-fixer:0.5.3"
     }
   },
   "description": "Fixes various issues in dicoms.",
@@ -61,7 +77,8 @@
     "COMMIT_TAG": "",
     "COMMIT_TIME": "2021-10-25T09:24:15+00:00",
     "GDCM_VERSION": "3.0.9",
-    "FLYWHEEL": "/flywheel/v0"
+    "FLYWHEEL": "/flywheel/v0",
+    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568"
   },
   "inputs": {
     "dicom": {
@@ -73,6 +90,10 @@
           "dicom"
         ]
       }
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
     }
   },
   "label": "Dicom Fixer",
@@ -81,5 +102,5 @@
   "name": "dicom-fixer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
-  "version": "0.4.0"
+  "version": "0.5.3"
 }
