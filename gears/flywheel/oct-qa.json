@@ -1,0 +1,42 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "save_figures_if_fail": {
+      "default": false,
+      "description": "If any of the qa tests fail, save all generated figures within the parent container.",
+      "type": "boolean"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "Ophthalmology",
+      "show-job": true
+    },
+    "gear-builder": {
+      "category": "qa",
+      "image": "flywheel/oct-qa:0.0.5"
+    }
+  },
+  "description": "OCT Quality Assessment.\n\nThis gear assesses the quality of OCT volumes and their slices. The criteria to flag a \nslice is being bigger than 1.5 * Interquartile Range (IQR) or smaller than 1.5 * IQR in \neach of the four measurement tests. If any slices are flagged for any of the four tests, \nthe `overall_qc` test will be set to `fail`. All test results are saved in the input \nfile's info dictionary under `\"qc\":\"oct-qa\"`",
+  "environment": {},
+  "inputs": {
+    "raw_input": {
+      "base": "file",
+      "description": "OCT data in numpy array (.npy), dicom (.dcm) or zipped dicom (.dcm.zip) format. The format must be (Number of slices x Height of slices x Width of slices)"
+    }
+  },
+  "label": "OCT QA",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "oct-qa",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/oct-qa",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/oct-qa",
+  "version": "0.0.5"
+}
