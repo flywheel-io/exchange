@@ -1,95 +1,90 @@
 {
-    "name": "roi2nix",
-    "label": "ROI to NIfTI",
-    "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
-    "author": "Flywheel",
-    "maintainer": "Flywheel <support@flywheel.io>",
-    "license": "MIT",
-    "url": "",
-    "source": "https://github.com/flywheel-apps/ROI2nix",
-    "cite": "",
-    "version": "1.0.0",
-
-    "custom": {
-        "docker-image": "flywheel/roi2nix:1.0.0",
-        "gear-builder": {
-            "category": "analysis",
-            "image": "flywheel/roi2nix:1.0.0"
-        }
+  "name": "roi2nix",
+  "label": "ROI to NIfTI",
+  "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
+  "author": "Flywheel",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "license": "MIT",
+  "url": "",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/roi2nix",
+  "cite": "",
+  "version": "1.0.1",
+  "custom": {
+    "docker-image": "flywheel/roi2nix:1.0.1",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/roi2nix:1.0.1"
+    }
+  },
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "CONVERTER_DIR": "/flywheel/v0/converters",
+    "SCRIPT_DIR": "/flywheel/v0/converters/scripts",
+    "SLICER_DIR": "/flywheel/v0/converters/slicer",
+    "SLICER_DOCKER_DIR": "/flywheel/v0/converters/slicer_docker",
+    "PLASTIMATCH_DIR": "/flywheel/v0/converters/plastimatch",
+    "DCM2NIIX_DIR": "/flywheel/v0/converters/dcm2niix",
+    "DICOM2NIFTI_DIR": "/flywheel/v0/converters/dicom2nifti",
+    "DCMHEAT_DIR": "/flywheel/v0/dcmheat",
+    "CXX": "/usr/bin/gcc",
+    "HOME": "/root",
+    "TERM": "xterm",
+    "SHLVL": "1",
+    "XDG_RUNTIME_DIR": "/tmp/runtime-sliceruser",
+    "PATH": "/flywheel/v0/converters/slicer/slicer:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "_": "/usr/bin/env",
+    "OPENJPEGDIR": "/flywheel/v0/openjpeg"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key"
     },
-    "environment": {
-        "FLYWHEEL": "/flywheel/v0",
-        "CONVERTER_DIR": "/flywheel/v0/converters",
-        "SCRIPT_DIR": "/flywheel/v0/converters/scripts",
-        "SLICER_DIR": "/flywheel/v0/converters/slicer",
-        "SLICER_DOCKER_DIR": "/flywheel/v0/converters/slicer_docker",
-        "PLASTIMATCH_DIR": "/flywheel/v0/converters/plastimatch",
-        "DCM2NIIX_DIR": "/flywheel/v0/converters/dcm2niix",
-        "DICOM2NIFTI_DIR": "/flywheel/v0/converters/dicom2nifti",
-        "DCMHEAT_DIR": "/flywheel/v0/dcmheat",
-        "CXX": "/usr/bin/gcc",
-        "HOME": "/root",
-        "TERM": "xterm",
-        "SHLVL": "1",
-        "XDG_RUNTIME_DIR":"/tmp/runtime-sliceruser",
-        "PATH": "/flywheel/v0/converters/slicer/slicer:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        "DEBIAN_FRONTEND":"noninteractive",
-        "_":"/usr/bin/env",
-        "OPENJPEGDIR":"/flywheel/v0/openjpeg"
-
-
+    "Input_File": {
+      "base": "file",
+      "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti",
+          "dicom"
+        ]
+      }
+    }
+  },
+  "config": {
+    "save_NRRD": {
+      "default": false,
+      "description": "Saves the ROI's as output Type NRRD instead of Nifti.  Default False",
+      "type": "boolean"
     },
-
-    "inputs": {
-        "api-key": {
-            "base": "api-key"
-        },
-        "Input_File": {
-            "base": "file",
-            "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
-            "optional": false,
-            "type": {
-                "enum": [
-                    "nifti",
-                    "dicom"
-                ]
-            }
-        }
+    "save_binary_masks": {
+      "default": true,
+      "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
+      "type": "boolean"
     },
-    "config": {
-        "save_NRRD": {
-            "default": false,
-            "description": "Saves the ROI's as output Type NRRD instead of Nifti.  Default False",
-            "type": "boolean"
-        },
-        "save_binary_masks": {
-            "default": true,
-            "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
-            "type": "boolean"
-        },
-        "save_combined_output": {
-            "default": false,
-            "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
-            "type": "boolean"
-        },
-
-        "save_slicer_color_table": {
-            "default": false,
-            "description": "Saves a 3D Slicer colortable file for 3D Slicer integration. Default is False.",
-            "type": "boolean"
-        },
-        "conversion_method": {
-            "default": "dcm2niix",
-            "type": "string",
-            "enum": [
-                "dcm2niix",
-                "slicer-dcmtk",
-                "slicer-gdcm",
-                "slicer-arch",
-                "plastimatch",
-                "dicom2nifti"
-            ]
-        }
+    "save_combined_output": {
+      "default": false,
+      "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
+      "type": "boolean"
     },
-    "command": "poetry run python3 /flywheel/v0/run.py"
+    "save_slicer_color_table": {
+      "default": false,
+      "description": "Saves a 3D Slicer colortable file for 3D Slicer integration. Default is False.",
+      "type": "boolean"
+    },
+    "conversion_method": {
+      "default": "dcm2niix",
+      "type": "string",
+      "enum": [
+        "dcm2niix",
+        "slicer-dcmtk",
+        "slicer-gdcm",
+        "slicer-arch",
+        "plastimatch",
+        "dicom2nifti"
+      ]
+    }
+  },
+  "command": "poetry run python3 /flywheel/v0/run.py"
 }
