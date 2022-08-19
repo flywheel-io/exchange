@@ -1,7 +1,7 @@
 {
   "author": "Flywheel",
   "cite": "https://qsiprep.readthedocs.io/en/latest/citing.html",
-  "command": "poetry run python run.py",
+  "command": "python /flywheel/v0/run.py",
   "config": {
     "debug": {
       "default": false,
@@ -324,7 +324,7 @@
       "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
       "type": "boolean"
     },
-    "gear-FREESURFER_LICENSE": {
+    "freesurfer_license_key": {
       "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "type": "string",
       "optional": true
@@ -343,7 +343,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-qsiprep:1.0.2_0.15.4"
+      "image": "flywheel/bids-qsiprep:1.0.3_0.15.4"
     },
     "license": {
       "non-commercial-use-only": false,
@@ -375,7 +375,7 @@
       ]
     }
   },
-  "description": "BIDS qsiprep 1.0.1_0.15.4 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes",
+  "description": "BIDS qsiprep 1.0.*_0.15.4 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes",
   "environment": {
     "AFNI_IMSAVE_WARNINGS": "NO",
     "AFNI_INSTALLDIR": "/opt/afni-latest",
@@ -455,7 +455,7 @@
       "base": "file",
       "optional": true
     },
-    "freesurfer_license": {
+    "freesurfer_license_file": {
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
       "base": "file",
       "optional": true
@@ -476,5 +476,5 @@
   "name": "bids-qsiprep",
   "source": "https://qsiprep.readthedocs.io/en/latest/",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-qsiprep",
-  "version": "1.0.2_0.15.4"
+  "version": "1.0.3_0.15.4"
 }
