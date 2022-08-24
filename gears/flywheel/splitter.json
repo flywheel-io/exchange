@@ -2,14 +2,14 @@
   "name": "splitter",
   "label": "DICOM splitter",
   "description": "The DICOM splitter extracts embedded localizer DICOM frames and/or re-group DICOM frames in archive by specific DICOM tags provided by user.",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/splitter:1.3.1"
+      "image": "flywheel/splitter:1.3.3"
     },
     "flywheel": {
-      "suite": "Conversion",
+      "suite": "AEQC",
       "show-job": true
     }
   },
