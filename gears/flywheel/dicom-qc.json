@@ -1,4 +1,3 @@
-
 {
   "author": "Flywheel <support@flywheel.io>",
   "cite": "dicom3tools: 1993-2021, David A. Clunie DBA PixelMed Publishing.",
@@ -47,11 +46,11 @@
   },
   "custom": {
     "flywheel": {
-      "suite": "AEQC"
+      "suite": "Curation"
     },
     "gear-builder": {
       "category": "qa",
-      "image": "flywheel/dicom-qc:0.4.8"
+      "image": "flywheel/dicom-qc:0.4.9"
     }
   },
   "description": "Validate dicom archive on a set of hardcoded and user-specified rules",
@@ -112,5 +111,5 @@
   "name": "dicom-qc",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc/-/blob/master/README.md",
-  "version": "0.4.8"
+  "version": "0.4.9"
 }
