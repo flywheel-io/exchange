@@ -1,0 +1,130 @@
+{
+  "name": "ants-registrationsynquick",
+  "label": "Ants_RegistrationSynQuick using Nipype",
+  "description": "A gear to perform ANTS registration using Nipype and RegistrationSynQuick",
+  "author": "Flywheel",
+  "cite": "",
+  "maintainer": "support@flywheel.io",
+  "source": "https://github.com/flywheel-apps/Ants_RegistrationSynQuick",
+  "url": "https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.ants.registration.html#registrationsynquick",
+  "version": "0.1.1_2.3.5",
+  "custom": {
+    "flywheel": {
+      "suite": "NIPYPE"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/ants_registrationsynquick:0.1.1_2.3.5"
+    }
+  },
+  "license": "Other",
+  "inputs": {
+    "api_key": {
+      "base": "api-key"
+    },
+    "moving_image": {
+      "description": "Image to apply transformation to (generally a coregistered functional). Maps to a command-line argument: %s.",
+      "base": "file",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "fixed_image": {
+      "description": "Image to which the moving image is warped.  Defaults to MNI template if not provided",
+      "base": "file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  },
+  "config": {
+    "args": {
+      "description": "Additional parameters to the command.",
+      "type": "string",
+      "optional": true
+    },
+    "dimension": {
+      "description": "Image dimension (2 or 3). Maps to a command-line argument: -d . (Nipype default value: 3)",
+      "type": "integer",
+      "default": 3
+    },
+    "histogram_bins": {
+      "description": "Histogram bins for mutual information in SyN stage (default = 32). Maps to a command-line argument: -r ",
+      "type": "integer",
+      "default": 32
+    },
+    "output_prefix": {
+      "description": "A prefix that is prepended to all output files. Maps to a command-line argument: -o ",
+      "type": "string",
+      "default": "transform"
+    },
+    "precision_type": {
+      "description": "Precision type (default = double). Maps to a command-line argument: -p ",
+      "type": "string",
+      "default": "double",
+      "enum": [
+        "double",
+        "float"
+      ]
+    },
+    "spline_distance": {
+      "description": "Spline distance for deformable B-spline SyN transform (default = 26). Maps to a command-line argument: -s .",
+      "type": "integer",
+      "default": 26
+    },
+    "transform_type": {
+      "description": "Transform type\nt: translation\nr: rigid\na: rigid + affine\ns: rigid + affine + deformable syn (default)\nsr: rigid + deformable syn\nb: rigid + affine + deformable b-spline syn\nbr: rigid + deformable b-spline syn",
+      "type": "string",
+      "default": "s",
+      "enum": [
+        "t",
+        "r",
+        "a",
+        "s",
+        "sr",
+        "b",
+        "br"
+      ]
+    },
+    "use_histogram_matching": {
+      "description": "Use histogram matching. Maps to a command-line argument: -j ",
+      "type": "boolean",
+      "optional": true
+    },
+    "skullstrip_standard_image": {
+      "description": "Use this option if you are registering to the standard image, but your moving image has no skull.",
+      "type": "boolean",
+      "default": false
+    },
+    "save_transform": {
+      "description": "Save transformation information (matrix, warps, inverse warp, etc).",
+      "type": "boolean",
+      "default": false
+    },
+    "num_threads": {
+      "description": "Number of threads to use for processing",
+      "type": "integer",
+      "default": 1
+    }
+  },
+  "environment": {
+    "workingDir": "/opt/ants",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "ANTSPATH": "/opt/ants/bin/",
+    "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.8.11",
+    "PYTHON_PIP_VERSION": "21.2.3",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/c20b0cfd643cd4a19246ccf204e2997af70f6b21/public/get-pip.py",
+    "PYTHON_GET_PIP_SHA256": "fa6f3fb93cce234cd4e8dd2beb54a51ab9c247653b52855a48dd44e6b21ff28b",
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "command": "poetry run python /flywheel/v0/run.py"
+}
+
