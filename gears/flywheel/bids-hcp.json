@@ -1,6 +1,6 @@
 {
   "author": "Human Connectome Project",
-  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+  "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., ... Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105-124.",
   "command": "/flywheel/v0/run.py",
   "config": {
     "aseg_csv": {
@@ -59,6 +59,11 @@
     "dwi_name_out": {
       "default": "diffusion",
       "description": "Output name for preprocessed data. *Note: Spaces will be replaced with '_'.",
+      "type": "string"
+    },
+    "freesurfer_license_key": {
+      "default": "",
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "type": "string"
     },
     "gear_abort_on_bids_error": {
@@ -120,7 +125,7 @@
       "type": "boolean"
     },
     "subject": {
-      "description": "Subject ID (use to override session subject id)",
+      "description": "Subject ID (use to override session subject id; 'sub-' is omitted)",
       "optional": true,
       "type": "string"
     },
@@ -153,6 +158,11 @@
         "z-"
       ],
       "type": "string"
+    },
+    "writable_dir": {
+      "default": "/var/tmp",
+      "description": "Gears expect to be able to write temporary files in /flywheel/v0/.  If this location is not writable (such as when running in Singularity), this path will be used instead.  bids-hcp creates a large number of files so this disk space should be fast and local.",
+      "type": "string"
     }
   },
   "custom": {
@@ -161,7 +171,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-hcp:1.2.5_4.3.0_rc1"
+      "image": "flywheel/bids-hcp:1.2.6_4.3.0"
     }
   },
   "description": "Runs the preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.3.0 release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images.",
@@ -178,7 +188,6 @@
     "FSLTCLSH": "/usr/bin/tclsh",
     "FSLWISH": "/usr/bin/wish",
     "FSL_DIR": "/usr/share/fsl",
-    "FSL_PYTHON": "${FSLDIR}/fslpython/envs/fslpython",
     "FS_OVERRIDE": "0",
     "HCPPIPEDIR": "/opt/HCP-Pipelines",
     "HCPPIPEDIR_Bin": "/opt/HCP-Pipelines/global/binaries",
@@ -193,7 +202,7 @@
     "HCPPIPEDIR_fMRIVol": "/opt/HCP-Pipelines/fMRIVolume/scripts",
     "HCPPIPEDIR_tfMRI": "/opt/HCP-Pipelines/tfMRI/scripts",
     "HCPPIPEDIR_tfMRIAnalysis": "/opt/HCP-Pipelines/TaskfMRIAnalysis/scripts",
-    "LD_LIBRARY_PATH": "/usr/share/fsl/lib:/usr/share/fsl/lib",
+    "LD_LIBRARY_PATH": "/usr/share/fsl/lib:",
     "LOCAL_DIR": "/opt/freesurfer/local",
     "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
     "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
@@ -203,27 +212,37 @@
     "MSMBINDIR": "/opt/HCP-Pipelines/MSMBinaries",
     "MSMBin": "/opt/HCP-Pipelines/MSMBinaries",
     "MSMCONFIGDIR": "/opt/HCP-Pipelines/MSMConfig",
-    "PATH": "/opt/poetry/bin:/opt/workbench/bin_linux64:/opt/venv/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/fsl/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin",
+    "PATH": "/opt/poetry/bin:/opt/venv/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/workbench/bin_linux64:/usr/share/fsl/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
     "POETRY_HOME": "/opt/poetry",
     "POSSUMDIR": "/usr/share/fsl",
     "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
     "SUBJECTS_DIR": "/opt/freesurfer/subjects",
-    "WORKBENCH": "/opt/workbench/wb_command",
-    "python3": "/opt/venv/bin/python3.9"
+    "python3": "/opt/venv/bin/python3.9",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "TZ": "America/New_York",
+    "FSL_PYTHON": "/usr/share/fsl/fslpython/envs/fslpython",
+    "HCPPIPEDIR_fMRISurf": "/opt/HCP-Pipelines/fMRISurface/scripts",
+    "LC_ALL": "C",
+    "LANGUAGE": "C",
+    "OS": "Linux",
+    "PYTHONUNBUFFERED": "1",
+    "POETRY_VERSION": "1.1.6",
+    "POETRY_NO_INTERACTION": "1",
+    "VIRTUAL_ENV": "/opt/venv"
   },
   "inputs": {
-    "FreeSurferLicense": {
-      "base": "file",
-      "description": "FreeSurfer license.txt file",
-      "optional": true
-    },
     "api-key": {
       "base": "api-key"
     },
     "bidsignore": {
       "base": "file",
       "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+      "optional": true
+    },
+    "freesurfer_license_file": {
+      "base": "file",
+      "description": "FreeSurfer license.txt file",
       "optional": true
     },
     "gdcoeffs": {
@@ -243,5 +262,5 @@
   "name": "bids-hcp",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-hcp",
   "url": "https://github.com/Washington-University/Pipelines",
-  "version": "1.2.5_4.3.0_rc1"
+  "version": "1.2.6_4.3.0"
 }
