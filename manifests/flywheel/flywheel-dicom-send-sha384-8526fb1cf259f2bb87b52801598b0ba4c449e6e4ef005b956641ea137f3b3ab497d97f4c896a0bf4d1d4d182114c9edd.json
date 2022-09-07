@@ -1,0 +1,243 @@
+{
+  "gear": {
+    "name": "dicom-send",
+    "label": "DICOM Send",
+    "description": "DICOM Send utilizes DCMTK's storescu to send DICOM data from a Flywheel instance to a destination DICOM server, hosted externally. This Gear supports the transmission of individual DICOM files and archives, as well as the transmission of an entire session when a specific input is not provided. Note that a private tag is added to each DICOM file to be transmitted (Flywheel:DICOM Send, at group 0x0021). Importantly, the external DICOM server must be reachable from the engine host of the Flywheel instance.",
+    "version": "4.0.2",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Any DICOM file or an archive (zip or tar) containing DICOM file(s). Non DICOM files are ignored. If no input is provided, all DICOM files in the session where the Gear is executed are downloaded and used as input.",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        },
+        "optional": true
+      },
+      "key": {
+        "base": "file",
+        "description": "TLS key.  Needed if tls is enabled",
+        "optional": true
+      },
+      "cert": {
+        "base": "file",
+        "description": "TLS cert.  Needed if tls is enabled.",
+        "optional": true
+      },
+      "add_cert_file": {
+        "base": "file",
+        "description": "Optional Cert file to add to list of certificates",
+        "optional": true
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      }
+    },
+    "config": {
+      "debug": {
+        "description": "Enable debug logging",
+        "type": "boolean",
+        "default": false
+      },
+      "destination": {
+        "description": "The IP address or hostname of the destination DICOM server. Note: The server must be reachable from the engine host of the Flywheel instance.",
+        "type": "string"
+      },
+      "called_ae": {
+        "description": "The Called AE title of the receiving DICOM server.",
+        "type": "string"
+      },
+      "calling_ae": {
+        "description": "The Calling AE title. Default = flywheel",
+        "type": "string",
+        "default": "flywheel"
+      },
+      "port": {
+        "description": "Port number of the listening DICOM service. Default = 104",
+        "type": "number",
+        "default": 104
+      },
+      "file_download_retry_time": {
+        "description": "Max retry time per file when backing-off on file download errors.",
+        "type": "number",
+        "default": 10
+      },
+      "tls_enabled": {
+        "description": "Enable or disable TLS normal or anonymous",
+        "type": "boolean",
+        "default": false
+      },
+      "tls_require_peer_cert": {
+        "description": "Verify peer certificate, fail if absent",
+        "type": "boolean",
+        "default": true
+      },
+      "group": {
+        "description": "Dicom group to apply dicom-send tag",
+        "default": "0x0021",
+        "type": "string"
+      },
+      "identifier": {
+        "description": "Private tag creator for dicom-send tag",
+        "default": "Flywheel",
+        "type": "string"
+      },
+      "tag_value": {
+        "description": "Dicom tag value for dicom-send tag",
+        "default": "DICOM send",
+        "type": "string"
+      }
+    },
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-send",
+    "url": "http://support.dcmtk.org/docs/storescu.html",
+    "custom": {
+      "gear-builder": {
+        "category": "utility",
+        "image": "flywheel/dicom-send:4.0.2"
+      },
+      "flywheel": {
+        "suite": "DCMTK"
+      }
+    },
+    "command": "poetry run python run.py",
+    "environment": {
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "PYTHON_VERSION": "3.10.4",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/38e54e5de07c66e875c11a1ebbdb938854625dd8/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "e235c437e5c7d7524fbce3880ca39b917a73dc565e0c813465b7a7a329bb279a",
+      "PYSITE": "/usr/local/lib/python3.10/site-packages",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "MICRO_VERSION": "2.0.10",
+      "EDITOR": "micro",
+      "MUSTACHE_VERSION": "1.3.1",
+      "GJO_VERSION": "1.0.2",
+      "JQ_VERSION": "jq-1.6",
+      "PIP_NO_CACHE_DIR": "0",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.13",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "COMMIT": "main.66a70563",
+      "COMMIT_TIME": "2022-04-04T09:04:44+00:00",
+      "FLYWHEEL": "/flywheel/v0"
+    }
+  },
+  "exchange": {
+    "git-commit": "955557c7422b64217e22b1b756cb163782d6fe73",
+    "rootfs-hash": "sha384:8526fb1cf259f2bb87b52801598b0ba4c449e6e4ef005b956641ea137f3b3ab497d97f4c896a0bf4d1d4d182114c9edd",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-send-sha384-8526fb1cf259f2bb87b52801598b0ba4c449e6e4ef005b956641ea137f3b3ab497d97f4c896a0bf4d1d4d182114c9edd.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for DICOM Send",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "type": "boolean",
+            "default": false
+          },
+          "destination": {
+            "type": "string"
+          },
+          "called_ae": {
+            "type": "string"
+          },
+          "calling_ae": {
+            "type": "string",
+            "default": "flywheel"
+          },
+          "port": {
+            "type": "number",
+            "default": 104
+          },
+          "file_download_retry_time": {
+            "type": "number",
+            "default": 10
+          },
+          "tls_enabled": {
+            "type": "boolean",
+            "default": false
+          },
+          "tls_require_peer_cert": {
+            "type": "boolean",
+            "default": true
+          },
+          "group": {
+            "default": "0x0021",
+            "type": "string"
+          },
+          "identifier": {
+            "default": "Flywheel",
+            "type": "string"
+          },
+          "tag_value": {
+            "default": "DICOM send",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "destination",
+          "called_ae",
+          "calling_ae",
+          "port",
+          "file_download_retry_time",
+          "tls_enabled",
+          "tls_require_peer_cert",
+          "group",
+          "identifier",
+          "tag_value"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "key": {
+            "type": "object",
+            "properties": {}
+          },
+          "cert": {
+            "type": "object",
+            "properties": {}
+          },
+          "add_cert_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
