@@ -7,15 +7,15 @@
   "license": "MIT",
   "source": "https://github.com/flywheel-apps/fsl-topup",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "environment": {
   },
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fsl-topup:0.0.3"
+      "image": "flywheel/fsl-topup:0.0.6_5.0.10"
     },
-    "docker-image": "flywheel/fsl-topup:0.0.3",
+    "docker-image": "flywheel/fsl-topup:0.0.6_5.0.10",
     "flywheel": {
       "suite": "FSL"
     }
@@ -124,5 +124,5 @@
       "type": "boolean"
     }
   },
-  "command": "python3 run.py"
+  "command": "source /venv/bin/activate && python run.py"
 }
