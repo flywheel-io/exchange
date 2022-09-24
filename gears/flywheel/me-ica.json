@@ -9,14 +9,14 @@
   "cite": "Kundu, P., Brenowitz, N.D., Voon, V., Worbe, Y., Vertes, P.E., Inati, S.J., Saad, Z.S., Bandettini, P.A. & Bullmore, E.T. Integrated strategy for improving functional connectivity mapping using multiecho fMRI. PNAS (2013). Kundu, P., Inati, S.J., Evans, J.W., Luh, W.M. & Bandettini, P.A. Differentiating BOLD and non-BOLD signals in fMRI time series using multi-echo EPI. NeuroImage (2011). http://dx.doi.org/10.1016/j.neuroimage.2011.12.028",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.3.8",
+  "version": "0.3.14",
   "command": "python3 /flywheel/v0/run.py",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/me-ica:0.3.8"
+      "image": "flywheel/me-ica:0.3.14"
     },
-    "docker-image": "flywheel/me-ica:0.3.8",
+    "docker-image": "flywheel/me-ica:0.3.14",
     "flywheel": {
       "suite": "AFNI"
     }
@@ -58,7 +58,7 @@
       "type": "boolean"
     },
     "no_axialize": {
-      "description": "Do not re-write dataset in axial-first order. Default is to axialize, recommended.",
+      "description": "Do not re-write dataset in axial-first order. Default is to axialize, recommended",
       "default": false,
       "type": "boolean"
     },
@@ -68,12 +68,7 @@
       "type": "number"
     },
     "keep_int": {
-      "description": "Keep preprocessing intermediates. Default delete.",
-      "default": false,
-      "type": "boolean"
-    },
-    "no_axialize": {
-      "description": "Do not re-write dataset in axial-first order. Default is to axialize, recommended",
+      "description": "Keep preprocessing intermediate files.  WARNING, this will require a large amount of space.",
       "default": false,
       "type": "boolean"
     },
@@ -191,11 +186,6 @@
       "default": false,
       "type": "boolean"
     },
-    "keep_int": {
-      "description": "Keep preprocessing intermediate files.  WARNING, this will require a large amount of space.",
-      "default": false,
-      "type": "boolean"
-    },
     "skip_check": {
       "description": "Skip dependency checks during initialization.",
       "default": false,
@@ -222,7 +212,6 @@
     "api_key": {
       "base": "api-key"
     },
-    
     "functional": {
       "description": "Functional DICOM dataset (Required).",
       "base": "file",
@@ -252,5 +241,19 @@
         ]
       }
     }
+  },
+  "environment": {
+    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+    "HOSTNAME": "9a1dbfee1bc5",
+    "OLDPWD": "/flywheel/v0",
+    "PWD": "/flywheel/v0/output",
+    "HOME": "/root",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "FLYWHEEL": "/flywheel/v0",
+    "TERM": "xterm",
+    "SHLVL": "1",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/abin",
+    "LESSOPEN": " | /usr/bin/lesspipe %s",
+    "_": "/usr/bin/env"
   }
 }
