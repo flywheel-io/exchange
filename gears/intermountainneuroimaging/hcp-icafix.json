@@ -14,7 +14,7 @@
       "image": "amhe4269/hcp-icafix:1.06.15_inc1.1",
       "category": "analysis"
     },
-      "flywheel": {
+    "flywheel": {
       "suite": "Denoising"
     }
   },
