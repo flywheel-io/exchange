@@ -88,7 +88,6 @@
       "base": "file",
       "optional": false
     }
-
   },
   "environment": {
     "CARET7DIR": "/opt/workbench/bin_linux64",
