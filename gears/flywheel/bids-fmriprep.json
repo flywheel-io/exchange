@@ -38,13 +38,9 @@
             "type": "string"
         },
         "cifti-output": {
-            "description": "output preprocessed BOLD as a CIFTI dense timeseries. Optionally, the number of grayordinate can be specified (default is 91k, which equates to 2mm resolution)\nPossible choices: 91k, 170k",
-            "enum": [
-                "91k",
-                "170k"
-            ],
-            "type": "string",
-            "optional": true
+            "default": false,
+            "description": "output BOLD files as CIFTI dtseries",
+            "type": "boolean"
         },
         "debug": {
             "default": "",
@@ -150,6 +146,11 @@
             ],
             "type": "string"
         },
+        "gear-log-to-file": {
+            "default": false,
+            "description": "Instead of logging in real time, save log output of fMRIPrep to the file output/log#.txt (where # is 1 or 2 depending on how many times fMRIPrep was run.",
+            "type": "boolean"
+        },
         "gear-run-bids-validation": {
             "default": false,
             "description": "Gear will run BIDS validation before running fMRIPrep and print out all warnings and errors.  fMRIPrep runs a version of the bids validator so having the gear run it is not necessary, but might be informative.  If validation fails and gear-abort-on-bids-error is true, fMRIPrep will NOT be run.",
@@ -184,11 +185,6 @@
             "default": "rusage[mem=12000]",
             "description": "[LSF] How much RAM to request. This is used for the underlying '-R' option.",
             "type": "string"
-        },
-        "me-output-echos": {
-            "default": false,
-            "description": "Output individual echo time series with slice, motion and susceptibility correction. Useful for further Tedana processing post-fMRIPrep.",
-            "type": "boolean"
         },
         "md-only-boilerplate": {
             "default": false,
@@ -225,24 +221,10 @@
             "description": "Maximum number of threads per-process.  Default is all available.",
             "type": "integer"
         },
-        "output-layout": {
-            "default": "bids",
-            "description": "Organization of outputs. bids (default) places fMRIPrep derivatives directly in the output directory, and defaults to placing FreeSurfer derivatives in <output-dir>/sourcedata/freesurfer. legacy creates derivative datasets as subdirectories of outputs.",
-            "enum": [
-                "bids",
-                "legacy"
-            ],
-            "type": "string"
-        },
         "output-spaces": {
             "default": "MNI152NLin2009cAsym",
             "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/stable/spaces.html",
             "type": "string"
-        },
-        "random-seed": {
-            "description": "Initialize the random seed for the workflow",
-            "type": "string",
-            "optional": true
         },
         "reports-only": {
             "default": false,
@@ -293,16 +275,6 @@
             ],
             "type": "string"
         },
-        "slice-time-ref": {
-            "default": 0.5,
-            "description": "The time of the reference slice to correct BOLD values to, as a fraction acquisition time. 0 indicates the start, 0.5 the midpoint, and 1 the end of acquisition. The alias start corresponds to 0, and middle to 0.5. The default value is 0.5.",
-            "type": "number"
-        },
-        "sloppy": {
-            "optional": true,
-            "type": "boolean",
-            "description": "Use low-quality tools for speed - TESTING ONLY"
-        },
         "stop-on-first-crash": {
             "default": false,
             "description": "Force stopping on first crash, even if a work directory was specified",
@@ -312,11 +284,6 @@
             "default": "",
             "description": "select a specific task to be processed",
             "type": "string"
-        },
-        "topup-max-vols": {
-            "description": "maximum number of volumes to use with TOPUP, per-series (EPI or BOLD)",
-            "type": "integer",
-            "optional": true
         },
         "use-aroma": {
             "default": false,
@@ -330,7 +297,7 @@
         },
         "verbose": {
             "default": "",
-            "description": "increases log verbosity for each occurence, debug level is -vvv",
+            "description": "increases log verbosity for each occurrence, debug level is -vvv",
             "enum": [
                 "",
                 "v",
@@ -346,13 +313,13 @@
         }
     },
     "custom": {
-        "docker-image": "flywheel/bids-fmriprep:1.3.2_21.0.1",
+        "docker-image": "flywheel/bids-fmriprep:1.4.1_20.2.7",
         "flywheel": {
             "suite": "BIDS Apps"
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "flywheel/bids-fmriprep:1.3.2_21.0.1"
+            "image": "flywheel/bids-fmriprep:1.4.1_20.2.7"
         },
         "license": {
             "dependencies": [
@@ -384,77 +351,58 @@
             "non-commercial-use-only": true
         }
     },
-    "description": "fMRIPrep 21.0.1 (Long-Term Support version) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "description": "fMRIPrep 20.2.7 (Long-Term Support version) is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
     "environment": {
-        "PATH": "/opt/conda/bin:/opt/conda/condabin:/opt/conda/bin:/opt/workbench/bin_linux64:/opt/ICA-AROMA:/opt/ants:/opt/afni-latest:/opt/convert3d-1.0.0/bin:/opt/fsl-6.0.5.1/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        "FLYWHEEL": "/flywheel/v0",
-        "PYTHONUNBUFFERED": "1",
-        "FSL_DIR": "/opt/fsl-6.0.5.1",
-        "CONDA_EXE": "/opt/conda/bin/conda",
-        "PYTHONNOUSERSITE": "1",
         "AFNI_IMSAVE_WARNINGS": "NO",
-        "OS": "Linux",
-        "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
-        "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+        "AFNI_MODELPATH": "/usr/lib/afni/models",
+        "AFNI_PLUGINPATH": "/usr/lib/afni/plugins",
+        "AFNI_TTATLAS_DATASET": "/usr/share/afni/atlases",
+        "ANTSPATH": "/usr/lib/ants",
+        "AROMA_VERSION": "0.4.5",
+        "CPATH": "/usr/local/miniconda/include/:",
+        "FIX_VERTEX_AREA": "",
+        "FLYWHEEL": "/flywheel/v0",
+        "FREESURFER_HOME": "/opt/freesurfer",
+        "FSF_OUTPUT_FORMAT": "nii.gz",
+        "FSLDIR": "/usr/share/fsl/5.0",
+        "FSLMULTIFILEQUIT": "TRUE",
+        "FSLOUTPUTTYPE": "NIFTI_GZ",
+        "FSLTCLSH": "/usr/bin/tclsh",
+        "FSLWISH": "/usr/bin/wish",
+        "FSL_DIR": "/usr/share/fsl/5.0",
         "FS_OVERRIDE": "0",
-        "GSETTINGS_SCHEMA_DIR": "/opt/conda/share/glib-2.0/schemas",
-        "CONDA_PREFIX": "/opt/conda",
-        "GSETTINGS_SCHEMA_DIR_CONDA_BACKUP": "",
         "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
         "HOME": "/home/fmriprep",
+        "IS_DOCKER_8395080871": "1",
         "LANG": "C.UTF-8",
-        "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
-        "CONDA_PROMPT_MODIFIER": "(base)",
-        "MNI_DIR": "/opt/freesurfer/mni",
-        "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
-        "FSLDIR": "/opt/fsl-6.0.5.1",
-        "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
-        "AROMA_VERSION": "0.4.5",
-        "FREESURFER_HOME": "/opt/freesurfer",
-        "C3DPATH": "/opt/convert3d-1.0.0",
-        "LOCAL_DIR": "/opt/freesurfer/local",
-        "TERM": "xterm",
-        "_CE_CONDA": "",
-        "FIX_VERTEX_AREA": "",
-        "AFNI_PLUGINPATH": "/opt/afni-latest",
-        "CONDA_SHLVL": "1",
-        "SHLVL": "1",
-        "SUBJECTS_DIR": "/opt/freesurfer/subjects",
-        "PROJ_LIB": "/opt/conda/share/proj",
-        "ANTSPATH": "/opt/ants",
-        "FSLMULTIFILEQUIT": "TRUE",
-        "CONDA_PYTHON_EXE": "/opt/conda/bin/python",
-        "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/opt/conda/lib:/opt/workbench/lib_linux64:/opt/fsl-6.0.5.1/lib:",
-        "FSLREMOTECALL": "",
-        "CONDA_DEFAULT_ENV": "base",
-        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
-        "OMP_NUM_THREADS": "1",
         "LC_ALL": "C.UTF-8",
-        "FSLMACHINELIST": "",
-        "FSLGECUDAQ": "cuda.q",
-        "FSF_OUTPUT_FORMAT": "nii.gz",
+        "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:",
+        "LOCAL_DIR": "/opt/freesurfer/local",
+        "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+        "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
         "MKL_NUM_THREADS": "1",
-        "CPATH": "/opt/conda/include:",
-        "DEBIAN_FRONTEND": "noninteractive",
-        "FSLOUTPUTTYPE": "NIFTI_GZ",
-        "PROJ_NETWORK": "ON",
-        "_": "/bin/env",
-        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
+        "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+        "MNI_DIR": "/opt/freesurfer/mni",
+        "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+        "OMP_NUM_THREADS": "1",
+        "OS": "Linux",
+        "PATH": "/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/ants:/usr/lib/fsl/5.0:/usr/lib/afni/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+        "POSSUMDIR": "/usr/share/fsl/5.0",
+        "PWD": "/flywheel/v0",
+        "PYTHONNOUSERSITE": "1",
+        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
+        "SUBJECTS_DIR": "/opt/freesurfer/subjects"
     },
     "inputs": {
-        "bidsignore": {
-            "base": "file",
-            "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
-            "optional": true
-        },
-        "config-file": {
-            "base": "file",
-            "description": "Use pre-generated configuration file. Values in file will be overridden by command-line arguments.",
-            "optional": true
-        },
         "bids-filter-file": {
             "base": "file",
             "description": "a JSON file describing custom BIDS input filters using PyBIDS.",
+            "optional": true
+        },
+        "bidsignore": {
+            "base": "file",
+            "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
             "optional": true
         },
         "freesurfer_license": {
@@ -467,21 +415,21 @@
             "description": "Zip file of existing FreeSurfer subject's directory to reuse.  If the output of FreeSurfer recon-all is provided to fMRIPrep, that output will be used rather than re-running recon-all.  Unzipping the file should produce a particular subject's directory which will be placed in the $FREESURFER_HOME/subjects directory.  The name of the directory must match the -subjid as passed to recon-all.  This version of fMRIPrep uses Freesurfer v6.0.1.",
             "optional": true
         },
+        "key": {
+            "base": "api-key",
+            "read-only": true
+        },
         "previous-results": {
             "base": "file",
             "description": "Provide previously calculated fMRIPrep output results as a zip file.  This file will be unzipped into the output directory so that previous results will be used instead of re-calculating them.  This input is provided so that bids-fmriprep can be run incrementally as new data is acquired.",
             "optional": true
-        },
-        "key": {
-            "base": "api-key",
-            "read-only": true
         }
     },
-    "label": "BIDS fMRIPrep 21.0.1: A Robust Preprocessing Pipeline for fMRI Data",
+    "label": "BIDS fMRIPrep: A Robust Preprocessing Pipeline for fMRI Data",
     "license": "BSD-3-Clause",
     "maintainer": "Flywheel <support@flywheel.io>",
     "name": "bids-fmriprep",
     "source": "https://github.com/nipreps/fmriprep",
     "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
-    "version": "1.3.2_21.0.1"
+    "version": "1.4.1_20.2.7"
 }
