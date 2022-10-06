@@ -30,7 +30,6 @@
         "DEBUG"
       ]
     },
-
     "TrainingFile": {
       "type": "string",
       "default": "HCP_hp2000.RData",
