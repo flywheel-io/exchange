@@ -76,7 +76,7 @@
   },
   "inputs": {
     "api-key": {
-        "base": "api-key"
+      "base": "api-key"
     },
     "functional_zip": {
       "description": "Select functional run for ICA",
