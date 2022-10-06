@@ -83,7 +83,6 @@
       "base": "file",
       "optional": false
     },
-
     "structural_zip": {
       "description": "Select structural zip for the functional data",
       "base": "file",
