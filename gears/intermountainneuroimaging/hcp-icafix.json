@@ -19,7 +19,7 @@
     }
   },
   "config": {
-     "gear-log-level": {
+    "gear-log-level": {
       "default": "INFO",
       "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
       "type": "string",
