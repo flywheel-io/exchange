@@ -33,15 +33,17 @@
     "TrainingFile": {
       "type": "string",
       "default": "HCP_hp2000.RData",
-      "enum": ["HCP_hp2000.RData",
-              "HCP7T_hp2000.RData",
-              "HCP_Style_Single_Multirun_Dedrift.RData",
-              "NHPHCP_Macaque_RIKEN30SRFIX.RData",
-              "Standard.RData",
-              "Standard_old.Rdata",
-              "UKBiobank.RData",
-              "WhII_MB6.RData",
-              "WhII_Standard.RData"],
+      "enum": [
+        "HCP_hp2000.RData",
+        "HCP7T_hp2000.RData",
+        "HCP_Style_Single_Multirun_Dedrift.RData",
+        "NHPHCP_Macaque_RIKEN30SRFIX.RData",
+        "Standard.RData",
+        "Standard_old.Rdata",
+        "UKBiobank.RData",
+        "WhII_MB6.RData",
+        "WhII_Standard.RData"
+      ],
       "description": "Name of FIX training file to use for classification. 'Standard', 'HCP_hp2000', 'HCP7T_hp2000', 'WhII_MB6', 'WhII_Standard', 'UKBiobank'. See https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX/UserGuide#Trained-weights_files for details."
     },
 
