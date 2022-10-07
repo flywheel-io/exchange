@@ -1,0 +1,244 @@
+{
+  "gear": {
+    "name": "hcp-icafix",
+    "label": "HCP: ICAFIX Functional Pipeline",
+    "description": "Runs ICA-FIX denoising on functional data preprocessed according to the HCP Minimal Preprocessing Pipeline. This Gear is based on scripts from the v4.0-alpha release of the ICAFIX, PostFix, and RestingStateStats pipelines. NOTE: This Gear requires that HCP-STRUCT and HCP-FUNC Gears have been run, as the outputs of those gears are required inputs here. Also note that more than 1 HCP-FUNC output can be provided as input.",
+    "author": "FMRIB Software Library (FIX wrapper published by Human Connectome Project) ",
+    "maintainer": "Amy Hegarty <amhe4269@colorado.edu>",
+    "license": "Other",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "source": "https://github.com/intermountainneuroimaging/hcp-icafix",
+    "cite": "(1) G. Salimi-Khorshidi, G. Douaud, C.F. Beckmann, M.F. Glasser, L. Griffanti S.M. Smith. Automatic denoising of functional MRI data: Combining independent component analysis and hierarchical fusion of classifiers. NeuroImage, 90:449-68, 2014 (2) L. Griffanti, G. Salimi-Khorshidi, C.F. Beckmann, E.J. Auerbach, G. Douaud, C.E. Sexton, E. Zsoldos, K. Ebmeier, N. Filippini, C.E. Mackay, S. Moeller, J.G. Xu, E. Yacoub, G. Baselli, K. Ugurbil, K.L. Miller, and S.M. Smith. ICA-based artefact removal and accelerated fMRI acquisition for improved resting state network imaging. NeuroImage, 95:232-47, 2014",
+    "version": "1.06.15_inc1.1",
+    "custom": {
+      "gear-builder": {
+        "image": "amhe4269/hcp-icafix:1.06.15_inc1.1",
+        "category": "analysis"
+      },
+      "flywheel": {
+        "suite": "Denoising"
+      }
+    },
+    "config": {
+      "gear-log-level": {
+        "default": "INFO",
+        "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+        "type": "string",
+        "enum": [
+          "ERROR",
+          "WARNING",
+          "INFO",
+          "DEBUG"
+        ]
+      },
+      "TrainingFile": {
+        "type": "string",
+        "default": "HCP_hp2000.RData",
+        "enum": [
+          "HCP_hp2000.RData",
+          "HCP7T_hp2000.RData",
+          "HCP_Style_Single_Multirun_Dedrift.RData",
+          "NHPHCP_Macaque_RIKEN30SRFIX.RData",
+          "Standard.RData",
+          "Standard_old.Rdata",
+          "UKBiobank.RData",
+          "WhII_MB6.RData",
+          "WhII_Standard.RData"
+        ],
+        "description": "Name of FIX training file to use for classification. 'Standard', 'HCP_hp2000', 'HCP7T_hp2000', 'WhII_MB6', 'WhII_Standard', 'UKBiobank'. See https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX/UserGuide#Trained-weights_files for details."
+      },
+      "do_motion_regression": {
+        "type": "boolean",
+        "default": false,
+        "description": "set whether or not to regress motion parameters (24 regressors) out of the data as part of FIX (TRUE or FALSE)"
+      },
+      "HighPassFilter": {
+        "type": "integer",
+        "default": 2000,
+        "minimum": 1,
+        "maximum": 9999,
+        "description": "set temporal highpass full-width (2*sigma) to use, in seconds, cannot be 0 for single-run FIX.  For detrending-like behaviour, set <highpass> to 2000"
+      },
+      "FixThreshold": {
+        "type": "integer",
+        "default": 10,
+        "description": "set FIX threshold (controls sensitivity/specificity tradeoff)"
+      },
+      "DeleteIntermediates": {
+        "type": "boolean",
+        "default": false,
+        "description": "delete highpass files (note that delete intermediates=TRUE is not recommended for MR+FIX)"
+      },
+      "dry-run": {
+        "type": "boolean",
+        "default": false,
+        "description": "Log all commands, but do not execute."
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "functional_zip": {
+        "description": "Select functional run for ICA",
+        "base": "file",
+        "optional": false
+      },
+      "structural_zip": {
+        "description": "Select structural zip for the functional data",
+        "base": "file",
+        "optional": false
+      }
+    },
+    "environment": {
+      "CARET7DIR": "/opt/workbench/bin_linux64",
+      "FLYWHEEL": "/flywheel/v0",
+      "FMRI_ANALYSIS_DIR": "/opt/freesurfer/fsfast",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FSFAST_HOME": "/opt/freesurfer/fsfast",
+      "FSF_OUTPUT_FORMAT": "nii.gz",
+      "FSLDIR": "/usr/share/fsl",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "FSL_DIR": "/usr/share/fsl",
+      "FSL_PYTHON": "${FSLDIR}/fslpython/envs/fslpython",
+      "FS_OVERRIDE": "0",
+      "HCPPIPEDIR": "/opt/HCP-Pipelines",
+      "HCPPIPEDIR_Bin": "/opt/HCP-Pipelines/global/binaries",
+      "HCPPIPEDIR_Config": "/opt/HCP-Pipelines/global/config",
+      "HCPPIPEDIR_FS": "/opt/HCP-Pipelines/FreeSurfer/scripts",
+      "HCPPIPEDIR_Global": "/opt/HCP-Pipelines/global/scripts",
+      "HCPPIPEDIR_PostFS": "/opt/HCP-Pipelines/PostFreeSurfer/scripts",
+      "HCPPIPEDIR_PreFS": "/opt/HCP-Pipelines/PreFreeSurfer/scripts",
+      "HCPPIPEDIR_Templates": "/opt/HCP-Pipelines/global/templates",
+      "HCPPIPEDIR_dMRI": "/opt/HCP-Pipelines/DiffusionPreprocessing/scripts",
+      "HCPPIPEDIR_dMRITract": "/opt/HCP-Pipelines/DiffusionTractography/scripts",
+      "HCPPIPEDIR_fMRIVol": "/opt/HCP-Pipelines/fMRIVolume/scripts",
+      "HCPPIPEDIR_tfMRI": "/opt/HCP-Pipelines/tfMRI/scripts",
+      "HCPPIPEDIR_tfMRIAnalysis": "/opt/HCP-Pipelines/TaskfMRIAnalysis/scripts",
+      "LD_LIBRARY_PATH": "/usr/share/fsl/lib:/usr/share/fsl/lib",
+      "LOCAL_DIR": "/opt/freesurfer/local",
+      "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+      "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+      "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+      "MNI_DIR": "/opt/freesurfer/mni",
+      "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "MSMBINDIR": "/opt/HCP-Pipelines/MSMBinaries",
+      "MSMBin": "/opt/HCP-Pipelines/MSMBinaries",
+      "MSMCONFIGDIR": "/opt/HCP-Pipelines/MSMConfig",
+      "PATH": "/opt/fix:/opt/poetry/bin:/opt/workbench/bin_linux64:/opt/venv/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/fsl/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin",
+      "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "POETRY_HOME": "/opt/poetry",
+      "POSSUMDIR": "/usr/share/fsl",
+      "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
+      "SUBJECTS_DIR": "/opt/freesurfer/subjects",
+      "WORKBENCH": "/opt/workbench/wb_command",
+      "python3": "/opt/venv/bin/python3",
+      "python": "/opt/venv/bin/python",
+      "FSL_FIXDIR": "/opt/fix",
+      "FSL_FIX_CIFTIRW": "/opt/HCP-Pipelines/global/matlab/",
+      "FSL_FIX_WBC": "/opt/workbench/bin_linux64/wb_command"
+    },
+    "command": "/flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "16c941a9c77a98e2a7dc277bd11780b151470ceb",
+    "rootfs-hash": "sha384:cbf9fd90913abea3b0c631821352924701b07d706068ea856aed9a66cb6c3a5b84d3ae073476e05e5d209a2994d981ac",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/intermountainneuroimaging-hcp-icafix-sha384-cbf9fd90913abea3b0c631821352924701b07d706068ea856aed9a66cb6c3a5b84d3ae073476e05e5d209a2994d981ac.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for HCP: ICAFIX Functional Pipeline",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "gear-log-level": {
+            "default": "INFO",
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "DEBUG"
+            ]
+          },
+          "TrainingFile": {
+            "type": "string",
+            "default": "HCP_hp2000.RData",
+            "enum": [
+              "HCP_hp2000.RData",
+              "HCP7T_hp2000.RData",
+              "HCP_Style_Single_Multirun_Dedrift.RData",
+              "NHPHCP_Macaque_RIKEN30SRFIX.RData",
+              "Standard.RData",
+              "Standard_old.Rdata",
+              "UKBiobank.RData",
+              "WhII_MB6.RData",
+              "WhII_Standard.RData"
+            ]
+          },
+          "do_motion_regression": {
+            "type": "boolean",
+            "default": false
+          },
+          "HighPassFilter": {
+            "type": "integer",
+            "default": 2000,
+            "minimum": 1,
+            "maximum": 9999
+          },
+          "FixThreshold": {
+            "type": "integer",
+            "default": 10
+          },
+          "DeleteIntermediates": {
+            "type": "boolean",
+            "default": false
+          },
+          "dry-run": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "gear-log-level",
+          "TrainingFile",
+          "do_motion_regression",
+          "HighPassFilter",
+          "FixThreshold",
+          "DeleteIntermediates",
+          "dry-run"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "functional_zip": {
+            "type": "object",
+            "properties": {}
+          },
+          "structural_zip": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "functional_zip",
+          "structural_zip"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
