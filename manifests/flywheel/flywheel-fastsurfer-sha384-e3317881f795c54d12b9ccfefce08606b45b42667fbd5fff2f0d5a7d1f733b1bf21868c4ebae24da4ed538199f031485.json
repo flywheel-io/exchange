@@ -1,0 +1,106 @@
+{
+  "gear": {
+    "name": "fastsurfer",
+    "inputs": {
+      "T1w": {
+        "base": "file",
+        "optional": false,
+        "description": "Input 3D-T1w nifti in zipped format",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "use-gpu": {
+        "default": true,
+        "description": "Use GPU for computing the FastSurfer segmentation. Gear will default to CPU if no GPU is available.",
+        "type": "boolean"
+      },
+      "debug": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable debug mode."
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Image Processing - Segmentation"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fastsurfer:1.0.4_v1.1.0"
+      }
+    },
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "Henschel L, Conjeti S, Estrada S, Diers K, Fischl B, Reuter M, FastSurfer - A fast and accurate deep learning based neuroimaging pipeline, NeuroImage 219 (2020), 117012",
+    "description": "FastSurferCNN - an advanced deep learning architecture capable of whole brain segmentation into 95 classes in under 1 minute, mimicking FreeSurfer anatomical segmentation and cortical parcellation (DKTatlas)",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/FastSurferCNN:/venv/bin/",
+      "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+      "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+      "NVIDIA_VISIBLE_DEVICES": "all"
+    },
+    "command": "python run.py",
+    "license": "Other",
+    "label": "Fast Surfer",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fastsurfer",
+    "source": "https://github.com/Deep-MI/FastSurfer",
+    "version": "1.0.4_v1.1.0"
+  },
+  "exchange": {
+    "git-commit": "315b9cea00f791449e658d185c786bd28076788c",
+    "rootfs-hash": "sha384:e3317881f795c54d12b9ccfefce08606b45b42667fbd5fff2f0d5a7d1f733b1bf21868c4ebae24da4ed538199f031485",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fastsurfer-sha384-e3317881f795c54d12b9ccfefce08606b45b42667fbd5fff2f0d5a7d1f733b1bf21868c4ebae24da4ed538199f031485.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Fast Surfer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "use-gpu": {
+            "default": true,
+            "type": "boolean"
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "use-gpu",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "T1w": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "T1w"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
