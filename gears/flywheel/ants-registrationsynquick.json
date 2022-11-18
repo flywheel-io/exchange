@@ -7,14 +7,14 @@
   "maintainer": "support@flywheel.io",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/ants-registrationsynquick",
   "url": "https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.ants.registration.html#registrationsynquick",
-  "version": "0.1.2_2.3.5",
+  "version": "0.1.3_2.3.5",
   "custom": {
     "flywheel": {
       "suite": "NIPYPE"
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/ants-registrationsynquick:0.1.2_2.3.5"
+      "image": "flywheel/ants-registrationsynquick:0.1.3_2.3.5"
     }
   },
   "license": "Other",
@@ -123,7 +123,8 @@
     "PYTHON_PIP_VERSION": "21.2.3",
     "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/c20b0cfd643cd4a19246ccf204e2997af70f6b21/public/get-pip.py",
     "PYTHON_GET_PIP_SHA256": "fa6f3fb93cce234cd4e8dd2beb54a51ab9c247653b52855a48dd44e6b21ff28b",
-    "FLYWHEEL": "/flywheel/v0"
+    "FLYWHEEL": "/flywheel/v0",
+    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568"
   },
   "command": "poetry run python /flywheel/v0/run.py"
 }
