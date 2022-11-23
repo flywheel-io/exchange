@@ -8,12 +8,11 @@
   "url": "",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/roi2nix",
   "cite": "",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "custom": {
-    "docker-image": "flywheel/roi2nix:1.0.2",
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/roi2nix:1.0.2"
+      "image": "flywheel/roi2nix:1.0.3"
     }
   },
   "environment": {
@@ -34,7 +33,10 @@
     "PATH": "/flywheel/v0/converters/slicer/slicer:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "DEBIAN_FRONTEND": "noninteractive",
     "_": "/usr/bin/env",
-    "OPENJPEGDIR": "/flywheel/v0/openjpeg"
+    "OPENJPEGDIR": "/flywheel/v0/openjpeg",
+    "SLICER_URL": "http://download.slicer.org/bitstream/60add706ae4540bf6a89bf98",
+    "DCMCOMMIT": "003f0d19f1e57b0129c9dcf3e653f51ca3559028",
+    "OJ_VERSION": "2.4.0"
   },
   "inputs": {
     "api-key": {
