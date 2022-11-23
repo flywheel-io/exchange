@@ -1,0 +1,173 @@
+{
+  "gear": {
+    "name": "roi2nix",
+    "label": "ROI to NIfTI",
+    "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "url": "",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/roi2nix",
+    "cite": "",
+    "version": "1.0.3",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/roi2nix:1.0.3"
+      }
+    },
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "CONVERTER_DIR": "/flywheel/v0/converters",
+      "SCRIPT_DIR": "/flywheel/v0/converters/scripts",
+      "SLICER_DIR": "/flywheel/v0/converters/slicer",
+      "SLICER_DOCKER_DIR": "/flywheel/v0/converters/slicer_docker",
+      "PLASTIMATCH_DIR": "/flywheel/v0/converters/plastimatch",
+      "DCM2NIIX_DIR": "/flywheel/v0/converters/dcm2niix",
+      "DICOM2NIFTI_DIR": "/flywheel/v0/converters/dicom2nifti",
+      "DCMHEAT_DIR": "/flywheel/v0/dcmheat",
+      "CXX": "/usr/bin/gcc",
+      "HOME": "/root",
+      "TERM": "xterm",
+      "SHLVL": "1",
+      "XDG_RUNTIME_DIR": "/tmp/runtime-sliceruser",
+      "PATH": "/flywheel/v0/converters/slicer/slicer:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "DEBIAN_FRONTEND": "noninteractive",
+      "_": "/usr/bin/env",
+      "OPENJPEGDIR": "/flywheel/v0/openjpeg",
+      "SLICER_URL": "http://download.slicer.org/bitstream/60add706ae4540bf6a89bf98",
+      "DCMCOMMIT": "003f0d19f1e57b0129c9dcf3e653f51ca3559028",
+      "OJ_VERSION": "2.4.0"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "Input_File": {
+        "base": "file",
+        "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "save_NRRD": {
+        "default": false,
+        "description": "Saves the ROI's as output Type NRRD instead of Nifti.  Default False",
+        "type": "boolean"
+      },
+      "save_binary_masks": {
+        "default": true,
+        "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
+        "type": "boolean"
+      },
+      "save_combined_output": {
+        "default": false,
+        "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
+        "type": "boolean"
+      },
+      "save_slicer_color_table": {
+        "default": false,
+        "description": "Saves a 3D Slicer colortable file for 3D Slicer integration. Default is False.",
+        "type": "boolean"
+      },
+      "conversion_method": {
+        "default": "dcm2niix",
+        "type": "string",
+        "enum": [
+          "dcm2niix",
+          "slicer-dcmtk",
+          "slicer-gdcm",
+          "slicer-arch",
+          "plastimatch",
+          "dicom2nifti"
+        ]
+      }
+    },
+    "command": "poetry run python3 /flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "6344e904de03c73e69232beb85be7cae159018e2",
+    "rootfs-hash": "sha384:b487091f316c9c802cf8faa65d5ec196de4c726931b34c2502d48891b927e7b27384d4272fc8f7ac2443cc2a8262cad9",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-roi2nix-sha384-b487091f316c9c802cf8faa65d5ec196de4c726931b34c2502d48891b927e7b27384d4272fc8f7ac2443cc2a8262cad9.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for ROI to NIfTI",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "save_NRRD": {
+            "default": false,
+            "type": "boolean"
+          },
+          "save_binary_masks": {
+            "default": true,
+            "type": "boolean"
+          },
+          "save_combined_output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "save_slicer_color_table": {
+            "default": false,
+            "type": "boolean"
+          },
+          "conversion_method": {
+            "default": "dcm2niix",
+            "type": "string",
+            "enum": [
+              "dcm2niix",
+              "slicer-dcmtk",
+              "slicer-gdcm",
+              "slicer-arch",
+              "plastimatch",
+              "dicom2nifti"
+            ]
+          }
+        },
+        "required": [
+          "save_NRRD",
+          "save_binary_masks",
+          "save_combined_output",
+          "save_slicer_color_table",
+          "conversion_method"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "Input_File": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "Input_File"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
