@@ -32,8 +32,3 @@ if __name__ == '__main__':
             with open(gear, 'w') as fp:
                 fp.write(json.dumps(gear_def, indent=2))
             print(f"updated: {gear}")
-
-
-
-        
-

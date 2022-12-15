@@ -251,7 +251,7 @@
       "type": "integer"
     },
     "track_wPuncture": {
-      "description": "AFQ: This coefficient can take on values from 0 to 1, and affects how much the propagation should be encouraged to \u201cpuncture\u201d through planar tensors oriented normal to its path, versus turning into the plane.",
+      "description": "AFQ: This coefficient can take on values from 0 to 1, and affects how much the propagation should be encouraged to 'puncture' through planar tensors oriented normal to its path, versus turning into the plane.",
       "default": 0.2,
       "type": "number"
     },
