@@ -55,27 +55,27 @@
     "seed_based_correlation_atlas": {
       "optional": true,
       "description": "Target atlas for the seed-based correlation. Must specify an input ROI and analysis type.",
-      "type":"string",
+      "type": "string",
       "enum": [
-            "/cpac_templates/PNAS_Smith09_rsn10.nii.gz",
-            "/cpac_templates/CC400.nii.gz",
-            "/cpac_templates/ez_mask_pad.nii.gz",
-            "/cpac_templates/aal_mask_pad.nii.gz",
-            "/cpac_templates/CC200.nii.gz",
-            "/cpac_templates/tt_mask_pad.nii.gz",
-            "/cpac_templates/ho_mask_pad.nii.gz",
-            "/cpac_templates/rois_3mm.nii.gz"
+        "/cpac_templates/PNAS_Smith09_rsn10.nii.gz",
+        "/cpac_templates/CC400.nii.gz",
+        "/cpac_templates/ez_mask_pad.nii.gz",
+        "/cpac_templates/aal_mask_pad.nii.gz",
+        "/cpac_templates/CC200.nii.gz",
+        "/cpac_templates/tt_mask_pad.nii.gz",
+        "/cpac_templates/ho_mask_pad.nii.gz",
+        "/cpac_templates/rois_3mm.nii.gz"
       ]
     },
     "seed_based_correlation_analysis_type": {
-        "optional": true,
-        "description": "Analysis type for SCA. See https://github.com/FCP-INDI/C-PAC/blob/main/dev/docker_data/default_pipeline.yml#L1547 for acceptable combinations.",
-        "type": "string",
-        "enum": [
-          "Avg",
-          "DualReg",
-          "MultReg"
-        ]
+      "optional": true,
+      "description": "Analysis type for SCA. See https://github.com/FCP-INDI/C-PAC/blob/main/dev/docker_data/default_pipeline.yml#L1547 for acceptable combinations.",
+      "type": "string",
+      "enum": [
+        "Avg",
+        "DualReg",
+        "MultReg"
+      ]
     },
     "skip_bids_validator": {
       "default": false,
@@ -129,7 +129,7 @@
       "image": "flywheel/cpac:0.3.1_1.8.0"
     }
   },
-  "description": "The Configurable Pipeline for the Analysis of Connectomes.  C-PAC is software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+  "description": "The Configurable Pipeline for the Analysis of Connectomes.  C-PAC is software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
   "environment": {
     "C3DPATH": "/opt/c3d",
     "FSLDIR": "/usr/share/fsl/5.0",
@@ -162,7 +162,7 @@
     }
   },
   "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
-  "license": "Apache-2.0",
+  "license": "Other",
   "name": "c-pac",
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",

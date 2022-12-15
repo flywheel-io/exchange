@@ -1,42 +1,42 @@
 {
-    "name": "qa-dtiprep",
-    "label": "DTIPREP: DWI Quality Assurance Report",
-    "description": "DTIPrep performs a Study-specific Protocol based automatic pipeline for DWI/DTI quality control and preparation. This is both a GUI and command line tool. The configurable pipeline includes image/diffusion information check, padding/Cropping of data, slice-wise, interlace-wise and gradient-wise intensity and motion check, head motion and Eddy current artifact correction, and DTI computing. Version 1.2.4",
-    "maintainer": "Michael Perry <lmperry@stanford.edu>",
-    "author": "DTIPrep (Francois Budin <fbudin@unc.edu>)",
-    "url": "https://www.nitrc.org/projects/dtiprep",
-    "source": "https://github.com/scitran-apps/qa-dtiprep",
-    "license": "Apache-2.0",
-    "flywheel": "0",
-    "version": "0.0.2",
-    "config": {},
-    "inputs": {
-        "nifti": {
-            "base": "file",
-            "type": {
-                "enum": [
-                    "nifti"
-                ]
-            }
-        },
-        "bvec": {
-            "base": "file",
-            "type": {
-                "enum": [
-                    "bvec"
-                ]
-            }
-        },
-        "bval": {
-            "base": "file",
-            "type": {
-                "enum": [
-                    "bval"
-                ]
-            }
-        }
+  "name": "qa-dtiprep",
+  "label": "DTIPREP: DWI Quality Assurance Report",
+  "description": "DTIPrep performs a Study-specific Protocol based automatic pipeline for DWI/DTI quality control and preparation. This is both a GUI and command line tool. The configurable pipeline includes image/diffusion information check, padding/Cropping of data, slice-wise, interlace-wise and gradient-wise intensity and motion check, head motion and Eddy current artifact correction, and DTI computing. Version 1.2.4\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "DTIPrep (Francois Budin <fbudin@unc.edu>)",
+  "url": "https://www.nitrc.org/projects/dtiprep",
+  "source": "https://github.com/scitran-apps/qa-dtiprep",
+  "license": "Other",
+  "flywheel": "0",
+  "version": "0.0.2",
+  "config": {},
+  "inputs": {
+    "nifti": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     },
-    "custom": {
-        "docker-image": "scitran/qa-dtiprep"
+    "bvec": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "bvec"
+        ]
+      }
+    },
+    "bval": {
+      "base": "file",
+      "type": {
+        "enum": [
+          "bval"
+        ]
+      }
     }
+  },
+  "custom": {
+    "docker-image": "scitran/qa-dtiprep"
+  }
 }
