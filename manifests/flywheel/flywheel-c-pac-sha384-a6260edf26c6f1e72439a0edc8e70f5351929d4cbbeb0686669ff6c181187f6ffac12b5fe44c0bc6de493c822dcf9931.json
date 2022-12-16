@@ -109,7 +109,7 @@
         "image": "flywheel/cpac:0.3.0_1.8.0"
       }
     },
-    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "environment": {
       "C3DPATH": "/opt/c3d",
       "FSLDIR": "/usr/share/fsl/5.0",
@@ -133,7 +133,7 @@
       }
     },
     "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
-    "license": "Apache-2.0",
+    "license": "Other",
     "name": "c-pac",
     "maintainer": "Flywheel <support@flywheel.io>",
     "source": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",

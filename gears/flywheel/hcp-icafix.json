@@ -1,7 +1,7 @@
 {
   "name": "hcp-icafix",
   "label": "HCP: ICAFIX Functional Pipeline",
-  "description": "Runs ICA-FIX denoising on functional data preprocessed according to the HCP Minimal Preprocessing Pipeline. This Gear is based on scripts from the v4.0-alpha release of the ICAFIX, PostFix, and RestingStateStats pipelines. NOTE: This Gear requires that HCP-STRUCT and HCP-FUNC Gears have been run, as the outputs of those gears are required inputs here. Also note that more than 1 HCP-FUNC output can be provided as input.",
+  "description": "Runs ICA-FIX denoising on functional data preprocessed according to the HCP Minimal Preprocessing Pipeline. This Gear is based on scripts from the v4.0-alpha release of the ICAFIX, PostFix, and RestingStateStats pipelines. NOTE: This Gear requires that HCP-STRUCT and HCP-FUNC Gears have been run, as the outputs of those gears are required inputs here. Also note that more than 1 HCP-FUNC output can be provided as input. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
   "author": "Human Connectome Project",
   "maintainer": "Flywheel <support@flywheel.io>",
   "license": "Other",
@@ -11,10 +11,9 @@
   "version": "0.2.2",
   "custom": {
     "gear-builder": {
-        "category": "analysis",
-        "image": "flywheel/hcp-icafix:0.2.2"
+      "category": "analysis",
+      "image": "flywheel/hcp-icafix:0.2.2"
     },
-
     "docker-image": "flywheel/hcp-icafix:0.2.2",
     "flywheel": {
       "suite": "Human Connectome Project"

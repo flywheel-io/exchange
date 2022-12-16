@@ -2,11 +2,11 @@
   "gear": {
     "name": "dtiinit",
     "label": "Diffusion Data Initialization Pipeline",
-    "description": "dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. See: http://white.stanford.edu/newlm/index.php/DTI_Preprocessing for more information regarding the pipeline. This dtiInit gear will output motion-corrected diffusion data (nifti, bval, bvecs) aligned to the first b0 image in the acquisition. It will also calculate FA, MD, RD, and AD maps. Tensors, vector RGB, brain mask, white-matter mask, and white-matter probability maps will also be output. All outputs will be included in a zip file.",
+    "description": "dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. See: http://white.stanford.edu/newlm/index.php/DTI_Preprocessing for more information regarding the pipeline. This dtiInit gear will output motion-corrected diffusion data (nifti, bval, bvecs) aligned to the first b0 image in the acquisition. It will also calculate FA, MD, RD, and AD maps. Tensors, vector RGB, brain mask, white-matter mask, and white-matter probability maps will also be output. All outputs will be included in a zip file. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "author": "Michael Perry <lmperry@stanford.edu>",
     "url": "https://github.com/vistalab/vistasoft/wiki",
     "source": "https://github.com/scitran-apps/dtiinit",
-    "license": "GPL-2.0",
+    "license": "Other",
     "flywheel": "0",
     "version": "0.1.2",
     "inputs": {

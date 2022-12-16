@@ -1,15 +1,14 @@
 {
   "name": "fsl-topup",
   "label": "FSL: TOPUP correction for susceptibility induced distortions",
-  "description": "Estimates a distortion correction field given one or more pairs of images with opposite PE directions",
+  "description": "Estimates a distortion correction field given one or more pairs of images with opposite PE directions LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
   "author": "FSL",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "license": "MIT",
+  "license": "Other",
   "source": "https://github.com/flywheel-apps/fsl-topup",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup",
   "version": "0.0.6",
-  "environment": {
-  },
+  "environment": {},
   "custom": {
     "gear-builder": {
       "category": "analysis",
@@ -22,49 +21,64 @@
   },
   "inputs": {
     "image_1": {
-
       "base": "file",
       "description": "first image in an pair of images with opposite phase encoding direction",
       "optional": false,
-      "type": { "enum": [ "nifti" ] }
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     },
     "image_2": {
       "base": "file",
       "description": "second image in an pair of images with opposite phase encoding direction",
       "optional": false,
-      "type": { "enum": [ "nifti" ] }
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     },
     "apply_to_1": {
       "base": "file",
       "description": "an image to apply the TOPUP correction to using this fieldmap.  Should have the same PE direction as image 1",
       "optional": true,
-      "type": { "enum": [ "nifti" ] }
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     },
     "apply_to_2": {
       "base": "file",
       "description": "an image to apply the TOPUP correction to using this fieldmap.  Should have the same PE direction as image 2",
       "optional": true,
-      "type": { "enum": [ "nifti" ] }
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     },
-
     "config_file": {
       "base": "file",
       "description": "A configuration file is a text file containing some or all of the parameters that can be specified for topup. The name of the file should be passed as argument to the --config parameter. It should be an ascii-file with one row for each parameter, and where comments (ignored by topup) are preceeded by a #.",
       "optional": true,
       "type": {
         "enum": [
-          "text",""
+          "text",
+          ""
         ]
       }
     },
-
     "acquisition_parameters": {
       "base": "file",
       "description": "This parameter specifies a text-file that contains information about how the volumes were acquired.  Row 1 is for image 1, row 2 is for image 2",
       "optional": true,
       "type": {
         "enum": [
-          "text",""
+          "text",
+          ""
         ]
       }
     }
@@ -117,8 +131,7 @@
         3
       ]
     },
-
-     "QA": {
+    "QA": {
       "default": true,
       "description": "Save a topup QA image comparing distorted to corrected images",
       "type": "boolean"
