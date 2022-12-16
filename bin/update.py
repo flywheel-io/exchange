@@ -20,6 +20,7 @@ UPDATE_STR = """
 """
 
 def update_exchange(gears, all_jsons):
+    gears = [g.split('/')[1] for g in gears]
     for path in all_jsons:
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
@@ -68,7 +69,7 @@ def check_updated(src, name):
             return
 
 
-def update_gear(src):
+def update_gear(src, branchname):
     url = src.split('https://')[1]
     domain = url.split('.com')
     if len(domain) != 2:
@@ -95,9 +96,9 @@ def update_gear(src):
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
             print(gear_def['source'])
             with open(tmp / 'manifest.json', 'w') as fp:
-                fp.write(json.dumps(gear_def, indent=2))
+                fp.write(json.dumps(gear_def, indent=2, ensure_ascii=False))
             res = subprocess.check_output([
-                'git', 'checkout', '-B', 'update-fsl-license'
+                'git', 'checkout', '-B', branchname
             ], cwd=tmp)
             res = subprocess.check_output([
                 'git', 'add', str(tmp / 'manifest.json')
@@ -105,12 +106,13 @@ def update_gear(src):
             res = subprocess.check_output([
                 'git', 'commit', '-m', 'Update license and description'
             ], cwd=tmp)
-            res = subprocess.check_output(['git', 'push', 'origin', 'update-fsl-license'], cwd=tmp)
+            res = subprocess.check_output(['git', 'push', 'origin', branchname], cwd=tmp)
         except subprocess.CalledProcessError as exc:
             print(exc)
 
 
-def update_repos(gears):
+def update_repos(gears, root_dir, branchname):
+    gears = [root_dir / (g + ".json") for g in gears]
     for gear in gears:
         if gear.exists():
             gear_def = OrderedDict()
@@ -118,7 +120,19 @@ def update_repos(gears):
                 gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
             src = gear_def.get('source')
             name = gear_def.get('name')
-            out = check_updated(src, name)
+            out = update_gear(src, branchname)
+
+
+def check_gears(gears, root_dir):
+    gears = [root_dir / (g + ".json") for g in gears]
+    for gear in gears:
+        if gear.exists():
+            gear_def = OrderedDict()
+            with open(gear, 'r') as fp:
+                gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
+            src = gear_def.get('source')
+            name = gear_def.get('name')
+            check_updated(src, name)
 
 
 if __name__ == '__main__':
@@ -126,7 +140,6 @@ if __name__ == '__main__':
     root_dir = Path(sys.argv[2])
     with open(gear_list, 'r') as fp:
         gears = [g.strip('\n') for g in fp.readlines()]
-    #gears = [root_dir / (g + ".json") for g in gears]
-    gears = [g.split('/')[1] for g in gears]
     all_jsons = [path for path in root_dir.rglob('*') if path.is_file() and path.name.endswith('.json')]
-    update_exchange(gears, all_jsons)
+    #update_exchange(gears, all_jsons)
+    update_repos(gears, root_dir, 'update-license')
