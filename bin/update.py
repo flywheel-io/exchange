@@ -10,14 +10,14 @@ import os
 
 decoder = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
-UPDATE_STR = """
- \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and
- license is required for any commercial applications. For commercial licence
- please contact fsl@innovation.ox.ac.uk . For academic use, an academic license
- is required which is available by registering on the FSL website. Any use of
- the software requires that the user obtain the appropriate license. See
- https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.
-"""
+UPDATE_STR = (
+ " LICENSING NOTE: FSL software are owned by Oxford University Innovation and "
+ "license is required for any commercial applications. For commercial licence "
+ "please contact fsl@innovation.ox.ac.uk. For academic use, an academic license "
+ "is required which is available by registering on the FSL website. Any use of "
+ "the software requires that the user obtain the appropriate license. See "
+ "https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information."
+)
 
 def update_exchange(gears, all_jsons):
     gears = [g.split('/')[1] for g in gears]
@@ -85,6 +85,12 @@ def update_gear(src, branchname):
                 'git', 'clone', '--depth=1',
                 f"git@{domain}.com:{path}", tmp
             ], cwd=tmp)
+            res = subprocess.check_output([
+                'git', 'checkout', '-B', branchname
+            ], cwd=tmp)
+            res = subprocess.check_output([
+                'git', 'checkout', 'master', '--', str(tmp / 'manifest.json')
+            ], cwd=tmp)
             gear_def = OrderedDict()
             if not (tmp  / 'manifest.json').exists():
                 print(os.listdir(tmp), 'has no manifest') 
@@ -98,15 +104,15 @@ def update_gear(src, branchname):
             with open(tmp / 'manifest.json', 'w') as fp:
                 fp.write(json.dumps(gear_def, indent=2, ensure_ascii=False))
             res = subprocess.check_output([
-                'git', 'checkout', '-B', branchname
-            ], cwd=tmp)
-            res = subprocess.check_output([
                 'git', 'add', str(tmp / 'manifest.json')
             ], cwd=tmp)
             res = subprocess.check_output([
                 'git', 'commit', '-m', 'Update license and description'
             ], cwd=tmp)
-            res = subprocess.check_output(['git', 'push', 'origin', branchname], cwd=tmp)
+            res = subprocess.check_output([
+                'git', 'push', 'origin', branchname, '--force',
+                '-o', 'merge_request.create'
+            ], cwd=tmp)
         except subprocess.CalledProcessError as exc:
             print(exc)
 
@@ -143,3 +149,4 @@ if __name__ == '__main__':
     all_jsons = [path for path in root_dir.rglob('*') if path.is_file() and path.name.endswith('.json')]
     #update_exchange(gears, all_jsons)
     update_repos(gears, root_dir, 'update-license')
+    #check_gears(gears, root_dir)
