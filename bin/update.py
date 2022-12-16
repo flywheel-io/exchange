@@ -29,6 +29,7 @@ def update_exchange(gears, root):
     gears = [g.split('/')[1] for g in gears]
     current_gears = {}
     for path in gear_jsons:
+        org = path.parent.name
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
             gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
@@ -38,17 +39,19 @@ def update_exchange(gears, root):
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
             with open(path, 'w') as fp:
                 fp.write(json.dumps(gear_def, indent=2, ensure_ascii=False))
-            current_gears[name] = gear_def.get('version')
+            current_gears[org + '/' + name] = gear_def.get('version')
             print(f"updated: {name}")
 
     for path in manifest_jsons:
+        org = path.parent.name
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
             gear = json.loads(fp.read(), object_pairs_hook=OrderedDict)
         gear_def = gear['gear']
         name = gear_def.get('name', '')
         if  name in gears:
-            if name in current_gears and gear_def.get('version') == current_gears.get(name):
+            full_name = org + '/' + name
+            if full_name in current_gears and gear_def.get('version') == current_gears.get(full_name):
                 path.unlink()
                 print(f"Removed {path}")
             else:
