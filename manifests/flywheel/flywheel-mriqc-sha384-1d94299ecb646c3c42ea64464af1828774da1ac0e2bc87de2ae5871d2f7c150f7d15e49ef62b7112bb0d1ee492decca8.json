@@ -33,7 +33,7 @@
     "custom": {
       "docker-image": "flywheel/mriqc:v0.4.0"
     },
-    "description": "MRIQC (v0.10.1) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated. Also note, for the auto-detection config option to work for this gear, the follow gears must be run beforehand: (1) dicom-mr-classifier then (2) dcm2niix (version 0.3.1 or higher).",
+    "description": "MRIQC (v0.10.1) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated. Also note, for the auto-detection config option to work for this gear, the follow gears must be run beforehand: (1) dicom-mr-classifier then (2) dcm2niix (version 0.3.1 or higher).\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "inputs": {
       "nifti": {
         "description": "MRI NIfTI file. Input can be a T1w or T2w anatomical file or a Functional.",
@@ -46,7 +46,7 @@
       }
     },
     "label": "MRIQC: No-reference image quality metrics for quality assessment of MRI (v0.10.1)",
-    "license": "BSD-3-Clause",
+    "license": "Other",
     "maintainer": "Flywheel <support@flywheel.io>",
     "name": "mriqc",
     "source": "https://github.com/flywheel-apps/mriqc",

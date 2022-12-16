@@ -376,7 +376,7 @@
         ]
       }
     },
-    "description": "BIDS qsiprep 1.0.1_0.15.4 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes",
+    "description": "BIDS qsiprep 1.0.1_0.15.4 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "environment": {
       "AFNI_IMSAVE_WARNINGS": "NO",
       "AFNI_INSTALLDIR": "/opt/afni-latest",
@@ -472,7 +472,7 @@
       }
     },
     "label": "BIDS QSIPrep",
-    "license": "MIT",
+    "license": "Other",
     "maintainer": "Flywheel <support@flywheel.io>",
     "name": "bids-qsiprep",
     "source": "https://qsiprep.readthedocs.io/en/latest/",

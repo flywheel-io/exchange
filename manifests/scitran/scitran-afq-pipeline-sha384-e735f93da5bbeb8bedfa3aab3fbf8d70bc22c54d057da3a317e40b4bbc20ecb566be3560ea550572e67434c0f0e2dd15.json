@@ -2,13 +2,13 @@
   "gear": {
     "name": "afq-pipeline",
     "label": "AFQ Pipeline: Automated Fiber Quantification Pipeline",
-    "description": "This gear contains a 3-step pipeline designed to run AFQ. The first step is optional, and will merge two diffusion datasets using FSLMERGE. The second step is data preprocessing using DTIINIT, from the VISTA Lab, Stanford University. The final step is the Automated Fiber Quantification (AFQ), which generates tract profiles of tissue properties for major fiber tracts in the brain.",
+    "description": "This gear contains a 3-step pipeline designed to run AFQ. The first step is optional, and will merge two diffusion datasets using FSLMERGE. The second step is data preprocessing using DTIINIT, from the VISTA Lab, Stanford University. The final step is the Automated Fiber Quantification (AFQ), which generates tract profiles of tissue properties for major fiber tracts in the brain.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "maintainer": "Michael Perry <lmperry@stanford.edu>",
     "author": "Jason D. Yeatman, et. al, VISTA Lab, FMRIB Software Laboratory",
     "cite": "Yeatman J.D., Dougherty R.F., Myall N.J., Wandell B.A., Feldman H.M. (2012). Tract Profiles of White Matter Properties: Automating Fiber-Tract Quantification. PLoS One.; M. Jenkinson, C.F. Beckmann, T.E. Behrens, M.W. Woolrich, S.M. Smith. FSL. NeuroImage, 62:782-90, 2012",
     "url": "https://github.com/yeatmanlab/afq",
     "source": "https://github.com/scitran-apps/afq-pipline",
-    "license": "GPL-2.0",
+    "license": "Other",
     "flywheel": "0",
     "version": "1.0.1",
     "custom": {
@@ -109,13 +109,13 @@
         "id": "-z"
       },
       "auto": {
-        "description": "FSLMERGE: auto-choose: single slices -> volume, volumes -> 4D (time series) [default=true]",
+        "description": "FSLMERGE: auto-choose:\u00a0single\u00a0slices\u00a0->\u00a0volume,\u00a0volumes\u00a0->\u00a04D\u00a0(time\u00a0series) [default=true]",
         "default": true,
         "type": "boolean",
         "id": "-a"
       },
       "catTR": {
-        "description": "FSLMERGE: concatenate images in time and set the output image tr to this value. values other than '0' will trigger this option. [default=0, false]",
+        "description": "FSLMERGE: concatenate\u00a0images\u00a0in\u00a0time\u00a0and\u00a0set\u00a0the\u00a0output\u00a0image tr\u00a0to\u00a0this value. values other than '0' will trigger this option. [default=0, false]",
         "default": 0,
         "type": "number",
         "id": "-tr"
@@ -297,7 +297,7 @@
         "type": "integer"
       },
       "track_wPuncture": {
-        "description": "AFQ: This coefficient can take on values from 0 to 1, and affects how much the propagation should be encouraged to “puncture” through planar tensors oriented normal to its path, versus turning into the plane.",
+        "description": "AFQ: This coefficient can take on values from 0 to 1, and affects how much the propagation should be encouraged to \u201cpuncture\u201d through planar tensors oriented normal to its path, versus turning into the plane.",
         "default": 0.2,
         "type": "number"
       },
