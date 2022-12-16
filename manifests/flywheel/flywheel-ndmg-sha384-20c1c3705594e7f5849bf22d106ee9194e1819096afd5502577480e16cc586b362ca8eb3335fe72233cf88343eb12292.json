@@ -2,7 +2,7 @@
   "gear": {
     "name": "ndmg",
     "label": "NDMG (NeuroData's MR Graphs Package)",
-    "description": "NeuroData's MR Graphs package, ndmg (pronounced \"nutmeg\"), is a turn-key pipeline which uses structural and diffusion MRI data to estimate multi-resolution connectomes reliably and scalably.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "description": "NeuroData's MR Graphs package, ndmg (pronounced \"nutmeg\"), is a turn-key pipeline which uses structural and diffusion MRI data to estimate multi-resolution connectomes reliably and scalably. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "maintainer": "Derek Pisner <dpisner@utexas.edu>",
     "author": "Gregory Kiar, Eric W. Bridgeford, Joshua T. Vogelstein, et al.",
     "url": "https://github.com/neurodata/ndmg",
