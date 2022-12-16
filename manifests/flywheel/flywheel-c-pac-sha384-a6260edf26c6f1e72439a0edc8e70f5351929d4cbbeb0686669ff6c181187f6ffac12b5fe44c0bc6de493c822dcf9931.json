@@ -1,0 +1,253 @@
+{
+  "gear": {
+    "author": "Craddock C, Sikka S, Cheung B, et al.",
+    "command": "/opt/poetry/bin/poetry run python3 /flywheel/v0/run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "type": "boolean"
+      },
+      "preconfig": {
+        "optional": true,
+        "description": "Name of pre-configured pipeline to run.",
+        "type": "string",
+        "enum": [
+          "anat-only",
+          "benchmark-ANTS",
+          "benchmark-FNIRT",
+          "fmriprep-options",
+          "ndmg",
+          "preproc",
+          "monkey",
+          "nhp-macaque",
+          "rodent",
+          "regtest-1",
+          "regtest-2",
+          "regtest-3",
+          "regtest-4"
+        ]
+      },
+      "n_cpus": {
+        "default": 0,
+        "description": "Number of execution resources available for the pipeline(==0: Use default).",
+        "type": "integer"
+      },
+      "mem_mb": {
+        "default": 0,
+        "description": "Amount of RAM available to the pipeline in megabytes. Included for compatibility with BIDS-Apps standard, but mem_gb is preferred (==0: Use default of 6 GB).",
+        "type": "number"
+      },
+      "mem_gb": {
+        "default": 0,
+        "description": "Amount of RAM available to the pipeline in megabytes. If this is specified along with mem_mb, this flag will take precedence.d (==0: Use default of 6 GB).",
+        "type": "number"
+      },
+      "save_working_dir": {
+        "default": false,
+        "description": "Save the contents of the working directory.",
+        "type": "boolean"
+      },
+      "skip_bids_validator": {
+        "default": false,
+        "description": "Skips BIDS validation",
+        "type": "boolean"
+      },
+      "tracking_opt-out": {
+        "default": true,
+        "description": "Disable usage tracking. Only the number of participants on the analysis is tracked.",
+        "type": "boolean"
+      },
+      "test_config": {
+        "default": false,
+        "description": "test_config will run through the entire configuration process but will not execute the pipeline",
+        "type": "boolean"
+      },
+      "gear-save-output-on-error": {
+        "default": false,
+        "description": "Save the contents of the working directory to output on failure (can be large).",
+        "type": "boolean"
+      },
+      "gear-run-bids-validation": {
+        "default": true,
+        "description": "Run bids-validator on a the gear bids directory.",
+        "type": "boolean"
+      },
+      "gear-abort-on-bids-error": {
+        "default": false,
+        "description": "If bids-validator returns an error, abort gear execution.",
+        "type": "boolean"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Go through all the setup steps, but don't run any analysis",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Image Processing - Other",
+        "classification": {
+          "type": [
+            "NIFTI"
+          ],
+          "modality": [
+            "MR"
+          ],
+          "components": [
+            "FSL",
+            "ANTS",
+            "fmriprep"
+          ],
+          "keywords": [
+            "neuroimaging",
+            "pipeline"
+          ]
+        }
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/cpac:0.3.0_1.8.0"
+      }
+    },
+    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "environment": {
+      "C3DPATH": "/opt/c3d",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+      "ANTSPATH": "/usr/lib/ants",
+      "FREESURFER_HOME": "/usr/lib/freesurfer",
+      "PATH": "/usr/lib/freesurfer/bin:/usr/lib/freesurfer/fsfast/bin:/usr/lib/freesurfer/tktools:/usr/share/fsl/5.0/bin:/usr/lib/fsl/5.0:/usr/lib/freesurfer/mni/bin:/opt/poetry/bin:/opt/venv/bin:/usr/lib/freesurfer/bin:/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/ants:/opt/afni:/opt/c3d/bin:/root/.nvm/versions/node/v11.15.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/5.0",
+      "python3": "/opt/venv/bin/python3.8",
+      "POETRY_HOME": "/opt/poetry"
+    },
+    "inputs": {
+      "pipeline_file": {
+        "base": "file",
+        "optional": true,
+        "description": "NOT THE DATASET; An optional custom pipeline file"
+      }
+    },
+    "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+    "license": "Other",
+    "name": "c-pac",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",
+    "version": "0.3.0_1.8.0"
+  },
+  "exchange": {
+    "git-commit": "90256271d65fa86ed383c8ebec6b308c1db5c8a3",
+    "rootfs-hash": "sha384:a6260edf26c6f1e72439a0edc8e70f5351929d4cbbeb0686669ff6c181187f6ffac12b5fe44c0bc6de493c822dcf9931",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-c-pac-sha384-a6260edf26c6f1e72439a0edc8e70f5351929d4cbbeb0686669ff6c181187f6ffac12b5fe44c0bc6de493c822dcf9931.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "preconfig": {
+            "type": "string",
+            "enum": [
+              "anat-only",
+              "benchmark-ANTS",
+              "benchmark-FNIRT",
+              "fmriprep-options",
+              "ndmg",
+              "preproc",
+              "monkey",
+              "nhp-macaque",
+              "rodent",
+              "regtest-1",
+              "regtest-2",
+              "regtest-3",
+              "regtest-4"
+            ]
+          },
+          "n_cpus": {
+            "default": 0,
+            "type": "integer"
+          },
+          "mem_mb": {
+            "default": 0,
+            "type": "number"
+          },
+          "mem_gb": {
+            "default": 0,
+            "type": "number"
+          },
+          "save_working_dir": {
+            "default": false,
+            "type": "boolean"
+          },
+          "skip_bids_validator": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tracking_opt-out": {
+            "default": true,
+            "type": "boolean"
+          },
+          "test_config": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-save-output-on-error": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-run-bids-validation": {
+            "default": true,
+            "type": "boolean"
+          },
+          "gear-abort-on-bids-error": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "n_cpus",
+          "mem_mb",
+          "mem_gb",
+          "save_working_dir",
+          "skip_bids_validator",
+          "tracking_opt-out",
+          "test_config",
+          "gear-save-output-on-error",
+          "gear-run-bids-validation",
+          "gear-abort-on-bids-error",
+          "gear-dry-run"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "pipeline_file": {
+            "type": "object",
+            "properties": {}
+          }
+        }
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

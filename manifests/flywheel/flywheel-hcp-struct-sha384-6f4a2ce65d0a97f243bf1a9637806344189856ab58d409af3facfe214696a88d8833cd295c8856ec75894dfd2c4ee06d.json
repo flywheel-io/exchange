@@ -1,0 +1,243 @@
+{
+  "gear": {
+    "name": "hcp-struct",
+    "label": "HCP: Structural Preprocessing Pipeline",
+    "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images. NOTE: This Gear is a prerequisite for other Gears in the HCP suite. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "author": "Human Connectome Project",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "url": "https://github.com/Washington-University/Pipelines",
+    "source": "https://github.com/flywheel-apps/hcp-struct",
+    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+    "version": "0.1.6",
+    "custom": {
+      "docker-image": "flywheel/hcp-struct:0.1.6"
+    },
+    "flywheel": {
+      "suite": "Human Connectome Project"
+    },
+    "inputs": {
+      "T1": {
+        "description": "T1-weighted anatomical NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "T2": {
+        "description": "T2-weighted anatomical NIfTI file",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "FreeSurferLicense": {
+        "description": "FreeSurfer license.txt file (found in $FREESURFER_HOME/license.txt)",
+        "base": "file",
+        "optional": false
+      },
+      "GradientCoeff": {
+        "description": "Scanner gradient nonlinearity coefficient file",
+        "base": "file",
+        "optional": true
+      },
+      "SpinEchoPositive": {
+        "description": "Spin echo field map for correcting T1w and T2w (Positive phase-encode, ie: R>>L or P>>A)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": true
+      },
+      "SpinEchoNegative": {
+        "description": "Spin echo field map for correcting T1w and T2w (Negative phase-encode, ie: L>>R or A>>P)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": true
+      },
+      "SiemensGREMagnitude": {
+        "description": "B0 GRE field map magnitude from a Siemens scanner (Must also provide SiemensGREPhase)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": true
+      },
+      "SiemensGREPhase": {
+        "description": "B0 GRE field map phase from a Siemens scanner (Must also provide SiemensGREMagnitude)",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "optional": true
+      }
+    },
+    "config": {
+      "Subject": {
+        "type": "string",
+        "default": "000000",
+        "description": "Subject ID (Default = 000000)"
+      },
+      "RegName": {
+        "type": "string",
+        "default": "MSMSulc",
+        "description": "Surface registration type: either 'FS' (freesurfer) or 'MSMSulc' (HCP default)"
+      },
+      "BrainSize": {
+        "type": "integer",
+        "default": 150,
+        "description": "Brain size in mm (in Superior-Inferior axis), typically 150 (default) for adults"
+      },
+      "TemplateSize": {
+        "type": "string",
+        "default": "0.8mm",
+        "description": "Voxel size of HCP anatomical template. Best if matches input. (Options = 0.7mm, 0.8mm (default), 1mm)"
+      },
+      "StructuralUnwarpDirection": {
+        "description": "Readout direction for structural scans ( 'x', 'x-', 'y', 'y-', 'z', 'z-' ). HCP default = 'z'",
+        "default": "z",
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "94e51bac56f3bee09d870fb8e20a26542440c40e",
+    "rootfs-hash": "sha384:6f4a2ce65d0a97f243bf1a9637806344189856ab58d409af3facfe214696a88d8833cd295c8856ec75894dfd2c4ee06d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hcp-struct-sha384-6f4a2ce65d0a97f243bf1a9637806344189856ab58d409af3facfe214696a88d8833cd295c8856ec75894dfd2c4ee06d.tgz"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "type": "object",
+    "properties": {
+      "inputs": {
+        "required": [
+          "T2",
+          "T1",
+          "FreeSurferLicense"
+        ],
+        "type": "object",
+        "properties": {
+          "GradientCoeff": {
+            "type": "object",
+            "properties": {}
+          },
+          "SpinEchoNegative": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "T2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "T1": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "SiemensGREPhase": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "FreeSurferLicense": {
+            "type": "object",
+            "properties": {}
+          },
+          "SiemensGREMagnitude": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "SpinEchoPositive": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "config": {
+        "required": [
+          "StructuralUnwarpDirection",
+          "RegName",
+          "TemplateSize",
+          "BrainSize",
+          "Subject"
+        ],
+        "type": "object",
+        "properties": {
+          "StructuralUnwarpDirection": {
+            "default": "z",
+            "type": "string"
+          },
+          "RegName": {
+            "default": "MSMSulc",
+            "type": "string"
+          },
+          "TemplateSize": {
+            "default": "0.8mm",
+            "type": "string"
+          },
+          "BrainSize": {
+            "default": 150,
+            "type": "integer"
+          },
+          "Subject": {
+            "default": "000000",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title": "Invocation manifest for HCP: Structural Preprocessing Pipeline"
+  }
+}
