@@ -135,7 +135,7 @@
         "image": "flywheel/fsl-feat:1.0.4_6.0"
       }
     },
-    "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).",
     "inputs": {
       "NIFTI": {
         "base": "file",
@@ -168,7 +168,7 @@
       }
     },
     "label": "FSL: FEAT - fMRI preprocessing (v6.0)",
-    "license": "Other",
+    "license": "Apache-2.0",
     "maintainer": "Flywheel <support@flywheel.io>",
     "name": "fsl-feat",
     "source": "https://github.com/flywheel-apps/fsl-feat",

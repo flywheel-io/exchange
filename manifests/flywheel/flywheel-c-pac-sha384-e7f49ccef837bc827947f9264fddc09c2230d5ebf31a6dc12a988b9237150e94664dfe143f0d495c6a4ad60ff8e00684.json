@@ -2,12 +2,12 @@
   "gear": {
     "name": "c-pac",
     "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
-    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "description": "The Configurable Pipeline for the Analysis of Connectomes C-PAC is a software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
     "maintainer": "Flywheel <support@flywheel.io>",
     "author": "Craddock C, Sikka S, Cheung B, et al.",
     "url": "https://github.com/BIDS-Apps/CPAC",
     "source": "https://github.com/flywheel-apps/c-pac",
-    "license": "Other",
+    "license": "Apache-2.0",
     "version": "0.1.1_v1.4.1",
     "custom": {
       "docker-image": "flywheel/c-pac:0.1.1_v1.4.1",

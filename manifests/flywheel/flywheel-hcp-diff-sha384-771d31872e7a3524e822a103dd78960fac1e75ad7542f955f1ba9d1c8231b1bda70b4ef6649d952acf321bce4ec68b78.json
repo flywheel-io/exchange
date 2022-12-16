@@ -2,10 +2,10 @@
   "gear": {
     "name": "hcp-diff",
     "label": "HCP: Diffusion Preprocessing Pipeline",
-    "description": "Runs the diffusion preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. This includes correction for EPI distortion (using FSL topup), correction for motion and eddy-current distortion (using FSL eddy), and registration to subject anatomy. In addition, this Gear generates a QC mosaic. This Gear requires that the HCP-Structural gear has been run - the output of which is used here. This Gear allows input of up to 4 diffusion acquisitions.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "description": "Runs the diffusion preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. This includes correction for EPI distortion (using FSL topup), correction for motion and eddy-current distortion (using FSL eddy), and registration to subject anatomy. In addition, this Gear generates a QC mosaic. This Gear requires that the HCP-Structural gear has been run - the output of which is used here. This Gear allows input of up to 4 diffusion acquisitions.",
     "author": "Human Connectome Project",
     "maintainer": "Flywheel <support@flywheel.io>",
-    "license": "Other",
+    "license": "Apache-2.0",
     "url": "https://github.com/Washington-University/Pipelines",
     "source": "https://github.com/flywheel-apps/hcp-diff",
     "version": "0.1.0",

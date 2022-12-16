@@ -1,7 +1,7 @@
 {
   "gear": {
     "author": "Human Connectome Project",
-    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., \u2026 Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105\u2013124.",
+    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
     "command": "/flywheel/v0/run.py",
     "config": {
       "BrainSize": {
@@ -72,7 +72,7 @@
         "image": "flywheel/hcp-struct:1.0.4_4.3.0"
       }
     },
-    "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images. NOTE: This Gear is a prerequisite for other Gears in the HCP suite.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "description": "Runs the structural preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline, described in Glasser et al. 2013. Currently this includes v4.0-alpha release of PreFreeSurfer, FreeSurfer, and PostFreeSurfer pipelines. This Gear also generates some helpful QC images. NOTE: This Gear is a prerequisite for other Gears in the HCP suite.",
     "environment": {
       "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
     },
