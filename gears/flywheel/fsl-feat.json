@@ -17,11 +17,7 @@
       "default": 12,
       "description": "Degrees of Freedom for registration to standard space (allowed: 3, 6, 12)",
       "type": "integer",
-      "enum": [
-        3,
-        6,
-        12
-      ]
+      "enum": [3, 6, 12]
     },
     "FNIRT": {
       "default": 0,
@@ -83,12 +79,8 @@
     "SEARCH_SPACE": {
       "default": 90,
       "description": "Search space for registration to initial structural. 0 = no search; 90 = normal search; 180 = full search",
-      "type": "integer",
-      "enum": [
-        0,
-        90,
-        180
-      ]
+      "type" : "integer",
+      "enum": [0, 90, 180]
     },
     "STC": {
       "default": 1,
@@ -134,7 +126,7 @@
       "image": "flywheel/fsl-feat:1.0.4_6.0"
     }
   },
-  "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
+  "description": "FSL's FEAT (FMRI Expert Analysis Tool). As implemented in this Gear FEAT allows for basic preprocessing of an fMRI dataset including motion correction using MCFLIRT [Jenkinson 2002]; slice-timing correction using Fourier-space time-series phase-shifting; non-brain removal using BET [Smith 2002]; spatial smoothing using a Gaussian kernel; multiplicative mean intensity normalization of the volume at each timepoint; and highpass temporal filtering (Gaussian-weighted least-squares straight line fitting), brain extraction, and registration to a standard image (MNI152).",
   "inputs": {
     "NIFTI": {
       "base": "file",
@@ -167,7 +159,7 @@
     }
   },
   "label": "FSL: FEAT - fMRI preprocessing (v6.0)",
-  "license": "Other",
+  "license": "Apache-2.0",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "fsl-feat",
   "source": "https://github.com/flywheel-apps/fsl-feat",

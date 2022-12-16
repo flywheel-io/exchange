@@ -31,7 +31,7 @@
       },
       "bold2t1w-init": {
         "default": "register",
-        "description": "Either \u201cregister\u201d (the default) to initialize volumes at center or \u201cheader\u201d to use the header information when coregistering BOLD to T1w images.",
+        "description": "Either “register” (the default) to initialize volumes at center or “header” to use the header information when coregistering BOLD to T1w images.",
         "enum": [
           "register",
           "header"
@@ -45,7 +45,7 @@
       },
       "debug": {
         "default": "",
-        "description": "Possible choices: compcor, all.  Debug mode(s) to enable. \u2018all\u2019 is alias for all available modes.",
+        "description": "Possible choices: compcor, all.  Debug mode(s) to enable. ‘all’ is alias for all available modes.",
         "enum": [
           "",
           "compcor",
@@ -214,7 +214,7 @@
       },
       "output-spaces": {
         "default": "MNI152NLin2009cAsym",
-        "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: \u201cMNI152Lin\u201d, \u201cMNI152NLin2009cAsym\u201d, \u201cMNI152NLin6Asym\u201d, \u201cMNI152NLin6Sym\u201d, \u201cMNIInfant\u201d, \u201cMNIPediatricAsym\u201d, \u201cNKI\u201d, \u201cOASIS30ANTs\u201d, \u201cPNC\u201d, \u201cfsLR\u201d, \u201cfsaverage\u201d) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/stable/spaces.html",
+        "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/stable/spaces.html",
         "type": "string"
       },
       "reports-only": {
@@ -224,7 +224,7 @@
       },
       "resource-monitor": {
         "default": false,
-        "description": "enable Nipype\u2019s resource monitoring to keep track of memory and CPU usage",
+        "description": "enable Nipype’s resource monitoring to keep track of memory and CPU usage",
         "type": "boolean"
       },
       "return-all-components": {
@@ -244,12 +244,12 @@
       },
       "skull-strip-fixed-seed": {
         "default": false,
-        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with \u2013omp-nthreads 1",
+        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1",
         "type": "boolean"
       },
       "skull-strip-t1w": {
         "default": "force",
-        "description": "Possible choices: auto, skip, force.  Determiner for T1-weighted skull stripping (\u2018force\u2019 ensures skull stripping, \u2018skip\u2019 ignores skull stripping, and \u2018auto\u2019 applies brain extraction based on the outcome of a heuristic to check whether the brain is already masked).  Default is force.",
+        "description": "Possible choices: auto, skip, force.  Determiner for T1-weighted skull stripping (‘force’ ensures skull stripping, ‘skip’ ignores skull stripping, and ‘auto’ applies brain extraction based on the outcome of a heuristic to check whether the brain is already masked).  Default is force.",
         "enum": [
           "auto",
           "skip",
@@ -708,7 +708,5 @@
       "config",
       "inputs"
     ]
-  },
-  "license": "Other",
-  "description": "\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n"
+  }
 }

@@ -1,157 +1,157 @@
 {
-  "name": "ndmg",
-  "label": "NDMG (NeuroData's MR Graphs Package)",
-  "description": "NeuroData's MR Graphs package, ndmg (pronounced \"nutmeg\"), is a turn-key pipeline which uses structural and diffusion MRI data to estimate multi-resolution connectomes reliably and scalably.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
-  "maintainer": "Derek Pisner <dpisner@utexas.edu>",
-  "author": "Gregory Kiar, Eric W. Bridgeford, Joshua T. Vogelstein, et al.",
-  "url": "https://github.com/neurodata/ndmg",
-  "source": "https://github.com/flywheel-apps/ndmg",
-  "license": "Other",
-  "version": "0.1.0_staging",
-  "custom": {
-    "docker-image": "flywheel/ndmg:0.1.0_staging",
-    "gear-builder": {
-      "category": "analysis",
-      "image": "flywheel/ndmg:0.1.0_staging"
+    "name": "ndmg",
+    "label": "NDMG (NeuroData's MR Graphs Package)",
+    "description": "NeuroData's MR Graphs package, ndmg (pronounced \"nutmeg\"), is a turn-key pipeline which uses structural and diffusion MRI data to estimate multi-resolution connectomes reliably and scalably.",
+    "maintainer": "Derek Pisner <dpisner@utexas.edu>",
+    "author": "Gregory Kiar, Eric W. Bridgeford, Joshua T. Vogelstein, et al.",
+    "url": "https://github.com/neurodata/ndmg",
+    "source": "https://github.com/flywheel-apps/ndmg",
+    "license": "Apache-2.0",
+    "version": "0.1.0_staging",
+    "custom": {
+        "docker-image": "flywheel/ndmg:0.1.0_staging",
+        "gear-builder": {
+                "category": "analysis",
+                "image": "flywheel/ndmg:0.1.0_staging"
+        },
+        "flywheel": {
+            "suite": "NeuroData"
+        }
     },
-    "flywheel": {
-      "suite": "NeuroData"
+    "inputs": {
+        "t1w": {
+            "base": "file",
+            "description": "T1-weighted anatomical NIfTI file",
+            "type": {
+              "enum": [
+                "nifti"
+              ]
+            },
+            "optional": false
+          },
+          "dwi": {
+            "base": "file",
+            "description": "Diffusion-Weighted NIfTI file",
+            "type": {
+              "enum": [
+                "nifti"
+              ]
+            },
+            "optional": false
+          },
+          "bvecs": {
+            "base": "file",
+            "description": "A text file that defines the gradient vectors created by a DWI scan.",
+            "optional": false
+          },
+          "bvals": {
+            "base": "file",
+            "description": "A text file that defines magnitudes for the gradient vectors created by a DWI scan.",
+            "optional": false
+          }
+    },
+    "config": {
+        "atlas": {
+            "default": "desikan",
+            "description": "The atlas that defines the node location of the graph you create.",
+            "type": "string",
+            "enum":[
+                "desikan", 
+                "CPAC200", 
+                "DKT", 
+                "HarvardOxfordcort", 
+                "HarvardOxfordsub", 
+                "JHU", 
+                "Schaefer2018-200", 
+                "Talairach", 
+                "aal", 
+                "brodmann", 
+                "glasser", 
+                "yeo-7-liberal", 
+                "yeo-17-liberal"
+            ]
+        },
+        "mod_type": {
+            "default": "det",
+            "description": "Deterministic or probablistic tractography.",
+            "type": "string",
+            "enum":[
+                "det", 
+                "prob"
+            ]
+        },
+        "track_type": {
+            "default": "local",
+            "description": "Local or particle tracking.",
+            "type": "string",
+            "enum":[
+                "local", 
+                "particle"
+            ]
+        },
+        "mod_func": {
+            "default": "csa",
+            "description": "Constant Solid Angle or Constrained Spherical Deconvolution.",
+            "type": "string",
+            "enum":[
+                "csa", 
+                "csd"
+            ]
+        },
+        "reg_style": {
+            "default": "native",
+            "description": "Registration style. If native, do all registration in each scan's space; if mni, register scans to the MNI atlas; if native_dsn, do registration in native space, and then fit the streamlines to MNI space.",
+            "type": "string",
+            "enum":[
+                "native", 
+                "native_dsn", 
+                "mni"
+            ]
+        },
+        "vox_size": {
+            "default": "1mm",
+            "description": "Whether our voxels are 1mm or 2mm. ",
+            "type": "string",
+            "enum":[
+                "local", 
+                "particle"
+            ]
+        },
+        "seeds": {
+            "default": 1,
+            "description": "Seeding density for tractography. More seeds generally results in a better graph, but at a much higher computational cost.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 21
+        }
+    },
+    "command": "/flywheel/v0/run.py",
+    "environment":{
+        "TERM": "xterm",
+        "FSLMULTIFILEQUIT": "TRUE",
+        "POSSUMDIR": "/usr/share/fsl/5.0",
+        "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+        "PYTHONWARNINGS": "ignore",
+        "MPLCONFIGDIR": "/tmp/",
+        "PATH": "/usr/lib/fsl/5.0:/opt/afni:/usr/share/fsl/5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "NDMG_URL": "https://github.com/neurodata/ndmg.git",
+        "FSLTCLSH": "/usr/bin/tclsh",
+        "FSLMACHINELIST": "",
+        "CRAN_URL": "https://cran.rstudio.com/",
+        "FSLREMOTECALL": "",
+        "FSLWISH": "/usr/bin/wish",
+        "FSLBROWSER": "/etc/alternatives/x-www-browser",
+        "SHLVL": "1",
+        "HOME": "/root",
+        "FSLDIR": "/usr/share/fsl/5.0",
+        "NDMG_ATLASES": "https://github.com/neurodata/neuroparc.git",
+        "LESSOPEN": "| /usr/bin/lesspipe %s",
+        "FSLLOCKDIR": "",
+        "AFNI_URL": "https://files.osf.io/v1/resources/fvuh8/providers/osfstorage/5a0dd9a7b83f69027512a12b",
+        "FSLOUTPUTTYPE": "NIFTI_GZ",
+        "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+        "NDEB_URL": "http://neuro.debian.net/lists/xenial.us-ca.full",
+        "_": "/usr/local/bin/ipython",
+        "KMP_DUPLICATE_LIB_OK": "True"
     }
-  },
-  "inputs": {
-    "t1w": {
-      "base": "file",
-      "description": "T1-weighted anatomical NIfTI file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": false
-    },
-    "dwi": {
-      "base": "file",
-      "description": "Diffusion-Weighted NIfTI file",
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      },
-      "optional": false
-    },
-    "bvecs": {
-      "base": "file",
-      "description": "A text file that defines the gradient vectors created by a DWI scan.",
-      "optional": false
-    },
-    "bvals": {
-      "base": "file",
-      "description": "A text file that defines magnitudes for the gradient vectors created by a DWI scan.",
-      "optional": false
-    }
-  },
-  "config": {
-    "atlas": {
-      "default": "desikan",
-      "description": "The atlas that defines the node location of the graph you create.",
-      "type": "string",
-      "enum": [
-        "desikan",
-        "CPAC200",
-        "DKT",
-        "HarvardOxfordcort",
-        "HarvardOxfordsub",
-        "JHU",
-        "Schaefer2018-200",
-        "Talairach",
-        "aal",
-        "brodmann",
-        "glasser",
-        "yeo-7-liberal",
-        "yeo-17-liberal"
-      ]
-    },
-    "mod_type": {
-      "default": "det",
-      "description": "Deterministic or probablistic tractography.",
-      "type": "string",
-      "enum": [
-        "det",
-        "prob"
-      ]
-    },
-    "track_type": {
-      "default": "local",
-      "description": "Local or particle tracking.",
-      "type": "string",
-      "enum": [
-        "local",
-        "particle"
-      ]
-    },
-    "mod_func": {
-      "default": "csa",
-      "description": "Constant Solid Angle or Constrained Spherical Deconvolution.",
-      "type": "string",
-      "enum": [
-        "csa",
-        "csd"
-      ]
-    },
-    "reg_style": {
-      "default": "native",
-      "description": "Registration style. If native, do all registration in each scan's space; if mni, register scans to the MNI atlas; if native_dsn, do registration in native space, and then fit the streamlines to MNI space.",
-      "type": "string",
-      "enum": [
-        "native",
-        "native_dsn",
-        "mni"
-      ]
-    },
-    "vox_size": {
-      "default": "1mm",
-      "description": "Whether our voxels are 1mm or 2mm. ",
-      "type": "string",
-      "enum": [
-        "local",
-        "particle"
-      ]
-    },
-    "seeds": {
-      "default": 1,
-      "description": "Seeding density for tractography. More seeds generally results in a better graph, but at a much higher computational cost.",
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 21
-    }
-  },
-  "command": "/flywheel/v0/run.py",
-  "environment": {
-    "TERM": "xterm",
-    "FSLMULTIFILEQUIT": "TRUE",
-    "POSSUMDIR": "/usr/share/fsl/5.0",
-    "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
-    "PYTHONWARNINGS": "ignore",
-    "MPLCONFIGDIR": "/tmp/",
-    "PATH": "/usr/lib/fsl/5.0:/opt/afni:/usr/share/fsl/5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "NDMG_URL": "https://github.com/neurodata/ndmg.git",
-    "FSLTCLSH": "/usr/bin/tclsh",
-    "FSLMACHINELIST": "",
-    "CRAN_URL": "https://cran.rstudio.com/",
-    "FSLREMOTECALL": "",
-    "FSLWISH": "/usr/bin/wish",
-    "FSLBROWSER": "/etc/alternatives/x-www-browser",
-    "SHLVL": "1",
-    "HOME": "/root",
-    "FSLDIR": "/usr/share/fsl/5.0",
-    "NDMG_ATLASES": "https://github.com/neurodata/neuroparc.git",
-    "LESSOPEN": "| /usr/bin/lesspipe %s",
-    "FSLLOCKDIR": "",
-    "AFNI_URL": "https://files.osf.io/v1/resources/fvuh8/providers/osfstorage/5a0dd9a7b83f69027512a12b",
-    "FSLOUTPUTTYPE": "NIFTI_GZ",
-    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
-    "NDEB_URL": "http://neuro.debian.net/lists/xenial.us-ca.full",
-    "_": "/usr/local/bin/ipython",
-    "KMP_DUPLICATE_LIB_OK": "True"
-  }
 }

@@ -1,3 +1,4 @@
+"""Various tools for bulk updating gears on the exchange."""
 import sys
 from pathlib import Path
 import json
@@ -19,17 +20,18 @@ license. See
 for more information.
 """
 
-def update_exchange(gears):
-    for gear in gears:
-        if gear.exists():
-            gear_def = OrderedDict()
-            with open(gear, 'r') as fp:
-                gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
+def update_exchange(gears, all_jsons):
+    for path in all_jsons:
+        gear_def = OrderedDict()
+        with open(path, 'r') as fp:
+            gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
+        if gear_def.get('gear', {}).get('name', '') in gears:
+
             gear_def['license'] = "Other"
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
-            with open(gear, 'w') as fp:
+            with open(path, 'w') as fp:
                 fp.write(json.dumps(gear_def, indent=2))
-            print(f"updated: {gear}")
+            print(f"updated: {gear_def.get('gear', {}).get('name')}")
 
 
 def check_updated(src, name):
@@ -120,5 +122,7 @@ if __name__ == '__main__':
     root_dir = Path(sys.argv[2])
     with open(gear_list, 'r') as fp:
         gears = [g.strip('\n') for g in fp.readlines()]
-    gears = [root_dir / (g + ".json") for g in gears]
-    update_exchange(gears)
+    #gears = [root_dir / (g + ".json") for g in gears]
+    gears = [g.split('/')[1] for g in gears]
+    all_jsons = [path for path in root_dir.rglob('*') if path.is_file() and path.name.endswith('.json')]
+    update_exchange(gears, all_jsons)
