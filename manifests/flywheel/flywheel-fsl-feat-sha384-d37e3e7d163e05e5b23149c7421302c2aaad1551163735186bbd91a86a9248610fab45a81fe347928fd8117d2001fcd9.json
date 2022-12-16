@@ -243,5 +243,7 @@
       }
     },
     "title": "Invocation manifest for FSL: FEAT - fMRI preprocessing (v6.0)"
-  }
+  },
+  "license": "Other",
+  "description": "\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n"
 }

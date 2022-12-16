@@ -8,7 +8,7 @@
     "license": "Other",
     "url": "https://github.com/Washington-University/Pipelines",
     "source": "https://github.com/flywheel-apps/hcp-struct",
-    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., … Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105–124.",
+    "cite": "Glasser M. F., Sotiropoulos S. N., Wilson J. A., Coalson T. S., Fischl B., Andersson J. L., \u2026 Consortium, W. U.-M. H. (2013). The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage, 80, 105\u2013124.",
     "version": "0.1.6",
     "custom": {
       "docker-image": "flywheel/hcp-struct:0.1.6"
@@ -239,5 +239,7 @@
       }
     },
     "title": "Invocation manifest for HCP: Structural Preprocessing Pipeline"
-  }
+  },
+  "license": "Other",
+  "description": "\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n"
 }

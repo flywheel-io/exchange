@@ -142,7 +142,7 @@
         "optional": true
       },
       "separate_all_dwis": {
-        "description": "don’t attempt to combine dwis from multiple runs. Each will be processed separately.",
+        "description": "don\u2019t attempt to combine dwis from multiple runs. Each will be processed separately.",
         "type": "boolean",
         "optional": true
       },
@@ -213,7 +213,7 @@
         "optional": true
       },
       "b0-motion-corr-to": {
-        "description": "align to the “first” b0 volume or do an “iterative” registration of all b0 images to their midpoint image (default: iterative)",
+        "description": "align to the \u201cfirst\u201d b0 volume or do an \u201citerative\u201d registration of all b0 images to their midpoint image (default: iterative)",
         "type": "string",
         "enum": [
           "",
@@ -233,7 +233,7 @@
         "optional": true
       },
       "hmc_model": {
-        "description": "model used to generate target images for hmc. If “none” the non-b0 images will be warped using the same transform as their nearest b0 image. If “3dSHORE”, SHORELine will be used. If “eddy_ingress”, the dwis are assumed to have been run through fsls eddy.",
+        "description": "model used to generate target images for hmc. If \u201cnone\u201d the non-b0 images will be warped using the same transform as their nearest b0 image. If \u201c3dSHORE\u201d, SHORELine will be used. If \u201ceddy_ingress\u201d, the dwis are assumed to have been run through fsls eddy.",
         "type": "string",
         "enum": [
           "",
@@ -263,7 +263,7 @@
         "optional": true
       },
       "skull-strip-fixed-seed": {
-        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1",
+        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with \u2013omp-nthreads 1",
         "type": "boolean",
         "optional": true
       },
@@ -293,7 +293,7 @@
         "optional": true
       },
       "use-syn-sdc": {
-        "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. To use this option, “template” must be passed to –output-space",
+        "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. To use this option, \u201ctemplate\u201d must be passed to \u2013output-space",
         "type": "boolean",
         "optional": true
       },
@@ -303,7 +303,7 @@
         "optional": true
       },
       "reports-only": {
-        "description": "only generate reports, don’t run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.",
+        "description": "only generate reports, don\u2019t run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.",
         "type": "boolean",
         "optional": true
       },
@@ -703,5 +703,7 @@
       "config",
       "inputs"
     ]
-  }
+  },
+  "license": "Other",
+  "description": "\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n"
 }

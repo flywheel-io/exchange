@@ -94,7 +94,7 @@
       },
       "float32": {
         "default": false,
-        "description": "Cast the input data to float32 if it’s represented in higher precision (saves space and improves perfomance)",
+        "description": "Cast the input data to float32 if it\u2019s represented in higher precision (saves space and improves perfomance)",
         "type": "boolean"
       },
       "gear-abort-on-bids-error": {
@@ -168,7 +168,7 @@
         "type": "integer"
       },
       "no-sub": {
-        "description": "Turn off submission of anonymized quality metrics to MRIQC’s metrics repository",
+        "description": "Turn off submission of anonymized quality metrics to MRIQC\u2019s metrics repository",
         "optional": true,
         "type": "boolean"
       },
@@ -458,5 +458,7 @@
       "config",
       "inputs"
     ]
-  }
+  },
+  "license": "Other",
+  "description": "\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n"
 }
