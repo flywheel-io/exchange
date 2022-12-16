@@ -34,7 +34,7 @@ def update_exchange(gears, all_jsons):
             gear_def['license'] = "Other"
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
             with open(path, 'w') as fp:
-                fp.write(json.dumps(gear, indent=2))
+                fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
             print(f"updated: {name}")
 
 
