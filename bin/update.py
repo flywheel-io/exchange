@@ -11,27 +11,31 @@ import os
 decoder = json.JSONDecoder(object_pairs_hook=OrderedDict)
 
 UPDATE_STR = """
-\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and
-license is required for any commercial applications.  For academic use, an
-academic license is required which is available by registering on the FSL
-website. Any use of the software requires that the user obtain the appropriate
-license. See 
-[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)
-for more information.
+ \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and
+ license is required for any commercial applications. For commercial licence
+ please contact fsl@innovation.ox.ac.uk . For academic use, an academic license
+ is required which is available by registering on the FSL website. Any use of
+ the software requires that the user obtain the appropriate license. See
+ https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.
 """
 
 def update_exchange(gears, all_jsons):
     for path in all_jsons:
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
-            gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
-        if gear_def.get('gear', {}).get('name', '') in gears:
+            gear = json.loads(fp.read(), object_pairs_hook=OrderedDict)
+        # Manifests folder uses {gear: {}} whereas gears folder uses just {}
+        gear_def = gear
+        if 'gear' in gear_def:
+            gear_def = gear_def['gear']
+        name = gear_def.get('name', '')
+        if  name in gears:
 
             gear_def['license'] = "Other"
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
             with open(path, 'w') as fp:
-                fp.write(json.dumps(gear_def, indent=2))
-            print(f"updated: {gear_def.get('gear', {}).get('name')}")
+                fp.write(json.dumps(gear, indent=2))
+            print(f"updated: {name}")
 
 
 def check_updated(src, name):

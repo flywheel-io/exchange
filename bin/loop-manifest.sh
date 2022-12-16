@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#  Script to pull all manifest images and search for specific string in $PATH for each gear
+
 GEARS_DIR="$1"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
