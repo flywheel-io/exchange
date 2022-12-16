@@ -187,7 +187,7 @@
       }
     }
   },
-  "description": "This gear returns statistical output for a given NIFTI image.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
+  "description": "This gear returns statistical output for a given NIFTI image.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
   "environment": {
     "FLYWHEEL": "/flywheel/v0",
     "PATH": "/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",

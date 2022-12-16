@@ -1,7 +1,7 @@
 {
   "name": "pydeface-gear",
   "label": "Pydeface Gear",
-  "description": "A gear to remove facial structure from MRI images.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
+  "description": "A gear to remove facial structure from MRI images.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
   "author": "poldracklab",
   "maintainer": "Flywheel <support@flywheel.io>",
   "license": "Other",

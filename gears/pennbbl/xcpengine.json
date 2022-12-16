@@ -1,7 +1,7 @@
 {
   "name": "xcpengine-fw",
   "label": "XCPENGINE: pipeline for processing of  structural and functional data.",
-  "description": " The XCP imaging pipeline (XCP system) for  preprocessing of structural and functional data.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
+  "description": " The XCP imaging pipeline (XCP system) for  preprocessing of structural and functional data.\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n\n\t LICENSING NOTE: FSL software are owned by Oxford University Innovation and\nlicense is required for any commercial applications.  For academic use, an\nacademic license is required which is available by registering on the FSL\nwebsite. Any use of the software requires that the user obtain the appropriate\nlicense. See \n[FSL Software Downloads](https://fsl.fmrib.ox.ac.uk/fsldownloads_registration)\nfor more information.\n",
   "version": "1.0631",
   "inputs": {
     "antsct": {
