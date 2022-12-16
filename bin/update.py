@@ -19,29 +19,43 @@ UPDATE_STR = (
  "https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information."
 )
 
-def update_exchange(gears, all_jsons, action='update'):
-    gears = [g.split('/')[1] for g in gears]
-    for path in all_jsons:
+def update_exchange(gears, root):
+    gear_jsons = [
+        p for p in (root / 'gears').rglob('*') if p.is_file() and p.name.endswith('.json')
+    ]
+    manifest_jsons = [
+        p for p in (root / 'manifests').rglob('*') if p.is_file() and p.name.endswith('.json')
+    ]
+    current_gears = []
+    for path in gear_jsons:
+        gear_def = OrderedDict()
+        with open(path, 'r') as fp:
+            gear_def = json.loads(fp.read(), object_pairs_hook=OrderedDict)
+        name = gear_def.get('name', '')
+        if  name in gears:
+            gear_def['license'] = "Other"
+            gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
+            with open(path, 'w') as fp:
+                fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
+            current_gears[name] = gear_def.get('version')
+            print(f"updated: {name}")
+
+    for path in manifest_jsons:
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
             gear = json.loads(fp.read(), object_pairs_hook=OrderedDict)
-        # Manifests folder uses {gear: {}} whereas gears folder uses just {}
-        gear_def = gear
-        if 'gear' in gear_def:
-            gear_def = gear_def['gear']
+        gear_def = gear['gear']
         name = gear_def.get('name', '')
         if  name in gears:
-            if action == 'update':
+            if name in current_gears and gear_def.get('version') == current_gears.get(name):
+                path.unlink()
+                print(f"Removed {path}")
+            else:
                 gear_def['license'] = "Other"
                 gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
                 with open(path, 'w') as fp:
                     fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
                 print(f"updated: {name}")
-            elif action == 'remove':
-                path.unlink()
-                print(f"Removed {path}")
-            else:
-                print("Unknown action")
 
 
 def check_updated(src, name):
@@ -151,12 +165,6 @@ if __name__ == '__main__':
     root_dir = Path(sys.argv[2])
     with open(gear_list, 'r') as fp:
         gears = [g.strip('\n') for g in fp.readlines()]
-    all_jsons = [path for path in root_dir.rglob('*') if path.is_file() and path.name.endswith('.json')]
-    action = ''
-    if root_dir.name == 'gears':
-        action = 'update'
-    elif root_dir.name == 'manifests':
-        action = 'remove'
-    update_exchange(gears, all_jsons, action=action)
+    update_exchange(gears, root_dir)
     #update_repos(gears, root_dir, 'update-license')
     #check_gears(gears, root_dir)
