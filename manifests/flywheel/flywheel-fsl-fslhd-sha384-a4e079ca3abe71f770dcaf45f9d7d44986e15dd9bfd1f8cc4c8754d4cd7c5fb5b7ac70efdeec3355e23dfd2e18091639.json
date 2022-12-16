@@ -31,7 +31,7 @@
         "image": "flywheel/fsl-fslhd:1.1.2_5.0"
       }
     },
-    "description": "Extract nifti header using FSL's fslhd (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils) LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "description": "Extract nifti header using FSL's fslhd (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils) LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "environment": {
       "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
       "FSLDIR": "/usr/share/fsl/5.0",
