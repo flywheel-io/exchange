@@ -26,7 +26,8 @@ def update_exchange(gears, root):
     manifest_jsons = [
         p for p in (root / 'manifests').rglob('*') if p.is_file() and p.name.endswith('.json')
     ]
-    current_gears = []
+    gears = [g.split('/')[1] for g in gears]
+    current_gears = {}
     for path in gear_jsons:
         gear_def = OrderedDict()
         with open(path, 'r') as fp:
@@ -36,7 +37,7 @@ def update_exchange(gears, root):
             gear_def['license'] = "Other"
             gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
             with open(path, 'w') as fp:
-                fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
+                fp.write(json.dumps(gear_def, indent=2, ensure_ascii=False))
             current_gears[name] = gear_def.get('version')
             print(f"updated: {name}")
 
