@@ -2,12 +2,12 @@
   "gear": {
     "name": "dtiinit",
     "label": "VISTALAB: dtiInit - Diffusion Data Initialization Pipeline",
-    "description": "VISTALAB's dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. This Gear allows all dtiInit parameters to be set from within the configuration UI. All outputs are archived in a zip file for easy download. dtiInit.json is saved for easy reference to configuration parameters used at runtime.",
+    "description": "VISTALAB's dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. This Gear allows all dtiInit parameters to be set from within the configuration UI. All outputs are archived in a zip file for easy download. dtiInit.json is saved for easy reference to configuration parameters used at runtime.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "maintainer": "Michael Perry <lmperry@stanford.edu>",
     "author": "Stanford VISTA Lab",
     "url": "https://github.com/vistalab/vistasoft/wiki/dwi-Initialization",
     "source": "https://github.com/scitran-apps/dtiinit",
-    "license": "GPL-2.0",
+    "license": "Other",
     "flywheel": "0",
     "version": "0.2.1",
     "custom": {

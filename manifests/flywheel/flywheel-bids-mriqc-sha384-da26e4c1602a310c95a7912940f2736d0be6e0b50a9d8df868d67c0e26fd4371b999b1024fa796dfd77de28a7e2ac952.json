@@ -2,7 +2,7 @@
   "gear": {
     "name": "bids-mriqc",
     "label": "BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
-    "description": "MRIQC (0.15.2 - April 6, 2020) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  Note: arguments --n_procs --mem_gb and --ants-nthreads are not availble to configure becaues they are set to use the maximum available as detected by MRIQC.",
+    "description": "MRIQC (0.15.2 - April 6, 2020) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  Note: arguments --n_procs --mem_gb and --ants-nthreads are not availble to configure becaues they are set to use the maximum available as detected by MRIQC.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "version": "1.2.1_0.15.2",
     "custom": {
       "docker-image": "flywheel/bids-mriqc:1.2.1_0.15.2",
@@ -267,7 +267,7 @@
     "author": "Poldrack Lab, Stanford University",
     "maintainer": "Flywheel <support@flywheel.io>",
     "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
-    "license": "BSD-3-Clause",
+    "license": "Other",
     "source": "https://github.com/flywheel-apps/bids-mriqc",
     "url": "https://mriqc.readthedocs.io/en/stable/about.html"
   },

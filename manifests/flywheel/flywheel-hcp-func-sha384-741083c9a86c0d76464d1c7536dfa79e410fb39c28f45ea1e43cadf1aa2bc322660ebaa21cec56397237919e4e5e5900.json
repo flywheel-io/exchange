@@ -2,7 +2,7 @@
   "gear": {
     "name": "hcp-func",
     "label": "HCP: Functional Preprocessing Pipeline",
-    "description": "Runs the functional preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. Currently, this Gear includes v4.0-alpha release of fMRIVolume and fMRISurface, as well as generating some helpful QC images. NOTE: this Gear requires that the HCP structural preprocessing pipeline has been run, as the output of that pipeline must be provided as input to this Gear.",
+    "description": "Runs the functional preprocessing steps of the Human Connectome Project Minimal Preprocessing Pipeline described in Glasser et al. 2013. Currently, this Gear includes v4.0-alpha release of fMRIVolume and fMRISurface, as well as generating some helpful QC images. NOTE: this Gear requires that the HCP structural preprocessing pipeline has been run, as the output of that pipeline must be provided as input to this Gear.\n \tLICENSING NOTE: FSL software are owned by Oxford University Innovation and\n license is required for any commercial applications. For commercial licence\n please contact fsl@innovation.ox.ac.uk . For academic use, an academic license\n is required which is available by registering on the FSL website. Any use of\n the software requires that the user obtain the appropriate license. See\n https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
     "author": "Human Connectome Project",
     "maintainer": "Flywheel <support@flywheel.io>",
     "license": "Other",
