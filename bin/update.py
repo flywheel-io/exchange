@@ -121,4 +121,4 @@ if __name__ == '__main__':
     with open(gear_list, 'r') as fp:
         gears = [g.strip('\n') for g in fp.readlines()]
     gears = [root_dir / (g + ".json") for g in gears]
-    update_repos(gears)
+    update_exchange(gears)
