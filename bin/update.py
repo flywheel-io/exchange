@@ -19,7 +19,7 @@ UPDATE_STR = (
  "https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information."
 )
 
-def update_exchange(gears, all_jsons):
+def update_exchange(gears, all_jsons, action='update'):
     gears = [g.split('/')[1] for g in gears]
     for path in all_jsons:
         gear_def = OrderedDict()
@@ -31,12 +31,17 @@ def update_exchange(gears, all_jsons):
             gear_def = gear_def['gear']
         name = gear_def.get('name', '')
         if  name in gears:
-
-            gear_def['license'] = "Other"
-            gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
-            with open(path, 'w') as fp:
-                fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
-            print(f"updated: {name}")
+            if action == 'update':
+                gear_def['license'] = "Other"
+                gear_def['description'] = gear_def.get('description', "") + UPDATE_STR
+                with open(path, 'w') as fp:
+                    fp.write(json.dumps(gear, indent=2, ensure_ascii=False))
+                print(f"updated: {name}")
+            elif action == 'remove':
+                path.unlink()
+                print(f"Removed {path}")
+            else:
+                print("Unknown action")
 
 
 def check_updated(src, name):
@@ -147,6 +152,11 @@ if __name__ == '__main__':
     with open(gear_list, 'r') as fp:
         gears = [g.strip('\n') for g in fp.readlines()]
     all_jsons = [path for path in root_dir.rglob('*') if path.is_file() and path.name.endswith('.json')]
-    #update_exchange(gears, all_jsons)
-    update_repos(gears, root_dir, 'update-license')
+    action = ''
+    if root_dir.name == 'gears':
+        action = 'update'
+    elif root_dir.name == 'manifests':
+        action = 'remove'
+    update_exchange(gears, all_jsons, action=action)
+    #update_repos(gears, root_dir, 'update-license')
     #check_gears(gears, root_dir)
