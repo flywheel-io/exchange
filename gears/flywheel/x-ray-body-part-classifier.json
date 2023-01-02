@@ -1,0 +1,46 @@
+{
+  "author": "Flywheel support@flywheel.io",
+  "cite": "",
+  "command": "cd /opt/monai ; /opt/conda/bin/python app/x-ray-body-part-classifier-map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/x-ray-body-part-classifier/x-ray-body-part-classifier.zip",
+  "config": {
+    "save-json": {
+      "type": "boolean",
+      "default": false,
+      "description": "use flag to save json containing model results."
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable debug mode."
+    }
+  },
+  "description": "Gear for classification of 20 Body Parts on X-ray images",
+  "environment": {},
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "image": "flywheel/x-ray-body-part-classifier:0.1.0",
+      "category": "utility"
+    }
+  },
+  "inputs": {
+    "input-file": {
+      "base": "file",
+      "optional": false,
+      "type": {
+        "enum": [
+          "image"
+        ]
+      },
+      "description": "Input file for the gear"
+    }
+  },
+  "label": "X-ray Body Part Classifier",
+  "name": "x-ray-body-part-classifier",
+  "source": "",
+  "url": "",
+  "license": "MIT",
+  "version": "0.1.0"
+}
