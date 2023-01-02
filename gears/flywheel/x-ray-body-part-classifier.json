@@ -1,0 +1,46 @@
+{
+  "author": "Flywheel support@flywheel.io",
+  "cite": "",
+  "command": "cd /opt/monai ; /opt/conda/bin/python app/x-ray-body-part-classifier-map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/x-ray-body-part-classifier/x-ray-body-part-classifier.zip",
+  "config": {
+    "save-json": {
+      "type": "boolean",
+      "default": false,
+      "description": "use flag to save json containing model results."
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable debug mode."
+    }
+  },
+  "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are:\n'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger', 'Foot',\n'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',\n'Shoulder&Shoulder', 'Spine', 'Cervical', 'Toes', 'Wrist'.",
+  "environment": {},
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "image": "flywheel/x-ray-body-part-classifier:0.1.0",
+      "category": "utility"
+    }
+  },
+  "inputs": {
+    "input-file": {
+      "base": "file",
+      "optional": false,
+      "type": {
+        "enum": [
+          "image","nifti","dicom"
+        ]
+      },
+      "description": "Input file for the gear can be Nifti, Dicom or PNG"
+    }
+  },
+  "label": "X-ray Body Part Classifier",
+  "name": "x-ray-body-part-classifier",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
+  "license": "MIT",
+  "version": "0.1.0"
+}
