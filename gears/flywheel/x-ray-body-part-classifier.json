@@ -15,9 +15,9 @@
     }
   },
   "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are:
-                 'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger','Foot',
+                 'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger', 'Foot',
                  'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',
-                 'Shoulder&Shoulder','Spine.cervical','Toes','Wrist'.",
+                 'Shoulder&Shoulder', 'Spine', 'Cervical', 'Toes', 'Wrist'.",
   "environment": {},
   "custom": {
     "flywheel": {
