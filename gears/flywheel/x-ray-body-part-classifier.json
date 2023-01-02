@@ -14,7 +14,10 @@
       "description": "Enable debug mode."
     }
   },
-  "description": "Gear for classification of 20 Body Parts on X-ray images",
+  "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are:
+                 'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger','Foot',
+                 'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',
+                 'Shoulder&Shoulder','Spine.cervical','Toes','Wrist'.",
   "environment": {},
   "custom": {
     "flywheel": {
@@ -31,16 +34,16 @@
       "optional": false,
       "type": {
         "enum": [
-          "image"
+          "image","nifti","dicom"
         ]
       },
-      "description": "Input file for the gear"
+      "description": "Input file for the gear can be Nifti, Dicom or PNG"
     }
   },
   "label": "X-ray Body Part Classifier",
   "name": "x-ray-body-part-classifier",
-  "source": "",
-  "url": "",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
   "license": "MIT",
   "version": "0.1.0"
 }
