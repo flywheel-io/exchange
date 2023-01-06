@@ -14,7 +14,7 @@
       "description": "Enable debug mode."
     }
   },
-  "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are:\n'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger', 'Foot',\n'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',\n'Shoulder&Shoulder', 'Spine', 'Cervical', 'Toes', 'Wrist'.",
+  "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are: \n'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger', 'Foot',\n'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',\n'Shoulder&Shoulder', 'Spine', 'Cervical', 'Toes', 'Wrist'.",
   "environment": {},
   "custom": {
     "flywheel": {
