@@ -1,0 +1,79 @@
+{
+  "gear": {
+    "name": "fw-test-utility",
+    "label": "FW QA Test Utility Gear",
+    "description": "Utility Gear that can be configured to pass or fail",
+    "version": "1.0.1",
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Any file.",
+        "optional": false
+      }
+    },
+    "config": {
+      "fail": {
+        "default": false,
+        "description": "Select checkbox to fail gear run",
+        "type": "boolean"
+      }
+    },
+    "environment": {},
+    "command": "python run.py",
+    "author": "Stephen Di Salvio",
+    "maintainer": "Stephen Di Salvio",
+    "cite": "List citations here.",
+    "license": "Other",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-utility",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-utility",
+    "custom": {
+      "flywheel": {
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "utility",
+        "image": "flywheel/fw-test-utility:1.0.1"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "56fc653f8b02c598f7441364e2087ddaba42ea20",
+    "rootfs-hash": "sha384:1a74f7d4114046666bc0e220a56ae09765bffa8f867a92c47e1ad464710628ac141f47d799827a7261c1d190f3ac7d78",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fw-test-utility-sha384-1a74f7d4114046666bc0e220a56ae09765bffa8f867a92c47e1ad464710628ac141f47d799827a7261c1d190f3ac7d78.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FW QA Test Utility Gear",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "fail": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "fail"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
