@@ -21,7 +21,7 @@
     },
     "gear-builder": {
       "category": "classifier",
-      "image": "flywheel/file-classifier:0.5.0"
+      "image": "flywheel/file-classifier:0.5.1"
     }
   },
   "description": "Generic file classifier. This gear update the classification of a file based on the metadata attached to it, and therefore should only run AFTER gears which populate metadata on the file, such as file-metadata-curator. The gear takes as input a file, and an optional classification profile. The gear tags the input file upon completion.",
@@ -77,5 +77,5 @@
   "name": "file-classifier",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
-  "version": "0.5.0"
+  "version": "0.5.1"
 }
