@@ -2,7 +2,7 @@
   "name": "dcm2niix",
   "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
   "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
-  "version": "1.4.0_1.0.20211006",
+  "version": "1.4.2_1.0.20220720",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
@@ -12,7 +12,7 @@
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dcm2niix:1.4.0_1.0.20211006"
+      "image": "flywheel/dcm2niix:1.4.2_1.0.20220720"
     },
     "flywheel": {
       "suite": "Conversion"
@@ -20,7 +20,7 @@
     "license": {
       "main": {
         "name": "Other",
-        "url": "https://github.com/rordenlab/dcm2niix/blob/v1.0.20211006/license.txt"
+        "url": "https://github.com/rordenlab/dcm2niix/blob/v1.0.20220720/license.txt"
       },
       "dependencies": [
         {
@@ -132,6 +132,11 @@
       "type": "boolean",
       "default": false
     },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
     "decompress_dicoms": {
       "description": "Decompress DICOM files before conversion. This will perform decompression using gdcmconv and then perform the conversion using dcm2niix. Options: true, false (default).",
       "type": "boolean",
@@ -216,6 +221,11 @@
       "type": "boolean",
       "default": false
     },
+    "sanitize_filename": {
+      "description": "Sanitize filename by removing invalid characters.",
+      "type": "boolean",
+      "default": true
+    },
     "single_file_mode": {
       "description": "Single file mode, do not convert other images in the folder. Options: true, false (default).",
       "type": "boolean",
@@ -232,6 +242,9 @@
     "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
     "FSLDIR": "/usr/share/fsl/5.0",
     "PATH": ":/usr/lib/fsl/5.0:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin::/usr/bin::/sbin:/bin",
-    "FSLOUTPUTTYPE": "NIFTI_GZ"
+    "FSLOUTPUTTYPE": "NIFTI_GZ",
+    "FIXDCMCOMMIT": "918ee3327174c3c736e7b3839a556e0a709730c8",
+    "DCMCOMMIT": "bb3a6c35d2bbac6ed95acb2cd0df65f35e79b5fb",
+    "FLYWHEEL": "/flywheel/v0"
   }
 }
