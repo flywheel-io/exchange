@@ -2,7 +2,7 @@
   "gear": {
     "name": "dcm2niix",
     "label": "DICOM to NIfTI conversion using dcm2niix with an optional implementation of PyDeface.",
-    "description": "Implementation of Chris Rorden's dcm2niix for converting DICOM to NIfTI, with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI.",
+    "description": "Implementation of Chris Rorden's dcm2niix for converting DICOM to NIfTI, with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "version": "1.1.0_1.0.20201102",
     "author": "Flywheel",
     "maintainer": "Flywheel <support@flywheel.io>",
