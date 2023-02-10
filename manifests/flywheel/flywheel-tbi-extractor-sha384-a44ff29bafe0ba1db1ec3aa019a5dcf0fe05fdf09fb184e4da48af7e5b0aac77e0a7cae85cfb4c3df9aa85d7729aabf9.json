@@ -1,0 +1,377 @@
+{
+  "gear": {
+    "name": "tbi-extractor",
+    "label": "TBI Extractor: Automated extraction of common data elements for traumatic brain injury.",
+    "description": "Implementation of tbiExtractor for automated extraction of common data elements from radiology reports for traumatic brain injury.",
+    "version": "0.1.4_0.3.2",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/tbi-extractor",
+    "source": "https://github.com/flywheel-apps/tbi-extractor",
+    "cite": "https://doi.org/10.1371/journal.pone.0214775",
+    "license": "MIT",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/tbi-extractor:0.1.4_0.3.2"
+      },
+      "flywheel": {
+        "suite": "Data Annotation"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "radiology_report": {
+        "base": "file",
+        "description": "The radiology report to be annotated by tbiExtractor.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "text"
+          ]
+        }
+      }
+    },
+    "config": {
+      "save_target_phrases": {
+        "description": "Save the lexical target phrases identified in the report for the resulting annotation.",
+        "type": "boolean",
+        "default": false
+      },
+      "save_modifier_phrases": {
+        "description": "Save the lexical modifier phrases identified in the report for the resulting annotation.",
+        "type": "boolean",
+        "default": false
+      },
+      "aneurysm": {
+        "description": "Include the lexical target: aneurysm.",
+        "type": "boolean",
+        "default": true
+      },
+      "anoxic": {
+        "description": "Include the lexical target: anoxic.",
+        "type": "boolean",
+        "default": true
+      },
+      "atrophy": {
+        "description": "Include the lexical target: atrophy.",
+        "type": "boolean",
+        "default": true
+      },
+      "cistern": {
+        "description": "Include the lexical target: cistern.",
+        "type": "boolean",
+        "default": true
+      },
+      "contusion": {
+        "description": "Include the lexical target: contusion.",
+        "type": "boolean",
+        "default": true
+      },
+      "diffuse_axonal": {
+        "description": "Include the lexical target: diffuse axonal.",
+        "type": "boolean",
+        "default": true
+      },
+      "epidural_hemorrhage": {
+        "description": "Include the lexical target: epidural hemorrhage.",
+        "type": "boolean",
+        "default": true
+      },
+      "facial_fracture": {
+        "description": "Include the lexical target: facial fracture.",
+        "type": "boolean",
+        "default": true
+      },
+      "fluid": {
+        "description": "Include the lexical target: extraaxial fluid collection.",
+        "type": "boolean",
+        "default": true
+      },
+      "gray_white_differentiation": {
+        "description": "Include the lexical target: gray-white matter differentiation.",
+        "type": "boolean",
+        "default": true
+      },
+      "hemorrhage": {
+        "description": "Include the lexical target: hemorrhage not-otherwise-specified.",
+        "type": "boolean",
+        "default": true
+      },
+      "herniation": {
+        "description": "Include the lexical target: brain herniation.",
+        "type": "boolean",
+        "default": true
+      },
+      "hydrocephalus": {
+        "description": "Include the lexical target: hydrocephalus.",
+        "type": "boolean",
+        "default": true
+      },
+      "hyperdensities": {
+        "description": "Include the lexical target: hyperdensities.",
+        "type": "boolean",
+        "default": true
+      },
+      "hypodensities": {
+        "description": "Include the lexical target: hypodensities.",
+        "type": "boolean",
+        "default": true
+      },
+      "intracranial_pathology": {
+        "description": "Include the lexical target: intracranial pathology.",
+        "type": "boolean",
+        "default": true
+      },
+      "intraparenchymal_hemorrage": {
+        "description": "Include the lexical target: intraparenchymal hemorrage.",
+        "type": "boolean",
+        "default": true
+      },
+      "intraventricular_hemorrhage": {
+        "description": "Include the lexical target: intraventricular hemorrhage.",
+        "type": "boolean",
+        "default": true
+      },
+      "ischemia": {
+        "description": "Include the lexical target: ischemia.",
+        "type": "boolean",
+        "default": true
+      },
+      "mass_effect": {
+        "description": "Include the lexical target: mass effect.",
+        "type": "boolean",
+        "default": true
+      },
+      "microhemorrhage": {
+        "description": "Include the lexical target: microhemorrhage.",
+        "type": "boolean",
+        "default": true
+      },
+      "midline_shift": {
+        "description": "Include the lexical target: midline shift.",
+        "type": "boolean",
+        "default": true
+      },
+      "pneumocephalus": {
+        "description": "Include the lexical target: pneumocephalus.",
+        "type": "boolean",
+        "default": true
+      },
+      "skull_fracture": {
+        "description": "Include the lexical target: skull fracture.",
+        "type": "boolean",
+        "default": true
+      },
+      "subarachnoid_hemorrhage": {
+        "description": "Include the lexical target: subarachnoid hemorrhage.",
+        "type": "boolean",
+        "default": true
+      },
+      "subdural_hemorrhage": {
+        "description": "Include the lexical target: subdural hemorrhage.",
+        "type": "boolean",
+        "default": true
+      },
+      "swelling": {
+        "description": "Include the lexical target: brain swelling.",
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "command": "poetry run python run.py"
+  },
+  "exchange": {
+    "git-commit": "fa2a151b237c933065b5f279936c9382d051cc2d",
+    "rootfs-hash": "sha384:a44ff29bafe0ba1db1ec3aa019a5dcf0fe05fdf09fb184e4da48af7e5b0aac77e0a7cae85cfb4c3df9aa85d7729aabf9",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-tbi-extractor-sha384-a44ff29bafe0ba1db1ec3aa019a5dcf0fe05fdf09fb184e4da48af7e5b0aac77e0a7cae85cfb4c3df9aa85d7729aabf9.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for TBI Extractor: Automated extraction of common data elements for traumatic brain injury.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "save_target_phrases": {
+            "type": "boolean",
+            "default": false
+          },
+          "save_modifier_phrases": {
+            "type": "boolean",
+            "default": false
+          },
+          "aneurysm": {
+            "type": "boolean",
+            "default": true
+          },
+          "anoxic": {
+            "type": "boolean",
+            "default": true
+          },
+          "atrophy": {
+            "type": "boolean",
+            "default": true
+          },
+          "cistern": {
+            "type": "boolean",
+            "default": true
+          },
+          "contusion": {
+            "type": "boolean",
+            "default": true
+          },
+          "diffuse_axonal": {
+            "type": "boolean",
+            "default": true
+          },
+          "epidural_hemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "facial_fracture": {
+            "type": "boolean",
+            "default": true
+          },
+          "fluid": {
+            "type": "boolean",
+            "default": true
+          },
+          "gray_white_differentiation": {
+            "type": "boolean",
+            "default": true
+          },
+          "hemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "herniation": {
+            "type": "boolean",
+            "default": true
+          },
+          "hydrocephalus": {
+            "type": "boolean",
+            "default": true
+          },
+          "hyperdensities": {
+            "type": "boolean",
+            "default": true
+          },
+          "hypodensities": {
+            "type": "boolean",
+            "default": true
+          },
+          "intracranial_pathology": {
+            "type": "boolean",
+            "default": true
+          },
+          "intraparenchymal_hemorrage": {
+            "type": "boolean",
+            "default": true
+          },
+          "intraventricular_hemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "ischemia": {
+            "type": "boolean",
+            "default": true
+          },
+          "mass_effect": {
+            "type": "boolean",
+            "default": true
+          },
+          "microhemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "midline_shift": {
+            "type": "boolean",
+            "default": true
+          },
+          "pneumocephalus": {
+            "type": "boolean",
+            "default": true
+          },
+          "skull_fracture": {
+            "type": "boolean",
+            "default": true
+          },
+          "subarachnoid_hemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "subdural_hemorrhage": {
+            "type": "boolean",
+            "default": true
+          },
+          "swelling": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "save_target_phrases",
+          "save_modifier_phrases",
+          "aneurysm",
+          "anoxic",
+          "atrophy",
+          "cistern",
+          "contusion",
+          "diffuse_axonal",
+          "epidural_hemorrhage",
+          "facial_fracture",
+          "fluid",
+          "gray_white_differentiation",
+          "hemorrhage",
+          "herniation",
+          "hydrocephalus",
+          "hyperdensities",
+          "hypodensities",
+          "intracranial_pathology",
+          "intraparenchymal_hemorrage",
+          "intraventricular_hemorrhage",
+          "ischemia",
+          "mass_effect",
+          "microhemorrhage",
+          "midline_shift",
+          "pneumocephalus",
+          "skull_fracture",
+          "subarachnoid_hemorrhage",
+          "subdural_hemorrhage",
+          "swelling"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "radiology_report": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "radiology_report"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "gear": {
+    "name": "deid-export",
+    "label": "De-identified Export",
+    "description": "Profile-based anonymization and export of files within a project. Files within the source project will be anonymized (according to a required template) and exported to a specified project. Output is a csv file reporting the status of all exported items.",
+    "author": "Flywheel, Inc.",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/deid-export/-/blob/main/README.md",
+    "version": "1.2.3",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/deid-export:1.2.3"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "deid_profile": {
+        "base": "file",
+        "description": "A Flywheel de-identification profile specifying the de-identification actions to perform.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      },
+      "subject_csv": {
+        "base": "file",
+        "description": "A CSV file that contains mapping values to apply for subjects during de-identification.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "config": {
+      "project_path": {
+        "optional": false,
+        "description": "The resolver path of the destination project (E.g., 'flywheel/test').",
+        "type": "string"
+      },
+      "overwrite_files": {
+        "default": true,
+        "description": "If true, existing files in destination containers will be overwritten if a file to be exported has the same filename.",
+        "type": "boolean"
+      },
+      "debug": {
+        "default": false,
+        "description": "Enable debug log if checked",
+        "type": "boolean"
+      }
+    },
+    "environment": {
+      "LANG": "C.UTF-8",
+      "PYTHONPATH": "/flywheel/v0"
+    },
+    "command": "poetry run python /flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "754acff3adb0fc9bd74d0737bfb9da71cf8351ed",
+    "rootfs-hash": "sha384:65ca7d500fbb407277edb1bd7c453dbb6cbc0475cab19d0a4c11075efac7deb548491b949e86403d51c88124fe63ec51",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-deid-export-sha384-65ca7d500fbb407277edb1bd7c453dbb6cbc0475cab19d0a4c11075efac7deb548491b949e86403d51c88124fe63ec51.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for De-identified Export",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "project_path": {
+            "type": "string"
+          },
+          "overwrite_files": {
+            "default": true,
+            "type": "boolean"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "project_path",
+          "overwrite_files",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "deid_profile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          },
+          "subject_csv": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "deid_profile"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "The ANTs Longitudinal Cortical Thickness Pipeline:Tustison, N. J., Holbrook, A. J., Avants, B. B., Roberts, J. M., Cook, P. A., Reagh, Z. M., Duda, J. T., Stone, J. R., Gillen, D. L., & Yassa, M. A., 2017. https://www.biorxiv.org/content/10.1101/170209v1",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "image_dimension": {
+        "default": 3,
+        "description": "2 or 3 (for 2- or 3-dimensional image)",
+        "type": "integer"
+      },
+      "atropos_iteration": {
+        "type": "integer",
+        "default": 5,
+        "description": "Number of iterations within Atropos."
+      },
+      "denoise_anatomical_image": {
+        "type": "integer",
+        "default": 1,
+        "description": "Denoise anatomical images."
+      },
+      "number_of_modalities": {
+        "type": "integer",
+        "default": 1,
+        "description": "Number of modalities used to construct the template:  For example,if one wanted to use multiple modalities consisting of T1, T2, and FA components, it will be 3 modalities."
+      },
+      "rigid_template_update_component": {
+        "type": "integer",
+        "default": 0,
+        "description": "Update the single-subject template with the full affine transform (default 0).If 1, the rigid component of the affine transform will be used to update the template. Using the rigid component is desireable to reduce bias, but variations in the origin or head position across time points can cause the template head to drift out of the field of view."
+      },
+      "rigid_alignment_to_SST": {
+        "type": "integer",
+        "default": 0,
+        "description": "If 1, register anatomical images to the single-subject template before processing with antsCorticalThickness. This potentially reduces bias caused by variable orientation and voxel spacing "
+      },
+      "input_regex": {
+        "type": "string",
+        "default": ".*nii\\.gz",
+        "description": "Regular expression that matches files to be used as anatomical image inputs. (Default '.*nii\\\\.gz'). https://en.wikipedia.org/wiki/Regular_expression."
+      },
+      "input_tags": {
+        "type": "string",
+        "default": "",
+        "description": "Tag(s) that matches files to be used as anatomical image inputs. When multiple tags are specified, they must be comma separated (e.g. anatomical,ANTsLongitudinal)"
+      },
+      "atlases_template": {
+        "type": "string",
+        "default": "OASIS-30_Atropos_template",
+        "enum": [
+          "OASIS-30_Atropos_template"
+        ],
+        "description": "If predefined atlases are not provided as an input, the gear will use this as the default predefined atlas template."
+      }
+    },
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/ants-dbm-longitudinal:0.1.1_2.3.5"
+      }
+    },
+    "description": "ANTs based gear that run antsLongitudinalCorticalThickness.sh shell script and generate two zip archives that contains Single Subject Template and Time Point based template.",
+    "environment": {
+      "ANTSPATH": "/opt/ants/bin/",
+      "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "FLYWHEEL": "/flywheel/v0",
+      "ANTS_RANDOM_SEED": "42",
+      "ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS": "42"
+    },
+    "inputs": {
+      "registered_predefined_atlases": {
+        "base": "file",
+        "description": "Registered atlases to a population based template",
+        "optional": true
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      }
+    },
+    "label": "ANTs DBM Longitudinal",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "ants-dbm-longitudinal",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/ants-dbm-longitudinal",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/ants-dbm-longitudinal",
+    "version": "0.1.1_2.3.5"
+  },
+  "exchange": {
+    "git-commit": "0d99a480d2f18209ab8db39832f7adf24e7a31b5",
+    "rootfs-hash": "sha384:b7f354096836be9c941d2d85ec58e0d78ffb9ad10c5b878b8f6c4b19088c2dc2255e577ca9cfa1158bae9d5f42bf7e20",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-ants-dbm-longitudinal-sha384-b7f354096836be9c941d2d85ec58e0d78ffb9ad10c5b878b8f6c4b19088c2dc2255e577ca9cfa1158bae9d5f42bf7e20.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for ANTs DBM Longitudinal",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "image_dimension": {
+            "default": 3,
+            "type": "integer"
+          },
+          "atropos_iteration": {
+            "type": "integer",
+            "default": 5
+          },
+          "denoise_anatomical_image": {
+            "type": "integer",
+            "default": 1
+          },
+          "number_of_modalities": {
+            "type": "integer",
+            "default": 1
+          },
+          "rigid_template_update_component": {
+            "type": "integer",
+            "default": 0
+          },
+          "rigid_alignment_to_SST": {
+            "type": "integer",
+            "default": 0
+          },
+          "input_regex": {
+            "type": "string",
+            "default": ".*nii\\.gz"
+          },
+          "input_tags": {
+            "type": "string",
+            "default": ""
+          },
+          "atlases_template": {
+            "type": "string",
+            "default": "OASIS-30_Atropos_template",
+            "enum": [
+              "OASIS-30_Atropos_template"
+            ]
+          }
+        },
+        "required": [
+          "debug",
+          "image_dimension",
+          "atropos_iteration",
+          "denoise_anatomical_image",
+          "number_of_modalities",
+          "rigid_template_update_component",
+          "rigid_alignment_to_SST",
+          "input_regex",
+          "input_tags",
+          "atlases_template"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "registered_predefined_atlases": {
+            "type": "object",
+            "properties": {}
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

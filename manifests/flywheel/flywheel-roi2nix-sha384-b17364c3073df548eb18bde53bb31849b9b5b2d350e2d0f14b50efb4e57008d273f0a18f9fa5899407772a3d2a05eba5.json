@@ -1,0 +1,138 @@
+{
+  "gear": {
+    "name": "roi2nix",
+    "label": "ROI to NIfTI",
+    "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "MIT",
+    "url": "",
+    "source": "https://github.com/flywheel-apps/ROI2nix",
+    "cite": "",
+    "version": "0.3.4",
+    "custom": {
+      "docker-image": "flywheel/roi2nix:0.3.4",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/roi2nix:0.3.4"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "Input_File": {
+        "base": "file",
+        "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "save_binary_masks": {
+        "default": true,
+        "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
+        "type": "boolean"
+      },
+      "save_combined_output": {
+        "default": false,
+        "description": "Saves all ROIs in a single bitmasked file. If less than 2 ROIs exists, then this has no effect. Default is False.",
+        "type": "boolean"
+      },
+      "combined_output_size": {
+        "default": "int32",
+        "description": "Bit depth of combined ROI bitmasked file.",
+        "enum": [
+          "int8",
+          "int16",
+          "int32",
+          "int64"
+        ],
+        "type": "string"
+      },
+      "save_slicer_color_table": {
+        "default": false,
+        "description": "Saves a 3D Slicer colortable file for 3D Slicer integration. Default is False.",
+        "type": "boolean"
+      }
+    },
+    "command": "/flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "5064a28a1b1ed99317b102524269485b3aac6e5c",
+    "rootfs-hash": "sha384:b17364c3073df548eb18bde53bb31849b9b5b2d350e2d0f14b50efb4e57008d273f0a18f9fa5899407772a3d2a05eba5",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-roi2nix-sha384-b17364c3073df548eb18bde53bb31849b9b5b2d350e2d0f14b50efb4e57008d273f0a18f9fa5899407772a3d2a05eba5.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for ROI to NIfTI",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "save_binary_masks": {
+            "default": true,
+            "type": "boolean"
+          },
+          "save_combined_output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "combined_output_size": {
+            "default": "int32",
+            "enum": [
+              "int8",
+              "int16",
+              "int32",
+              "int64"
+            ],
+            "type": "string"
+          },
+          "save_slicer_color_table": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "save_binary_masks",
+          "save_combined_output",
+          "combined_output_size",
+          "save_slicer_color_table"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "Input_File": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "Input_File"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

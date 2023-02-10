@@ -1,12 +1,12 @@
 {
   "name": "fslmerge",
   "label": "FSL: FSLMERGE - FMRIB Merge Tool (FSL v5.0)",
-  "description": "FSLMERGE (FMRIB) concatenates image files into a single output. This concatenation can be in time, or in X, Y or Z. All image dimensions (except for the one being concatenated over) must be the same in all input images. For example, this can be used to take multiple 3D files (eg as output by SPM) and create a single 4D image file. This Gear also supports the merger of diffusion data with bvec/bval files.",
+  "description": "FSLMERGE (FMRIB) concatenates image files into a single output. This concatenation can be in time, or in X, Y or Z. All image dimensions (except for the one being concatenated over) must be the same in all input images. For example, this can be used to take multiple 3D files (eg as output by SPM) and create a single 4D image file. This Gear also supports the merger of diffusion data with bvec/bval files. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
   "maintainer": "Michael Perry <lmperry@stanford.edu>",
   "author": "Analysis Group, FMRIB, Oxford, UK.",
   "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
   "source": "https://github.com/scitran-apps/fslmerge",
-  "license": "Apache-2.0",
+  "license": "Other",
   "version": "0.1.2",
   "custom": {
     "docker-image": "scitran/fslmerge:0.1.2",

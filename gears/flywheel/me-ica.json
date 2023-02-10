@@ -9,13 +9,14 @@
   "cite": "Kundu, P., Brenowitz, N.D., Voon, V., Worbe, Y., Vertes, P.E., Inati, S.J., Saad, Z.S., Bandettini, P.A. & Bullmore, E.T. Integrated strategy for improving functional connectivity mapping using multiecho fMRI. PNAS (2013). Kundu, P., Inati, S.J., Evans, J.W., Luh, W.M. & Bandettini, P.A. Differentiating BOLD and non-BOLD signals in fMRI time series using multi-echo EPI. NeuroImage (2011). http://dx.doi.org/10.1016/j.neuroimage.2011.12.028",
   "license": "Other",
   "flywheel": "0",
-  "version": "0.3.4_3.2beta1",
+  "version": "0.3.14",
+  "command": "python3 /flywheel/v0/run.py",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/me-ica:0.3.4_3.2beta1"
+      "image": "flywheel/me-ica:0.3.14"
     },
-    "docker-image": "flywheel/me-ica:0.3.4_3.2beta1",
+    "docker-image": "flywheel/me-ica:0.3.14",
     "flywheel": {
       "suite": "AFNI"
     }
@@ -26,33 +27,13 @@
       "default": "0",
       "type": "string"
     },
-    "mni": {
+    "MNI": {
       "description": "Warp to MNI standard space using high-resolution template.",
       "default": false,
       "type": "boolean"
     },
-    "tr": {
-      "description": "The TR. Optional. The default is to read this value from input dataset header.",
-      "optional": true,
-      "type": "number"
-    },
-    "cpus": {
-      "description": "Maximum number of CPUs (OpenMP threads) to use. Default 2.",
-      "default": 2,
-      "type": "integer"
-    },
-    "no_axialize": {
-      "description": "Do not re-write dataset in axial-first order. Default is to axialize, recommended.",
-      "default": false,
-      "type": "boolean"
-    },
-    "keep_int": {
-      "description": "Keep preprocessing intermediates. Default delete.",
-      "default": false,
-      "type": "boolean"
-    },
-    "tpattern_gen": {
-      "description": "Use generated tpattern file from NIfTI header information in Flywheel. If a slice_timing file is not provided, this option will use the generated 'slicetimes.txt' file generated from the NIfTI metadata in Flywheel. Default=true",
+    "qwarp": {
+      "description": "Nonlinear anatomical normalization to MNI (or --space template) using 3dQWarp, after affine",
       "default": false,
       "type": "boolean"
     },
@@ -61,10 +42,170 @@
       "default": false,
       "type": "boolean"
     },
+    "fres": {
+      "description": "Specify functional voxel dim. in mm (iso.) for resampling during preprocessing. Default none.",
+      "type": "number",
+      "optional": true
+    },
+    "no_skullstrip": {
+      "description": "Anatomical is already intensity-normalized and skull-stripped (if -a provided)",
+      "default": false,
+      "type": "boolean"
+    },
+    "no_despike": {
+      "description": "Do not de-spike functional data. Default is to de-spike, recommended.",
+      "default": false,
+      "type": "boolean"
+    },
+    "no_axialize": {
+      "description": "Do not re-write dataset in axial-first order. Default is to axialize, recommended",
+      "default": false,
+      "type": "boolean"
+    },
+    "TR": {
+      "description": "The TR. Optional. The default is to read this value from input dataset header.",
+      "optional": true,
+      "type": "number"
+    },
+    "keep_int": {
+      "description": "Keep preprocessing intermediate files.  WARNING, this will require a large amount of space.",
+      "default": false,
+      "type": "boolean"
+    },
+    "mask_mode": {
+      "description": "Mask functional with help from anatomical or standard space images: use 'anat' or 'template'",
+      "type": "string",
+      "default": "func",
+      "enum": [
+        "func",
+        "anat",
+        "template"
+      ]
+    },
+    "coreg_mode": {
+      "description": "Coregistration with Local Pearson and T2* weights (default), or use align_epi_anat.py (edge method): use 'lp-t2s' or 'aea'",
+      "type": "string",
+      "default": "lp-t2s",
+      "enum": [
+        "lp-t2s",
+        "aea"
+      ]
+    },
+    "strict": {
+      "description": "Hidden option in meica.py.  Function unknown. Do not modify unless you are an expert user",
+      "default": false,
+      "type": "boolean"
+    },
+    "smooth": {
+      "description": "Data FWHM smoothing (3dBlurInMask). Default off.",
+      "optional": true,
+      "type": "number"
+    },
+    "align_args": {
+      "description": "Additional arguments to anatomical-functional co-registration routine.",
+      "default": "",
+      "type": "string"
+    },
+    "ted_args": {
+      "description": "Additional arguments to TE-dependence analysis routine",
+      "default": "",
+      "type": "string"
+    },
+    "select_only": {
+      "description": "Hidden option in meica.py.  Function unknown. Do not modify unless you are an expert user",
+      "default": false,
+      "type": "boolean"
+    },
+    "tedica_only": {
+      "description": "Hidden option in meica.py.  Function unknown. Do not modify unless you are an expert user",
+      "default": false,
+      "type": "boolean"
+    },
+    "export_only": {
+      "description": "Hidden option in meica.py.  Function unknown. Do not modify unless you are an expert user",
+      "default": false,
+      "type": "boolean"
+    },
     "daw": {
       "description": "Daw is a weight use to control ICA dimensionality. It may be raised (e.g., from 10 to 20) to account for a low number of timepoints or lowered (e.g., from 10 to 5) if meica does not converge.",
       "default": 10,
       "type": "integer"
+    },
+    "highpass": {
+      "description": "Hidden option in meica.py.  Performs highpass filtereing with 3dBandpass. Do not modify unless you are an expert user",
+      "type": "boolean",
+      "optional": true
+    },
+    "detrend": {
+      "description": "Hidden option in meica.py.  Performs detrending with 3dDetrent. Do not modify unless you are an expert user",
+      "type": "boolean",
+      "optional": true
+    },
+    "initcost": {
+      "description": "Hidden option in meica.py.  Do not modify unless you are an expert user",
+      "type": "string",
+      "default": "tanh"
+    },
+    "finalcost": {
+      "description": "Hidden option in meica.py.  Do not modify unless you are an expert user",
+      "type": "string",
+      "default": "tanh"
+    },
+    "sourceTEs": {
+      "description": "Hidden option in meica.py.  Do not modify unless you are an expert user",
+      "type": "integer",
+      "default": -1
+    },
+    "prefix": {
+      "description": "Prefix for final ME-ICA output datasets.",
+      "default": "",
+      "type": "string"
+    },
+    "cpus": {
+      "description": "Maximum number of CPUs (OpenMP threads) to use. Default 2.",
+      "default": 2,
+      "type": "integer"
+    },
+    "label": {
+      "description": "Label to tag ME-ICA analysis folder.",
+      "default": "",
+      "type": "string"
+    },
+    "test_proc": {
+      "description": "Align and preprocess 1 dataset then exit, for testing.",
+      "default": false,
+      "type": "boolean"
+    },
+    "script_only": {
+      "description": "Generate script only, then exit.",
+      "default": false,
+      "type": "boolean"
+    },
+    "pp_only": {
+      "description": "Preprocess only, then exit.",
+      "default": false,
+      "type": "boolean"
+    },
+    "skip_check": {
+      "description": "Skip dependency checks during initialization.",
+      "default": false,
+      "type": "boolean"
+    },
+    "flywheel_save_output_on_error": {
+      "description": "If me-ica fails, save the current work space, including intermediate files.  Typically for debugging purposes",
+      "default": false,
+      "type": "boolean"
+    },
+    "gear-log-level": {
+      "default": "INFO",
+      "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+      "type": "string",
+      "enum": [
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "DEBUG"
+      ]
     }
   },
   "inputs": {
@@ -100,5 +241,19 @@
         ]
       }
     }
+  },
+  "environment": {
+    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+    "HOSTNAME": "9a1dbfee1bc5",
+    "OLDPWD": "/flywheel/v0",
+    "PWD": "/flywheel/v0/output",
+    "HOME": "/root",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "FLYWHEEL": "/flywheel/v0",
+    "TERM": "xterm",
+    "SHLVL": "1",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/abin",
+    "LESSOPEN": " | /usr/bin/lesspipe %s",
+    "_": "/usr/bin/env"
   }
 }

@@ -1,0 +1,117 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "siemens CSA": {
+        "default": false,
+        "description": "When enabled, parses Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
+        "type": "boolean"
+      },
+      "derived metadata": {
+        "default": true,
+        "description": "When enabled, adds derived metadata under filer.info.header.derived (e.g. ScanCoverage for Dicom CT)",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "file-metadata-importer",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Utility"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/file-metadata-importer:1.2.0"
+      }
+    },
+    "description": "Parse and import file metadata into Flywheel.",
+    "environment": {},
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "input-file": {
+        "base": "file",
+        "description": "Input file.",
+        "optional": false
+      }
+    },
+    "label": "File metadata importer",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-metadata-importer",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-metadata-importer",
+    "version": "1.2.0"
+  },
+  "exchange": {
+    "git-commit": "6505f397fad230096e15e52deddf04b755560759",
+    "rootfs-hash": "sha384:82cff6b451df7e6fa59f0b04f2193444baac4563239f3ce874561b22942836a75180b3e53583df492adb245208f8834f",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-metadata-importer-sha384-82cff6b451df7e6fa59f0b04f2193444baac4563239f3ce874561b22942836a75180b3e53583df492adb245208f8834f.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File metadata importer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "siemens CSA": {
+            "default": false,
+            "type": "boolean"
+          },
+          "derived metadata": {
+            "default": true,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "file-metadata-importer",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "siemens CSA",
+          "derived metadata",
+          "tag"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "input-file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

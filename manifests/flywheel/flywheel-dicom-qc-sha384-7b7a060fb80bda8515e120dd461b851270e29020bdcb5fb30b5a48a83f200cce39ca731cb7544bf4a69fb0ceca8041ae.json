@@ -1,0 +1,178 @@
+{
+  "gear": {
+    "author": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "check_bed_moving": {
+        "description": "Check for duplicate slice positions (ImagePositionPatient)",
+        "type": "boolean",
+        "default": true
+      },
+      "check_embedded_localizer": {
+        "description": "Check for existance of embedded localizer",
+        "type": "boolean",
+        "default": true
+      },
+      "check_instance_number_uniqueness": {
+        "description": "Check for uniqueness of InstanceNumber",
+        "type": "boolean",
+        "default": true
+      },
+      "check_series_consistency": {
+        "description": "Check for inconsistent SeriesNumber",
+        "type": "boolean",
+        "default": true
+      },
+      "check_slice_consistency": {
+        "description": "Check for inconsistent slice locations",
+        "type": "boolean",
+        "default": true
+      },
+      "tag": {
+        "default": "dicom-qc",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      },
+      "debug": {
+        "description": "Include debug output",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "qa",
+        "image": "flywheel/dicom-qc:0.3.0"
+      }
+    },
+    "description": "Validate dicom archive on a set of hardcoded and user-specified rules",
+    "environment": {
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PIP_NO_CACHE_DIR": "0",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.11",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "FLYWHEEL": "/flywheel/v0"
+    },
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "description": "Dicom Archive",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "validation-schema": {
+        "base": "file",
+        "description": "A JSON template to validate file.info.header",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "label": "Dicom QC",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "dicom-qc",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc/-/blob/master/README.md",
+    "version": "0.3.0"
+  },
+  "exchange": {
+    "git-commit": "f74adab36321964be3e0168bb72f1e453a7ec8f8",
+    "rootfs-hash": "sha384:7b7a060fb80bda8515e120dd461b851270e29020bdcb5fb30b5a48a83f200cce39ca731cb7544bf4a69fb0ceca8041ae",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-qc-sha384-7b7a060fb80bda8515e120dd461b851270e29020bdcb5fb30b5a48a83f200cce39ca731cb7544bf4a69fb0ceca8041ae.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Dicom QC",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "check_bed_moving": {
+            "type": "boolean",
+            "default": true
+          },
+          "check_embedded_localizer": {
+            "type": "boolean",
+            "default": true
+          },
+          "check_instance_number_uniqueness": {
+            "type": "boolean",
+            "default": true
+          },
+          "check_series_consistency": {
+            "type": "boolean",
+            "default": true
+          },
+          "check_slice_consistency": {
+            "type": "boolean",
+            "default": true
+          },
+          "tag": {
+            "default": "dicom-qc",
+            "type": "string"
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "check_bed_moving",
+          "check_embedded_localizer",
+          "check_instance_number_uniqueness",
+          "check_series_consistency",
+          "check_slice_consistency",
+          "tag",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "validation-schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "dicom",
+          "validation-schema"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

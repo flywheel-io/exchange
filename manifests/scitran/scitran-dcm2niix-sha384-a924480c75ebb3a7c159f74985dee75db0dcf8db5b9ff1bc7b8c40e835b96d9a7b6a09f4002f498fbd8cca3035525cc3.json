@@ -2,12 +2,12 @@
   "gear": {
     "name": "dcm2niix",
     "label": "DCM2NIIX: dcm2nii DICOM to NIfTI converter",
-    "description": "Chris Rorden's dcm2niix (OpenJPEG build, 64-bit Linux). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types.",
+    "description": "Chris Rorden's dcm2niix (OpenJPEG build, 64-bit Linux). dcm2niix is a popular tool for converting images from the complicated formats used by scanner manufacturers (DICOM, PAR/REC) to the simple NIfTI format used by many scientific tools. dcm2niix works for all modalities (CT, MRI, PET, SPECT) and sequence types. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
     "maintainer": "Michael Perry <lmperry@stanford.edu>",
     "author": "Chris Rorden (@neurolabusc)",
     "url": "https://github.com/rordenlab/dcm2niix",
     "source": "https://github.com/scitran-apps/dcm2niix",
-    "license": "BSD-2-Clause",
+    "license": "Other",
     "flywheel": "0",
     "version": "0.8.0_1.0.20190902",
     "custom": {

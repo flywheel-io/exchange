@@ -1,0 +1,272 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "Estimation of metabolite concentrations from localized in vivo proton NMR spectra. Magn Reson Med 30, 672 (1993). Stephen Provencher",
+    "command": "poetry run python run.py",
+    "config": {
+      "Bruker": {
+        "default": false,
+        "description": "Bruker, Philips and Toshiba data must have this option set to true, which causes all 4 programs in the LCModel package to complex conjugate the data.",
+        "type": "boolean"
+      },
+      "chomit": {
+        "optional": true,
+        "description": "Comma-separated list of metabolites to be excluded from the spectra",
+        "type": "string"
+      },
+      "dry_run": {
+        "default": false,
+        "description": "Run through everything, except the actual model",
+        "type": "boolean"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "icolst": {
+        "description": "Voxels in cols icolst through icolen with be analyzed as part of a rectangular subset",
+        "optional": true,
+        "type": "integer"
+      },
+      "icolen": {
+        "description": "Voxels in cols icolst through icolen with be analyzed as part of a rectangular subset",
+        "optional": true,
+        "type": "integer"
+      },
+      "irowst": {
+        "description": "Voxels in rows irowst through irowen with be analyzed as part of a rectangular subset",
+        "optional": true,
+        "type": "integer"
+      },
+      "irowen": {
+        "description": "Voxels in rows irowst through irowen with be analyzed as part of a rectangular subset",
+        "optional": true,
+        "type": "integer"
+      },
+      "slices_to_process": {
+        "description": "Specify slices to analyze. Default behavior is to analyze (1) slices specified in a control file or (2) all slices, as specified in the .rda file",
+        "optional": true,
+        "type": "string"
+      },
+      "nomit": {
+        "optional": true,
+        "description": "Number of metabolites to omit (must match the number specified in chomit)",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 30
+      },
+      "ppmst": {
+        "description": "Upper limit of the spectra",
+        "type": "number",
+        "optional": true
+      },
+      "ppmend": {
+        "description": "Lower limit of the spectra",
+        "type": "number",
+        "optional": true
+      },
+      "seqacq": {
+        "optional": true,
+        "description": "FOR BRUKER USERS ONLY. Set to true when the imaginary part of the complex pair is acquired one sample time after the real part.",
+        "type": "boolean"
+      },
+      "vendor": {
+        "default": "Siemens",
+        "description": "Name of scanner manufacturer where the data was acquired.",
+        "type": "string",
+        "enum": [
+          "Bruker",
+          "GE5",
+          "GELX",
+          "Marconi",
+          "Philips",
+          "Siemens",
+          "Toshiba",
+          "Varian"
+        ]
+      },
+      "volume": {
+        "default": 1,
+        "description": "voxel size",
+        "type": "number"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Image Processing - Spectroscopy"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/lcmodel:0.0.5_6.3"
+      }
+    },
+    "description": "LCMODEL: Automatic quantification of in vivo proton MR spectra. Fully automatic, non-interactive, operator-independent: time-domain data input, one-page summary output. Fully developed, over 27 years, with spectra analyzed from a wide variety of scanners and field strengths at more than 1000 sites.",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "LD_LIBRARY_PATH": "~/.lcmodel",
+      "PATH": "~/.lcmodel/bin:/opt/poetry/bin:/usr/bin/python3:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "inputs": {
+      "rda_file": {
+        "base": "file",
+        "optional": false,
+        "description": "Raw MRS data to be analyzed. (from the scanner; becomes srcraw)"
+      },
+      "RAW": {
+        "base": "file",
+        "optional": false,
+        "description": "Idealized output from the basis set (becomes filraw). Associated with the basis set. Must be bin2raw-converted .RAW file."
+      },
+      "water_reference_data": {
+        "base": "file",
+        "optional": true,
+        "description": "Unsuppressed water reference spectrum"
+      },
+      "basis_set": {
+        "base": "file",
+        "description": "Basis set for the analysis"
+      },
+      "control_file": {
+        "base": "file",
+        "optional": true,
+        "description": "Control file submitted to LCModel"
+      },
+      "key": {
+        "base": "api-key",
+        "read-only": true
+      }
+    },
+    "label": "LC Model",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "lcmodel",
+    "source": "http://s-provencher.com/lcmodel.shtml",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/lcmodel",
+    "version": "0.0.5_6.3"
+  },
+  "exchange": {
+    "git-commit": "2d2f02b141c894044bfacc1040a3198b3e16097d",
+    "rootfs-hash": "sha384:15cc8f72c36cbf14e1693df7e086ecc0ec4681f3b1324c78d3a640956a9e8f4534d2eb03c92b057d42d629d6e44d6c92",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-lcmodel-sha384-15cc8f72c36cbf14e1693df7e086ecc0ec4681f3b1324c78d3a640956a9e8f4534d2eb03c92b057d42d629d6e44d6c92.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for LC Model",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "Bruker": {
+            "default": false,
+            "type": "boolean"
+          },
+          "chomit": {
+            "type": "string"
+          },
+          "dry_run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "icolst": {
+            "type": "integer"
+          },
+          "icolen": {
+            "type": "integer"
+          },
+          "irowst": {
+            "type": "integer"
+          },
+          "irowen": {
+            "type": "integer"
+          },
+          "slices_to_process": {
+            "type": "string"
+          },
+          "nomit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 30
+          },
+          "ppmst": {
+            "type": "number"
+          },
+          "ppmend": {
+            "type": "number"
+          },
+          "seqacq": {
+            "type": "boolean"
+          },
+          "vendor": {
+            "default": "Siemens",
+            "type": "string",
+            "enum": [
+              "Bruker",
+              "GE5",
+              "GELX",
+              "Marconi",
+              "Philips",
+              "Siemens",
+              "Toshiba",
+              "Varian"
+            ]
+          },
+          "volume": {
+            "default": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "Bruker",
+          "dry_run",
+          "debug",
+          "vendor",
+          "volume"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "rda_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "RAW": {
+            "type": "object",
+            "properties": {}
+          },
+          "water_reference_data": {
+            "type": "object",
+            "properties": {}
+          },
+          "basis_set": {
+            "type": "object",
+            "properties": {}
+          },
+          "control_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "rda_file",
+          "RAW",
+          "basis_set",
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

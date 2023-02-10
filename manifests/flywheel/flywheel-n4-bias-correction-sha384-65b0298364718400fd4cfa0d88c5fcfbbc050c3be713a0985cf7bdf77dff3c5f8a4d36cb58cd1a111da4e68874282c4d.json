@@ -1,0 +1,111 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "dim": {
+        "default": 3,
+        "minimum": 2,
+        "maximum": 4,
+        "description": "Dimension",
+        "type": "integer"
+      },
+      "dist": {
+        "default": 300,
+        "minimum": 0,
+        "maximum": 1000,
+        "description": "B-spline fitting distance isotropic mesh spacing for the smoothing",
+        "type": "integer"
+      },
+      "shrink_f": {
+        "default": 1,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Shrink factor resampling for large images",
+        "type": "integer"
+      }
+    },
+    "custom": {
+      "gear-builder": {
+        "category": "utility",
+        "image": "flywheel/n4-bias-correction:0.1.0_2.3.5"
+      }
+    },
+    "description": "N4 Bias Field Correction.",
+    "inputs": {
+      "nifti-input": {
+        "base": "file",
+        "description": "A nifti file."
+      }
+    },
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "ANTSPATH": "/opt/ants/bin/"
+    },
+    "label": "N4 Bias Correction",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "n4-bias-correction",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/n4-bias-correction",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/n4-bias-correction",
+    "version": "0.1.0_2.3.5"
+  },
+  "exchange": {
+    "git-commit": "6c8a5119b5da61c1af2a15d98ae7e59b682c7f05",
+    "rootfs-hash": "sha384:65b0298364718400fd4cfa0d88c5fcfbbc050c3be713a0985cf7bdf77dff3c5f8a4d36cb58cd1a111da4e68874282c4d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-n4-bias-correction-sha384-65b0298364718400fd4cfa0d88c5fcfbbc050c3be713a0985cf7bdf77dff3c5f8a4d36cb58cd1a111da4e68874282c4d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for N4 Bias Correction",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "dim": {
+            "default": 3,
+            "minimum": 2,
+            "maximum": 4,
+            "type": "integer"
+          },
+          "dist": {
+            "default": 300,
+            "minimum": 0,
+            "maximum": 1000,
+            "type": "integer"
+          },
+          "shrink_f": {
+            "default": 1,
+            "minimum": 1,
+            "maximum": 10,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dim",
+          "dist",
+          "shrink_f"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "nifti-input": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "nifti-input"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

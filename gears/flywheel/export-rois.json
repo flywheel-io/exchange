@@ -7,11 +7,11 @@
   "license": "MIT",
   "source": "https://github.com/flywheel-apps/ROI_export",
   "url": "https://github.com/flywheel-apps/ROI_export",
-  "version": "1.1.1",
+  "version": "1.1.11",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/export-rois:1.1.1"
+      "image": "flywheel/export-rois:1.1.11"
     },
     "flywheel": {
       "suite": "Metadata I/O"

@@ -1,0 +1,177 @@
+{
+  "gear": {
+    "name": "google-dlp-phi-screen",
+    "label": "PHI Screen (Google DLP)",
+    "description": "This is a gear for inspecting and redacting sensitive information from DICOM files via the Google DLP API.",
+    "version": "1.0.0",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/google-dlp-phi-screen:1.0.0"
+      }
+    },
+    "inputs": {
+      "google_api_key_file": {
+        "base": "file",
+        "description": "A json file containing a Google API key and the Google Project ID",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source data"
+          ]
+        }
+      },
+      "input_dicom": {
+        "base": "file",
+        "description": "A DICOM archive",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "redact": {
+        "default": false,
+        "description": "Whether to redact sensitive data from the DICOMS based on inspection results. [default = false]",
+        "type": "boolean"
+      },
+      "includeQuote": {
+        "default": true,
+        "description": "Whether to include a quote of the sensitive information in the JSON report. [default = true]",
+        "type": "boolean"
+      },
+      "infoType_1": {
+        "default": "",
+        "description": "An infoType to scan for. Please refer to https://cloud.google.com/dlp/docs/infotypes-reference",
+        "type": "string"
+      },
+      "infoType_2": {
+        "default": "",
+        "description": "An infoType to scan for. Please refer to https://cloud.google.com/dlp/docs/infotypes-reference",
+        "type": "string"
+      },
+      "infoType_3": {
+        "default": "",
+        "description": "An infoType to scan for. Please refer to https://cloud.google.com/dlp/docs/infotypes-reference",
+        "type": "string"
+      },
+      "infoType_4": {
+        "default": "",
+        "description": "An infoType to scan for. Please refer to https://cloud.google.com/dlp/docs/infotypes-reference",
+        "type": "string"
+      },
+      "minLikelihood": {
+        "default": "POSSIBLE",
+        "description": "The likelihood threshold as defined at https://cloud.google.com/dlp/docs/likelihood. Findings lower than this threshold will not be included in results.",
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Optional - set True to set log level to debug, else log level will be info.",
+        "type": "boolean"
+      }
+    },
+    "command": "poetry run python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "license": "Other",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/google-dlp-phi-screen",
+    "url": "https://cloud.google.com/dlp"
+  },
+  "exchange": {
+    "git-commit": "d3135eb886d24a8f910b8aef307e092a3e4841ef",
+    "rootfs-hash": "sha384:597b5593fca7d67350c0dd115ad9e33a020a0e5607681de0ba8867b3b7a663d3ca24163cb8874eef48a326221b42c1d7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-google-dlp-phi-screen-sha384-597b5593fca7d67350c0dd115ad9e33a020a0e5607681de0ba8867b3b7a663d3ca24163cb8874eef48a326221b42c1d7.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for PHI Screen (Google DLP)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "redact": {
+            "default": false,
+            "type": "boolean"
+          },
+          "includeQuote": {
+            "default": true,
+            "type": "boolean"
+          },
+          "infoType_1": {
+            "default": "",
+            "type": "string"
+          },
+          "infoType_2": {
+            "default": "",
+            "type": "string"
+          },
+          "infoType_3": {
+            "default": "",
+            "type": "string"
+          },
+          "infoType_4": {
+            "default": "",
+            "type": "string"
+          },
+          "minLikelihood": {
+            "default": "POSSIBLE",
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "redact",
+          "includeQuote",
+          "infoType_1",
+          "infoType_2",
+          "infoType_3",
+          "infoType_4",
+          "minLikelihood",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "google_api_key_file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source data"
+                ]
+              }
+            }
+          },
+          "input_dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "google_api_key_file",
+          "input_dicom"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}

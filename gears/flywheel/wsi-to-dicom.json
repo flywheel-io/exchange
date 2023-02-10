@@ -2,12 +2,12 @@
     "name": "wsi-to-dicom",
     "label": "WSI to dicom",
     "description": "This gear contains a tool that converts whole slide images (WSIs) to DICOM. To read the underlying whole slide images (WSIs), this tool relies on OpenSlide, which supports a variety of file formats.",
-    "version": "0.1.1_1.0.3",
+    "version": "0.1.2_1.0.3",
     "custom": {
-        "docker-image": "flywheel/wsi-to-dicom:0.1.1_1.0.3",
+        "docker-image": "flywheel/wsi-to-dicom:0.1.2_1.0.3",
         "gear-builder": {
             "category": "converter",
-            "image": "flywheel/wsi-to-dicom:0.1.1_1.0.3"
+            "image": "flywheel/wsi-to-dicom:0.1.2_1.0.3"
         },
         "flywheel": {
             "suite": "Whole Slide Image"

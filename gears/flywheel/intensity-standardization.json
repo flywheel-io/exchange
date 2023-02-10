@@ -1,0 +1,54 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "hist_levels": {
+      "default": 256,
+      "minimum": 1,
+      "maximum": 1024,
+      "description": "The number of histogram levels to use.",
+      "type": "integer"
+    },
+    "match_points": {
+      "default": 20,
+      "minimum": 1,
+      "maximum": 50,
+      "description": "The number of match points to use.",
+      "type": "integer"
+    },
+    "thresh": {
+      "default": false,
+      "description": "If on, only pixels above the mean in each volume are thresholded.",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "gear-builder": {
+      "category": "utility",
+      "image": "flywheel/intensity-standardization:0.2.0_4.13.0"
+    }
+  },
+  "description": "Histogram Matching Intensity Standardization",
+  "inputs": {
+    "nifti-input-src": {
+      "base": "file",
+      "description": "A nifti file for source image. Input volume to be filtered."
+    },
+    "nifti-input-ref": {
+      "base": "file",
+      "description": "A nifti file for reference image. Input volume whose histogram will be matched."
+    }
+  },
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "PATH": "/opt/qt/5.15.2/gcc_64/:/opt/rh/devtoolset-4/root/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/src/Slicer-build/Slicer-build/lib/Slicer-4.13/cli-modules"
+  },
+  "label": "Histogram Matching Intensity Standardization",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "intensity-standardization",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/intensity-standardization",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/intensity-standardization",
+  "version": "0.2.0_4.13.0"
+}

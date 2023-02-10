@@ -1,0 +1,133 @@
+{
+  "gear": {
+    "name": "hierarchy-curator",
+    "label": "Hierarchy Curator",
+    "description": "Curates a container in the flywheel hierarchy given a python HierarchyCurator class. Using an implementation of the HierarchyCurator Class (provided as an input file (e.g., curator.py)) this gear is able to curate an entire project, walking down the hierarchy through project, subject, session, acquisition, analysis, and file containers.",
+    "version": "2.1.4",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/hierarchy-curator:2.1.4"
+      },
+      "flywheel": {
+        "suite": "Curation"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "curator": {
+        "base": "file",
+        "description": "A python implementation of the Curator class (see https://github.com/flywheel-apps/custom-curator for more details).",
+        "type": {
+          "enum": [
+            "source data"
+          ]
+        }
+      },
+      "additional-input-one": {
+        "base": "file",
+        "optional": true,
+        "description": "An optional input for curation."
+      },
+      "additional-input-two": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "additional-input-three": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      }
+    },
+    "config": {
+      "debug": {
+        "description": "Log debug messages",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.8.13",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/38e54e5de07c66e875c11a1ebbdb938854625dd8/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "e235c437e5c7d7524fbce3880ca39b917a73dc565e0c813465b7a7a329bb279a",
+      "FLYWHEEL": "/flywheel/v0"
+    },
+    "command": "poetry run python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "license": "MIT",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/hierarchy-curator",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/hierarchy-curator"
+  },
+  "exchange": {
+    "git-commit": "88ea3becaffe24ec66e9ae892bda5c4772d858ca",
+    "rootfs-hash": "sha384:aa048da88c0cb27d0f77c2a3d59e3ebf32d5d41b94c0c7924593ce2065584114393387b9c0e35381da7444941a943473",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-hierarchy-curator-sha384-aa048da88c0cb27d0f77c2a3d59e3ebf32d5d41b94c0c7924593ce2065584114393387b9c0e35381da7444941a943473.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Hierarchy Curator",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "curator": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source data"
+                ]
+              }
+            }
+          },
+          "additional-input-one": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-two": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-three": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "curator"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
