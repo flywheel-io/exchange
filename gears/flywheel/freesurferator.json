@@ -140,7 +140,7 @@
       }
     },
     "freesurfer_license_file": {
-      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear. It is optional because it will be only required if the Freesurfer option is selected for 'coreg_method', if the license file is not there, the gear will fail.",
+      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
       "base": "file",
       "optional": true
     },
@@ -217,7 +217,7 @@
       "type": "boolean"
     },
     "freesurfer_license_key": {
-      "description": "Text from license file generated during FreeSurfer registration. Entries should be space separated. Usually this should be added at the project level and it will be read from there.",
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
       "optional": true,
       "type": "string"
     }
