@@ -1,0 +1,419 @@
+{
+  "gear": {
+    "name": "freesurferator",
+    "label": "freesurferator: create anatomical ROIs for DWI, PET or fMRI in subject space.",
+    "description": "This gear takes either an existing FS zipped run, or an anatomical NIfTI file and performs all of the FreeSurfer cortical reconstruction process. Outputs are provided in a zip file and include the entire output directory tree from Recon-All. Configuration options exist for setting the subject ID and for converting outputs to NIfTI, OBJ, and CSV. FreeSurfer is a software package for the analysis and visualization of structural and functional neuroimaging data from cross-sectional or longitudinal studies. It is developed by the Laboratory for Computational Neuroimaging at the Athinoula A. Martinos Center for Biomedical Imaging. Please see https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSoftwareLicense for license information. This gear includes a bunch of atlases (cerebellum, HCP, Neuropythy...) and depending on the configuration options it will create many ROIs in subject space that can later be incorporated to other neuroimaging tools (PETsurfer, RTP2-pipeline for DWI, fMRI, ...)",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/freesurferator.git",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/freesurferator.git",
+    "author": "Flywheel",
+    "cite": "For citation information, please visit: https://www.biorxiv.org/content/10.1101/2022.03.17.484761v1",
+    "command": "python run.py",
+    "license": "Other",
+    "version": "0.1.2_7.3.2",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/freesurferator:0.1.2_7.3.2"
+      },
+      "flywheel": {
+        "suite": "Petsurfer",
+        "show-job": true
+      }
+    },
+    "environment": {
+      "PATH": "/opt/freesurfer/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/sbin:/bin:/opt/ants/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.9.15",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/66030fa03382b4914d4c4d0896961a0bdeeeb274/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "1e501cf004eac1b7eb1f97266d28f995ae835d30250bec7f8850562703067dc6",
+      "FLYWHEEL": "/flywheel/v0",
+      "ANTSPATH": "/opt/ants/bin/",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FREESURFER": "/opt/freesurfer",
+      "DISPLAY": ":50.0",
+      "FS_LICENSE": "/opt/freesurfer/license.txt",
+      "OS": "Linux",
+      "FS_OVERRIDE": "0",
+      "FSF_OUTPUT_FORMAT": "nii.gz",
+      "MNI_DIR": "/opt/freesurfer/mni",
+      "LOCAL_DIR": "/opt/freesurfer/local",
+      "FSFAST_HOME": "/opt/freesurfer/fsfast",
+      "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+      "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+      "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+      "FMRI_ANALYSIS_DIR": "/opt/freesurfer/fsfast",
+      "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "XAPPLRESDIR": "/opt/freesurfer/MCRv97/X11/app-defaults",
+      "MCR_CACHE_ROOT": "/flywheel/v0/output",
+      "MCR_CACHE_DIR": "/flywheel/v0/output/.mcrCache9.7",
+      "FSL_OUTPUT_FORMAT": "nii.gz",
+      "ANTS_VERSION": "v2.4.2",
+      "QT_QPA_PLATFORM": "xcb"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "anat": {
+        "description": "Anatomical NIfTI file.",
+        "base": "file",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "pre_fs": {
+        "description": "ZIP file with a full freesurfer run",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        }
+      },
+      "mniroizip": {
+        "description": "ZIP file with all the ROIs in MNI space, and the MNI template too",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        }
+      },
+      "annotfile": {
+        "description": "zip with annot files in fsaverage space. Create surface ROIs in fsaverage and save them as annots and them zip them, the system will create cortical volumetric independent ROIs in subject space",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        }
+      },
+      "t1w_anatomical_2": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_3": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_4": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "t1w_anatomical_5": {
+        "description": "Additional anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "freesurfer_license_file": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      },
+      "t2w_anatomical": {
+        "description": "T2w Anatomical NIfTI file",
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "subject_id": {
+        "description": "Desired subject ID. Any spaces in the subject_id will be replaced with underscores and will be used to name the resulting FreeSurfer output directory. NOTE: If using a previous Gear output as input the subject code will be parsed from the input archive, however it should still be provided here for good measure.",
+        "default": "Sxxx",
+        "type": "string"
+      },
+      "reconall_options": {
+        "description": "Command line options to the recon-all algorithm. (Default='-all -qcache'). By default we enable '-all' and '-qcache'. '-all' runs the entire pipeline and '-qcache' will resample data onto the average subject (called fsaverage) and smooth it at various FWHM (full-width/half-max) values, usually 0, 5, 10, 15, 20, and 25mm, which can speed later processing. Note that modification of these options may result in failure if the options are not recognized.",
+        "default": "-all -qcache",
+        "type": "string"
+      },
+      "hippocampal_subfields": {
+        "description": "Generates an automated segmentation of the hippocampal subfields based on a statistical atlas built primarily upon ultra-high resolution (~0.1 mm isotropic) ex vivo MRI data. Choosing this option will write <subject_id>_HippocampalSubfields.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/HippocampalSubfields for more info. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "brainstem_structures": {
+        "description": "Generate automated segmentation of four different brainstem structures from the input T1 scan: medulla oblongata, pons, midbrain and superior cerebellar peduncle (SCP). We use a Bayesian segmentation algorithm that relies on a probabilistic atlas of the brainstem (and neighboring brain structures) built upon manual delineations of the structures on interest in 49 scans (10 for the brainstem structures, 39 for the surrounding structures). The delineation protocol for the brainstem was designed by Dr. Adam Boxer and his team at the UCSF Memory and Aging Center, and is described in the paper. Choosing this option will write <subject_id>_BrainstemStructures.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/BrainstemSubstructures for more info. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "thalamic_nuclei": {
+        "description": "Generate parcellation of the thalamus into 25 different nuclei, using a probabilistic atlas built with histological data. The parcellation is based on structural MRI, either the main T1 scan processed through recon-all, or an additional scan of a different modality, which potentially shows better contrast between the nuclei. Choosing this option will write <subject_id>_thalamic-nuclei.lh.v10.T1.csv and <subject_id>_thalamic-nuclei.rh.v10.T1.stats.csv to the final results. See: https://surfer.nmr.mgh.harvard.edu/fswiki/ThalamicNuclei for more info. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "cerebellum": {
+        "description": "bring CerebellumParcellation-Bucker2011 (17Networks LooseMask) into native space, and generate separate image files for each volume",
+        "default": false,
+        "type": "boolean"
+      },
+      "hcp": {
+        "description": "bring MNI_Glasser_HCP into native space, and generate separate image files for each volume",
+        "default": false,
+        "type": "boolean"
+      },
+      "mori": {
+        "description": "bring MORI  ROIs MNI_JHU_tracts_ROIs into native space",
+        "default": false,
+        "type": "boolean"
+      },
+      "aparc2009": {
+        "description": "separate the aparc.a2009 from freesurfer to individual images for each segment",
+        "default": false,
+        "type": "boolean"
+      },
+      "neuropythy_analysis": {
+        "description": "Perform a neuropythy analysis. See: https://github.com/noahbenson/neuropythy for more info. (Default=false)",
+        "default": false,
+        "type": "boolean"
+      },
+      "run_gtmseg": {
+        "description": "Run gtmseg, it is a step required for PETsurfer. By default, is true.",
+        "default": true,
+        "type": "boolean"
+      },
+      "force_ants": {
+        "description": "Ants will be automatically done depending on what segmentations are asked. If this options is set to true, ANTs will be run regardless of those options. Default=false",
+        "default": false,
+        "type": "boolean"
+      },
+      "freesurfer_license_key": {
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "optional": true,
+        "type": "string"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "bca9895968927efd21f40c01b29f11d6d3355246",
+    "rootfs-hash": "sha384:6522ca570bf971f963e30ec9b704d62db25cae09405d865109ebe543975ee9e4f66b5b7a49cbce29109ba1a93dbdf74b",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-freesurferator-sha384-6522ca570bf971f963e30ec9b704d62db25cae09405d865109ebe543975ee9e4f66b5b7a49cbce29109ba1a93dbdf74b.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for freesurferator: create anatomical ROIs for DWI, PET or fMRI in subject space.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "subject_id": {
+            "default": "Sxxx",
+            "type": "string"
+          },
+          "reconall_options": {
+            "default": "-all -qcache",
+            "type": "string"
+          },
+          "hippocampal_subfields": {
+            "default": false,
+            "type": "boolean"
+          },
+          "brainstem_structures": {
+            "default": false,
+            "type": "boolean"
+          },
+          "thalamic_nuclei": {
+            "default": false,
+            "type": "boolean"
+          },
+          "cerebellum": {
+            "default": false,
+            "type": "boolean"
+          },
+          "hcp": {
+            "default": false,
+            "type": "boolean"
+          },
+          "mori": {
+            "default": false,
+            "type": "boolean"
+          },
+          "aparc2009": {
+            "default": false,
+            "type": "boolean"
+          },
+          "neuropythy_analysis": {
+            "default": false,
+            "type": "boolean"
+          },
+          "run_gtmseg": {
+            "default": true,
+            "type": "boolean"
+          },
+          "force_ants": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer_license_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject_id",
+          "reconall_options",
+          "hippocampal_subfields",
+          "brainstem_structures",
+          "thalamic_nuclei",
+          "cerebellum",
+          "hcp",
+          "mori",
+          "aparc2009",
+          "neuropythy_analysis",
+          "run_gtmseg",
+          "force_ants"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "anat": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "pre_fs": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "mniroizip": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "annotfile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_2": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_3": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_4": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "t1w_anatomical_5": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "freesurfer_license_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "t2w_anatomical": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "anat"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
