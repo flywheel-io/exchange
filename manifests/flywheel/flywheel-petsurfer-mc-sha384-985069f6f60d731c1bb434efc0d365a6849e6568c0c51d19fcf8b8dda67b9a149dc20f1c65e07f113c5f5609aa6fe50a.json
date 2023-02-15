@@ -1,0 +1,143 @@
+{
+  "gear": {
+    "author": "Flywheel, Inc",
+    "cite": "https://surfer.nmr.mgh.harvard.edu/fswiki/PetSurfer",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "freesurfer_license_key": {
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "type": "string",
+        "optional": true
+      }
+    },
+    "description": "Motion correction of PET volumes (Petsurfer pipeline).",
+    "environment": {
+      "PATH": "/opt/miniconda-latest/bin:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "PYTHON_VERSION": "3.10.9",
+      "PYTHON_PIP_VERSION": "22.3.1",
+      "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/66030fa03382b4914d4c4d0896961a0bdeeeb274/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "1e501cf004eac1b7eb1f97266d28f995ae835d30250bec7f8850562703067dc6",
+      "OS": "Linux",
+      "FS_OVERRIDE": "0",
+      "SUBJECTS_DIR": "/opt/freesurfer/subjects",
+      "FSF_OUTPUT_FORMAT": "nii.gz",
+      "MNI_DIR": "/opt/freesurfer/mni",
+      "LOCAL_DIR": "/opt/freesurfer/local",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FSFAST_HOME": "/opt/freesurfer/fsfast",
+      "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+      "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+      "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+      "FMRI_ANALYSIS_DIR": "/opt/freesurfer/fsfast",
+      "PERL5LIB": "/opt/freesurfer/mni/share/perl5",
+      "MNI_PERL5LIB": "/opt/freesurfer/mni/share/perl5/",
+      "FLYWHEEL": "/flywheel/v0",
+      "FS_LICENSE": "/opt/freesurfer/license.txt",
+      "DEBIAN_FRONTEND": "noninteractive",
+      "DEBCONF_NOWARNINGS": "yes"
+    },
+    "custom": {
+      "gear-builder": {
+        "image": "flywheel/petsurfer-mc:0.1.0_7.3.2",
+        "category": "analysis"
+      },
+      "flywheel": {
+        "show-job": true,
+        "suite": "Petsurfer"
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "freesurfer_license_file": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      },
+      "input-file": {
+        "base": "file",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        },
+        "description": "Input NIfTI file for the Motion correction"
+      }
+    },
+    "label": "Petsurfer motion correction",
+    "name": "petsurfer-mc",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-mc",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-mc",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "license": "Other",
+    "version": "0.1.0_7.3.2"
+  },
+  "exchange": {
+    "git-commit": "7ec53778d710403f616409583d06e4db655deea7",
+    "rootfs-hash": "sha384:985069f6f60d731c1bb434efc0d365a6849e6568c0c51d19fcf8b8dda67b9a149dc20f1c65e07f113c5f5609aa6fe50a",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-petsurfer-mc-sha384-985069f6f60d731c1bb434efc0d365a6849e6568c0c51d19fcf8b8dda67b9a149dc20f1c65e07f113c5f5609aa6fe50a.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Petsurfer motion correction",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer_license_key": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "freesurfer_license_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "input-file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
