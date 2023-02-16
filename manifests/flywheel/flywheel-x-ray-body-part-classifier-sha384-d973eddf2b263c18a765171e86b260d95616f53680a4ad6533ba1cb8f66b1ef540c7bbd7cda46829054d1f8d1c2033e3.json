@@ -1,0 +1,103 @@
+{
+  "gear": {
+    "author": "Flywheel support@flywheel.io",
+    "cite": "",
+    "command": "cd /opt/monai ; /opt/conda/bin/python app/x-ray-body-part-classifier-map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/x-ray-body-part-classifier/x-ray-body-part-classifier.zip",
+    "config": {
+      "save-json": {
+        "type": "boolean",
+        "default": false,
+        "description": "use flag to save json containing model results."
+      },
+      "debug": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable debug mode."
+      }
+    },
+    "description": "This gear wraps a model for classifying 20 body parts on x-ray images. These are: \n'Ankle', 'Calcaneus', 'Chest', 'Elbow', 'Femur', 'Fibula&Tibia', 'Finger', 'Foot',\n'Hand', 'Head', 'Hip', 'Humerus', 'Knee', 'Mandible', 'Pelvis', 'Radius&Ulna',\n'Shoulder&Shoulder', 'Spine', 'Cervical', 'Toes', 'Wrist'.",
+    "environment": {},
+    "custom": {
+      "flywheel": {
+        "show-job": true
+      },
+      "gear-builder": {
+        "image": "flywheel/x-ray-body-part-classifier:0.1.2",
+        "category": "utility"
+      }
+    },
+    "inputs": {
+      "input-file": {
+        "base": "file",
+        "optional": false,
+        "type": {
+          "enum": [
+            "image",
+            "nifti",
+            "dicom"
+          ]
+        },
+        "description": "Input file for the gear can be Nifti, Dicom or PNG"
+      }
+    },
+    "label": "X-ray Body Part Classifier",
+    "name": "x-ray-body-part-classifier",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/x-ray-body-part-classifier",
+    "license": "MIT",
+    "version": "0.1.2"
+  },
+  "exchange": {
+    "git-commit": "abac5aad1d840930df468e03da84a55b3c165ed2",
+    "rootfs-hash": "sha384:d973eddf2b263c18a765171e86b260d95616f53680a4ad6533ba1cb8f66b1ef540c7bbd7cda46829054d1f8d1c2033e3",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-x-ray-body-part-classifier-sha384-d973eddf2b263c18a765171e86b260d95616f53680a4ad6533ba1cb8f66b1ef540c7bbd7cda46829054d1f8d1c2033e3.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for X-ray Body Part Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "save-json": {
+            "type": "boolean",
+            "default": false
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "save-json",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "input-file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "image",
+                  "nifti",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
