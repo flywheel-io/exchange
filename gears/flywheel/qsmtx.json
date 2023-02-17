@@ -23,7 +23,7 @@
         },
         "gear-builder": {
             "category": "analysis",
-            "image": "astewartau/qsmxt:1.3.2_20230204-3"
+            "image": "astewartau/qsmxt:1.3.2"
         }
     },
     "description": "QSMxT is an end-to-end pipeline for Quantitative Susceptibility Mapping (QSM). This gear is generously provided by the research community. Please address questions regarding the source code or other elements of the gear to the author/maintainer. Due diligence that the code does what you expect should be conducted as usual.",
@@ -61,5 +61,5 @@
     "name": "qsmxt",
     "source": "https://github.com/QSMxT/qsmxt-flywheel",
     "url": "https://github.com/QSMxT/QSMxT",
-    "version": "1.3.2_20230204-3"
+    "version": "1.3.2"
 }
