@@ -1,0 +1,132 @@
+{
+  "gear": {
+    "author": "Ashley Stewart",
+    "cite": "Stewart, AW, Robinson, SD, O'Brien, K, et al. QSMxT: Robust masking and artifact reduction for quantitative susceptibility mapping. Magn Reson Med. 2022; 87: 1289-1300. doi:10.1002/mrm.29048 ",
+    "command": "python run.py",
+    "config": {
+      "premade": {
+        "default": "gre",
+        "description": "Premade pipeline; 'gre' uses sensible default for 3D-GRE acquisitions; 'epi' uses sensible defaults for 3D-EPI acquisitions (human brain only); 'bet' uses a standard BET-masking approach (human brain only); 'fast' uses a series of fast QSM algorithms; 'body' uses sensible defaults for body imaging applications; 'nextqsm' uses the suggested settings for the NeXtQSM model.",
+        "enum": [
+          "gre",
+          "epi",
+          "bet",
+          "fast",
+          "body",
+          "nextqsm"
+        ],
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Community-contributed"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "astewartau/qsmxt_flywheel:1.3.2_20230220"
+      }
+    },
+    "description": "QSMxT is an end-to-end pipeline for Quantitative Susceptibility Mapping (QSM). This gear is generously provided by the research community. Please address questions regarding the source code or other elements of the gear to the author/maintainer. Due diligence that the code does what you expect should be conducted as usual.",
+    "environment": {
+      "ANTSPATH": "/opt/ants-2.3.4",
+      "FASTSURFER_HOME": "/opt/FastSurfer",
+      "JULIA_DEPOT_PATH": "~/.julia:/opt/julia_depot",
+      "PATH": "/opt/miniconda-4.7.12.1/bin:/opt/miniconda-4.7.12.1/condabin:/opt/miniconda-4.7.12.1/bin:/opt/dcm2niix-003f0d19f1e57b0129c9dcf3e653f51ca3559028/bin:/opt/ants-2.3.4:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/TGVQSM/tgvqsm-1.0.0:/opt/FastSurfer:/opt/nextqsm/src_tensorflow:/opt/bru2:/opt/julia-1.6.1/bin:/opt/QSMxT:/opt/QSMxT/scripts",
+      "PYTHONPATH": "/opt/TGVQSM/TGVQSM-master-011045626121baa8bfdd6633929974c732ae35e3/TGV_QSM:/opt/QSMxT",
+      "SUBJECTS_DIR": "/tmp"
+    },
+    "inputs": {
+      "magnitude": {
+        "base": "file",
+        "description": "Magnitude images",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "phase": {
+        "base": "file",
+        "description": "Phase images",
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "label": "QSMxT for Automated Quantitative Susceptibility Mapping",
+    "license": "GPL-3.0",
+    "maintainer": "Ashley Stewart",
+    "name": "qsmxt",
+    "source": "https://github.com/QSMxT/qsmxt-flywheel",
+    "url": "https://github.com/QSMxT/QSMxT",
+    "version": "1.3.2_20230220"
+  },
+  "exchange": {
+    "git-commit": "3cdbacb81f0b33ca4eb8a4e6d25e68a4b8eb2bac",
+    "rootfs-hash": "sha384:60754849077de64b88ed4175bea26bd90709ce88667b10fa6fbdc79fb1574ffcd9d0baecef6a80e520d201355fba3ba0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-qsmtx-sha384-60754849077de64b88ed4175bea26bd90709ce88667b10fa6fbdc79fb1574ffcd9d0baecef6a80e520d201355fba3ba0.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for QSMxT for Automated Quantitative Susceptibility Mapping",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "premade": {
+            "default": "gre",
+            "enum": [
+              "gre",
+              "epi",
+              "bet",
+              "fast",
+              "body",
+              "nextqsm"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "premade"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "magnitude": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "phase": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "magnitude",
+          "phase"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
