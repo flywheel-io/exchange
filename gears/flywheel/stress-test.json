@@ -1,0 +1,90 @@
+{
+  "name": "stress-test",
+  "label": "FW QA Stress Test",
+  "description": "FW QA test gear for stress-testing infrastructure",
+  "version": "0.2.2",
+  "inputs": {
+    "file": {
+      "base": "file"
+    }
+  },
+  "config": {
+    "run_time_sec": {
+      "type": "integer",
+      "default": 10,
+      "description": "The busy / noisy duration of the gear"
+    },
+    "sleep_time_sec": {
+      "type": "integer",
+      "default": 0,
+      "description": "Time spend sleeping without logging"
+    },
+    "num_output_files": {
+      "type": "integer",
+      "default": 3,
+      "description": "The number of output files to create"
+    },
+    "output_file_size_mb": {
+      "type": "number",
+      "default": 5,
+      "description": "The average output file size, in bytes"
+    },
+    "hash_output": {
+      "type": "string",
+      "default": "",
+      "description": "Hash output files using the given algorithm(s) and store on info"
+    },
+    "unique_filenames": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use unique output filenames"
+    },
+    "num_tmp_files": {
+      "type": "integer",
+      "default": 100,
+      "description": "The number of temp files to create"
+    },
+    "tmp_file_size_mb": {
+      "type": "number",
+      "default": 10,
+      "description": "The average temp file size, in bytes"
+    },
+    "exit_code": {
+      "type": "integer",
+      "default": 0,
+      "description": "The code to exit with"
+    },
+    "exit_signal_url": {
+      "type": "string",
+      "default": "",
+      "description": "Wait for GET of this URL to return 200 before exiting"
+    },
+    "num_log_messages": {
+      "type": "integer",
+      "default": 10,
+      "description": "Number of messages to log"
+    },
+    "log_message_size_in_words": {
+      "type": "integer",
+      "default": 10,
+      "description": "Length in words of the log message"
+    },
+    "log_sleep_time_in_sec": {
+      "type": "number",
+      "default": 1,
+      "description": "Time in sec between 2 log messages"
+    }
+  },
+  "command": "python run.py",
+  "author": "Flywheel, Inc",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "license": "Other",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/stress-test",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/stress-test",
+  "custom": {
+    "gear-builder": {
+      "image": "flywheel/stress-test:0.2.2",
+      "category": "analysis"
+    }
+  }
+}
