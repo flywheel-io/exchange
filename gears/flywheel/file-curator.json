@@ -20,11 +20,22 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-curator:0.3.0"
+      "image": "flywheel/file-curator:0.4.0"
     }
   },
   "description": "Curates a given file, to be used as a gear rule",
-  "environment": {},
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG": "C.UTF-8",
+    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+    "PYTHON_VERSION": "3.8.16",
+    "PYTHON_PIP_VERSION": "22.0.4",
+    "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/1a96dc5acd0303c4700e02655aefd3bc68c78958/public/get-pip.py",
+    "PYTHON_GET_PIP_SHA256": "d1d09b0f9e745610657a528689ba3ea44a73bd19c60f4c954271b790c71c2653",
+    "FLYWHEEL": "/flywheel/v0",
+    "PWD": "/flywheel/v0"
+  },
   "inputs": {
     "file-input": {
       "base": "file",
@@ -52,15 +63,14 @@
       "optional": true
     },
     "api-key": {
-      "base": "api-key",
-      "read-only": true
+      "base": "api-key"
     }
   },
   "label": "File Curator",
   "license": "MIT",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "file-curator",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-curator",
-  "version": "0.3.0"
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-curator",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-curator",
+  "version": "0.4.0"
 }
