@@ -1,0 +1,146 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/file-curator:0.4.0"
+      }
+    },
+    "description": "Curates a given file, to be used as a gear rule",
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.8.16",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/1a96dc5acd0303c4700e02655aefd3bc68c78958/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "d1d09b0f9e745610657a528689ba3ea44a73bd19c60f4c954271b790c71c2653",
+      "FLYWHEEL": "/flywheel/v0",
+      "PWD": "/flywheel/v0"
+    },
+    "inputs": {
+      "file-input": {
+        "base": "file",
+        "description": "File to curate",
+        "optional": false
+      },
+      "curator": {
+        "base": "file",
+        "description": "A python implementation of the FileCurator class (see https://gear-toolkit.readthedocs.io/en/latest/utils.html#curator for more details).",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      },
+      "additional-input-one": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "additional-input-two": {
+        "base": "file",
+        "description": "An optional input for curation.",
+        "optional": true
+      },
+      "api-key": {
+        "base": "api-key"
+      }
+    },
+    "label": "File Curator",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-curator",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-curator",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-curator",
+    "version": "0.4.0"
+  },
+  "exchange": {
+    "git-commit": "3cced88d91d081734234780c9a2cd3b9ca6752bc",
+    "rootfs-hash": "sha384:c947f8acbc0f39add2b9eef1d19776404e048fc933052864c699e97d907213834d19e642521db25ed3f97215287aaca5",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-curator-sha384-c947f8acbc0f39add2b9eef1d19776404e048fc933052864c699e97d907213834d19e642521db25ed3f97215287aaca5.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File Curator",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "tag"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "file-input": {
+            "type": "object",
+            "properties": {}
+          },
+          "curator": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          },
+          "additional-input-one": {
+            "type": "object",
+            "properties": {}
+          },
+          "additional-input-two": {
+            "type": "object",
+            "properties": {}
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "file-input",
+          "curator",
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
