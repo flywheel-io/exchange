@@ -1,0 +1,183 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "python run.py",
+    "config": {
+      "tag": {
+        "default": "dicom-fixer",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      },
+      "standardize_transfer_syntax": {
+        "default": true,
+        "description": "Decompress dicom's if possible and adjust TransferSyntaxUID to ExplicitVRLittleEndian",
+        "type": "boolean"
+      },
+      "unique": {
+        "default": true,
+        "description": "Enforce dicom uniqueness by SOPInstanceUID or file hash. Remove duplicate dicoms",
+        "type": "boolean"
+      },
+      "zip-single-dicom": {
+        "default": "match",
+        "description": "Output a single dicom as zip (.dcm.zip) instead of as a dicom (.dcm) or match input.",
+        "type": "string",
+        "enum": [
+          "match",
+          "yes",
+          "no"
+        ]
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation",
+        "classification": {
+          "type": [],
+          "modality": [],
+          "classification": [],
+          "dataset": [],
+          "keywords": [
+            "fixer",
+            "dicom"
+          ]
+        },
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/dicom-fixer:0.7.4"
+      }
+    },
+    "description": "Fixes various issues in dicoms.",
+    "environment": {
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "PYTHON_VERSION": "3.9.7",
+      "PYTHON_PIP_VERSION": "21.2.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d781367b97acf0ece7e9e304bf281e99b618bf10/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "01249aa3e58ffb3e1686b7141b4e9aac4d398ef4ac3012ed9dff8dd9f685ffe0",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "MICRO_VERSION": "2.0.10",
+      "EDITOR": "micro",
+      "MUSTACHE_VERSION": "1.3.0",
+      "GJO_VERSION": "1.0.2",
+      "JQ_VERSION": "jq-1.6",
+      "PIP_NO_CACHE_DIR": "0",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.11",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "COMMIT": "master.3a9476be",
+      "COMMIT_TAG": "",
+      "COMMIT_TIME": "2021-10-25T09:24:15+00:00",
+      "GDCM_VERSION": "3.0.9",
+      "FLYWHEEL": "/flywheel/v0",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568"
+    },
+    "inputs": {
+      "dicom": {
+        "base": "file",
+        "description": "Input dicom.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      }
+    },
+    "label": "Dicom Fixer",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "dicom-fixer",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
+    "version": "0.7.4"
+  },
+  "exchange": {
+    "git-commit": "86a2e12ac661fc69164c26e6c3bf693110a6af52",
+    "rootfs-hash": "sha384:78a0adfdfed78894ee50748d52c046fc1b7a505b9c6d1b58346fea2aa68daf5c4e374edb60e04c9ff34024c7d75aad57",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dicom-fixer-sha384-78a0adfdfed78894ee50748d52c046fc1b7a505b9c6d1b58346fea2aa68daf5c4e374edb60e04c9ff34024c7d75aad57.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Dicom Fixer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "default": "dicom-fixer",
+            "type": "string"
+          },
+          "standardize_transfer_syntax": {
+            "default": true,
+            "type": "boolean"
+          },
+          "unique": {
+            "default": true,
+            "type": "boolean"
+          },
+          "zip-single-dicom": {
+            "default": "match",
+            "type": "string",
+            "enum": [
+              "match",
+              "yes",
+              "no"
+            ]
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "tag",
+          "standardize_transfer_syntax",
+          "unique",
+          "zip-single-dicom",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "dicom",
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
