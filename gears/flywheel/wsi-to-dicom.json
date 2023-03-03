@@ -1,7 +1,7 @@
 {
   "name": "wsi-to-dicom",
   "label": "WSI to DICOM",
-  "description": "This gear contains a tool that converts whole slide images (WSIs) to DICOM. To read the underlying whole slide images (WSIs), this tool relies on OpenSlide, which supports a variety of file formats.",
+  "description": "This gear contains a tool that converts whole slide images (WSIs) to DICOM. To read the underlying whole slide images (WSIs), this tool relies on OpenSlide, which supports a variety of file formats. ",
   "version": "0.2.0_1.0.3",
   "custom": {
     "docker-image": "flywheel/wsi-to-dicom:0.2.0_1.0.3",
@@ -116,7 +116,7 @@
   "command": "python run.py",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "cite": "OpenSlide: A Vendor-Neutral Software Foundation for Digital Pathology\nAdam Goode, Benjamin Gilbert, Jan Harkes, Drazen Jukic, M. Satyanarayanan\nJournal of Pathology Informatics 2013, 4:27 ",
+  "cite": "OpenSlide: A Vendor-Neutral Software Foundation for Digital Pathology\nAdam Goode, Benjamin Gilbert, Jan Harkes, Drazen Jukic, M. Satyanarayanan\nJournal of Pathology Informatics 2013, 4:27",
   "license": "Other",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/wsi-to-dicom",
   "url": "https://github.com/GoogleCloudPlatform/wsi-to-dicom-converter"
