@@ -1,0 +1,242 @@
+{
+  "gear": {
+    "name": "wsi-to-dicom",
+    "label": "WSI to DICOM",
+    "description": "This gear contains a tool that converts whole slide images (WSIs) to DICOM. To read the underlying whole slide images (WSIs), this tool relies on OpenSlide, which supports a variety of file formats. ",
+    "version": "0.2.0_1.0.3",
+    "custom": {
+      "docker-image": "flywheel/wsi-to-dicom:0.2.0_1.0.3",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/wsi-to-dicom:0.2.0_1.0.3"
+      },
+      "flywheel": {
+        "suite": "Whole Slide Image"
+      }
+    },
+    "inputs": {
+      "input_file": {
+        "base": "file",
+        "description": "Input WSI file, supported by OpenSlide",
+        "optional": false
+      },
+      "jsonFile": {
+        "base": "file",
+        "description": "DICOM json file with additional tags (See DICOM JSON Model)",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "config": {
+      "tileWidth": {
+        "default": 512,
+        "description": "Tile width px (power of two preferred).",
+        "type": "integer"
+      },
+      "tileHeight": {
+        "default": 512,
+        "description": "Tile height px (power of two preferred).",
+        "type": "integer"
+      },
+      "levels": {
+        "default": 0,
+        "description": "Number of levels to generate, levels == 0 means number of levels will be read from wsi file.",
+        "type": "integer"
+      },
+      "downsamples": {
+        "description": "Size factor for each level for each level, downsample is size factor for each level (e.g. (1, 2, 10)).",
+        "optional": true,
+        "type": "string"
+      },
+      "startOn": {
+        "default": 0,
+        "description": "Level to start generation.",
+        "type": "integer"
+      },
+      "stopOn": {
+        "default": -1,
+        "description": "Level to stop generation (\"Max Level\" is -1).",
+        "type": "integer"
+      },
+      "sparse": {
+        "default": false,
+        "description": "Use TILED_SPARSE frame organization, by default it's TILED_FULL",
+        "type": "boolean"
+      },
+      "compression": {
+        "default": "jpeg",
+        "description": "Compression, supported compressions: jpeg, jpeg2000, raw.",
+        "enum": [
+          "jpeg",
+          "jpeg2000",
+          "raw"
+        ],
+        "type": "string"
+      },
+      "seriesDescription": {
+        "description": "(0008,103E) [LO] SeriesDescription Dicom tag.",
+        "optional": true,
+        "type": "string"
+      },
+      "studyId": {
+        "description": "(0020,000D) [UI] StudyInstanceUID Dicom tag.",
+        "optional": true,
+        "type": "string"
+      },
+      "seriesId": {
+        "description": "(0020,000E) [UI] SeriesInstanceUID Dicom tag.",
+        "optional": true,
+        "type": "string"
+      },
+      "batch": {
+        "default": -1,
+        "description": "Maximum frames in one file, as limit is exceeded new files is started (\"No Maximum\" is -1).",
+        "type": "integer"
+      },
+      "threads": {
+        "default": -1,
+        "description": "number of threads (\"Maximum Threads\" is -1)",
+        "type": "integer"
+      },
+      "debug": {
+        "default": false,
+        "description": "Print debug messages: dimensions of levels, size of frames.",
+        "type": "boolean"
+      },
+      "dropFirstRowAndColumn": {
+        "default": false,
+        "description": "Drop first row and column of the source image in order to workaround bug",
+        "type": "boolean"
+      }
+    },
+    "environment": {},
+    "command": "python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "OpenSlide: A Vendor-Neutral Software Foundation for Digital Pathology\nAdam Goode, Benjamin Gilbert, Jan Harkes, Drazen Jukic, M. Satyanarayanan\nJournal of Pathology Informatics 2013, 4:27",
+    "license": "Other",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/wsi-to-dicom",
+    "url": "https://github.com/GoogleCloudPlatform/wsi-to-dicom-converter"
+  },
+  "exchange": {
+    "git-commit": "8d0a33e548ed36388b59638bd1a7419a150de6e7",
+    "rootfs-hash": "sha384:cdee7c4455b544615f53e5cc89d7b6b30b7fc16f78d97013611a862f03390646acc16c03144ed1493deb216fbfeab5b3",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-wsi-to-dicom-sha384-cdee7c4455b544615f53e5cc89d7b6b30b7fc16f78d97013611a862f03390646acc16c03144ed1493deb216fbfeab5b3.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for WSI to DICOM",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "tileWidth": {
+            "default": 512,
+            "type": "integer"
+          },
+          "tileHeight": {
+            "default": 512,
+            "type": "integer"
+          },
+          "levels": {
+            "default": 0,
+            "type": "integer"
+          },
+          "downsamples": {
+            "type": "string"
+          },
+          "startOn": {
+            "default": 0,
+            "type": "integer"
+          },
+          "stopOn": {
+            "default": -1,
+            "type": "integer"
+          },
+          "sparse": {
+            "default": false,
+            "type": "boolean"
+          },
+          "compression": {
+            "default": "jpeg",
+            "enum": [
+              "jpeg",
+              "jpeg2000",
+              "raw"
+            ],
+            "type": "string"
+          },
+          "seriesDescription": {
+            "type": "string"
+          },
+          "studyId": {
+            "type": "string"
+          },
+          "seriesId": {
+            "type": "string"
+          },
+          "batch": {
+            "default": -1,
+            "type": "integer"
+          },
+          "threads": {
+            "default": -1,
+            "type": "integer"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "dropFirstRowAndColumn": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "tileWidth",
+          "tileHeight",
+          "levels",
+          "startOn",
+          "stopOn",
+          "sparse",
+          "compression",
+          "batch",
+          "threads",
+          "debug",
+          "dropFirstRowAndColumn"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "input_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "jsonFile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "input_file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
