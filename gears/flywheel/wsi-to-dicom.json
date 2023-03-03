@@ -116,7 +116,7 @@
   "command": "python run.py",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
-  "cite": "OpenSlide: A Vendor-Neutral Software Foundation for Digital Pathology\nAdam Goode, Benjamin Gilbert, Jan Harkes, Drazen Jukic, M. Satyanarayanan\nJournal of Pathology Informatics 2013, 4:27",
+  "cite": "OpenSlide: A Vendor-Neutral Software Foundation for Digital Pathology\nAdam Goode, Benjamin Gilbert, Jan Harkes, Drazen Jukic, M. Satyanarayanan\nJournal of Pathology Informatics 2013, 4:27 ",
   "license": "Other",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/wsi-to-dicom",
   "url": "https://github.com/GoogleCloudPlatform/wsi-to-dicom-converter"
