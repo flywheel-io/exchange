@@ -1,0 +1,107 @@
+{
+  "gear": {
+    "author": "van Griethuysen, J. J. M. et al.",
+    "cite": "van Griethuysen, J. J. M., Fedorov, A., Parmar, C., Hosny, A., Aucoin, N., Narayan, V., Beets-Tan, R. G. H., Fillon-Robin, J. C., Pieper, S., Aerts, H. J. W. L. (2017). Computational Radiomics System to Decode the Radiographic Phenotype. Cancer Research, 77(21), e104–e107.",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "convert_numpy_to_single_channel": {
+        "default": false,
+        "description": "Converts 3D numpy arrays that have 3 images along the third dimension--each representing a color channel--to single-channel arrays. Only the first image will be used to calculate radiomic features.",
+        "type": "boolean"
+      },
+      "voxel_based": {
+        "default": false,
+        "description": "Not implemented yet (leave as false). Perform voxel-based calculations. The output is a SimpleITK image of the parameter map instead of a float value for each feature. Voxel-based calculations take a significant longer time; features have to be calculated for each voxel.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Image Processing - Other"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/pyradiomics:2.0.2_3.0.1"
+      }
+    },
+    "description": "Extraction of Radiomics features from medical imaging data using the PyRadiomics module. Supports feature extraction for 2D and 3D images; a mask is required to calculate single values per feature for a region of interest (“segment-based”). If no mask is passed, then (almost, see *mask* input) the entire input image will be used as to generate features.  Extracted features are output in a CSV file. Voxel-based radiomics are not supported at this time.",
+    "environment": {},
+    "inputs": {
+      "image": {
+        "base": "file",
+        "description": "A 2D or 3D image that is supported by SimpleITK."
+      },
+      "mask": {
+        "base": "file",
+        "description": "A mask to be used for extracting pyRadiomics features and is supported by SimpleITK. If no mask is passed,\nthen a mask will be created that uses the entire image except the top-left pixel that is located at (0,0). \n  PyRadiomics requires masks to have at least one pixel that has a different intensity value than the rest.",
+        "optional": true
+      }
+    },
+    "label": "PyRadiomics",
+    "license": "BSD-3-Clause",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "pyradiomics",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/pyradiomics",
+    "url": "https://pyradiomics.readthedocs.io/en/latest/index.html",
+    "version": "2.0.2_3.0.1"
+  },
+  "exchange": {
+    "git-commit": "916483299ca91280a5ef7a037a91640dfd76e282",
+    "rootfs-hash": "sha384:172c8829a036f0476c9e7ac7f79f036df23ae6180b7e14275518e1c0ad5ea804dafd59a7a93a819de555b0dfec18cac1",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-pyradiomics-sha384-172c8829a036f0476c9e7ac7f79f036df23ae6180b7e14275518e1c0ad5ea804dafd59a7a93a819de555b0dfec18cac1.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for PyRadiomics",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "convert_numpy_to_single_channel": {
+            "default": false,
+            "type": "boolean"
+          },
+          "voxel_based": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "convert_numpy_to_single_channel",
+          "voxel_based"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "object",
+            "properties": {}
+          },
+          "mask": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "image"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
