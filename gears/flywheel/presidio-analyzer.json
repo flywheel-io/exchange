@@ -35,11 +35,13 @@
     "input_file": {
       "base": "file",
       "description": "A text, csv, tsv, or json file",
-      "enum": [
-        "text",
-        "tabular",
-        "source code"
-      ]
+      "type": {
+        "enum": [
+          "text",
+          "tabular",
+          "source code"
+          ]
+        }
     },
     "api-key": {
       "base": "api-key",
