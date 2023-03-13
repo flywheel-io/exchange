@@ -19,7 +19,7 @@
       "image": "flywheel/presidio-analyzer:0.1.0"
     }
   },
-  "description": "This gear utilizes Mircosoft's Presidio SDK which utilizes Natural Language Processing techiniques like Regex and NER to de-identify PII for subject and paitent data protection.",
+  "description": "This gear utilizes Mircosoft's Presidio SDK which utilizes Natural Language Processing techiniques like Regex and Named Entity Recognition to detect and report PII for subject and patient data protection.",
   "environment": {
     "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "LANG": "C.UTF-8",
@@ -34,7 +34,12 @@
   "inputs": {
     "input_file": {
       "base": "file",
-      "description": "A text, csv, tsv, or json file"
+      "description": "A text, csv, tsv, or json file",
+      "enum": [
+        "text",
+        "tabular",
+        "source code"
+      ]
     },
     "api-key": {
       "base": "api-key",
