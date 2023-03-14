@@ -1,0 +1,163 @@
+{
+  "gear": {
+    "name": "curate-bids",
+    "label": "BIDS Curation",
+    "description": "Use this gear to initialize BIDS filenames and attributes on all files within a given project.",
+    "author": "Flywheel <support@flywheel.io>",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/curate-bids",
+    "url": "https://bids.neuroimaging.io/",
+    "version": "2.1.5_1.1.5",
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/curate-bids:2.1.5_1.1.5"
+      },
+      "flywheel": {
+        "suite": "BIDS"
+      }
+    },
+    "license": "MIT",
+    "inputs": {
+      "api_key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "template": {
+        "base": "file",
+        "type": {
+          "enum": [
+            "json"
+          ]
+        },
+        "description": "A project curation JSON template.  This can extend or override the base template chosen in the configuration.",
+        "optional": true
+      }
+    },
+    "config": {
+      "reset": {
+        "description": "Remove all BIDS info from files before curating",
+        "type": "boolean",
+        "default": false
+      },
+      "base_template": {
+        "description": "Which base template to use. Options: ReproIn or BIDS-v1 (for backwards compatibility).  This setting is only used if no curation template is supplied as an input to the gear.  A curation template given as an input file can extend or completely override a base template and a setting in the input template determines which base template to extend, no matter how this configuration is set.",
+        "type": "string",
+        "default": "ReproIn",
+        "enum": [
+          "BIDS-v1",
+          "ReproIn"
+        ]
+      },
+      "intendedfor_regexes": {
+        "description": "A list of pairs of regular expressions.  The first regex matches the field map acquisition label and the second matches the IntendedFor BIDS path.  Initial processing sets the list of IntendedFor paths to all files in the different 'anat', 'func', and 'dwi' BIDS folders.  These regex pairs should be used to filter that list so that only the appropriate IntendedFor paths remain.",
+        "type": "string",
+        "default": ""
+      },
+      "verbosity": {
+        "description": "Set log level to INFO or DEBUG.",
+        "type": "string",
+        "default": "INFO",
+        "enum": [
+          "INFO",
+          "DEBUG"
+        ]
+      },
+      "use_or_save_config": {
+        "description": "This option sets the configuration and input file that will be used on subsequent runs of this gear.  If you choose 'Save Config File', a configuration file will be attached to the project called 'curate-bids-<run level>-config.json' where <run level> is 'project', 'subject' or 'session' depending on how you ran the gear.  If you choose 'Ignore Config File', that file will be ignored and the currently set configuration will be used.  The default, leaving this option blank, is to use the saved configuration file if it is present or to use the current configuration if not.  For example, using the 'Save Config File' option one time and providing a curation template as input, that will become the default for future runs so you can just press the 'Run Gear' button and don't have to adjust anything.  To turn this feature off, choose 'Disable Config File' which will disable the configuration file and quit without curating.",
+        "type": "string",
+        "default": "",
+        "enum": [
+          "",
+          "Save Config File",
+          "Ignore Config File",
+          "Disable Config File"
+        ]
+      }
+    },
+    "command": "/flywheel/v0/run.py"
+  },
+  "exchange": {
+    "git-commit": "e391290e1cbc24a087ced55f0aac5d011dbaa6b8",
+    "rootfs-hash": "sha384:8ecd4a27fef80f8d88e69e9ea1dc01207faedc0e03475322d294e7e06c6062171e000ed2acce13b156a16cdf0d96ca4d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-curate-bids-sha384-8ecd4a27fef80f8d88e69e9ea1dc01207faedc0e03475322d294e7e06c6062171e000ed2acce13b156a16cdf0d96ca4d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS Curation",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "reset": {
+            "type": "boolean",
+            "default": false
+          },
+          "base_template": {
+            "type": "string",
+            "default": "ReproIn",
+            "enum": [
+              "BIDS-v1",
+              "ReproIn"
+            ]
+          },
+          "intendedfor_regexes": {
+            "type": "string",
+            "default": ""
+          },
+          "verbosity": {
+            "type": "string",
+            "default": "INFO",
+            "enum": [
+              "INFO",
+              "DEBUG"
+            ]
+          },
+          "use_or_save_config": {
+            "type": "string",
+            "default": "",
+            "enum": [
+              "",
+              "Save Config File",
+              "Ignore Config File",
+              "Disable Config File"
+            ]
+          }
+        },
+        "required": [
+          "reset",
+          "base_template",
+          "intendedfor_regexes",
+          "verbosity",
+          "use_or_save_config"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object"
+          },
+          "template": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "json"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api_key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
