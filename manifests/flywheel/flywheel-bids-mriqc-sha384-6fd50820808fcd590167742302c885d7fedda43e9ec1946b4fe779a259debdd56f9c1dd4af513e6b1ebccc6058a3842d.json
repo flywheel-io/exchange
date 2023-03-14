@@ -1,0 +1,503 @@
+{
+  "gear": {
+    "name": "bids-mriqc",
+    "label": "BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
+    "description": "MRIQC (0.15.2 - April 6, 2020) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  Note: arguments --n_procs --mem_gb and --ants-nthreads are not availble to configure becaues they are set to use the maximum available as detected by MRIQC. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "version": "1.2.3_0.15.2",
+    "custom": {
+      "docker-image": "flywheel/bids-mriqc:1.2.3_0.15.2",
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-mriqc:1.2.3_0.15.2"
+      },
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "license": {
+        "non-commercial-use-only": true,
+        "main": {
+          "name": "BSD-3-Clause",
+          "url": "https://github.com/poldracklab/mriqc/blob/0.15.1/LICENSE.txt"
+        },
+        "dependencies": [
+          {
+            "name": "Other",
+            "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+          },
+          {
+            "name": "Other",
+            "url": "https://github.com/ANTsX/ANTs/blob/v2.2.0/COPYING.txt"
+          },
+          {
+            "name": "Other",
+            "url": "https://afni.nimh.nih.gov/pub/dist/doc/program_help/README.copyright.html"
+          }
+        ]
+      }
+    },
+    "inputs": {
+      "key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "bidsignore": {
+        "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "config": {
+      "participant_label": {
+        "description": "space-separated subjects (without 'sub-') [PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]",
+        "default": "",
+        "type": "string"
+      },
+      "session-id": {
+        "description": "space-separated sessions (without 'ses-') [SESSION_ID [SESSION_ID ...]]",
+        "default": "",
+        "type": "string"
+      },
+      "ants-float": {
+        "description": "use float number precision on ANTs computations",
+        "default": false,
+        "type": "boolean"
+      },
+      "correct-slice-timing": {
+        "description": "Perform slice timing correction",
+        "default": false,
+        "type": "boolean"
+      },
+      "deoblique": {
+        "description": "Deoblique the functional scans during head motion correction preprocessing",
+        "default": false,
+        "type": "boolean"
+      },
+      "despike": {
+        "description": "Despike the functional scans during head motion correction preprocessing",
+        "default": false,
+        "type": "boolean"
+      },
+      "dry-run": {
+        "description": "Run mriqc, but do not run the workflow inside",
+        "default": false,
+        "type": "boolean"
+      },
+      "email": {
+        "description": "Email address to include with quality metric submission",
+        "default": "",
+        "type": "string"
+      },
+      "fd_thres": {
+        "description": "motion threshold for FD computation",
+        "default": 0.2,
+        "type": "number"
+      },
+      "fft-spikes-detector": {
+        "description": "Turn on FFT based spike detector (slow)",
+        "default": false,
+        "type": "boolean"
+      },
+      "float32": {
+        "description": "Cast the input data to float32 if it’s represented in higher precision (saves space and improves perfomance)",
+        "default": false,
+        "type": "boolean"
+      },
+      "gear-abort-on-bids-error": {
+        "default": false,
+        "description": "Gear will not run mriqc if there are any BIDS errors detected",
+        "type": "boolean"
+      },
+      "gear-log-level": {
+        "default": "INFO",
+        "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+        "type": "string",
+        "enum": [
+          "ERROR",
+          "WARNING",
+          "INFO",
+          "DEBUG"
+        ]
+      },
+      "gear-run-bids-validation": {
+        "default": true,
+        "description": "Gear will run BIDS validation before mriqc.  If validation fails and gear-abort-on-bids-error is true, mriq will NOT be run.",
+        "type": "boolean"
+      },
+      "gear-save-intermediate-output": {
+        "default": false,
+        "description": "Gear will save ALL intermediate output into mriqc_work.zip",
+        "type": "boolean"
+      },
+      "gear-intermediate-files": {
+        "description": "Space separated list of FILES to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      },
+      "gear-intermediate-folders": {
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "default": "",
+        "type": "string"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Do everything except actually executing the command line",
+        "type": "boolean"
+      },
+      "gear-keep-output": {
+        "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
+        "default": false,
+        "type": "boolean"
+      },
+      "hmc-afni": {
+        "description": "Use ANFI 3dvolreg for head motion correction (HMC) - default",
+        "default": false,
+        "type": "boolean"
+      },
+      "hmc-fsl": {
+        "description": "Use FSL MCFLIRT instead of AFNI for head motion correction (HMC)",
+        "default": false,
+        "type": "boolean"
+      },
+      "ica": {
+        "description": "Run ICA on the raw data and include the componentsin the individual reports (slow but potentially very insightful)",
+        "default": false,
+        "type": "boolean"
+      },
+      "modalities": {
+        "description": "{T1w,bold,T2w} [{T1w,bold,T2w} ...] Default is all three",
+        "enum": [
+          "",
+          "T1w",
+          "bold",
+          "T2w",
+          "T1w bold",
+          "T1w T2w",
+          "bold T2w"
+        ],
+        "default": "",
+        "type": "string"
+      },
+      "no-sub": {
+        "description": "Turn off submission of anonymized quality metrics to MRIQC’s metrics repository",
+        "default": false,
+        "type": "boolean"
+      },
+      "profile": {
+        "description": "hook up the resource profiler callback to nipype",
+        "default": false,
+        "type": "boolean"
+      },
+      "run-id": {
+        "description": "[RUN_ID [RUN_ID ...]] filter input dataset by run id (only integer run ids are valid)",
+        "default": "",
+        "type": "string"
+      },
+      "start-idx": {
+        "description": "Initial volume in functional timeseries that should be considered for preprocessing",
+        "default": 0,
+        "type": "integer"
+      },
+      "stop-idx": {
+        "description": "Final volume in functional timeseries that should be considered for preprocessing",
+        "default": 0,
+        "type": "integer"
+      },
+      "task-id": {
+        "description": "[TASK_ID [TASK_ID ...]] filter input dataset by task id",
+        "default": "",
+        "type": "string"
+      },
+      "verbose": {
+        "default": "v",
+        "description": "increases mriqc log verbosity for each occurence, debug level is -vvv",
+        "enum": [
+          "",
+          "v",
+          "vv",
+          "vvv"
+        ],
+        "type": "string"
+      },
+      "verbose-reports": {
+        "description": "increase verbosity of report",
+        "default": false,
+        "type": "boolean"
+      },
+      "webapi-port": {
+        "description": "port where the MRIQC WebAPI is listening",
+        "default": "",
+        "type": "string"
+      },
+      "webapi-url": {
+        "description": "IP address where the MRIQC WebAPI is listening",
+        "default": "",
+        "type": "string"
+      },
+      "write-graph": {
+        "description": "Write workflow graph",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "environment": {
+      "AFNI_IMSAVE_WARNINGS": "NO",
+      "AFNI_MODELPATH": "/opt/afni/models",
+      "AFNI_PLUGINPATH": "/opt/afni/plugins",
+      "AFNI_TTATLAS_DATASET": "/opt/afni/atlases",
+      "ANTSPATH": "/usr/lib/ants",
+      "CPATH": "/usr/local/miniconda/include/:",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "HOME": "/home/bidsapp",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "PATH": "/usr/local/miniconda/bin:/opt/afni:/usr/lib/ants:/usr/lib/fsl/5.0:/usr/lib/afni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "POSSUMDIR": "/usr/share/fsl/5.0",
+      "PYTHONNOUSERSITE": "1",
+      "TEMPLATEFLOW_HOME": "/opt/templateflow",
+      "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
+    },
+    "command": "python run.py",
+    "author": "Poldrack Lab, Stanford University",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+    "license": "Other",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-mriqc",
+    "url": "https://mriqc.readthedocs.io/en/stable/about.html"
+  },
+  "exchange": {
+    "git-commit": "f24bc746e81662e082beb253879754f7968fd5a4",
+    "rootfs-hash": "sha384:6fd50820808fcd590167742302c885d7fedda43e9ec1946b4fe779a259debdd56f9c1dd4af513e6b1ebccc6058a3842d",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bids-mriqc-sha384-6fd50820808fcd590167742302c885d7fedda43e9ec1946b4fe779a259debdd56f9c1dd4af513e6b1ebccc6058a3842d.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "participant_label": {
+            "default": "",
+            "type": "string"
+          },
+          "session-id": {
+            "default": "",
+            "type": "string"
+          },
+          "ants-float": {
+            "default": false,
+            "type": "boolean"
+          },
+          "correct-slice-timing": {
+            "default": false,
+            "type": "boolean"
+          },
+          "deoblique": {
+            "default": false,
+            "type": "boolean"
+          },
+          "despike": {
+            "default": false,
+            "type": "boolean"
+          },
+          "dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "email": {
+            "default": "",
+            "type": "string"
+          },
+          "fd_thres": {
+            "default": 0.2,
+            "type": "number"
+          },
+          "fft-spikes-detector": {
+            "default": false,
+            "type": "boolean"
+          },
+          "float32": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-abort-on-bids-error": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-log-level": {
+            "default": "INFO",
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "DEBUG"
+            ]
+          },
+          "gear-run-bids-validation": {
+            "default": true,
+            "type": "boolean"
+          },
+          "gear-save-intermediate-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-intermediate-files": {
+            "default": "",
+            "type": "string"
+          },
+          "gear-intermediate-folders": {
+            "default": "",
+            "type": "string"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-keep-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "hmc-afni": {
+            "default": false,
+            "type": "boolean"
+          },
+          "hmc-fsl": {
+            "default": false,
+            "type": "boolean"
+          },
+          "ica": {
+            "default": false,
+            "type": "boolean"
+          },
+          "modalities": {
+            "enum": [
+              "",
+              "T1w",
+              "bold",
+              "T2w",
+              "T1w bold",
+              "T1w T2w",
+              "bold T2w"
+            ],
+            "default": "",
+            "type": "string"
+          },
+          "no-sub": {
+            "default": false,
+            "type": "boolean"
+          },
+          "profile": {
+            "default": false,
+            "type": "boolean"
+          },
+          "run-id": {
+            "default": "",
+            "type": "string"
+          },
+          "start-idx": {
+            "default": 0,
+            "type": "integer"
+          },
+          "stop-idx": {
+            "default": 0,
+            "type": "integer"
+          },
+          "task-id": {
+            "default": "",
+            "type": "string"
+          },
+          "verbose": {
+            "default": "v",
+            "enum": [
+              "",
+              "v",
+              "vv",
+              "vvv"
+            ],
+            "type": "string"
+          },
+          "verbose-reports": {
+            "default": false,
+            "type": "boolean"
+          },
+          "webapi-port": {
+            "default": "",
+            "type": "string"
+          },
+          "webapi-url": {
+            "default": "",
+            "type": "string"
+          },
+          "write-graph": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "participant_label",
+          "session-id",
+          "ants-float",
+          "correct-slice-timing",
+          "deoblique",
+          "despike",
+          "dry-run",
+          "email",
+          "fd_thres",
+          "fft-spikes-detector",
+          "float32",
+          "gear-abort-on-bids-error",
+          "gear-log-level",
+          "gear-run-bids-validation",
+          "gear-save-intermediate-output",
+          "gear-intermediate-files",
+          "gear-intermediate-folders",
+          "gear-dry-run",
+          "gear-keep-output",
+          "hmc-afni",
+          "hmc-fsl",
+          "ica",
+          "modalities",
+          "no-sub",
+          "profile",
+          "run-id",
+          "start-idx",
+          "stop-idx",
+          "task-id",
+          "verbose",
+          "verbose-reports",
+          "webapi-port",
+          "webapi-url",
+          "write-graph"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "object"
+          },
+          "bidsignore": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
