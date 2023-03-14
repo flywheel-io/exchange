@@ -6,11 +6,11 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/curate-bids",
   "url": "https://bids.neuroimaging.io/",
-  "version": "2.1.4_1.0.9",
+  "version": "2.1.5_1.1.5",
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/curate-bids:2.1.4_1.0.9"
+      "image": "flywheel/curate-bids:2.1.5_1.1.5"
     },
     "flywheel": {
       "suite": "BIDS"
@@ -74,5 +74,5 @@
       ]
     }
   },
-  "command": "poetry run python run.py"
+  "command": "/flywheel/v0/run.py"
 }
