@@ -21,7 +21,7 @@
       "show-job": true
     },
     "gear-builder": {
-      "image": "flywheel/breast-density-classifier:0.1.5",
+      "image": "flywheel/breast-density-classifier:0.1.6",
       "category": "utility"
     }
   },
@@ -39,8 +39,8 @@
   },
   "label": "Breast Density Classifier",
   "name": "breast-density-classifier",
-  "source": "",
-  "url": "",
+  "source": "https://monai.io/model-zoo.html",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
   "license": "MIT",
-  "version": "0.1.5"
+  "version": "0.1.6"
 }
