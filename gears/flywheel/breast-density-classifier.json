@@ -39,7 +39,7 @@
   },
   "label": "Breast Density Classifier",
   "name": "breast-density-classifier",
-  "source": "https://monai.io/model-zoo.html",
+  "source": "https://monai.io/model-zoo.html (https://arxiv.org/abs/2202.08238)",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
   "license": "MIT",
   "version": "0.1.6"
