@@ -1,0 +1,52 @@
+{
+  "author": "support@flywheel.io",
+  "cite": "",
+  "command": "cd /opt/monai ; /opt/conda/bin/python app/breast_density_classifier_map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/traced_ts_model/traced_ts_model.pt",
+  "config": {
+    "save-json": {
+      "type": "boolean",
+      "default": false,
+      "description": "use flag to save json containing model results."
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable debug mode."
+    }
+  },
+  "description": "Gear for breast density classification on mamography images",
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+    "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "image": "flywheel/breast-density-classifier:0.1.7",
+      "category": "utility"
+    }
+  },
+  "inputs": {
+    "input-file": {
+      "base": "file",
+      "optional": false,
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      },
+      "description": "Input file for the gear"
+    }
+  },
+  "label": "Breast Density Classifier",
+  "name": "breast-density-classifier",
+  "source": "https://monai.io/model-zoo.html (https://arxiv.org/abs/2202.08238)",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
+  "license": "MIT",
+  "version": "0.1.7"
+}
