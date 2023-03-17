@@ -15,13 +15,19 @@
     }
   },
   "description": "Gear for breast density classification on mamography images",
-  "environment": {},
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+    "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
   "custom": {
     "flywheel": {
       "show-job": true
     },
     "gear-builder": {
-      "image": "flywheel/breast-density-classifier:0.1.6",
+      "image": "flywheel/breast-density-classifier:0.1.7",
       "category": "utility"
     }
   },
@@ -42,5 +48,5 @@
   "source": "https://monai.io/model-zoo.html (https://arxiv.org/abs/2202.08238)",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
   "license": "MIT",
-  "version": "0.1.6"
+  "version": "0.1.7"
 }
