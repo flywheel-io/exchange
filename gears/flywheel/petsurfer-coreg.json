@@ -85,7 +85,7 @@
   "name": "petsurfer-coreg",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-coreg",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-coreg",
-  "version": "0.2.0_7.3.2",
+  "version": "0.2.1_7.3.2",,
   "custom": {
     "flywheel": {
       "suite": "Petsurfer",
@@ -93,7 +93,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/petsurfer-coreg:0.2.0_7.3.2"
+      "image": "flywheel/petsurfer-coreg:0.2.1_7.3.2"
     }
   }
 }
