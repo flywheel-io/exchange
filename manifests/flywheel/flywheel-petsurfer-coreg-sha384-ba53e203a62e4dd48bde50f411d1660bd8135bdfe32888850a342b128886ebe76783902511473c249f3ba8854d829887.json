@@ -1,0 +1,179 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "Greve, D. N., Svarer, C., Fisher, P. M., Feng, L., Hansen, A. E., Baare, W., ... & Knudsen, G. M. (2014). Cortical surface-based analysis reduces bias and variance in kinetic modeling of brain PET data. Neuroimage, 92, 225-236; Greve, D. N., Salat, D. H., Bowen, S. L., Izquierdo-Garcia, D., Schultz, A. P., Catana, C., ... & Johnson, K. A. (2016). Different partial volume correction methods lead to different conclusions: An 18 F-FDG-PET study of aging. NeuroImage, 132, 334-343.",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "freeview_slices": {
+        "default": [
+          "50 50 40",
+          "50 50 50",
+          "50 50 60",
+          "50 50 70",
+          "50 50 80"
+        ],
+        "description": "Slices for Freeview, per every slice one screenshot will be created and converted into a gif with the rest of the screenshots.",
+        "type": "array"
+      },
+      "freeview_view": {
+        "default": "coronal",
+        "description": "View for the freeview screenshot",
+        "type": "string"
+      },
+      "freesurfer_license_key": {
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "type": "string",
+        "default": ""
+      }
+    },
+    "description": "Coregisters PET and anatomical images, following PetSurfer's instructions",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "LD_LIBRARY_PATH": "/opt/fsl/lib:",
+      "FSLWISH": "/opt/fsl/bin/fslwish",
+      "FSLTCLSH": "/opt/fsl/bin/fsltclsh",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLDIR": "/opt/fsl",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "ARTHOME": "/opt/art",
+      "ANTSPATH": "/opt/ants/bin/",
+      "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_VERSION": "3.9.13",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "LANG": "C.UTF-8",
+      "PATH": "/opt/freesurfer/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "DISPLAY": ":50.0",
+      "QT_QPA_PLATFORM": "xcb",
+      "FS_LICENSE": "/opt/freesurfer/license.txt"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "fszip": {
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "description": "Archived output from a fully completed Freesurfer run. The zip file needs to have the gtmseg.mgz file, obtained running the 'gtmseg --s subject' command. Tested with freesurferator's FS 0.1.2_7.3.2 version (contains and True/False run_gtmseg option)."
+      },
+      "petfile": {
+        "base": "file",
+        "optional": true,
+        "description": "PET file coming from petsurfer-mc, where it has been averaged and motion corrected."
+      },
+      "freesurfer_license_file": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "label": "Co-registration between PET and anatomical images",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "petsurfer-coreg",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-coreg",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-coreg",
+    "version": "0.2.1_7.3.2",
+    "custom": {
+      "flywheel": {
+        "suite": "Petsurfer",
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/petsurfer-coreg:0.2.1_7.3.2"
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "0649f9750a0670d36887777e158bb483f4b8dc69",
+    "rootfs-hash": "sha384:ba53e203a62e4dd48bde50f411d1660bd8135bdfe32888850a342b128886ebe76783902511473c249f3ba8854d829887",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-petsurfer-coreg-sha384-ba53e203a62e4dd48bde50f411d1660bd8135bdfe32888850a342b128886ebe76783902511473c249f3ba8854d829887.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Co-registration between PET and anatomical images",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freeview_slices": {
+            "default": [
+              "50 50 40",
+              "50 50 50",
+              "50 50 60",
+              "50 50 70",
+              "50 50 80"
+            ],
+            "type": "array"
+          },
+          "freeview_view": {
+            "default": "coronal",
+            "type": "string"
+          },
+          "freesurfer_license_key": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "debug",
+          "freeview_slices",
+          "freeview_view",
+          "freesurfer_license_key"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "fszip": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "petfile": {
+            "type": "object",
+            "properties": {}
+          },
+          "freesurfer_license_file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
