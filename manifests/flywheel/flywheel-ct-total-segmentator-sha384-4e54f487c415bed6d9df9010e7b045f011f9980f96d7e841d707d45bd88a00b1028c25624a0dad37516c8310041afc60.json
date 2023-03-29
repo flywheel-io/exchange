@@ -1,0 +1,126 @@
+{
+  "gear": {
+    "name": "ct-total-segmentator",
+    "inputs": {
+      "CT": {
+        "base": "file",
+        "optional": false,
+        "description": "Input CT volume as a zipped nifti file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "use-fast": {
+        "default": false,
+        "description": "Use --fast flag. it will run a lower resolution model 3mm instead of 1.5mm.",
+        "type": "boolean"
+      },
+      "use-multilabel": {
+        "default": true,
+        "description": "Use --ml flag. it will Save one multilabel image for all classes.",
+        "type": "boolean"
+      },
+      "compute-statistics": {
+        "default": false,
+        "description": "Use --statistics flag. It will calculate volume (in mm3) and mean intensity. Results will be in statistics.json",
+        "type": "boolean"
+      },
+      "debug": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable debug mode."
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Image Processing - Segmentation"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/ct-total-segmentator:0.1.4_1.5.2"
+      }
+    },
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "Jakob Wasserthal, Manfred Meyer, Hanns-Christian Breit, Joshy Cyriac, Shan Yang, Martin Segeroth, TotalSegmentator: robust segmentation of 104 anatomical structures in CT images",
+    "description": "Tool for segmentation of 104 classes in CT images. It was trained on a wide range of different CT images (different scanners, institutions, protocols,...) and therefore should work well on most images.",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/conda/bin",
+      "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+      "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+      "NVIDIA_VISIBLE_DEVICES": "all"
+    },
+    "command": "/opt/conda/bin/python run.py",
+    "license": "Other",
+    "label": "CT Total Segmentator",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/ct-total-segmentator",
+    "source": "https://github.com/wasserth/TotalSegmentator",
+    "version": "0.1.4_1.5.2"
+  },
+  "exchange": {
+    "git-commit": "827dd8c8cf104fae58a9854db9cf737e61470ee9",
+    "rootfs-hash": "sha384:4e54f487c415bed6d9df9010e7b045f011f9980f96d7e841d707d45bd88a00b1028c25624a0dad37516c8310041afc60",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-ct-total-segmentator-sha384-4e54f487c415bed6d9df9010e7b045f011f9980f96d7e841d707d45bd88a00b1028c25624a0dad37516c8310041afc60.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for CT Total Segmentator",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "use-fast": {
+            "default": false,
+            "type": "boolean"
+          },
+          "use-multilabel": {
+            "default": true,
+            "type": "boolean"
+          },
+          "compute-statistics": {
+            "default": false,
+            "type": "boolean"
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "use-fast",
+          "use-multilabel",
+          "compute-statistics",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "CT": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "CT"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
