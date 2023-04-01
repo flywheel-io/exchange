@@ -1,0 +1,247 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "Greve, D. N., Svarer, C., Fisher, P. M., Feng, L., Hansen, A. E., Baare, W., ... & Knudsen, G. M. (2014). Cortical surface-based analysis reduces bias and variance in kinetic modeling of brain PET data. Neuroimage, 92, 225-236; Greve, D. N., Salat, D. H., Bowen, S. L., Izquierdo-Garcia, D., Schultz, A. P., Catana, C., ... & Johnson, K. A. (2016). Different partial volume correction methods lead to different conclusions: An 18 F-FDG-PET study of aging. NeuroImage, 132, 334-343.",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "do_PVC": {
+        "default": true,
+        "description": "Do Partial Volume Correction or not. When set to false, '--no-tfe' is added which turns off correction for the tissue fraction effect (TFE), which is a type of PVC.",
+        "type": "boolean"
+      },
+      "do_dynamic_analysis": {
+        "default": false,
+        "description": "If you are doing dynamic (kinetic) analysis, adds required arguments when running mri_gtmpvc. This overrides the rescale option, as doing dynamic analysis sets automatically the --no-rescale option",
+        "type": "boolean"
+      },
+      "freesurfer_license_key": {
+        "description": "Freesurfer license key",
+        "type": "string",
+        "optional": true
+      },
+      "psf": {
+        "default": "6",
+        "description": "The option '--psf FWHM' is the full-width/half-max of the the point-spread function (PSF) of the scanner as measured in image space (also known as the blurring function). The blurring function depends on the scanner and reconstruction method; here it is modeled as an isotropic Gaussian filter of the given FWHM. Eg, an HR+ is typically about 6mm. This parameter has nothing to do with applying smoothing. Set this to 0 to turn off PVC. If you don't know what to set this to, ask your PET physicist.",
+        "type": "string"
+      },
+      "auto_mask": {
+        "default": "1 .01",
+        "description": "1 .01 will create a mask to exclude voxels from the analysis (saves time). Output volumes will be reduced to a bounding box around this mask (saves space)",
+        "type": "string"
+      },
+      "mgx": {
+        "default": ".01",
+        "description": "Run Muller-Gartner analysis. .01 is the GM threshold. Only necessary if you want to do a voxel-wise analysis. It will only appear if do_PVC is set to true",
+        "type": "string"
+      },
+      "do_rescale": {
+        "default": true,
+        "description": "By default, it will scale by the intensity in pons. If you do not want scaling (eg, when doing a dynamic analysis), add --no-rescale. If you want to use something different to Pons, edit the rescale_id option. This set automatically if the do_dynamic_anaysis is set to true",
+        "type": "boolean"
+      },
+      "rescale_id": {
+        "default": "174",
+        "description": "If the do_rescale option is set to true (by default), the rescale_id option will set the reference region through the id in gtmseg.ctab (careful, the selected ID needs to exist in the gtmseg.mgz file, the options are: 2:Left-Cerebral-White-Matter, 4:Left-Lateral-Ventricle, 5:Left-Inf-Lat-Vent, 7:Left-Cerebellum-White-Matter, 8:Left-Cerebellum-Cortex, 10:Left-Thalamus, 11:Left-Caudate, 12:Left-Putamen, 13:Left-Pallidum, 14:3rd-Ventricle, 15:4th-Ventricle, 16:Brain-Stem, 17:Left-Hippocampus, 18:Left-Amygdala, 24:CSF, 26:Left-Accumbens-area, 28:Left-VentralDC, 30:Left-vessel, 31:Left-choroid-plexus, 41:Right-Cerebral-White-Matter, 43:Right-Lateral-Ventricle, 44:Right-Inf-Lat-      Vent, 46:Right-Cerebellum-White-Matter, 47:Right-Cerebellum-Cortex, 49:Right-Thalamus, 50:Right-Caudate, 51:Right-Putamen, 52:Right-Pallidum, 53:Right-Hippocampus, 54:Right-Amygdala, 58:Right-Accumbens-area, 60:Right-VentralDC, 63:Right-choroid-plexus, 85:Optic-Chiasm, 130:AirCavity, 165:Skull, 172:Vermis, 174:Pons). By default pons is selected (id=174)",
+        "type": "string"
+      },
+      "do_normalization": {
+        "default": false,
+        "description": "If freesurferator run ANTs and this opton is set to true, then the final result files will be normalized to a MNI template. We use FSL's 1mmm isotropic MNI template.",
+        "type": "boolean"
+      },
+      "km-ref": {
+        "default": "8 47",
+        "description": "Specifies the ROIs to use as the reference region for the MRTM models. 8 and 47 are the cerebellar hemisphers as found in $SUBJECTS_DIR/subject/mri/gtmseg.ctab (see also $FREESURFER_HOME/FreeSurferColorLUT.txt). This creates the file km.ref.tac.dat with the reference value for each time point.",
+        "type": "string"
+      },
+      "km-hb": {
+        "default": "11 12 13 50 51 52",
+        "description": "Specifies the ROIs to use as the high-binding region if using MRTM2. This creates km.hb.tac.nii.gz with the value for the high-binding region for each time point.",
+        "type": "string"
+      }
+    },
+    "description": "ROI Analysis, Setting Up Reference Regions for KM, and Apply Partial Volume Correction",
+    "environment": {
+      "PATH": "/opt/freesurfer/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ants/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.9.15",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/66030fa03382b4914d4c4d0896961a0bdeeeb274/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "1e501cf004eac1b7eb1f97266d28f995ae835d30250bec7f8850562703067dc6",
+      "FLYWHEEL": "/flywheel/v0",
+      "DISPLAY": ":50.0",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FS_LICENSE": "/opt/freesurfer/license.txt",
+      "ANTSPATH": "/opt/ants/bin/",
+      "ANTS_VERSION": "v2.4.2"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      },
+      "fszip": {
+        "base": "file",
+        "optional": true,
+        "type": {
+          "enum": [
+            "zip"
+          ]
+        },
+        "description": "Archived output from a fully completed Freesurfer run. The zip file needs to have the gtmseg.mgz file, obtained running the 'gtmseg --s subject' command. Tested with freesurferator's FS 7.3.2 version."
+      },
+      "petfile": {
+        "base": "file",
+        "optional": true,
+        "description": "PET file coming from petsurfer-mc, where it has been averaged and motion corrected."
+      },
+      "registration_file": {
+        "base": "file",
+        "optional": true,
+        "description": "Registration file file coming from petsurfer-coreg. There is no need to pass it explicitly, as this files travels with the fszip if the coregistration was done already. If this file is passed, it will override the one in fszip."
+      },
+      "freesurfer_license_file": {
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear. It is optional because it will be only required if the Freesurfer option is selected for 'coreg_method', if the license file is not there, the gear will fail.",
+        "base": "file",
+        "optional": true
+      }
+    },
+    "label": "Petsurfer ROI Analysis, Setting Up Reference Regions for KM, and Apply Partial Volume Correction",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "petsurfer-roi",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-roi",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/petsurfer-roi",
+    "custom": {
+      "flywheel": {
+        "suite": "Petsurfer",
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/petsurfer-roi:0.1.2_7.3.2"
+      }
+    },
+    "version": "0.1.2_7.3.2"
+  },
+  "exchange": {
+    "git-commit": "0ba53db1f3000af635ff3e2b1167090d1b663aeb",
+    "rootfs-hash": "sha384:5f44d15e48afe5dc9b3508a465ebf20e048e293997ce017a74890c384371abf6269816771bdffc1569da09fa70d1c520",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-petsurfer-roi-sha384-5f44d15e48afe5dc9b3508a465ebf20e048e293997ce017a74890c384371abf6269816771bdffc1569da09fa70d1c520.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Petsurfer ROI Analysis, Setting Up Reference Regions for KM, and Apply Partial Volume Correction",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "do_PVC": {
+            "default": true,
+            "type": "boolean"
+          },
+          "do_dynamic_analysis": {
+            "default": false,
+            "type": "boolean"
+          },
+          "freesurfer_license_key": {
+            "type": "string"
+          },
+          "psf": {
+            "default": "6",
+            "type": "string"
+          },
+          "auto_mask": {
+            "default": "1 .01",
+            "type": "string"
+          },
+          "mgx": {
+            "default": ".01",
+            "type": "string"
+          },
+          "do_rescale": {
+            "default": true,
+            "type": "boolean"
+          },
+          "rescale_id": {
+            "default": "174",
+            "type": "string"
+          },
+          "do_normalization": {
+            "default": false,
+            "type": "boolean"
+          },
+          "km-ref": {
+            "default": "8 47",
+            "type": "string"
+          },
+          "km-hb": {
+            "default": "11 12 13 50 51 52",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "do_PVC",
+          "do_dynamic_analysis",
+          "psf",
+          "auto_mask",
+          "mgx",
+          "do_rescale",
+          "rescale_id",
+          "do_normalization",
+          "km-ref",
+          "km-hb"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "fszip": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "zip"
+                ]
+              }
+            }
+          },
+          "petfile": {
+            "type": "object",
+            "properties": {}
+          },
+          "registration_file": {
+            "type": "object",
+            "properties": {}
+          },
+          "freesurfer_license_file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
