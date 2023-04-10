@@ -1,18 +1,18 @@
 {
   "name": "dcm2niix",
-  "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
-  "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
-  "version": "1.4.2_1.0.20220720",
+  "label": "dcm2niix: DICOM to NIfTI conversion",
+  "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD).",
+  "version": "2.0.0_1.0.20220720",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/dcm2niix",
-  "cite": "dcm2niix doi: 10.1016/j.jneumeth.2016.03.001 & PyDeface doi: 10.5281/zenodo.3524401",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/dcm2niix/",
+  "cite": "dcm2niix doi: 10.1016/j.jneumeth.2016.03.001",
   "license": "Other",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dcm2niix:1.4.2_1.0.20220720"
+      "image": "flywheel/dcm2niix:2.0.0_1.0.20220720"
     },
     "flywheel": {
       "suite": "Conversion"
@@ -21,13 +21,7 @@
       "main": {
         "name": "Other",
         "url": "https://github.com/rordenlab/dcm2niix/blob/v1.0.20220720/license.txt"
-      },
-      "dependencies": [
-        {
-          "name": "MIT",
-          "url": "https://github.com/poldracklab/pydeface/blob/v2.0.0/LICENSE.txt"
-        }
-      ]
+      }
     }
   },
   "inputs": {
@@ -52,25 +46,9 @@
         ]
       }
     },
-    "pydeface_template": {
-      "base": "file",
-      "description": "If implementing PyDeface, optional template image that will be used as the registration target instead of the default.",
-      "optional": true,
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
-    },
-    "pydeface_facemask": {
-      "base": "file",
-      "description": "If implementing PyDeface, optional face mask image that will be used instead of the default.",
-      "optional": true,
-      "type": {
-        "enum": [
-          "nifti"
-        ]
-      }
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
     }
   },
   "config": {
@@ -187,35 +165,6 @@
       "type": "boolean",
       "default": true
     },
-    "pydeface": {
-      "description": "Implement PyDeface to remove facial structures from NIfTI. Only defaced NIfTIs will be included in the output. Options: true, false (default).",
-      "type": "boolean",
-      "default": false
-    },
-    "pydeface_cost": {
-      "description": "If implementing PyDeface, the FSL-Flirt cost function. Options: 'mutualinfo' (default), 'corratio', 'normcorr', 'normal', 'leastsq', 'labeldiff', 'bbr'.",
-      "type": "string",
-      "default": "mutualinfo",
-      "enum": [
-        "mutualinfo",
-        "corratio",
-        "normcorr",
-        "normmi",
-        "leastsq",
-        "labeldiff",
-        "bbr"
-      ]
-    },
-    "pydeface_nocleanup": {
-      "description": "If implementing PyDeface, do not clean up temporary files. Options: true, false (default).",
-      "type": "boolean",
-      "default": false
-    },
-    "pydeface_verbose": {
-      "description": "If implementing PyDeface, show additional status prints. Options: true, false (default).",
-      "type": "boolean",
-      "default": false
-    },
     "remove_incomplete_volumes": {
       "description": "Remove incomplete trailing volumes for 4D scans aborted mid-acquisition before dcm2niix conversion. Options: true, false (default).",
       "type": "boolean",
@@ -231,20 +180,38 @@
       "type": "boolean",
       "default": false
     },
+    "tag": {
+      "default": "",
+      "description": "The tag to be added to one output file upon run completion.",
+      "type": "string"
+    },
     "text_notes_private": {
       "description": "Text notes include private patient details. Options: true, false (default).",
       "type": "boolean",
       "default": false
     }
   },
-  "command": "poetry run python run.py",
+  "command": "python /flywheel/v0/run.py",
   "environment": {
-    "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
-    "FSLDIR": "/usr/share/fsl/5.0",
-    "PATH": ":/usr/lib/fsl/5.0:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin::/usr/bin::/sbin:/bin",
+    "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "FSLOUTPUTTYPE": "NIFTI_GZ",
     "FIXDCMCOMMIT": "918ee3327174c3c736e7b3839a556e0a709730c8",
     "DCMCOMMIT": "bb3a6c35d2bbac6ed95acb2cd0df65f35e79b5fb",
-    "FLYWHEEL": "/flywheel/v0"
+    "FLYWHEEL": "/flywheel/v0",
+    "PWD": "/flywheel/v0",
+    "PYSITE": "/usr/local/lib/python3.11/site-packages",
+    "PYTHON_PIP_VERSION": "22.3.1",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "COMMIT_SHA": "0481c74f",
+    "COMMIT_REF": "main",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py",
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.11.2",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "BUILD_TIME": "2023-03-01T08:58:30Z",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+    "PYTHON_GET_PIP_SHA256": "394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637",
+    "EDITOR": "micro"
   }
 }
