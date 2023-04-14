@@ -1,7 +1,7 @@
 {
   "name": "fsl-superbet2",
   "label": "FSL: SUPER Brain Extraction Tool (BET2)",
-  "description": "Modified Brain Extraction Tool 2 (BET2) from FMRIB Software Library (FSL) v5.0 called SuperBET2 deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+  "description": "Modified Brain Extraction Tool 2 (BET2) from FMRIB Software Library (FSL) v5.0 called SuperBET2 deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
   "maintainer": "Flywheel Support <support@flywheel.io>",
   "author": "Sina Aslan, Ph.D.",
   "url": "https://github.com/saslan-7/super-bet2",
@@ -12,7 +12,6 @@
     "flywheel": {
       "suite": "FSL"
     },
-    "docker-image": "flywheel/fsl-superbet2:1.0.0_5.0.7",
     "gear-builder": {
       "category": "analysis",
       "image": "flywheel/fsl-superbet2:1.0.0_5.0.7"
