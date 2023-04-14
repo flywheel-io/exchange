@@ -1,0 +1,92 @@
+{
+  "gear": {
+    "name": "fsl-superbet2",
+    "label": "FSL: SUPER Brain Extraction Tool (BET2)",
+    "description": "Modified Brain Extraction Tool 2 (BET2) from FMRIB Software Library (FSL) v5.0 called SuperBET2 deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
+    "maintainer": "Flywheel Support <support@flywheel.io>",
+    "author": "Sina Aslan, Ph.D.",
+    "url": "https://github.com/saslan-7/super-bet2",
+    "source": "https://github.com/flywheel-apps/fsl-superbet2",
+    "license": "Other",
+    "version": "1.0.0_5.0.7",
+    "custom": {
+      "flywheel": {
+        "suite": "FSL"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fsl-superbet2:1.0.0_5.0.7"
+      }
+    },
+    "config": {
+      "fractional_intensity_threshold": {
+        "description": "Fractional intensity threshold (0->1); default=0.05; smaller values give larger brain outline estimates. Changing Fractional intensity threshold from its default value of 0.5 will cause the overall segmented brain to become larger (<0.5) or smaller (>0.5). This threshold must lie between 0 and 1.",
+        "default": 0.05,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "id": "-f"
+      }
+    },
+    "inputs": {
+      "nifti": {
+        "description": "Input T1 NIfTI file for BET algorithm.",
+        "base": "file",
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    }
+  },
+  "exchange": {
+    "git-commit": "097071f5e1b64d5b2cc59ab88684b69c12a1b39d",
+    "rootfs-hash": "sha384:cbe47efc85d033615cd480b51b526a20aeacd4814624cc767a14229a19851475299f2dc8963bb4571a097649b70ea9a7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fsl-superbet2-sha384-cbe47efc85d033615cd480b51b526a20aeacd4814624cc767a14229a19851475299f2dc8963bb4571a097649b70ea9a7.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FSL: SUPER Brain Extraction Tool (BET2)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "fractional_intensity_threshold": {
+            "default": 0.05,
+            "minimum": 0,
+            "maximum": 1,
+            "type": "number",
+            "id": "-f"
+          }
+        },
+        "required": [
+          "fractional_intensity_threshold"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "nifti": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "nifti"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
