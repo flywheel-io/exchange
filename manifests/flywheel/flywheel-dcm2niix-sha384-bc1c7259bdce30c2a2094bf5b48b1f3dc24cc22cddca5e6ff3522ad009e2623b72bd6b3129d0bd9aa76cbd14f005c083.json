@@ -1,0 +1,486 @@
+{
+  "gear": {
+    "name": "dcm2niix",
+    "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
+    "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "version": "1.4.4_1.0.20220720",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "url": "https://github.com/rordenlab/dcm2niix",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/dcm2niix",
+    "cite": "dcm2niix doi: 10.1016/j.jneumeth.2016.03.001 & PyDeface doi: 10.5281/zenodo.3524401",
+    "license": "Other",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/dcm2niix:1.4.4_1.0.20220720"
+      },
+      "flywheel": {
+        "suite": "Conversion"
+      },
+      "license": {
+        "main": {
+          "name": "Other",
+          "url": "https://github.com/rordenlab/dcm2niix/blob/v1.0.20220720/license.txt"
+        },
+        "dependencies": [
+          {
+            "name": "MIT",
+            "url": "https://github.com/poldracklab/pydeface/blob/v2.0.0/LICENSE.txt"
+          }
+        ]
+      }
+    },
+    "inputs": {
+      "dcm2niix_input": {
+        "base": "file",
+        "description": "Main input file for the Gear. This can be either a DICOM archive ('<dicom>.zip'), a PAR/REC archive ('<parrec>.zip'), or a single PAR file ('image.PAR' or 'image.par').",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom",
+            "parrec"
+          ]
+        }
+      },
+      "rec_file_input": {
+        "base": "file",
+        "description": "If dcm2niix_input is a single PAR file, the corresponding REC file ('image.REC' or 'image.rec') for one PAR/REC file pair as inputs to the Gear.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "parrec"
+          ]
+        }
+      },
+      "pydeface_template": {
+        "base": "file",
+        "description": "If implementing PyDeface, optional template image that will be used as the registration target instead of the default.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      },
+      "pydeface_facemask": {
+        "base": "file",
+        "description": "If implementing PyDeface, optional face mask image that will be used instead of the default.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "nifti"
+          ]
+        }
+      }
+    },
+    "config": {
+      "anonymize_bids": {
+        "description": "Anonymize BIDS. Options: true (default), false. 'bids_sidecar' config option must be enabled (i.e., 'y' or 'o' options).",
+        "type": "boolean",
+        "default": true
+      },
+      "bids_sidecar": {
+        "description": "Output BIDS sidecar in JSON format. Options are 'y'=yes, 'n'=no (default), 'o'=only (whereby no NIfTI file will be generated). Note: bids_sidecar is always invoked when running dcm2niix to be used as metadata. User configuration preference is handled after acquiring metadata.",
+        "type": "string",
+        "default": "y",
+        "enum": [
+          "y",
+          "n",
+          "o"
+        ]
+      },
+      "coil_combine": {
+        "description": "For sequences with individual coil data, saved as individual volumes, this option will save a NIfTI file with ONLY the combined coil data (i.e., the last volume). Options: true, false (default). WARNING: Expert Option. We make no effort to check for independent coil data; we trust that you know what you are asking for if you have selected this option.",
+        "type": "boolean",
+        "default": false
+      },
+      "comment": {
+        "description": "If non-empty, store comment as NIfTI aux_file. Options: non-empty string, 24 characters maximum. Note: The 24 character comment is placed in (1) all NIfTI output files in the aux_file variable. You can use fslhdr to access the NIfTI header data and see this comment; and (2) all JSON files (i.e., BIDS sidecars), which means the comment is stored as metadata for all associated output files and would be included in the 'bids_sidecar' file, if invoked.",
+        "type": "string",
+        "default": ""
+      },
+      "compress_images": {
+        "description": "Gzip compress images. Options: 'y'=yes (default), 'i'=internal, 'n'=no, '3'=no,3D. Note: If option '3' is chosen, the filename flag will be set to '-f %p_%s' to prevent overwriting files. Tip: If desire .nrrd output, select 'n'.",
+        "type": "string",
+        "default": "y",
+        "enum": [
+          "y",
+          "i",
+          "n",
+          "3"
+        ]
+      },
+      "compression_level": {
+        "description": "Set the gz compression level. Options: 1 (fastest) to 9 (smallest), 6 (default).",
+        "type": "number",
+        "default": 6,
+        "minimum": 1,
+        "maximum": 9
+      },
+      "convert_only_series": {
+        "description": "Selectively convert by series number - can be used up to 16 times. Options: 'all' (default), space-separated list of series numbers (e.g., '2 12 20'). WARNING: Expert Option. We trust that if you have selected this option, you know what you are asking for.",
+        "type": "string",
+        "default": "all"
+      },
+      "crop": {
+        "description": "Crop 3D T1 images. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "dcm2niix_verbose": {
+        "description": "Whether to include verbose output from dcm2niix call. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "decompress_dicoms": {
+        "description": "Decompress DICOM files before conversion. This will perform decompression using gdcmconv and then perform the conversion using dcm2niix. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "filename": {
+        "description": "Output filename template. Options: %a=antenna (coil) name, %b=basename, %c=comments, %d=series description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %o=mediaObjectInstanceUID, %p=protocol, %r=instance number, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID, %z=sequence name tag(0018,0024), %q sequence name tag(0018,1020). Defaults: dcm2niix tool `%f_%p_%t_%s`. Tip: A more informative filename can be useful for downstream BIDS curation by simply accessing relevant information in the extracted filename. For example, including echo number or protocol.",
+        "type": "string",
+        "default": "%f_%p_%t_%s"
+      },
+      "ignore_derived": {
+        "description": "Ignore derived, localizer, and 2D images. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "ignore_errors": {
+        "description": "Ignore dcm2niix errors and the exit status, and preserve outputs. Options: true, false (default). By default, when dcm2niix exits non-zero, outputs are not preserved. WARNING: Expert Option. We trust that if you have selected this option, you know what you are asking for.",
+        "type": "boolean",
+        "default": false
+      },
+      "lossless_scaling": {
+        "description": "Losslessly scale 16-bit integers to use dynamic range. Options: 'y'=scale, 'n'=no, but unit16->int16, 'o'=original (default).",
+        "type": "string",
+        "default": "o",
+        "enum": [
+          "y",
+          "n",
+          "o"
+        ]
+      },
+      "merge2d": {
+        "description": "Merge 2D slices from the same series regardless of study time, echo, coil, orientation, etc. Options: 0=no, 1=yes, 2=auto (default)",
+        "type": "number",
+        "default": 2,
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "output_nrrd": {
+        "description": "Export as NRRD instead of NIfTI. Options: true, false (default). Tip: To export .nrrd, change the **compress_images** config option to 'n'; otherwise, the output will split into two files (.raw.gz and .nhdr).",
+        "type": "boolean",
+        "default": false
+      },
+      "philips_scaling": {
+        "description": "Philips precise float (not display) scaling. Options: true (default), false.",
+        "type": "boolean",
+        "default": true
+      },
+      "pydeface": {
+        "description": "Implement PyDeface to remove facial structures from NIfTI. Only defaced NIfTIs will be included in the output. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "pydeface_cost": {
+        "description": "If implementing PyDeface, the FSL-Flirt cost function. Options: 'mutualinfo' (default), 'corratio', 'normcorr', 'normal', 'leastsq', 'labeldiff', 'bbr'.",
+        "type": "string",
+        "default": "mutualinfo",
+        "enum": [
+          "mutualinfo",
+          "corratio",
+          "normcorr",
+          "normmi",
+          "leastsq",
+          "labeldiff",
+          "bbr"
+        ]
+      },
+      "pydeface_nocleanup": {
+        "description": "If implementing PyDeface, do not clean up temporary files. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "pydeface_verbose": {
+        "description": "If implementing PyDeface, show additional status prints. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "remove_incomplete_volumes": {
+        "description": "Remove incomplete trailing volumes for 4D scans aborted mid-acquisition before dcm2niix conversion. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "sanitize_filename": {
+        "description": "Sanitize filename by removing invalid characters.",
+        "type": "boolean",
+        "default": true
+      },
+      "single_file_mode": {
+        "description": "Single file mode, do not convert other images in the folder. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      },
+      "text_notes_private": {
+        "description": "Text notes include private patient details. Options: true, false (default).",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "command": "poetry run python run.py",
+    "environment": {
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "PATH": ":/usr/lib/fsl/5.0:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin::/usr/bin::/sbin:/bin",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FIXDCMCOMMIT": "918ee3327174c3c736e7b3839a556e0a709730c8",
+      "DCMCOMMIT": "bb3a6c35d2bbac6ed95acb2cd0df65f35e79b5fb",
+      "FLYWHEEL": "/flywheel/v0"
+    }
+  },
+  "exchange": {
+    "git-commit": "762a2867dbf531f255f21c487bfa6cd505d4de97",
+    "rootfs-hash": "sha384:bc1c7259bdce30c2a2094bf5b48b1f3dc24cc22cddca5e6ff3522ad009e2623b72bd6b3129d0bd9aa76cbd14f005c083",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-dcm2niix-sha384-bc1c7259bdce30c2a2094bf5b48b1f3dc24cc22cddca5e6ff3522ad009e2623b72bd6b3129d0bd9aa76cbd14f005c083.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "anonymize_bids": {
+            "type": "boolean",
+            "default": true
+          },
+          "bids_sidecar": {
+            "type": "string",
+            "default": "y",
+            "enum": [
+              "y",
+              "n",
+              "o"
+            ]
+          },
+          "coil_combine": {
+            "type": "boolean",
+            "default": false
+          },
+          "comment": {
+            "type": "string",
+            "default": ""
+          },
+          "compress_images": {
+            "type": "string",
+            "default": "y",
+            "enum": [
+              "y",
+              "i",
+              "n",
+              "3"
+            ]
+          },
+          "compression_level": {
+            "type": "number",
+            "default": 6,
+            "minimum": 1,
+            "maximum": 9
+          },
+          "convert_only_series": {
+            "type": "string",
+            "default": "all"
+          },
+          "crop": {
+            "type": "boolean",
+            "default": false
+          },
+          "dcm2niix_verbose": {
+            "type": "boolean",
+            "default": false
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "decompress_dicoms": {
+            "type": "boolean",
+            "default": false
+          },
+          "filename": {
+            "type": "string",
+            "default": "%f_%p_%t_%s"
+          },
+          "ignore_derived": {
+            "type": "boolean",
+            "default": false
+          },
+          "ignore_errors": {
+            "type": "boolean",
+            "default": false
+          },
+          "lossless_scaling": {
+            "type": "string",
+            "default": "o",
+            "enum": [
+              "y",
+              "n",
+              "o"
+            ]
+          },
+          "merge2d": {
+            "type": "number",
+            "default": 2,
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "output_nrrd": {
+            "type": "boolean",
+            "default": false
+          },
+          "philips_scaling": {
+            "type": "boolean",
+            "default": true
+          },
+          "pydeface": {
+            "type": "boolean",
+            "default": false
+          },
+          "pydeface_cost": {
+            "type": "string",
+            "default": "mutualinfo",
+            "enum": [
+              "mutualinfo",
+              "corratio",
+              "normcorr",
+              "normmi",
+              "leastsq",
+              "labeldiff",
+              "bbr"
+            ]
+          },
+          "pydeface_nocleanup": {
+            "type": "boolean",
+            "default": false
+          },
+          "pydeface_verbose": {
+            "type": "boolean",
+            "default": false
+          },
+          "remove_incomplete_volumes": {
+            "type": "boolean",
+            "default": false
+          },
+          "sanitize_filename": {
+            "type": "boolean",
+            "default": true
+          },
+          "single_file_mode": {
+            "type": "boolean",
+            "default": false
+          },
+          "text_notes_private": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "anonymize_bids",
+          "bids_sidecar",
+          "coil_combine",
+          "comment",
+          "compress_images",
+          "compression_level",
+          "convert_only_series",
+          "crop",
+          "dcm2niix_verbose",
+          "debug",
+          "decompress_dicoms",
+          "filename",
+          "ignore_derived",
+          "ignore_errors",
+          "lossless_scaling",
+          "merge2d",
+          "output_nrrd",
+          "philips_scaling",
+          "pydeface",
+          "pydeface_cost",
+          "pydeface_nocleanup",
+          "pydeface_verbose",
+          "remove_incomplete_volumes",
+          "sanitize_filename",
+          "single_file_mode",
+          "text_notes_private"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "dcm2niix_input": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom",
+                  "parrec"
+                ]
+              }
+            }
+          },
+          "rec_file_input": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "parrec"
+                ]
+              }
+            }
+          },
+          "pydeface_template": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          },
+          "pydeface_facemask": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "dcm2niix_input"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
