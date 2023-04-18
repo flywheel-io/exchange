@@ -2,7 +2,7 @@
   "name": "dcm2niix",
   "label": "dcm2niix: DICOM to NIfTI conversion (with PyDeface)",
   "description": "Implementation of Chris Rorden's dcm2niix tool for converting DICOM (or PAR/REC) to NIfTI (or NRRD), with an optional implementation of Poldrack Lab's PyDeface to remove facial structures from NIfTI. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
-  "version": "1.4.2_1.0.20220720",
+  "version": "1.4.4_1.0.20220720",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://github.com/rordenlab/dcm2niix",
@@ -12,7 +12,7 @@
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dcm2niix:1.4.2_1.0.20220720"
+      "image": "flywheel/dcm2niix:1.4.4_1.0.20220720"
     },
     "flywheel": {
       "suite": "Conversion"
