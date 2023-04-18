@@ -1,0 +1,180 @@
+{
+  "gear": {
+    "name": "splitter",
+    "label": "DICOM splitter",
+    "description": "The DICOM splitter extracts embedded localizer DICOM frames and/or re-group DICOM frames in archive by specific DICOM tags provided by user.",
+    "version": "1.4.3",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/splitter:1.4.3"
+      },
+      "flywheel": {
+        "suite": "Curation",
+        "show-job": true
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "dicom": {
+        "base": "file",
+        "description": "Dicom Archive",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "config": {
+      "extract_localizer": {
+        "default": true,
+        "type": "boolean",
+        "description": "If true and DICOM archive contains embedded localizer images (ImageType = Localizer), the embedded images will be saved as their own DICOM archive"
+      },
+      "group_by": {
+        "description": "Comma-separated tags to group dicom frames by",
+        "type": "string",
+        "default": "SeriesInstanceUID"
+      },
+      "zip-single-dicom": {
+        "description": "Zip single dicom outputs",
+        "default": "match",
+        "type": "string",
+        "enum": [
+          "no",
+          "match"
+        ]
+      },
+      "tag": {
+        "default": "splitter",
+        "description": "The tag to be added to files upon run completion",
+        "type": "string"
+      },
+      "tag-single-output": {
+        "default": "",
+        "type": "string",
+        "description": "In addition to the tag applied to all files above, apply a second tag to a single output so that a downstream gear rule can run on the acquisition once splitter finishes.  Default empty, no tag will be applied"
+      },
+      "debug": {
+        "description": "Include debug output",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "environment": {
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "PYTHON_VERSION": "3.9.7",
+      "PYTHON_PIP_VERSION": "21.2.4",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.11",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "GDCM_VERSION": "3.0.9",
+      "FLYWHEEL": "/flywheel/v0",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d781367b97acf0ece7e9e304bf281e99b618bf10/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "01249aa3e58ffb3e1686b7141b4e9aac4d398ef4ac3012ed9dff8dd9f685ffe0",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "MICRO_VERSION": "2.0.10",
+      "EDITOR": "micro",
+      "MUSTACHE_VERSION": "1.3.0",
+      "GJO_VERSION": "1.0.2",
+      "JQ_VERSION": "jq-1.6",
+      "PIP_NO_CACHE_DIR": "0",
+      "COMMIT": "master.3a9476be",
+      "COMMIT_TIME": "2021-10-25T09:24:15+00:00"
+    },
+    "command": "python run.py",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "cite": "",
+    "license": "MIT",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/splitter",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/splitter"
+  },
+  "exchange": {
+    "git-commit": "058a8843272c92036d6f4483ff06638abf01a659",
+    "rootfs-hash": "sha384:a6369575ed274ed9832dafa7c2b261dff1f7b63cf44271b486c6cc51ed7322440ca5cdaa6f8fc1820ade650dbfd9cc77",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-splitter-sha384-a6369575ed274ed9832dafa7c2b261dff1f7b63cf44271b486c6cc51ed7322440ca5cdaa6f8fc1820ade650dbfd9cc77.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for DICOM splitter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "extract_localizer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "group_by": {
+            "type": "string",
+            "default": "SeriesInstanceUID"
+          },
+          "zip-single-dicom": {
+            "default": "match",
+            "type": "string",
+            "enum": [
+              "no",
+              "match"
+            ]
+          },
+          "tag": {
+            "default": "splitter",
+            "type": "string"
+          },
+          "tag-single-output": {
+            "default": "",
+            "type": "string"
+          },
+          "debug": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "extract_localizer",
+          "group_by",
+          "zip-single-dicom",
+          "tag",
+          "tag-single-output",
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "dicom": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "dicom"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
