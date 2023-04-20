@@ -1,0 +1,801 @@
+{
+  "gear": {
+    "author": "Poldrack lab, Stanford University",
+    "cite": "see https://fmriprep.readthedocs.io/en/stable/citing.html",
+    "command": "/flywheel/v0/run.sh",
+    "config": {
+      "anat-only": {
+        "default": false,
+        "description": "run anatomical workflows only",
+        "type": "boolean"
+      },
+      "aroma-melodic-dimensionality": {
+        "default": -200,
+        "description": "Exact or maximum number of MELODIC components to estimate (positive = exact, negative = maximum",
+        "type": "integer"
+      },
+      "boilerplate_only": {
+        "default": false,
+        "description": "generate boilerplate only",
+        "type": "boolean"
+      },
+      "bold2t1w-dof": {
+        "default": 6,
+        "description": "Degrees of freedom when registering BOLD to T1w images. 6 degrees (rotation and translation) are used by default.",
+        "enum": [
+          6,
+          9,
+          12
+        ],
+        "type": "integer"
+      },
+      "bold2t1w-init": {
+        "default": "register",
+        "description": "Either “register” (the default) to initialize volumes at center or “header” to use the header information when coregistering BOLD to T1w images.",
+        "enum": [
+          "register",
+          "header"
+        ],
+        "type": "string"
+      },
+      "cifti-output": {
+        "default": false,
+        "description": "output BOLD files as CIFTI dtseries",
+        "type": "boolean"
+      },
+      "debug": {
+        "default": "",
+        "description": "Possible choices: compcor, all.  Debug mode(s) to enable. ‘all’ is alias for all available modes.",
+        "enum": [
+          "",
+          "compcor",
+          "fieldmaps",
+          "pdb",
+          "all"
+        ],
+        "type": "string"
+      },
+      "dummy-scans": {
+        "description": "Number of non steady state volumes.",
+        "optional": true,
+        "type": "integer"
+      },
+      "dvars-spike-threshold": {
+        "default": 1.5,
+        "description": "Threshold for flagging a frame as an outlier on the basis of standardised DVARS",
+        "type": "number"
+      },
+      "echo-idx": {
+        "default": "",
+        "description": "select a specific echo to be processed in a multiecho series",
+        "type": "string"
+      },
+      "error-on-aroma-warnings": {
+        "default": false,
+        "description": "Raise an error if ICA_AROMA does not produce sensible output (e.g., if all the components are classified as signal or noise)",
+        "type": "boolean"
+      },
+      "fd-spike-threshold": {
+        "default": 0.5,
+        "description": "Threshold for flagging a frame as an outlier on the basis of framewise displacement",
+        "type": "number"
+      },
+      "fmap-bspline": {
+        "default": false,
+        "description": "fit a B-Spline field using least-squares (experimental)",
+        "type": "boolean"
+      },
+      "fmap-no-demean": {
+        "default": false,
+        "description": "do not remove median (within mask) from fieldmap",
+        "type": "boolean"
+      },
+      "force-bbr": {
+        "default": false,
+        "description": "Always use boundary-based registration (no goodness-of-fit checks)",
+        "type": "boolean"
+      },
+      "force-no-bbr": {
+        "default": false,
+        "description": "Do not use boundary-based registration (no goodness-of-fit checks)",
+        "type": "boolean"
+      },
+      "force-syn": {
+        "default": false,
+        "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available",
+        "type": "boolean"
+      },
+      "fs-no-reconall": {
+        "default": false,
+        "description": "disable FreeSurfer surface preprocessing",
+        "type": "boolean"
+      },
+      "gear-FREESURFER_LICENSE": {
+        "default": "",
+        "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+        "type": "string"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Do everything except actually executing the command line",
+        "type": "boolean"
+      },
+      "gear-intermediate-files": {
+        "default": "",
+        "description": "Space separated list of FILES to retain from the intermediate work directory.",
+        "type": "string"
+      },
+      "gear-intermediate-folders": {
+        "default": "",
+        "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+        "type": "string"
+      },
+      "gear-keep-fsaverage": {
+        "default": false,
+        "description": "Keep freesurfer/fsaverage* directories in output.  These are copied from the freesurfer installation.  Default is to delete them",
+        "type": "boolean"
+      },
+      "gear-log-level": {
+        "default": "INFO",
+        "description": "Gear Log verbosity level (INFO|DEBUG)",
+        "enum": [
+          "INFO",
+          "DEBUG"
+        ],
+        "type": "string"
+      },
+      "gear-log-to-file": {
+        "default": true,
+        "description": "Instead of logging in real time, save log output of fMRIPrep to the file output/log#.txt (where # is 1 or 2 depending on how many times fMRIPrep was run.",
+        "type": "boolean"
+      },
+      "gear-run-bids-validation": {
+        "default": false,
+        "description": "Gear will run BIDS validation before running fMRIPrep and print out all warnings and errors.  fMRIPrep runs a version of the bids validator so having the gear run it is not necessary, but might be informative.  If validation fails and gear-abort-on-bids-error is true, fMRIPrep will NOT be run.",
+        "type": "boolean"
+      },
+      "gear-save-intermediate-output": {
+        "default": false,
+        "description": "Gear will save ALL intermediate output into fmriprep_work_*.zip",
+        "type": "boolean"
+      },
+      "gear-save-output-as-subfolders": {
+        "default": false,
+        "description": "Instead of a single zipped file with fMRIPrep and Freesurfer output in it, the gear will save each separately.",
+        "type": "boolean"
+      },
+      "gear-writable-dir": {
+        "default": "/var/tmp",
+        "description": "Gears expect to be able to write temporary files in /flywheel/v0/.  If this location is not writable (such as when running in Singularity), this path will be used instead.  fMRIPrep creates a large number of files so this disk space should be fast and local.",
+        "type": "string"
+      },
+      "ignore": {
+        "default": "",
+        "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)  Possible choices: fieldmaps, slicetiming, sbref",
+        "type": "string"
+      },
+      "longitudinal": {
+        "default": false,
+        "description": "treat dataset as longitudinal - may increase runtime",
+        "type": "boolean"
+      },
+      "lsf-cpu": {
+        "default": "4",
+        "description": "[LSF] How many cores to request. This is used for the underlying '-n' option.",
+        "type": "string"
+      },
+      "lsf-ram": {
+        "default": "rusage[mem=12000]",
+        "description": "[LSF] How much RAM to request. This is used for the underlying '-R' option.",
+        "type": "string"
+      },
+      "md-only-boilerplate": {
+        "default": false,
+        "description": "skip generation of HTML and LaTeX formatted citation with pandoc",
+        "type": "boolean"
+      },
+      "medial-surface-nan": {
+        "default": false,
+        "description": "Replace medial wall values with NaNs on functional GIFTI files. Only performed for GIFTI files mapped to a freesurfer subject (fsaverage or fsnative).",
+        "type": "boolean"
+      },
+      "mem_mb": {
+        "default": 0,
+        "description": "upper bound memory limit for FMRIPREP processes",
+        "type": "integer"
+      },
+      "n_cpus": {
+        "default": 0,
+        "description": "Maximum number of threads across all processes (nprocs). Default is all available.",
+        "type": "integer"
+      },
+      "no-submm-recon": {
+        "default": false,
+        "description": "disable sub-millimeter (hires) reconstruction",
+        "type": "boolean"
+      },
+      "notrack": {
+        "default": false,
+        "description": "Opt-out of sending tracking information of this run to the FMRIPREP developers. This information helps to improve FMRIPREP and provides an indicator of real world usage crucial for obtaining funding",
+        "type": "boolean"
+      },
+      "omp-nthreads": {
+        "default": 0,
+        "description": "Maximum number of threads per-process.  Default is all available.",
+        "type": "integer"
+      },
+      "output-spaces": {
+        "default": "MNI152NLin2009cAsym",
+        "description": "Standard and non-standard spaces to resample anatomical and functional images to. Standard spaces may be specified by the form <TEMPLATE>[:res-<resolution>][:cohort-<label>][...], where <TEMPLATE> is a keyword (valid keywords: “MNI152Lin”, “MNI152NLin2009cAsym”, “MNI152NLin6Asym”, “MNI152NLin6Sym”, “MNIInfant”, “MNIPediatricAsym”, “NKI”, “OASIS30ANTs”, “PNC”, “fsLR”, “fsaverage”) or path pointing to a user-supplied template, and may be followed by optional, colon-separated parameters. Non-standard spaces (valid keywords: anat, T1w, run, func, sbref, fsnative) imply specific orientations and sampling grids. Important to note, the res-* modifier does not define the resolution used for the spatial normalization. For further details, please check out https://fmriprep.readthedocs.io/en/stable/spaces.html",
+        "type": "string"
+      },
+      "reports-only": {
+        "default": false,
+        "description": "",
+        "type": "boolean"
+      },
+      "resource-monitor": {
+        "default": false,
+        "description": "enable Nipype’s resource monitoring to keep track of memory and CPU usage",
+        "type": "boolean"
+      },
+      "return-all-components": {
+        "default": false,
+        "description": "Include all components estimated in CompCor decomposition in the confounds file instead of only the components sufficient to explain 50 percent of BOLD variance in each CompCor mask",
+        "type": "boolean"
+      },
+      "singularity-debug": {
+        "default": false,
+        "description": "[Singularity] Enable verbose logging.",
+        "type": "boolean"
+      },
+      "skip-bids-validation": {
+        "default": false,
+        "description": "assume the input dataset is BIDS compliant and skip the validation",
+        "type": "boolean"
+      },
+      "skull-strip-fixed-seed": {
+        "default": false,
+        "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with –omp-nthreads 1",
+        "type": "boolean"
+      },
+      "skull-strip-t1w": {
+        "default": "force",
+        "description": "Possible choices: auto, skip, force.  Determiner for T1-weighted skull stripping (‘force’ ensures skull stripping, ‘skip’ ignores skull stripping, and ‘auto’ applies brain extraction based on the outcome of a heuristic to check whether the brain is already masked).  Default is force.",
+        "enum": [
+          "auto",
+          "skip",
+          "force"
+        ],
+        "type": "string"
+      },
+      "skull-strip-template": {
+        "default": "OASIS30ANTs",
+        "description": "select a template for skull-stripping with antsBrainExtraction (default is OASIS30ANTs)",
+        "enum": [
+          "OASIS30ANTs",
+          "NKI"
+        ],
+        "type": "string"
+      },
+      "stop-on-first-crash": {
+        "default": false,
+        "description": "Force stopping on first crash, even if a work directory was specified",
+        "type": "boolean"
+      },
+      "task-id": {
+        "default": "",
+        "description": "select a specific task to be processed",
+        "type": "string"
+      },
+      "use-aroma": {
+        "default": false,
+        "description": "add ICA_AROMA to your preprocessing stream [ default = false ]",
+        "type": "boolean"
+      },
+      "use-syn-sdc": {
+        "default": false,
+        "description": "EXPERIMENTAL: Use fieldmap-free distortion correction",
+        "type": "boolean"
+      },
+      "verbose": {
+        "default": "",
+        "description": "increases log verbosity for each occurrence, debug level is -vvv",
+        "enum": [
+          "",
+          "v",
+          "vv",
+          "vvv"
+        ],
+        "type": "string"
+      },
+      "write-graph": {
+        "default": false,
+        "description": "Write workflow graph",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/bids-fmriprep:1.4.3_23.0.1",
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-fmriprep:1.4.3_23.0.1"
+      },
+      "license": {
+        "dependencies": [
+          {
+            "name": "Other",
+            "url": "https://fmriprep.readthedocs.io/en/stable/citing.html"
+          },
+          {
+            "name": "Other",
+            "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+          },
+          {
+            "name": "Other",
+            "url": "https://github.com/ANTsX/ANTs/blob/v2.2.0/COPYING.txt"
+          },
+          {
+            "name": "Other",
+            "url": "https://afni.nimh.nih.gov/pub/dist/doc/program_help/README.copyright.html"
+          },
+          {
+            "name": "Other",
+            "url": "https://github.com/freesurfer/freesurfer/blob/dev/LICENSE.txt"
+          }
+        ],
+        "main": {
+          "name": "BSD-3-Clause",
+          "url": "https://github.com/poldracklab/fmriprep/blob/master/LICENSE"
+        },
+        "non-commercial-use-only": true
+      }
+    },
+    "description": "fMRIPrep 23.0.1 is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.",
+    "environment": {
+      "AFNI_IMSAVE_WARNINGS": "NO",
+      "AFNI_MODELPATH": "/usr/lib/afni/models",
+      "AFNI_PLUGINPATH": "/usr/lib/afni/plugins",
+      "AFNI_TTATLAS_DATASET": "/usr/share/afni/atlases",
+      "ANTSPATH": "/usr/lib/ants",
+      "AROMA_VERSION": "0.4.5",
+      "CPATH": "/usr/local/miniconda/include/:",
+      "FIX_VERTEX_AREA": "",
+      "FLYWHEEL": "/flywheel/v0",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FSF_OUTPUT_FORMAT": "nii.gz",
+      "FSLDIR": "/usr/share/fsl/5.0",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSLTCLSH": "/usr/bin/tclsh",
+      "FSLWISH": "/usr/bin/wish",
+      "FSL_DIR": "/usr/share/fsl/5.0",
+      "FS_OVERRIDE": "0",
+      "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
+      "HOME": "/home/fmriprep",
+      "IS_DOCKER_8395080871": "1",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0:",
+      "LOCAL_DIR": "/opt/freesurfer/local",
+      "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+      "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+      "MKL_NUM_THREADS": "1",
+      "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+      "MNI_DIR": "/opt/freesurfer/mni",
+      "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "OMP_NUM_THREADS": "1",
+      "OS": "Linux",
+      "PATH": "/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/ants:/usr/lib/fsl/5.0:/usr/lib/afni/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "POSSUMDIR": "/usr/share/fsl/5.0",
+      "PWD": "/flywheel/v0",
+      "PYTHONNOUSERSITE": "1",
+      "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt",
+      "SUBJECTS_DIR": "/opt/freesurfer/subjects"
+    },
+    "inputs": {
+      "bids-filter-file": {
+        "base": "file",
+        "description": "a JSON file describing custom BIDS input filters using PyBIDS.",
+        "optional": true
+      },
+      "bidsignore": {
+        "base": "file",
+        "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+        "optional": true
+      },
+      "freesurfer_license": {
+        "base": "file",
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will by copied to the $FSHOME directory and used during execution of the Gear.",
+        "optional": true
+      },
+      "fs-subjects-dir": {
+        "base": "file",
+        "description": "Zip file of existing FreeSurfer subject's directory to reuse.  If the output of FreeSurfer recon-all is provided to fMRIPrep, that output will be used rather than re-running recon-all.  Unzipping the file should produce a particular subject's directory which will be placed in the $FREESURFER_HOME/subjects directory.  The name of the directory must match the -subjid as passed to recon-all.  This version of fMRIPrep uses Freesurfer v6.0.1.",
+        "optional": true
+      },
+      "key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "previous-results": {
+        "base": "file",
+        "description": "Provide previously calculated fMRIPrep output results as a zip file.  This file will be unzipped into the output directory so that previous results will be used instead of re-calculating them.  This input is provided so that bids-fmriprep can be run incrementally as new data is acquired.",
+        "optional": true
+      }
+    },
+    "label": "BIDS fMRIPrep: A Robust Preprocessing Pipeline for fMRI Data",
+    "license": "BSD-3-Clause",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "bids-fmriprep",
+    "source": "https://github.com/nipreps/fmriprep",
+    "url": "https://github.com/flywheel-apps/bids-fmriprep/blob/master/README.md",
+    "version": "1.4.3_23.0.1"
+  },
+  "exchange": {
+    "git-commit": "af9592bf0743ccfbf4e43461847a099a3e54f4df",
+    "rootfs-hash": "sha384:4bcba60633f7badf4b5743c8368bf7c6d94db7aa0d95fa7aea55a3dce2c19fcb11c4233c42def5a8373db8392e62f8f7",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bids-fmriprep-sha384-4bcba60633f7badf4b5743c8368bf7c6d94db7aa0d95fa7aea55a3dce2c19fcb11c4233c42def5a8373db8392e62f8f7.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS fMRIPrep: A Robust Preprocessing Pipeline for fMRI Data",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "anat-only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "aroma-melodic-dimensionality": {
+            "default": -200,
+            "type": "integer"
+          },
+          "boilerplate_only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "bold2t1w-dof": {
+            "default": 6,
+            "enum": [
+              6,
+              9,
+              12
+            ],
+            "type": "integer"
+          },
+          "bold2t1w-init": {
+            "default": "register",
+            "enum": [
+              "register",
+              "header"
+            ],
+            "type": "string"
+          },
+          "cifti-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "debug": {
+            "default": "",
+            "enum": [
+              "",
+              "compcor",
+              "fieldmaps",
+              "pdb",
+              "all"
+            ],
+            "type": "string"
+          },
+          "dummy-scans": {
+            "type": "integer"
+          },
+          "dvars-spike-threshold": {
+            "default": 1.5,
+            "type": "number"
+          },
+          "echo-idx": {
+            "default": "",
+            "type": "string"
+          },
+          "error-on-aroma-warnings": {
+            "default": false,
+            "type": "boolean"
+          },
+          "fd-spike-threshold": {
+            "default": 0.5,
+            "type": "number"
+          },
+          "fmap-bspline": {
+            "default": false,
+            "type": "boolean"
+          },
+          "fmap-no-demean": {
+            "default": false,
+            "type": "boolean"
+          },
+          "force-bbr": {
+            "default": false,
+            "type": "boolean"
+          },
+          "force-no-bbr": {
+            "default": false,
+            "type": "boolean"
+          },
+          "force-syn": {
+            "default": false,
+            "type": "boolean"
+          },
+          "fs-no-reconall": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-FREESURFER_LICENSE": {
+            "default": "",
+            "type": "string"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-intermediate-files": {
+            "default": "",
+            "type": "string"
+          },
+          "gear-intermediate-folders": {
+            "default": "",
+            "type": "string"
+          },
+          "gear-keep-fsaverage": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-log-level": {
+            "default": "INFO",
+            "enum": [
+              "INFO",
+              "DEBUG"
+            ],
+            "type": "string"
+          },
+          "gear-log-to-file": {
+            "default": true,
+            "type": "boolean"
+          },
+          "gear-run-bids-validation": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-save-intermediate-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-save-output-as-subfolders": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-writable-dir": {
+            "default": "/var/tmp",
+            "type": "string"
+          },
+          "ignore": {
+            "default": "",
+            "type": "string"
+          },
+          "longitudinal": {
+            "default": false,
+            "type": "boolean"
+          },
+          "lsf-cpu": {
+            "default": "4",
+            "type": "string"
+          },
+          "lsf-ram": {
+            "default": "rusage[mem=12000]",
+            "type": "string"
+          },
+          "md-only-boilerplate": {
+            "default": false,
+            "type": "boolean"
+          },
+          "medial-surface-nan": {
+            "default": false,
+            "type": "boolean"
+          },
+          "mem_mb": {
+            "default": 0,
+            "type": "integer"
+          },
+          "n_cpus": {
+            "default": 0,
+            "type": "integer"
+          },
+          "no-submm-recon": {
+            "default": false,
+            "type": "boolean"
+          },
+          "notrack": {
+            "default": false,
+            "type": "boolean"
+          },
+          "omp-nthreads": {
+            "default": 0,
+            "type": "integer"
+          },
+          "output-spaces": {
+            "default": "MNI152NLin2009cAsym",
+            "type": "string"
+          },
+          "reports-only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "resource-monitor": {
+            "default": false,
+            "type": "boolean"
+          },
+          "return-all-components": {
+            "default": false,
+            "type": "boolean"
+          },
+          "singularity-debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "skip-bids-validation": {
+            "default": false,
+            "type": "boolean"
+          },
+          "skull-strip-fixed-seed": {
+            "default": false,
+            "type": "boolean"
+          },
+          "skull-strip-t1w": {
+            "default": "force",
+            "enum": [
+              "auto",
+              "skip",
+              "force"
+            ],
+            "type": "string"
+          },
+          "skull-strip-template": {
+            "default": "OASIS30ANTs",
+            "enum": [
+              "OASIS30ANTs",
+              "NKI"
+            ],
+            "type": "string"
+          },
+          "stop-on-first-crash": {
+            "default": false,
+            "type": "boolean"
+          },
+          "task-id": {
+            "default": "",
+            "type": "string"
+          },
+          "use-aroma": {
+            "default": false,
+            "type": "boolean"
+          },
+          "use-syn-sdc": {
+            "default": false,
+            "type": "boolean"
+          },
+          "verbose": {
+            "default": "",
+            "enum": [
+              "",
+              "v",
+              "vv",
+              "vvv"
+            ],
+            "type": "string"
+          },
+          "write-graph": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "anat-only",
+          "aroma-melodic-dimensionality",
+          "boilerplate_only",
+          "bold2t1w-dof",
+          "bold2t1w-init",
+          "cifti-output",
+          "debug",
+          "dvars-spike-threshold",
+          "echo-idx",
+          "error-on-aroma-warnings",
+          "fd-spike-threshold",
+          "fmap-bspline",
+          "fmap-no-demean",
+          "force-bbr",
+          "force-no-bbr",
+          "force-syn",
+          "fs-no-reconall",
+          "gear-FREESURFER_LICENSE",
+          "gear-dry-run",
+          "gear-intermediate-files",
+          "gear-intermediate-folders",
+          "gear-keep-fsaverage",
+          "gear-log-level",
+          "gear-log-to-file",
+          "gear-run-bids-validation",
+          "gear-save-intermediate-output",
+          "gear-save-output-as-subfolders",
+          "gear-writable-dir",
+          "ignore",
+          "longitudinal",
+          "lsf-cpu",
+          "lsf-ram",
+          "md-only-boilerplate",
+          "medial-surface-nan",
+          "mem_mb",
+          "n_cpus",
+          "no-submm-recon",
+          "notrack",
+          "omp-nthreads",
+          "output-spaces",
+          "reports-only",
+          "resource-monitor",
+          "return-all-components",
+          "singularity-debug",
+          "skip-bids-validation",
+          "skull-strip-fixed-seed",
+          "skull-strip-t1w",
+          "skull-strip-template",
+          "stop-on-first-crash",
+          "task-id",
+          "use-aroma",
+          "use-syn-sdc",
+          "verbose",
+          "write-graph"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "bids-filter-file": {
+            "type": "object",
+            "properties": {}
+          },
+          "bidsignore": {
+            "type": "object",
+            "properties": {}
+          },
+          "freesurfer_license": {
+            "type": "object",
+            "properties": {}
+          },
+          "fs-subjects-dir": {
+            "type": "object",
+            "properties": {}
+          },
+          "key": {
+            "type": "object"
+          },
+          "previous-results": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
