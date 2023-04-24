@@ -1,0 +1,215 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "atlas": {
+      "default": "mindboggle",
+      "description": "Atlas to register to the fixed image",
+      "type": "string",
+      "enum": [
+        "mindboggle"
+      ]
+    },
+    "dimension": {
+      "type": "number",
+      "default": 3,
+      "description": "Image dimension",
+      "enum": [
+        2,
+        3
+      ]
+    },
+    "metric": {
+      "type": "string",
+      "description": "(JSON string) List of items which are CC or MeanSquares or Demons or GC or MI or Mattes)  The metric(s) to use for each stage. Enclose a list of the previous values in square brackets, to use multiple metrics for a single stage i.e. `[\"MI\",\"CC\",[\"MI,\"CC\"]`",
+      "default": "[\"MI\",\"MI\",\"CC\"]"
+    },
+    "metric_weight": {
+      "type": "string",
+      "description": "(JSON string) The metric weight(s) for each stage (float, weights must sum to 1 per stage).  Shape must match the config value `metric`",
+      "default": "[1,1,1]"
+    },
+    "radius_or_number_of_bins": {
+      "type": "string",
+      "description": "(JSON string) The number of bins in each stage for the MI and Mattes metric, the radius for other metrics (integer). Shape must match the config value `metric`",
+      "default": "[32,32,32]"
+    },
+    "sampling_strategy": {
+      "type": "string",
+      "description": "(JSON string) The metric sample strategy for each stage (one of '', 'Regular', or 'Random').  Shape must match the config value `metric`",
+      "default": "[\"Regular\",\"Regular\",\"Regular\"]"
+    },
+    "sampling_percentage": {
+      "type": "string",
+      "description": "(JSON string) The metric sampling percentage(s) to use for each stage (float, 0 <= val <= 1). Shape must match the config value `metric`",
+      "default": "[0.25,0.25,0.25]"
+    },
+    "use_estimate_learning_rate_once": {
+      "type": "string",
+      "description": "(JSON string) Estimate the learning rate step size only at the beginning of each level (boolean).  Must match number of stages.",
+      "default": "[false,false,false]"
+    },
+    "use_histogram_matching": {
+      "type": "string",
+      "description": "(JSON string) Histogram match the images before registration (boolean).  Must match number of stages.",
+      "default": "[false,false,false]"
+    },
+    "interpolation": {
+      "type": "string",
+      "description": "(JSON string) One of Linear, NearestNeighbor, CosineWindowedSinc, WelchWindowedSinc. HammingWindowedSinc, LanczosWindowedSinc, BSpline, MultiLabel, Gaussian",
+      "default": "Linear"
+    },
+    "interpolation_parameters": {
+      "type": "string",
+      "description": "(JSON string) Parameters for interpolation method. (json string)",
+      "optional": true
+    },
+    "transforms": {
+      "type": "string",
+      "description": "(JSON string) A list of items which are one of Rigid, Affine, CompositeAffine, Similarity, Translation, BSpline, GaussianDisplacementField, TimeVaryingVelocityField, TimeVaryingBSplineVelocityField, SyN, BSplineSyN, Exponential, or BSplineExponential.  Must be the same size as number of Stages.",
+      "default": "[\"Rigid\",\"Affine\",\"SyN\"]"
+    },
+    "transform_parameters": {
+      "type": "string",
+      "description": "(JSON string) Parameters for transform at each stage.  Must be same size as number of stages.",
+      "default": "[0.1,0.1,[0.1,3.0,0.0]]"
+    },
+    "restrict_deformation": {
+      "description": "A list of lists, one for each stage.  At each stage items are 0.0 <= a floating point number <= 1.0. This option allows the user to restrict the optimization of the displacement field, translation, rigid or affine transform on a per-component basis. For example, if one wants to limit the deformation or rotation of 3-D volume to the first two dimensions, this is possible by specifying a weight vector of 1,1,0 for a deformation field or 1,1,0,1,1,0 for a rigid transformation. Low-dimensional restriction only works if there are no preceding transformations.",
+      "optional": true,
+      "type": "string"
+    },
+    "number_of_iterations": {
+      "type": "string",
+      "description": "(JSON string) List of lists of integers for each stage, corresponds to MxNxO in the antsRegistration documentation: Convergence is determined from the number of iterations per level and is determined by  fitting a line to the normalized energy profile of the last N iterations (where N is specified by the window size) and determining the slope which is then compared with the convergence threshold.",
+      "default": "[[1000,500,250,100],[1000,500,250,100],[100,100,70,50,20]]"
+    },
+    "smoothing_sigmas": {
+      "type": "string",
+      "description": "(JSON string) List of lists of floats for each stage.  Specify the sigma of gaussian smoothing at each level.",
+      "default": "[[4,3,2,1],[4,3,2,1],[5,3,2,1,0]]"
+    },
+    "sigma_units": {
+      "type": "string",
+      "description": "Corresponding units of the smoothing sigmas, either mm or vox",
+      "default": "[\"vox\",\"vox\",\"vox\"]"
+    },
+    "shrink_factors": {
+      "type": "string",
+      "description": "(JSON string) List of list of integers for each stage. Specify  the  shrink  factor  for the virtual domain (typically the fixed image) at each level.",
+      "default": "[[12,8,4,2],[12,8,4,2],[10,6,4,2,1]]"
+    },
+    "convergence_threshold": {
+      "type": "string",
+      "description": "(JSON string) List of string valued convergence thresholds, one for each stage.",
+      "default": "[\"1e-6\",\"1e-6\",\"1e-6\"]"
+    },
+    "convergence_window_size": {
+      "type": "string",
+      "description": "(JSON string) List of integer window sizes, one for each stage.",
+      "default": "[10,10,10]"
+    },
+    "collapse_output_transforms": {
+      "type": "boolean",
+      "description": "Collapse output transforms. Specifically, enabling this option combines all adjacent linear transforms and composes all adjacent displacement field transforms before writing the results to disk.",
+      "default": true
+    },
+    "initialize_transforms_per_stage": {
+      "type": "boolean",
+      "description": "Initialize linear transforms from the previous stage. By enabling this option, the current linear stage transform is directly intialized from the previous stages linear transform; this allows multiple linear stages to be run where each stage directly updates the estimated linear transform from the previous stage. (e.g. Translation -> Rigid -> Affine)",
+      "default": false
+    },
+    "float": {
+      "type": "boolean",
+      "description": "Use float instead of double for computations.",
+      "default": false
+    },
+    "output_transform_prefix": {
+      "type": "string",
+      "description": "Output transform prefix, only if output_warped_image is True",
+      "default": "transform"
+    },
+    "output_warped_image": {
+      "type": "boolean",
+      "description": "Output warped moving image to the fixed space and",
+      "default": true
+    },
+    "output_inverse_warped_image": {
+      "type": "boolean",
+      "description": "Output warped fixed image to the fixed space and",
+      "default": true
+    },
+    "winsorize_upper_quantile": {
+      "description": "Winsorize data based on specified upper quantile",
+      "type": "number",
+      "default": 0.995
+    },
+    "winsorize_lower_quantile": {
+      "description": "Winsorize data based on specified lower quantile",
+      "type": "number",
+      "default": 0.005
+    },
+    "num_threads": {
+      "description": "Number of ITK threads to use.",
+      "type": "integer",
+      "default": 1
+    },
+    "args": {
+      "description": "Additional arguments",
+      "type": "string",
+      "optional": true
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "suite": "ANTs"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/ants-atlas-registration:0.1.1"
+    }
+  },
+  "description": "This performs the registration of predefined atlases to a target image (fixed image) using the antsRegistration algorithm from the ANTs package. The base template from the atlas dataset will be registered to the fixed image provided by the user and the computed warping will be applied to transform all atlas derivative images (e.g. masks, priors) into the fixed image space.",
+  "environment": {
+    "PATH": "/opt/ants/bin/:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.8.11",
+    "ANTSPATH": "/opt/ants/bin/",
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "inputs": {
+    "fixed_image": {
+      "base": "file",
+      "description": "Reference NIfTI image that will serve as the target for the registration (fixed image).",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "fixed_image_mask": {
+      "base": "file",
+      "description": "Mask for the fixed image.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  },
+  "label": "ANTs Atlas Registration",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "ants-atlas-registration",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/ants-atlas-registration",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/ants-atlas-registration",
+  "version": "0.1.1"
+}
