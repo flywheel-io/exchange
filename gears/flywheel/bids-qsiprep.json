@@ -3,295 +3,149 @@
   "cite": "https://qsiprep.readthedocs.io/en/latest/citing.html",
   "command": "python /flywheel/v0/run.py",
   "config": {
-    "debug": {
-      "default": false,
-      "description": "Log debug messages",
-      "type": "boolean"
-    },
-    "bids_app_args": {
-      "description": "[arg1 [arg2 ...]]",
-      "default": "",
-      "type": "string"
-    },
-    "interactive-reports-only": {
-      "description": "create interactive report json files on already preprocessed data.",
-      "type": "boolean",
-      "optional": true
-    },
     "acquisition_type": {
       "description": "select a specific acquisition type to be processed.",
-      "type": "string",
-      "optional": true
+      "optional": true,
+      "type": "string"
     },
     "anat-only": {
       "description": "run anatomical workflows only.",
-      "type": "boolean",
-      "optional": true
-    },
-    "dwi-only": {
-      "description": "ignore anatomical (T1w/T2w) data and process DWIs only.",
-      "type": "boolean",
-      "optional": true
-    },
-    "infant": {
-      "description": "configure pipelines to process infant brains.",
-      "type": "boolean",
-      "optional": true
-    },
-    "boilerplate": {
-      "description": "generate boilerplate only.",
-      "type": "boolean",
-      "optional": true
-    },
-    "longitudinal": {
-      "description": "treat dataset as longitudinal - may increase runtime.",
-      "type": "boolean",
-      "optional": true
-    },
-    "b0-threshold": {
-      "description": "any value in the .bval file less than this will be considered a b=0 image.\nCurrent default threshold = 100; this threshold can be lowered or increased.\nNote, setting this too high can result in inaccurate results.",
-      "type": "number",
-      "optional": true
-    },
-    "dwi_denoise_window": {
-      "description": "window size in voxels for dwidenoise. Must be odd (default: 5). If 0, dwidwenoise will not be run.",
-      "type": "integer",
-      "optional": true
-    },
-    "denoise-method": {
-      "description": "Image-based denoising method.\nEither 'dwidenoise' (MRtrix), 'patch2self' (DIPY) or none.",
-      "type": "string",
-      "enum": [
-        "",
-        "dwidenoise",
-        "patch2self"
-      ],
-      "optional": true
-    },
-    "unringing-method": {
-      "description": "mrdegibbs: use mrdegibbs from mrtrix3",
-      "type": "string",
-      "enum": [
-        "",
-        "mrdegibbs"
-      ],
-      "optional": true
-    },
-    "dwi-no-biascorr": {
-      "description": "skip b0-based dwi spatial bias correction.",
-      "type": "boolean",
-      "optional": true
-    },
-    "no-b0-harmonization": {
-      "description": "skip re-scaling dwi scans to have matching b=0 intensities.",
-      "type": "boolean",
-      "optional": true
-    },
-    "denoise-after-combining": {
-      "description": "run dwidenoise after combining dwis. Cannot be used with --separate-all-dwis.",
-      "type": "boolean",
-      "optional": true
-    },
-    "separate-all-dwis": {
-      "description": "don't attempt to combine dwis from multiple runs. Each will be processed separately.",
-      "type": "boolean",
-      "optional": true
-    },
-    "distortion-group-merge": {
-      "description": "Possible choices: concat, average, none\n  concatenate: append images in the 4th dimension\n  average: if a whole sequence was duplicated in both PE directions, average the corrected images of the same q-space coordinate\n  none: Default. Keep distorted groups separate",
-      "type": "string",
-      "enum": [
-        "",
-        "concatenate",
-        "average"
-      ],
-      "optional": true
-    },
-    "write-local-bvecs": {
-      "description": "write a series of voxelwise bvecs, relevant if writing preprocessed dwis to template space.",
-      "type": "boolean",
-      "optional": true
-    },
-    "output-space": {
-      "description": "Volume and surface spaces to resample dwis into\n  T1w: subject anatomical volume\n  template: deprecated. Will be ignored",
-      "type": "string",
-      "enum": [
-        "",
-        "T1w",
-        "template"
-      ],
-      "optional": true
-    },
-    "template": {
-      "description": "volume template space (default: MNI152NLin2009cAsym)",
-      "type": "string",
-      "enum": [
-        "",
-        "MNI152NLin2009cAsym"
-      ],
-      "optional": true
-    },
-    "output-resolution": {
-      "description": "the isotropic voxel size in mm the data will be resampled to after preprocessing.\nIf set to a lower value than the original voxel size, your data will be upsampled using BSpline interpolation.",
-      "type": "number",
-      "default": 1
-    },
-    "b0-to-t1w-transform": {
-      "description": "Degrees of freedom when registering b0 to T1w images. 6 degrees (rotation and translation) are used by default.",
-      "type": "string",
-      "enum": [
-        "",
-        "Rigid",
-        "Affine"
-      ],
-      "optional": true
-    },
-    "intramodal-template-iters": {
-      "description": "Number of iterations for finding the midpoint image from the b0 templates from all groups.\nHas no effect if there is only one group.\nIf 0, all b0 templates are directly registered to the t1w image.",
-      "type": "integer",
-      "optional": true
-    },
-    "intramodal-template-transform": {
-      "description": "Transformation used for building the intramodal template.",
-      "type": "string",
-      "enum": [
-        "",
-        "Rigid",
-        "Affine",
-        "BSplineSyN",
-        "SyN"
-      ],
-      "optional": true
+      "optional": true,
+      "type": "boolean"
     },
     "b0-motion-corr-to": {
       "description": "align to the 'first' b0 volume or do an 'iterative' registration of all b0 images\nto their midpoint image (default: iterative)",
-      "type": "string",
       "enum": [
         "",
         "iterative",
         "first"
       ],
-      "optional": true
+      "optional": true,
+      "type": "string"
     },
-    "hmc-transform": {
-      "description": "transformation to be optimized during head motion correction (default: affine)",
-      "type": "string",
+    "b0-threshold": {
+      "description": "any value in the .bval file less than this will be considered a b=0 image.\nCurrent default threshold = 100; this threshold can be lowered or increased.\nNote, setting this too high can result in inaccurate results.",
+      "optional": true,
+      "type": "number"
+    },
+    "b0-to-t1w-transform": {
+      "description": "Degrees of freedom when registering b0 to T1w images. 6 degrees (rotation and translation) are used by default.",
       "enum": [
         "",
-        "Affine",
-        "Rigid"
+        "Rigid",
+        "Affine"
       ],
-      "optional": true
+      "optional": true,
+      "type": "string"
     },
-    "hmc_model": {
-      "description": "model used to generate target images for hmc. If 'none' the non-b0 images will be warped using the same transform as their nearest b0 image. If '3dSHORE', SHORELine will be used. If 'eddy_ingress', the dwis are assumed to have been run through fsls eddy.",
-      "type": "string",
+    "bids_app_args": {
+      "default": "",
+      "description": "[arg1 [arg2 ...]]",
+      "type": "string"
+    },
+    "boilerplate": {
+      "description": "generate boilerplate only.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "denoise-after-combining": {
+      "description": "run dwidenoise after combining dwis. Cannot be used with --separate-all-dwis.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "denoise-method": {
+      "description": "Image-based denoising method.\nEither 'dwidenoise' (MRtrix), 'patch2self' (DIPY) or none.",
       "enum": [
         "",
-        "3dSHORE",
-        "eddy"
+        "dwidenoise",
+        "patch2self"
       ],
-      "optional": true
+      "optional": true,
+      "type": "string"
     },
-    "shoreline_iters": {
-      "description": "number of SHORELine iterations. (default: 2)",
-      "type": "integer",
-      "optional": true
+    "denoised_image_sdc": {
+      "description": "use denoised b=0 images if available instead of raw (from BIDS) images in SDC.",
+      "optional": true,
+      "type": "boolean"
     },
-    "impute-slice-threshold": {
-      "description": "impute data in slices that are this many SDs from expected. If 0 (default), no slices will be imputed",
-      "type": "number",
-      "optional": true
-    },
-    "skull-strip-template": {
-      "description": "select ANTs skull-stripping template (default: OASIS)",
-      "type": "string",
+    "distortion-group-merge": {
+      "description": "Possible choices: concat, average, none\n  concatenate: append images in the 4th dimension\n  average: if a whole sequence was duplicated in both PE directions, average the corrected images of the same q-space coordinate\n  none: Default. Keep distorted groups separate",
       "enum": [
         "",
-        "OASIS",
-        "NKI"
+        "concatenate",
+        "average"
       ],
-      "optional": true
-    },
-    "skull-strip-fixed-seed": {
-      "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with -omp-nthreads 1",
-      "type": "boolean",
-      "optional": true
-    },
-    "skip-t1-based-spatial-normalization": {
-      "description": "skip running the t1w-based normalization to template space. Default is to run the normalization.",
-      "type": "boolean",
-      "optional": true
+      "optional": true,
+      "type": "string"
     },
     "do-reconall": {
       "description": "Run the FreeSurfer recon-all pipeline",
-      "type": "boolean",
-      "optional": true
+      "optional": true,
+      "type": "boolean"
     },
-    "prefer_dedicated_fmaps": {
-      "description": "forces unwarping to use files from the fmap directory instead of using an RPEdir scan from the same session.",
-      "type": "boolean",
-      "optional": true
+    "dwi-no-biascorr": {
+      "description": "skip b0-based dwi spatial bias correction.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "dwi-only": {
+      "description": "ignore anatomical (T1w/T2w) data and process DWIs only.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "dwi_denoise_window": {
+      "description": "window size in voxels for dwidenoise. Must be odd (default: 5). If 0, dwidwenoise will not be run.",
+      "optional": true,
+      "type": "integer"
     },
     "fmap-bspline": {
       "description": "fit a B-Spline field using least-squares (experimental)",
-      "type": "boolean",
-      "optional": true
+      "optional": true,
+      "type": "boolean"
     },
     "fmap-no-demean": {
       "description": "do not remove median (within mask) from fieldmap (default: True)",
-      "type": "boolean",
-      "optional": true
-    },
-    "use-syn-sdc": {
-      "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. To use this option, 'template' must be passed to -output-space",
-      "type": "boolean",
-      "optional": true
+      "optional": true,
+      "type": "boolean"
     },
     "force-syn": {
       "description": "EXPERIMENTAL/TEMPORARY: Use SyN correction in addition to fieldmap correction, if available",
-      "type": "boolean",
-      "optional": true
-    },
-    "reports-only": {
-      "description": "only generate reports, don't run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.",
-      "type": "boolean",
-      "optional": true
-    },
-    "verbose": {
-      "default": "v",
-      "description": "increases log verbosity for each occurrence, debug level is -vvv",
-      "enum": [
-        "",
-        "v",
-        "vv",
-        "vvv"
-      ],
-      "type": "string"
-    },
-    "n_cpus": {
-      "description": "Number of CPUs/cores to use. Leave blank or set to 0 to use the maximum available in the system.",
       "optional": true,
-      "type": "integer"
-    },
-    "mem_mb": {
-      "description": "Maximum memory to use (MB). Leave blank or set to 0 to use the maximum available in the system.",
-      "optional": true,
-      "type": "integer"
-    },
-    "write-graph": {
-      "default": false,
-      "description": "Write workflow graph",
       "type": "boolean"
     },
-    "ignore": {
-      "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)  Possible choices: fieldmaps, slicetiming, sbref",
-      "default": "",
+    "freesurfer_license_key": {
+      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
+      "optional": true,
       "type": "string"
+    },
+    "gear-dry-run": {
+      "default": false,
+      "description": "Do everything except actually executing qsiprep",
+      "type": "boolean"
     },
     "gear-ignore-bids-errors": {
       "default": false,
       "description": "By default, the gear will not run if there are any BIDS errors detected.  Set this to run even if BIDS errors are detected",
+      "type": "boolean"
+    },
+    "gear-intermediate-files": {
+      "default": "",
+      "description": "Space separated list of FILES to retain from the intermediate work directory.",
+      "type": "string"
+    },
+    "gear-intermediate-folders": {
+      "default": "",
+      "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
+      "type": "string"
+    },
+    "gear-keep-output": {
+      "default": false,
+      "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
       "type": "boolean"
     },
     "gear-run-bids-validation": {
@@ -304,30 +158,191 @@
       "description": "Gear will save ALL intermediate output into qsiprep_work.zip",
       "type": "boolean"
     },
-    "gear-intermediate-files": {
-      "description": "Space separated list of FILES to retain from the intermediate work directory.",
-      "default": "",
+    "hmc-transform": {
+      "description": "transformation to be optimized during head motion correction (default: affine)",
+      "enum": [
+        "",
+        "Affine",
+        "Rigid"
+      ],
+      "optional": true,
       "type": "string"
     },
-    "gear-intermediate-folders": {
-      "description": "Space separated list of FOLDERS to retain from the intermediate work directory.",
-      "default": "",
+    "hmc_model": {
+      "description": "model used to generate target images for hmc. If 'none' the non-b0 images will be warped using the same transform as their nearest b0 image. If '3dSHORE', SHORELine will be used. If 'eddy_ingress', the dwis are assumed to have been run through fsls eddy.",
+      "enum": [
+        "",
+        "3dSHORE",
+        "eddy"
+      ],
+      "optional": true,
       "type": "string"
     },
-    "gear-dry-run": {
-      "default": false,
-      "description": "Do everything except actually executing qsiprep",
+    "ignore": {
+      "default": "",
+      "description": "Ignore selected aspects of the input dataset to disable corresponding parts of the workflow (a space delimited list)  Possible choices: fieldmaps, slicetiming, sbref",
+      "type": "string"
+    },
+    "impute-slice-threshold": {
+      "description": "impute data in slices that are this many SDs from expected. If 0 (default), no slices will be imputed",
+      "optional": true,
+      "type": "number"
+    },
+    "infant": {
+      "description": "configure pipelines to process infant brains.",
+      "optional": true,
       "type": "boolean"
     },
-    "gear-keep-output": {
-      "default": false,
-      "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
+    "interactive-reports-only": {
+      "description": "create interactive report json files on already preprocessed data.",
+      "optional": true,
       "type": "boolean"
     },
-    "freesurfer_license_key": {
-      "description": "Text from license file generated during FreeSurfer registration. *Entries should be space separated*",
-      "type": "string",
-      "optional": true
+    "intramodal-template-iters": {
+      "description": "Number of iterations for finding the midpoint image from the b0 templates from all groups.\nHas no effect if there is only one group.\nIf 0, all b0 templates are directly registered to the t1w image.",
+      "optional": true,
+      "type": "integer"
+    },
+    "intramodal-template-transform": {
+      "description": "Transformation used for building the intramodal template.",
+      "enum": [
+        "",
+        "Rigid",
+        "Affine",
+        "BSplineSyN",
+        "SyN"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "longitudinal": {
+      "description": "treat dataset as longitudinal - may increase runtime.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "mem_mb": {
+      "description": "Maximum memory to use (MB). Leave blank or set to 0 to use the maximum available in the system.",
+      "optional": true,
+      "type": "integer"
+    },
+    "n_cpus": {
+      "description": "Number of CPUs/cores to use. Leave blank or set to 0 to use the maximum available in the system.",
+      "optional": true,
+      "type": "integer"
+    },
+    "no-b0-harmonization": {
+      "description": "skip re-scaling dwi scans to have matching b=0 intensities.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "output-resolution": {
+      "default": 1,
+      "description": "the isotropic voxel size in mm the data will be resampled to after preprocessing.\nIf set to a lower value than the original voxel size, your data will be upsampled using BSpline interpolation.",
+      "type": "number"
+    },
+    "output-space": {
+      "description": "Volume and surface spaces to resample dwis into\n  T1w: subject anatomical volume\n  template: deprecated. Will be ignored",
+      "enum": [
+        "",
+        "T1w",
+        "template"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "pepolar_method": {
+      "description": "select which SDC method to use for PEPOLAR fieldmaps",
+      "enum": [
+        "",
+        "TOPUP",
+        "DRBUDDI"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "prefer_dedicated_fmaps": {
+      "description": "forces unwarping to use files from the fmap directory instead of using an RPEdir scan from the same session.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "reports-only": {
+      "description": "only generate reports, don't run workflows. This will only rerun report aggregation, not reportlet generation for specific nodes.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "separate-all-dwis": {
+      "description": "don't attempt to combine dwis from multiple runs. Each will be processed separately.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "shoreline_iters": {
+      "description": "number of SHORELine iterations. (default: 2)",
+      "optional": true,
+      "type": "integer"
+    },
+    "skip-t1-based-spatial-normalization": {
+      "description": "skip running the t1w-based normalization to template space. Default is to run the normalization.",
+      "optional": true,
+      "type": "boolean"
+    },
+    "skull-strip-fixed-seed": {
+      "description": "do not use a random seed for skull-stripping - will ensure run-to-run replicability when used with -omp-nthreads 1",
+      "optional": true,
+      "type": "boolean"
+    },
+    "skull-strip-template": {
+      "description": "select ANTs skull-stripping template (default: OASIS)",
+      "enum": [
+        "",
+        "OASIS",
+        "NKI"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "template": {
+      "description": "volume template space (default: MNI152NLin2009cAsym)",
+      "enum": [
+        "",
+        "MNI152NLin2009cAsym"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "unringing-method": {
+      "description": "mrdegibbs: use mrdegibbs from mrtrix3",
+      "enum": [
+        "",
+        "mrdegibbs"
+      ],
+      "optional": true,
+      "type": "string"
+    },
+    "use-syn-sdc": {
+      "description": "EXPERIMENTAL: Use fieldmap-free distortion correction. To use this option, 'template' must be passed to -output-space",
+      "optional": true,
+      "type": "boolean"
+    },
+    "verbose": {
+      "default": "v",
+      "description": "increases log verbosity for each occurrence, debug level is -vvv",
+      "enum": [
+        "",
+        "v",
+        "vv",
+        "vvv"
+      ],
+      "type": "string"
+    },
+    "write-graph": {
+      "default": false,
+      "description": "Write workflow graph",
+      "type": "boolean"
+    },
+    "write-local-bvecs": {
+      "description": "write a series of voxelwise bvecs, relevant if writing preprocessed dwis to template space.",
+      "optional": true,
+      "type": "boolean"
     }
   },
   "custom": {
@@ -343,14 +358,9 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-qsiprep:1.0.3_0.15.4"
+      "image": "flywheel/bids-qsiprep:1.0.4_0.16.1"
     },
     "license": {
-      "non-commercial-use-only": false,
-      "main": {
-        "name": "BSD-3-Clause",
-        "url": "https://github.com/PennLINC/qsiprep/blob/0.15.4/LICENSE"
-      },
       "dependencies": [
         {
           "name": "Other",
@@ -372,40 +382,55 @@
           "name": "MPL-2.0",
           "url": "https://github.com/MRtrix3/mrtrix3/blob/master/LICENCE.txt"
         }
-      ]
+      ],
+      "main": {
+        "name": "BSD-3-Clause",
+        "url": "https://github.com/PennLINC/qsiprep/blob/0.16.1/LICENSE"
+      },
+      "non-commercial-use-only": false
     }
   },
-  "description": "BIDS qsiprep 1.0.*_0.15.4 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+  "description": "BIDS qsiprep 1.0.*_0.16.1 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes",
   "environment": {
     "AFNI_IMSAVE_WARNINGS": "NO",
     "AFNI_INSTALLDIR": "/opt/afni-latest",
-    "ANTS_DEPS": "zlib1g-dev",
     "ANTSPATH": "/opt/ants/bin",
+    "ANTS_DEPS": "zlib1g-dev",
     "ARTHOME": "/opt/art",
     "C3DPATH": "/opt/convert3d-nightly",
     "CRN_SHARED_DATA": "/niworkflows_data",
     "CUDA_VERSION": "10.2.89",
     "DIPY_HOME": "/home/qsiprep/.dipy",
     "DSI_STUDIO_DEPS": "qt512base qt512charts-no-lgpl",
+    "FLYWHEEL": "/flywheel/v0",
     "FREESURFER_DEPS": "bc ca-certificates curl libgomp1 libxmu6 libxt6 tcsh perl",
     "FREESURFER_HOME": "/opt/freesurfer",
-    "FS_OVERRIDE": "0",
+    "FSF_OUTPUT_FORMAT": "nii.gz",
+    "FSLDIR": "/opt/fsl-6.0.5.1",
+    "FSLGECUDAQ": "cuda.q",
+    "FSLMULTIFILEQUIT": "TRUE",
+    "FSLOUTPUTTYPE": "NIFTI_GZ",
     "FSL_DEPS": "libquadmath0",
     "FSL_DIR": "/opt/fsl-6.0.5.1",
-    "FSF_OUTPUT_FORMAT": "nii.gz",
-    "FSLGECUDAQ": "cuda.q",
-    "FSLOUTPUTTYPE": "NIFTI_GZ",
+    "FS_OVERRIDE": "0",
     "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
+    "IS_DOCKER_8395080871": "1",
+    "KMP_WARNINGS": "0",
     "LD_LIBRARY_PATH": "/opt/qt512/lib/x86_64-linux-gnu:/opt/qt512/lib:/opt/qt512/lib/x86_64-linux-gnu:/opt/qt512/lib:/opt/ants/lib:/opt/fsl-6.0.5.1/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
     "LOCAL_DIR": "/opt/freesurfer/local",
     "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
     "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+    "MKL_NUM_THREADS": "1",
     "MNI_DATAPATH": "/opt/freesurfer/mni/data",
     "MNI_DIR": "/opt/freesurfer/mni",
     "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
     "MRTRIX3_DEPS": "bzip2 ca-certificates curl libpng16-16 libblas3 liblapack3",
+    "MRTRIX_NTHREADS": "1",
     "NCCL_VERSION": "2.11.4",
     "NVARCH": "x86_64",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+    "NVIDIA_REQUIRE_CUDA": "cuda>=10.2 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441",
+    "NVIDIA_VISIBLE_DEVICES": "all",
     "NV_CUDA_CUDART_VERSION": "10.2.89-1",
     "NV_CUDA_LIB_VERSION": "10.2.89-1",
     "NV_LIBCUBLAS_PACKAGE": "libcublas10=10.2.2.89-1",
@@ -419,62 +444,52 @@
     "NV_ML_REPO_ENABLED": "1",
     "NV_ML_REPO_URL": "https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64",
     "NV_NVTX_VERSION": "10.2.89-1",
-    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
-    "NVIDIA_REQUIRE_CUDA": "cuda>=10.2 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441",
-    "NVIDIA_VISIBLE_DEVICES": "all",
+    "OMP_NUM_THREADS": "1",
     "OS": "Linux",
     "PATH": "/opt/poetry/bin:/opt/qt512/bin:/opt/art/bin:/opt/convert3d-nightly/bin:/usr/local/miniconda/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/opt/qt512/bin:/opt/fsl-6.0.5.1/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ants/bin:/opt/dsi-studio/dsi_studio_64:/opt/mrtrix3-latest/bin:/opt/3Tissue/bin:/opt/afni-latest",
     "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
     "PKG_CONFIG_PATH": "/opt/qt512/lib/pkgconfig:/opt/qt512/lib/pkgconfig:",
-    "PYTHONUNBUFFERED": "1",
-    "QSIRECON_ATLAS": "/atlas/qsirecon_atlases",
-    "QT_BASE_DIR": "/opt/qt512",
-    "QTDIR": "/opt/qt512",
-    "SHLVL": "1",
-    "SUBJECTS_DIR": "/opt/freesurfer/subjects",
-    "FSLDIR": "/opt/fsl-6.0.5.1",
-    "FSLMULTIFILEQUIT": "TRUE",
-    "MKL_NUM_THREADS": "1",
-    "OMP_NUM_THREADS": "1",
-    "MRTRIX_NTHREADS": "1",
-    "KMP_WARNINGS": "0",
-    "IS_DOCKER_8395080871": "1",
-    "FLYWHEEL": "/flywheel/v0",
     "POETRY_HOME": "/opt/poetry",
     "POETRY_VERSION": "1.1.13",
-    "POETRY_VIRTUALENVS_CREATE": "false"
+    "POETRY_VIRTUALENVS_CREATE": "false",
+    "PYTHONUNBUFFERED": "1",
+    "QSIRECON_ATLAS": "/atlas/qsirecon_atlases",
+    "QTDIR": "/opt/qt512",
+    "QT_BASE_DIR": "/opt/qt512",
+    "SHLVL": "1",
+    "SUBJECTS_DIR": "/opt/freesurfer/subjects"
   },
   "inputs": {
-    "bidsignore": {
-      "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
-      "base": "file",
-      "optional": true
-    },
-    "eddy-config": {
-      "description": "path to a json file with settings for the call to eddy. If no json is specified, a default one will be used. The current default json can be found here: https://github.com/PennBBL/qsiprep/blob/master/qsiprep/data/eddy_params.json",
-      "base": "file",
-      "optional": true
-    },
-    "freesurfer_license_file": {
-      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
-      "base": "file",
-      "optional": true
-    },
     "api-key": {
       "base": "api-key",
       "read-only": true
     },
-    "recon-spec": {
-      "description": "json file specifying a reconstruction pipeline to be run after preprocessing.",
+    "bidsignore": {
       "base": "file",
+      "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+      "optional": true
+    },
+    "eddy-config": {
+      "base": "file",
+      "description": "path to a json file with settings for the call to eddy. If no json is specified, a default one will be used. The current default json can be found here: https://github.com/PennBBL/qsiprep/blob/master/qsiprep/data/eddy_params.json",
+      "optional": true
+    },
+    "freesurfer_license_file": {
+      "base": "file",
+      "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
+      "optional": true
+    },
+    "recon-spec": {
+      "base": "file",
+      "description": "json file specifying a reconstruction pipeline to be run after preprocessing.",
       "optional": true
     }
   },
   "label": "BIDS QSIPrep",
-  "license": "Other",
+  "license": "MIT",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "bids-qsiprep",
   "source": "https://qsiprep.readthedocs.io/en/latest/",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-qsiprep",
-  "version": "1.0.3_0.15.4"
+  "version": "1.0.4_0.16.1"
 }
