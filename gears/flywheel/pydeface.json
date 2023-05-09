@@ -1,0 +1,156 @@
+{
+  "author": "Flywheel",
+  "cite": "PyDeface doi: 10.5281/zenodo.6856482",
+  "command": "python run.py",
+  "config": {
+    "cost": {
+      "type": "string",
+      "default": "mutualinfo",
+      "description": "FSL-FLIRT cost function",
+      "enum": [
+        "mutualinfo",
+        "corratio",
+        "normcorr",
+        "normmi",
+        "leastsq",
+        "labeldiff",
+        "bbr"
+      ]
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "nocleanup": {
+      "type": "boolean",
+      "description": "Do not cleanup temporary files. Off by default.",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Show additional status prints. Off by default.",
+      "default": false
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/pydeface:0.1.0_2.0.2"
+    },
+    "license": {
+      "main": {
+        "name": "MIT",
+        "url": "https://github.com/poldracklab/pydeface/blob/v2.0.2/LICENSE.txt"
+      }
+    }
+  },
+  "description": "Flywheel gear for the implementation of Poldrack Lab's PyDeface to remove facial structures from MRI images.",
+  "environment": {
+    "CONDA_SHLVL": "1",
+    "LC_ALL": "C.UTF-8",
+    "CONDA_EXE": "/opt/conda/bin/conda",
+    "FSLWISH": "/usr/bin/wish",
+    "FSLDIR": "/usr/share/fsl/6.0",
+    "LANG": "C.UTF-8",
+    "HOSTNAME": "d8012530f084",
+    "FSLMACHINELIST": "",
+    "CONDA_PREFIX": "/opt/conda/envs/neuro",
+    "CONDA_DIR": "/opt/conda",
+    "FSLTCLSH": "/usr/bin/tclsh",
+    "FSLREMOTECALL": "",
+    "_CE_M": "",
+    "PWD": "/flywheel/v0",
+    "HOME": "/root",
+    "CONDA_PYTHON_EXE": "/opt/conda/bin/python",
+    "FSLLOCKDIR": "",
+    "_CE_CONDA": "",
+    "FLYWHEEL": "/flywheel/v0",
+    "CONDA_PROMPT_MODIFIER": "(neuro) ",
+    "FSLGECUDAQ": "cuda.q",
+    "ND_ENTRYPOINT": "/neurodocker/startup.sh",
+    "TERM": "xterm",
+    "SHLVL": "1",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/fsl/6.0/bin",
+    "CONDA_DEFAULT_ENV": "neuro",
+    "FSLOUTPUTTYPE": "NIFTI_GZ",
+    "FSLMULTIFILEQUIT": "TRUE",
+    "_": "/opt/conda/envs/neuro/bin/python",
+    "PYTHON_PIP_VERSION": "22.3.1",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py",
+    "PYTHON_VERSION": "3.11.2",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "PYTHON_GET_PIP_SHA256": "394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637",
+    "POSSUMDIR": "/usr/share/fsl/6.0",
+    "LD_LIBRARY_PATH": "/usr/share/fsl/6.0/lib:",
+    "FSLBROWSER": "/etc/alternatives/x-www-browser",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "NEURODEB_KEY": "http://neuro.debian.net/_static/neuro.debian.net.asc",
+    "FSL_DIR": "/usr/share/fsl/6.0",
+    "PYDEFACE_VERSION": "v2.0.2",
+    "PYSITE": "/usr/local/lib/python3.11/site-packages",
+    "COMMIT_SHA": "fa0da4dd",
+    "COMMIT_REF": "main",
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "BUILD_TIME": "2023-03-20T11:43:06Z",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+    "EDITOR": "micro"
+  },
+  "inputs": {
+    "infile": {
+      "base": "file",
+      "description": "input nifti",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "template": {
+      "base": "file",
+      "description": "Optional template image that will be used as the registration target instead of the default.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "facemask": {
+      "base": "file",
+      "description": "Optional face mask image that will be used instead of the default.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "applyto": {
+      "base": "file",
+      "description": "Optional, Apply the created facemask to another image.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    }
+  },
+  "label": "Pydeface",
+  "license": "Other",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "pydeface",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/pydeface",
+  "url": "https://github.com/poldracklab/pydeface",
+  "version": "0.1.0_2.0.2"
+}
