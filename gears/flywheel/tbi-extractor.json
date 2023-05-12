@@ -2,7 +2,7 @@
   "name": "tbi-extractor",
   "label": "TBI Extractor: Automated extraction of common data elements for traumatic brain injury.",
   "description": "Implementation of tbiExtractor for automated extraction of common data elements from radiology reports for traumatic brain injury.",
-  "version": "0.1.4_0.3.2",
+  "version": "0.1.5_0.3.2",
   "author": "Flywheel",
   "maintainer": "Flywheel <support@flywheel.io>",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/tbi-extractor",
@@ -12,10 +12,11 @@
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/tbi-extractor:0.1.4_0.3.2"
+      "image": "flywheel/tbi-extractor:0.1.5_0.3.2"
     },
     "flywheel": {
-      "suite": "Data Annotation"
+      "suite": "NLP",
+      "show-job": true
     }
   },
   "inputs": {
@@ -32,9 +33,34 @@
           "text"
         ]
       }
+    },
+    "terms_of_interest": {
+      "base": "file",
+      "description": "Comma-separated values to search for in the report. May be the default or user-specified file.",
+      "optional": true,
+      "type": {
+        "enum": [
+          "text"
+        ]
+      }
     }
   },
   "config": {
+    "debug": {
+      "description": "Log verbosity.",
+      "type": "boolean",
+      "default": false
+    },
+    "exclude_targets": {
+      "description": "Comma-separated list of targets to exclude from the algorithm. If the number of entries is burdensome, modify the terms_of_interest in the input tab.",
+      "type": "string",
+      "optional": true
+    },
+    "put_metadata_on_dicom": {
+      "description": "Gear outputs are available on the report's info under tbi-extractor. Optionally, add the metadata to the dicom file as well.",
+      "type": "boolean",
+      "default": false
+    },
     "save_target_phrases": {
       "description": "Save the lexical target phrases identified in the report for the resulting annotation.",
       "type": "boolean",
@@ -44,142 +70,7 @@
       "description": "Save the lexical modifier phrases identified in the report for the resulting annotation.",
       "type": "boolean",
       "default": false
-    },
-    "aneurysm": {
-      "description": "Include the lexical target: aneurysm.",
-      "type": "boolean",
-      "default": true
-    },
-    "anoxic": {
-      "description": "Include the lexical target: anoxic.",
-      "type": "boolean",
-      "default": true
-    },
-    "atrophy": {
-      "description": "Include the lexical target: atrophy.",
-      "type": "boolean",
-      "default": true
-    },
-    "cistern": {
-      "description": "Include the lexical target: cistern.",
-      "type": "boolean",
-      "default": true
-    },
-    "contusion": {
-      "description": "Include the lexical target: contusion.",
-      "type": "boolean",
-      "default": true
-    },
-    "diffuse_axonal": {
-      "description": "Include the lexical target: diffuse axonal.",
-      "type": "boolean",
-      "default": true
-    },
-    "epidural_hemorrhage": {
-      "description": "Include the lexical target: epidural hemorrhage.",
-      "type": "boolean",
-      "default": true
-    },
-    "facial_fracture": {
-      "description": "Include the lexical target: facial fracture.",
-      "type": "boolean",
-      "default": true
-    },
-    "fluid": {
-      "description": "Include the lexical target: extraaxial fluid collection.",
-      "type": "boolean",
-      "default": true
-    },
-    "gray_white_differentiation": {
-      "description": "Include the lexical target: gray-white matter differentiation.",
-      "type": "boolean",
-      "default": true
-    },
-    "hemorrhage": {
-      "description": "Include the lexical target: hemorrhage not-otherwise-specified.",
-      "type": "boolean",
-      "default": true
-    },
-    "herniation": {
-      "description": "Include the lexical target: brain herniation.",
-      "type": "boolean",
-      "default": true
-    },
-    "hydrocephalus": {
-      "description": "Include the lexical target: hydrocephalus.",
-      "type": "boolean",
-      "default": true
-    },
-    "hyperdensities": {
-      "description": "Include the lexical target: hyperdensities.",
-      "type": "boolean",
-      "default": true
-    },
-    "hypodensities": {
-      "description": "Include the lexical target: hypodensities.",
-      "type": "boolean",
-      "default": true
-    },
-    "intracranial_pathology": {
-      "description": "Include the lexical target: intracranial pathology.",
-      "type": "boolean",
-      "default": true
-    },
-    "intraparenchymal_hemorrage": {
-      "description": "Include the lexical target: intraparenchymal hemorrage.",
-      "type": "boolean",
-      "default": true
-    },
-    "intraventricular_hemorrhage": {
-      "description": "Include the lexical target: intraventricular hemorrhage.",
-      "type": "boolean",
-      "default": true
-    },
-    "ischemia": {
-      "description": "Include the lexical target: ischemia.",
-      "type": "boolean",
-      "default": true
-    },
-    "mass_effect": {
-      "description": "Include the lexical target: mass effect.",
-      "type": "boolean",
-      "default": true
-    },
-    "microhemorrhage": {
-      "description": "Include the lexical target: microhemorrhage.",
-      "type": "boolean",
-      "default": true
-    },
-    "midline_shift": {
-      "description": "Include the lexical target: midline shift.",
-      "type": "boolean",
-      "default": true
-    },
-    "pneumocephalus": {
-      "description": "Include the lexical target: pneumocephalus.",
-      "type": "boolean",
-      "default": true
-    },
-    "skull_fracture": {
-      "description": "Include the lexical target: skull fracture.",
-      "type": "boolean",
-      "default": true
-    },
-    "subarachnoid_hemorrhage": {
-      "description": "Include the lexical target: subarachnoid hemorrhage.",
-      "type": "boolean",
-      "default": true
-    },
-    "subdural_hemorrhage": {
-      "description": "Include the lexical target: subdural hemorrhage.",
-      "type": "boolean",
-      "default": true
-    },
-    "swelling": {
-      "description": "Include the lexical target: brain swelling.",
-      "type": "boolean",
-      "default": true
     }
   },
-  "command": "poetry run python run.py"
+  "command": "python run.py"
 }
