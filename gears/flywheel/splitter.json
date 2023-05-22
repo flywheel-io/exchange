@@ -2,11 +2,11 @@
   "name": "splitter",
   "label": "DICOM splitter",
   "description": "The DICOM splitter extracts embedded localizer DICOM frames and/or re-group DICOM frames in archive by specific DICOM tags provided by user.",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/splitter:1.4.3"
+      "image": "flywheel/splitter:1.5.0"
     },
     "flywheel": {
       "suite": "Curation",
@@ -63,6 +63,11 @@
       "description": "Include debug output",
       "type": "boolean",
       "default": false
+    },
+    "delete_input": {
+      "description": "Delete input on successful split. Default true.",
+      "type": "boolean",
+      "default": true
     }
   },
   "environment": {
@@ -87,7 +92,8 @@
     "JQ_VERSION": "jq-1.6",
     "PIP_NO_CACHE_DIR": "0",
     "COMMIT": "master.3a9476be",
-    "COMMIT_TIME": "2021-10-25T09:24:15+00:00"
+    "COMMIT_TIME": "2021-10-25T09:24:15+00:00",
+    "PWD": "/flywheel/v0"
   },
   "command": "python run.py",
   "author": "Flywheel",
