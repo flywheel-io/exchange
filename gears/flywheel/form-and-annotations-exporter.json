@@ -46,7 +46,7 @@
       "image": "flywheel/form-and-annotations-exporter:0.0.3"
     }
   },
-  "description": "Export Form Responses and Annotations to CSV files.",
+  "description": "Export Form Responses and/or Annotations to CSV file(s).",
   "environment": {},
   "inputs": {
     "api-key": {
