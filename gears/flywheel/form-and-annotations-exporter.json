@@ -1,0 +1,63 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "/flywheel/v0/run.py",
+  "config": {
+    "annotations-scope": {
+      "default": "task",
+      "description": "The scope of the exported annotations.",
+      "enum": [
+        "task",
+        "non-task",
+        "both",
+        "none"
+      ],
+      "type": "string"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "form-responses-scope": {
+      "default": "task",
+      "description": "The scope of the form responses.",
+      "enum": [
+        "task",
+        "non-task",
+        "both",
+        "none"
+      ],
+      "type": "string"
+    },
+    "protocol_name": {
+      "description": "The name of the protocol to export data from.",
+      "optional": false,
+      "type": "string"
+    }
+  },
+  "custom": {
+    "docker-image": "flywheel/form-and-annotations-exporter:0.0.1",
+    "flywheel": {
+      "suite": "Curation"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/form-and-annotations-exporter:0.0.1"
+    }
+  },
+  "description": "Export Form Responses and Annotations to CSV files.",
+  "environment": {},
+  "inputs": {
+    "api-key": {
+      "base": "api-key"
+    }
+  },
+  "label": "Form and Annotation Exporter",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "form-and-annotations-exporter",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+  "version": "0.0.1"
+}
