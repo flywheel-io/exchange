@@ -1,0 +1,129 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "/flywheel/v0/run.py",
+    "config": {
+      "annotations-scope": {
+        "default": "task",
+        "description": "The scope of the exported annotations.",
+        "enum": [
+          "task",
+          "non-task",
+          "both",
+          "none"
+        ],
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "form-responses-scope": {
+        "default": "task",
+        "description": "The scope of the form responses.",
+        "enum": [
+          "task",
+          "non-task",
+          "both",
+          "none"
+        ],
+        "type": "string"
+      },
+      "protocol_name": {
+        "description": "The name of the protocol to export data from.",
+        "optional": true,
+        "type": "string"
+      }
+    },
+    "custom": {
+      "docker-image": "flywheel/form-and-annotations-exporter:0.0.4",
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/form-and-annotations-exporter:0.0.4"
+      }
+    },
+    "description": "Export Form Responses and/or Annotations to CSV file(s).",
+    "environment": {},
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      }
+    },
+    "label": "Form and Annotation Exporter",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "form-and-annotations-exporter",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "version": "0.0.4"
+  },
+  "exchange": {
+    "git-commit": "e642fb25423f7b9767e4277b7d80bc42c062430a",
+    "rootfs-hash": "sha384:8ae28c7d85e3967052e712a25bfdaf765794d2ebb484d4772edbc42d582460b1f399d38c08e4a2eadfee201582812a55",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-form-and-annotations-exporter-sha384-8ae28c7d85e3967052e712a25bfdaf765794d2ebb484d4772edbc42d582460b1f399d38c08e4a2eadfee201582812a55.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Form and Annotation Exporter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "annotations-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "non-task",
+              "both",
+              "none"
+            ],
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "form-responses-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "non-task",
+              "both",
+              "none"
+            ],
+            "type": "string"
+          },
+          "protocol_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "annotations-scope",
+          "debug",
+          "form-responses-scope"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
