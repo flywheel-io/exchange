@@ -1,0 +1,102 @@
+{
+  "name": "mask-exporter",
+  "label": "Mask Exporter",
+  "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
+  "author": "Flywheel",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "license": "MIT",
+  "url": "",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mask-exporter",
+  "cite": "",
+  "version": "1.0.4",
+  "custom": {
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/mask-exporter:1.0.4"
+    }
+  },
+  "environment": {
+    "FLYWHEEL": "/flywheel/v0",
+    "CXX": "/usr/bin/gcc",
+    "HOME": "/root",
+    "TERM": "xterm",
+    "SHLVL": "1",
+    "XDG_RUNTIME_DIR": "/tmp/runtime-sliceruser",
+    "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "_": "/usr/bin/env",
+    "OPENJPEGDIR": "/flywheel/v0/openjpeg",
+    "DCMCOMMIT": "fe2f26005109f396a4f828aa438241f73fc25fe8",
+    "OJ_VERSION": "2.4.0",
+    "PWD": "/flywheel/v0",
+    "PYSITE": "/usr/local/lib/python3.11/site-packages",
+    "PYTHON_PIP_VERSION": "22.3.1",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "COMMIT_SHA": "0481c74f",
+    "COMMIT_REF": "main",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py",
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.11.2",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "BUILD_TIME": "2023-03-01T08:58:30Z",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+    "PYTHON_GET_PIP_SHA256": "394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637",
+    "EDITOR": "micro"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": false
+    },
+    "input-file": {
+      "base": "file",
+      "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti",
+          "dicom"
+        ]
+      }
+    }
+  },
+  "config": {
+    "save-nrrd": {
+      "default": false,
+      "description": "Saves the ROI's as output type NRRD instead of NIfTI.  Default False",
+      "type": "boolean"
+    },
+    "save-binary-masks": {
+      "default": true,
+      "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
+      "type": "boolean"
+    },
+    "save-combined-output": {
+      "default": false,
+      "description": "For each task, saves all ROIs in a combined bitmasked file. Non-task ROIs will be combined into their own bitmasked file. Default is False.",
+      "type": "boolean"
+    },
+    "annotations-scope": {
+      "default": "both",
+      "description": "Scope of ROIs to save: task, non-task, or both. Default both.",
+      "type": "string",
+      "enum": [
+        "task",
+        "non-task",
+        "both"
+      ]
+    },
+    "additional-arguments": {
+      "optional": true,
+      "description": "Expert Option: Additional arguments to be passed through to the converter.",
+      "type": "string"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
+  "command": "python /flywheel/v0/run.py"
+}
