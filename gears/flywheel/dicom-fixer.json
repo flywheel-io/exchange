@@ -51,7 +51,7 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dicom-fixer:0.7.4"
+      "image": "flywheel/dicom-fixer:0.7.5"
     }
   },
   "description": "Fixes various issues in dicoms.",
@@ -102,6 +102,5 @@
   "name": "dicom-fixer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
-  "version": "0.7.4"
+  "version": "0.7.5"
 }
-
