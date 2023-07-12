@@ -1,0 +1,207 @@
+{
+  "author": "Flywheel",
+  "cite": "https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferMethodsCitation",
+  "command": "python run.py",
+  "config": {
+    "back_of_head": {
+      "default": false,
+      "description": "Include back of head in the defacing",
+      "type": "boolean"
+    },
+    "code": {
+      "description": "Embed codename in pics",
+      "optional": true,
+      "type": "string"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "display": {
+      "description": "Set Xvfb display no for taking pics",
+      "optional": true,
+      "type": "integer"
+    },
+    "expert": {
+      "description": "Set expert options",
+      "optional": true,
+      "type": "string"
+    },
+    "keep_facemask": {
+      "default": false,
+      "description": "Retain face.mask.mgz file",
+      "type": "boolean"
+    },
+    "fill_const": {
+      "description": "Fill constraints: constIn constOut",
+      "optional": true,
+      "type": "string"
+    },
+    "fill_zero": {
+      "default": false,
+      "description": "Fill with zeroes",
+      "type": "boolean"
+    },
+    "forehead": {
+      "default": false,
+      "description": "Include forehead in defacing (risks removing brain)",
+      "type": "boolean"
+    },
+    "function": {
+      "default": "infile",
+      "description": "Defacing function to utilize, 'infile' or 'apply'",
+      "type": "string",
+      "enum": [
+        "infile",
+        "apply"
+      ]
+    },
+    "no_ears": {
+      "default": false,
+      "description": "Do not include ears in the defacing",
+      "type": "boolean"
+    },
+    "no_post": {
+      "default": false,
+      "description": "Do not make a head surface after defacing",
+      "type": "boolean"
+    },
+    "no_samseg_fast": {
+      "default": false,
+      "description": "Do NOT configure samseg to run quickly",
+      "type": "boolean"
+    },
+    "output_filetype": {
+      "default": "nii.gz",
+      "description": "Set defaced output filetype, options 'nii.gz', 'nii', 'mgz', default 'nii.gz'",
+      "type": "string",
+      "enum": [
+        "nii.gz",
+        "nii",
+        "mgz"
+      ]
+    },
+    "pics": {
+      "default": false,
+      "description": "For QA: Take pictures, saved as codename.face-before.png, codename.face-after.png, and codename.before+after.gif in the output directory.",
+      "type": "boolean"
+    },
+    "samseg_fast": {
+      "default": false,
+      "description": "Configure samseg to run quickly; sets ndil=1 (default)",
+      "type": "boolean"
+    },
+    "save_outputs": {
+      "default": false,
+      "description": "Save all additional output from MiDeface as a zip file",
+      "type": "boolean"
+    },
+    "threads": {
+      "description": "Number of CPUs to use",
+      "optional": true,
+      "type": "integer"
+    },
+    "xmask_samseg": {
+      "description": "Segment input using samseg (14GB, +~20-40min)",
+      "optional": true,
+      "type": "integer"
+    },
+    "xmask_synthseg": {
+      "description": "Segment input using synthseg (35GB, +~20min)",
+      "optional": true,
+      "type": "integer"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "category": "converter",
+      "image": "flywheel/mideface:0.1.1_7.3.2"
+    }
+  },
+  "description": "Flywheel gear for the implementation of FreeSurfer's MiDeFace to remove facial structures from MRI images.",
+  "environment": {
+    "PYTHON_PIP_VERSION": "22.3.1",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "FLYWHEEL": "/flywheel/v0",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py",
+    "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/freesurfer/bin:/usr/local/freesurfer/fsfast/bin:/usr/local/ImageMagick-7.1.1/bin",
+    "LANG": "C.UTF-8",
+    "PYTHON_VERSION": "3.11.3",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "PWD": "/flywheel/v0",
+    "PYTHON_GET_PIP_SHA256": "394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637",
+    "LD_LIBRARY_PATH": "/usr/local/ImageMagick-7.1.1/lib:/usr/local/lib",
+    "FREESURFER": "/usr/local/freesurfer",
+    "FREESURFER_HOME": "/usr/local/freesurfer",
+    "FS_LICENSE": "/usr/local/freesurfer/license.txt",
+    "OS": "Linux",
+    "MAGICK_HOME": "/usr/local/ImageMagick-7.1.1",
+    "FS_OVERRIDE": "0",
+    "SUBJECTS_DIR": "/usr/local/freesurfer/subjects",
+    "FSL_OUTPUT_FORMAT": "nii.gz"
+  },
+  "inputs": {
+    "infile": {
+      "base": "file",
+      "description": "Input to deface, in NIfTI or mgz format",
+      "optional": false,
+      "type": {
+        "enum": [
+          "nifti",
+          "mgz"
+        ]
+      }
+    },
+    "freesurfer_license_file": {
+      "base": "file",
+      "description": "Freesurfer license file. Obtaining a license is free and can be obtained at surfer.nmr.mgh.harvard.edu/fswiki/License",
+      "optional": true
+    },
+    "apply_facemask": {
+      "base": "file",
+      "description": "If using apply function, facemask.mgz to apply",
+      "optional": true
+    },
+    "apply_reg": {
+      "base": "file",
+      "description": "If using apply function, reg.lta file to apply",
+      "optional": true
+    },
+    "init_reg": {
+      "base": "file",
+      "description": "If using infile function, initialize samseg with registration.lta",
+      "optional": true
+    },
+    "samseg_json": {
+      "base": "file",
+      "description": "If using infile function, configure samseg with json file",
+      "optional": true,
+      "type": {
+        "enum": [
+          "json"
+        ]
+      }
+    },
+    "xmask": {
+      "base": "file",
+      "description": "If using infile function, specify exclusion mask",
+      "optional": true
+    },
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    }
+  },
+  "label": "MiDeface",
+  "license": "Other",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "mideface",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mideface",
+  "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/MiDeFace",
+  "version": "0.1.1_7.3.2"
+}
+
