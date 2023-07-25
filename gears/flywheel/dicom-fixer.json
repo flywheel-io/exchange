@@ -3,15 +3,34 @@
   "cite": "",
   "command": "python run.py",
   "config": {
-    "tag": {
-      "default": "dicom-fixer",
-      "description": "The tag to be added on input file upon run completion.",
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "dicom-standard": {
+      "default": "local",
+      "description": "Specify which DICOM standards revision to use. Default `local` (faster), `current` optional for most up-to-date revision.",
+      "enum": [
+        "local",
+        "current"
+      ],
       "type": "string"
     },
     "standardize_transfer_syntax": {
       "default": true,
       "description": "Decompress dicom's if possible and adjust TransferSyntaxUID to ExplicitVRLittleEndian",
       "type": "boolean"
+    },
+    "strict-validation": {
+      "default": false,
+      "description": "Enforce strict DICOM validation if true; else, allow python-parsable values that may not meet DICOM standards.",
+      "type": "boolean"
+    },
+    "tag": {
+      "default": "dicom-fixer",
+      "description": "The tag to be added on input file upon run completion.",
+      "type": "string"
     },
     "unique": {
       "default": true,
@@ -21,66 +40,65 @@
     "zip-single-dicom": {
       "default": "match",
       "description": "Output a single dicom as zip (.dcm.zip) instead of as a dicom (.dcm) or match input.",
-      "type": "string",
       "enum": [
         "match",
         "yes",
         "no"
-      ]
-    },
-    "debug": {
-      "default": false,
-      "description": "Log debug messages",
-      "type": "boolean"
+      ],
+      "type": "string"
     }
   },
   "custom": {
     "flywheel": {
-      "suite": "Curation",
       "classification": {
-        "type": [],
-        "modality": [],
         "classification": [],
         "dataset": [],
         "keywords": [
           "fixer",
           "dicom"
-        ]
+        ],
+        "modality": [],
+        "type": []
       },
-      "show-job": true
+      "show-job": true,
+      "suite": "Curation"
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/dicom-fixer:0.7.4"
+      "image": "flywheel/dicom-fixer:0.8.0"
     }
   },
   "description": "Fixes various issues in dicoms.",
   "environment": {
-    "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "LANG": "C.UTF-8",
-    "PYTHON_VERSION": "3.9.7",
-    "PYTHON_PIP_VERSION": "21.2.4",
-    "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
-    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d781367b97acf0ece7e9e304bf281e99b618bf10/public/get-pip.py",
-    "PYTHON_GET_PIP_SHA256": "01249aa3e58ffb3e1686b7141b4e9aac4d398ef4ac3012ed9dff8dd9f685ffe0",
-    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
-    "MICRO_VERSION": "2.0.10",
+    "COMMIT": "master.3a9476be",
+    "COMMIT_TAG": "",
+    "COMMIT_TIME": "2021-10-25T09:24:15+00:00",
     "EDITOR": "micro",
-    "MUSTACHE_VERSION": "1.3.0",
+    "FLYWHEEL": "/flywheel/v0",
+    "GDCM_VERSION": "3.0.9",
     "GJO_VERSION": "1.0.2",
+    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
     "JQ_VERSION": "jq-1.6",
+    "LANG": "C.UTF-8",
+    "MICRO_VERSION": "2.0.10",
+    "MUSTACHE_VERSION": "1.3.0",
+    "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "PIP_NO_CACHE_DIR": "0",
     "POETRY_HOME": "/opt/poetry",
     "POETRY_VERSION": "1.1.11",
     "POETRY_VIRTUALENVS_CREATE": "false",
-    "COMMIT": "master.3a9476be",
-    "COMMIT_TAG": "",
-    "COMMIT_TIME": "2021-10-25T09:24:15+00:00",
-    "GDCM_VERSION": "3.0.9",
-    "FLYWHEEL": "/flywheel/v0",
-    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568"
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "PYTHON_GET_PIP_SHA256": "01249aa3e58ffb3e1686b7141b4e9aac4d398ef4ac3012ed9dff8dd9f685ffe0",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d781367b97acf0ece7e9e304bf281e99b618bf10/public/get-pip.py",
+    "PYTHON_PIP_VERSION": "21.2.4",
+    "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+    "PYTHON_VERSION": "3.9.7"
   },
   "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
     "dicom": {
       "base": "file",
       "description": "Input dicom.",
@@ -90,10 +108,6 @@
           "dicom"
         ]
       }
-    },
-    "api-key": {
-      "base": "api-key",
-      "read-only": true
     }
   },
   "label": "Dicom Fixer",
@@ -102,6 +116,5 @@
   "name": "dicom-fixer",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-fixer/-/blob/main/README.md",
-  "version": "0.7.4"
+  "version": "0.8.0"
 }
-
