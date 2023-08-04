@@ -12,46 +12,56 @@
       "default": "file-classifier",
       "description": "The tag to be added on input file upon run completion.",
       "type": "string"
+    },
+    "validate": {
+      "default": false,
+      "description": "If true the gear will validate the classification schema.",
+      "type": "boolean"
     }
   },
   "custom": {
     "flywheel": {
-      "suite": "Curation",
-      "show-job": true
+      "show-job": true,
+      "suite": "Curation"
     },
     "gear-builder": {
       "category": "classifier",
-      "image": "flywheel/file-classifier:0.5.1"
+      "image": "flywheel/file-classifier:0.6.0"
     }
   },
   "description": "Generic file classifier. This gear update the classification of a file based on the metadata attached to it, and therefore should only run AFTER gears which populate metadata on the file, such as file-metadata-curator. The gear takes as input a file, and an optional classification profile. The gear tags the input file upon completion.",
   "environment": {
-    "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    "LANG": "C.UTF-8",
-    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
-    "PYTHON_VERSION": "3.10.5",
-    "PYTHON_PIP_VERSION": "22.0.4",
-    "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
-    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
-    "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
-    "FLYWHEEL": "/flywheel/v0",
-    "PYTHONPATH": "/flywheel/v0",
-    "PYSITE": "/usr/local/lib/python3.10/site-packages",
-    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
-    "MICRO_VERSION": "2.0.10",
+    "COMMIT": "main.a30a2597",
+    "COMMIT_TIME": "2022-06-21T13:24:40+00:00",
     "EDITOR": "micro",
-    "MUSTACHE_VERSION": "1.3.1",
+    "FLYWHEEL": "/flywheel/v0",
     "GJO_VERSION": "1.0.2",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
     "JQ_VERSION": "jq-1.6",
+    "LANG": "C.UTF-8",
+    "MICRO_VERSION": "2.0.10",
+    "MUSTACHE_VERSION": "1.3.1",
+    "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "PIP_NO_CACHE_DIR": "0",
-    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
     "POETRY_HOME": "/opt/poetry",
     "POETRY_VERSION": "1.1.13",
     "POETRY_VIRTUALENVS_CREATE": "false",
-    "COMMIT": "main.a30a2597",
-    "COMMIT_TIME": "2022-06-21T13:24:40+00:00"
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "PWD": "/flywheel/v0",
+    "PYSITE": "/usr/local/lib/python3.10/site-packages",
+    "PYTHONPATH": "/flywheel/v0",
+    "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
+    "PYTHON_PIP_VERSION": "22.0.4",
+    "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+    "PYTHON_VERSION": "3.10.5",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib"
   },
   "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
     "file-input": {
       "base": "file",
       "description": "File to classify"
@@ -65,10 +75,6 @@
           "source code"
         ]
       }
-    },
-    "api-key": {
-      "base": "api-key",
-      "read-only": true
     }
   },
   "label": "File Classifier",
@@ -77,5 +83,5 @@
   "name": "file-classifier",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/file-classifier.git",
-  "version": "0.5.1"
+  "version": "0.6.0"
 }
