@@ -1,0 +1,156 @@
+{
+  "gear": {
+    "name": "tbi-extractor",
+    "label": "TBI Extractor: Automated extraction of common data elements for traumatic brain injury.",
+    "description": "Implementation of tbiExtractor for automated extraction of common data elements from radiology reports for traumatic brain injury.",
+    "version": "0.1.5_0.3.2",
+    "author": "Flywheel",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/tbi-extractor",
+    "source": "https://github.com/flywheel-apps/tbi-extractor",
+    "cite": "https://doi.org/10.1371/journal.pone.0214775",
+    "license": "MIT",
+    "custom": {
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/tbi-extractor:0.1.5_0.3.2"
+      },
+      "flywheel": {
+        "suite": "NLP",
+        "show-job": true
+      }
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "radiology_report": {
+        "base": "file",
+        "description": "The radiology report to be annotated by tbiExtractor.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "text"
+          ]
+        }
+      },
+      "terms_of_interest": {
+        "base": "file",
+        "description": "Comma-separated values to search for in the report. May be the default or user-specified file.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "text"
+          ]
+        }
+      }
+    },
+    "config": {
+      "debug": {
+        "description": "Log verbosity.",
+        "type": "boolean",
+        "default": false
+      },
+      "exclude_targets": {
+        "description": "Comma-separated list of targets to exclude from the algorithm. If the number of entries is burdensome, modify the terms_of_interest in the input tab.",
+        "type": "string",
+        "optional": true
+      },
+      "put_metadata_on_dicom": {
+        "description": "Gear outputs are available on the report's info under tbi-extractor. Optionally, add the metadata to the dicom file as well.",
+        "type": "boolean",
+        "default": false
+      },
+      "save_target_phrases": {
+        "description": "Save the lexical target phrases identified in the report for the resulting annotation.",
+        "type": "boolean",
+        "default": false
+      },
+      "save_modifier_phrases": {
+        "description": "Save the lexical modifier phrases identified in the report for the resulting annotation.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "command": "python run.py"
+  },
+  "exchange": {
+    "git-commit": "1d3c5b497bd4d77948e9023c27ed3d9f752a1850",
+    "rootfs-hash": "sha384:43b16dee7181de4b7cb8c085d61f66a7c03d428ed9bec4f6757535ddfe7772b40f7e2c96c2bb502b1dc30627805d0178",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-tbi-extractor-sha384-43b16dee7181de4b7cb8c085d61f66a7c03d428ed9bec4f6757535ddfe7772b40f7e2c96c2bb502b1dc30627805d0178.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for TBI Extractor: Automated extraction of common data elements for traumatic brain injury.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "type": "boolean",
+            "default": false
+          },
+          "exclude_targets": {
+            "type": "string"
+          },
+          "put_metadata_on_dicom": {
+            "type": "boolean",
+            "default": false
+          },
+          "save_target_phrases": {
+            "type": "boolean",
+            "default": false
+          },
+          "save_modifier_phrases": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "debug",
+          "put_metadata_on_dicom",
+          "save_target_phrases",
+          "save_modifier_phrases"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "radiology_report": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "text"
+                ]
+              }
+            }
+          },
+          "terms_of_interest": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "radiology_report"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
