@@ -1,0 +1,126 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "namespace": {
+        "default": "csv_import",
+        "description": "If a yaml map is not provided, this is the namespace to nest all metadata under.  Will correspond to 'container.info.<namespace>",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/csv-importer:0.0.2"
+      }
+    },
+    "description": "A gear to ingest data from CSV files into Flywheel metadata",
+    "environment": {},
+    "inputs": {
+      "api_key": {
+        "base": "api-key"
+      },
+      "input_csv": {
+        "base": "file",
+        "description": "The csv file to ingest",
+        "type": {
+          "enum": [
+            "tabular data"
+          ]
+        }
+      },
+      "yaml_map": {
+        "base": "file",
+        "description": "A yaml file mapping CSV columns to flywheel metadata locations",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "label": "CSV Importer",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "csv-importer",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/csv-importer",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/csv-importer",
+    "version": "0.0.2"
+  },
+  "exchange": {
+    "git-commit": "8e80be3485eb23ba7d05ea728bf57d91a43c5502",
+    "rootfs-hash": "sha384:713c13531650d21a1fd915f07d89da83da52d9f5c87493e800e6f029cce9ab0562552114fdad8c906ede99197da69797",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-csv-importer-sha384-713c13531650d21a1fd915f07d89da83da52d9f5c87493e800e6f029cce9ab0562552114fdad8c906ede99197da69797.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for CSV Importer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "namespace": {
+            "default": "csv_import",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "namespace"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "object"
+          },
+          "input_csv": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "tabular data"
+                ]
+              }
+            }
+          },
+          "yaml_map": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api_key",
+          "input_csv"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
