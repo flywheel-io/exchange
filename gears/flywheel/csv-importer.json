@@ -1,0 +1,59 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "namespace": {
+      "default": "csv_import",
+      "description": "If a yaml map is not provided, this is the namespace to nest all metadata under.  Will correspond to 'container.info.<namespace>",
+      "type": "string"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/csv-importer:0.0.2"
+    }
+  },
+  "description": "A gear to ingest data from CSV files into Flywheel metadata",
+  "environment": {},
+  "inputs": {
+    "api_key": {
+      "base": "api-key"
+    },
+    "input_csv": {
+      "base": "file",
+      "description": "The csv file to ingest",
+      "type": {
+        "enum": [
+          "tabular data"
+        ]
+      }
+    },
+    "yaml_map": {
+      "base": "file",
+      "description": "A yaml file mapping CSV columns to flywheel metadata locations",
+      "optional": true,
+      "type": {
+        "enum": [
+          "source code"
+        ]
+      }
+    }
+  },
+  "label": "CSV Importer",
+  "license": "Other",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "csv-importer",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/csv-importer",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/csv-importer",
+  "version": "0.0.2"
+}
