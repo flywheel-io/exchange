@@ -108,9 +108,13 @@ def main():
     )
 
     # In gitlab.com/flywheel-io/scientific-solutions/gears or not
-    df["needs_migration"] = df["url"].apply(lambda url: needs_migration(url)) & df["fw_owned"]
+    df["needs_migration"] = df.apply(
+        lambda row:
+        needs_migration(row["source"]) and needs_migration(row["url"]),
+        axis=1
+    ) & df["fw_owned"]
 
-    df.sort_values(by=['name', 'timestamp'], inplace=True)
+    df.sort_values(by=['name', 'modified'], inplace=True)
     df.drop_duplicates(subset=['name'], keep='last', inplace=True)
     df.to_csv(output_csv, index=False)
     log.info(f"Inventory saved to {output_csv}")
