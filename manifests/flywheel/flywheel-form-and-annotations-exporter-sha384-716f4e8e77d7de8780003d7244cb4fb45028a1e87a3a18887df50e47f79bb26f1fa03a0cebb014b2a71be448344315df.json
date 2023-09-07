@@ -1,0 +1,139 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "/flywheel/v0/run.py",
+    "config": {
+      "annotations-scope": {
+        "default": "task",
+        "description": "The scope of the exported annotations.",
+        "enum": [
+          "task",
+          "non-task",
+          "both",
+          "none"
+        ],
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "form-responses-scope": {
+        "default": "task",
+        "description": "The scope of the form responses.",
+        "enum": [
+          "task",
+          "non-task",
+          "both",
+          "none"
+        ],
+        "type": "string"
+      },
+      "protocol_name": {
+        "description": "The name of the protocol to export data from.",
+        "optional": true,
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/form-and-annotations-exporter:0.0.6"
+      }
+    },
+    "description": "Export Form Responses and/or Annotations to CSV file(s).",
+    "environment": {
+      "PYTHON_PIP_VERSION": "23.0.1",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "FLYWHEEL": "/flywheel/v0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py",
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "PYTHON_VERSION": "3.10.12",
+      "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+      "PWD": "/flywheel/v0",
+      "PYTHON_GET_PIP_SHA256": "96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      }
+    },
+    "label": "Form and Annotation Exporter",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "form-and-annotations-exporter",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "version": "0.0.6"
+  },
+  "exchange": {
+    "git-commit": "595d5065fccff4d48b7522b3524720a20cf06dd2",
+    "rootfs-hash": "sha384:716f4e8e77d7de8780003d7244cb4fb45028a1e87a3a18887df50e47f79bb26f1fa03a0cebb014b2a71be448344315df",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-form-and-annotations-exporter-sha384-716f4e8e77d7de8780003d7244cb4fb45028a1e87a3a18887df50e47f79bb26f1fa03a0cebb014b2a71be448344315df.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Form and Annotation Exporter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "annotations-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "non-task",
+              "both",
+              "none"
+            ],
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "form-responses-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "non-task",
+              "both",
+              "none"
+            ],
+            "type": "string"
+          },
+          "protocol_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "annotations-scope",
+          "debug",
+          "form-responses-scope"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
