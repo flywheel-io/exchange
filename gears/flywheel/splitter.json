@@ -2,11 +2,11 @@
   "name": "splitter",
   "label": "DICOM splitter",
   "description": "The DICOM splitter extracts embedded localizer DICOM frames and/or re-group DICOM frames in archive by specific DICOM tags provided by user.",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "custom": {
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/splitter:1.5.1"
+      "image": "flywheel/splitter:1.5.2"
     },
     "flywheel": {
       "suite": "Curation",
@@ -100,6 +100,6 @@
   "maintainer": "Flywheel <support@flywheel.io>",
   "cite": "",
   "license": "MIT",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/splitter",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/splitter"
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/splitter",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/splitter"
 }
