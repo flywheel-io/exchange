@@ -18,6 +18,11 @@
       ],
       "type": "string"
     },
+    "completed-task-only": {
+      "default": true,
+      "description": "Whether to export only completed read task ROIs (ignores incomplete read tasks). Default True.",
+      "type": "boolean"
+    },
     "debug": {
       "default": false,
       "description": "Log debug messages",
@@ -47,7 +52,7 @@
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/mask-exporter:1.1.2"
+      "image": "flywheel/mask-exporter:1.1.3"
     }
   },
   "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
@@ -103,5 +108,5 @@
   "name": "mask-exporter",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mask-exporter",
   "url": "",
-  "version": "1.1.2"
+  "version": "1.1.3"
 }
