@@ -1,0 +1,295 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "https://microsoft.github.io/presidio/",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "detection-only": {
+        "description": "If true, only scan the image for PHI and tags file and acquisition with 'PHI-Found'. Does not redact PII from images.",
+        "type": "boolean",
+        "default": true
+      },
+      "use_dicom_metadata": {
+        "description": "Use the dicom metadata to identify and improve phi detection.",
+        "type": "boolean",
+        "default": true
+      },
+      "Create Bounding Box Images": {
+        "description": "Toggle to generate separate image(s) with bounding boxes outlining detected PII",
+        "type": "boolean",
+        "optional": true
+      },
+      "PERSON": {
+        "description": "Toggle this configuration option to direct gear to look for A full person name, which can include first names, middle names or initials, and last names.",
+        "type": "boolean",
+        "optional": true
+      },
+      "DATE_TIME": {
+        "description": "Toggle this configuration option to direct gear to look for Absolute or relative dates or periods or times smaller than a day.",
+        "type": "boolean",
+        "optional": true
+      },
+      "LOCATION": {
+        "description": "Toggle this configuration option to direct gear to look for Name of politically or geographically defined location (cities, provinces, countries, international regions, bodies of water, mountains)",
+        "type": "boolean",
+        "optional": true
+      },
+      "PHONE_NUMBER": {
+        "description": "Toggle this configuration option to direct gear to look for A telephone number",
+        "type": "boolean",
+        "optional": true
+      },
+      "MEDICAL_LICENSE": {
+        "description": "Toggle this configuration option to direct gear to look for Common medical license numbers.",
+        "type": "boolean",
+        "optional": true
+      },
+      "URL": {
+        "description": "Toggle this configuration option to direct gear to look for A URL (Uniform Resource Locator), unique identifier used to locate a resource on the Internet",
+        "type": "boolean",
+        "optional": true
+      },
+      "NRP": {
+        "description": "Toggle this configuration option to direct gear to look for A person's Nationality, religious or political group.",
+        "type": "boolean",
+        "optional": true
+      },
+      "EMAIL_ADDRESS": {
+        "description": "Toggle this configuration option to direct gear to look for An email address identifies an email box to which email messages are delivered",
+        "type": "boolean",
+        "optional": true
+      },
+      "CRYPTO": {
+        "description": "Toggle this configuration option to direct gear to look for A Crypto wallet number. Currently only Bitcoin address is supported",
+        "type": "boolean",
+        "optional": true
+      },
+      "IBAN_CODE": {
+        "description": "Toggle this configuration option to direct gear to look for The International Bank Account Number (IBAN) is an internationally agreed system of identifying bank accounts across national borders to facilitate the communication and processing of cross border transactions with a reduced risk of transcription errors.",
+        "type": "boolean",
+        "optional": true
+      },
+      "IP_ADDRESS": {
+        "description": "Toggle this configuration option to direct gear to look for An Internet Protocol (IP) address (either IPv4 or IPv6).",
+        "type": "boolean",
+        "optional": true
+      },
+      "CREDIT_CARD": {
+        "description": "Toggle this configuration option to direct gear to look for A credit card number is between 12 to 19 digits.",
+        "type": "boolean",
+        "optional": true
+      },
+      "US_SSN": {
+        "description": "Toggle this configuration option to direct gear to look for A US 9-digit social security number.",
+        "type": "boolean",
+        "optional": true
+      },
+      "US_DRIVER_LICENSE": {
+        "description": "Toggle this configuration option to direct gear to look for A US driver's license number.",
+        "type": "boolean",
+        "optional": true
+      },
+      "US_PASSPORT": {
+        "description": "Toggle this configuration option to direct gear to look for A US passport ID.",
+        "type": "boolean",
+        "optional": true
+      },
+      "US_BANK_NUMBER": {
+        "description": "Toggle this configuration option to direct gear to look for A US bank number.",
+        "type": "boolean",
+        "optional": true
+      },
+      "US_ITIN": {
+        "description": "Toggle this configuration option to direct gear to look for A 9-digit Individual Taxpayer Identification Number.",
+        "type": "boolean",
+        "optional": true
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "PHI-Detection",
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/presidio-image-redactor:0.1.1"
+      }
+    },
+    "description": "This gear utilizes Mircrosoft's open source Presidio SDK to scan images for potential Personal Identifiable Information (PII), report on PII findings, and redact PII contained within pixel data.",
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "PYTHON_VERSION": "3.8.18",
+      "PYTHON_PIP_VERSION": "23.0.1",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/9af82b715db434abb94a0a6f3569f43e72157346/public/get-pip.py",
+      "PYTHON_GET_PIP_SHA256": "45a2bb8bf2bb5eff16fdd00faef6f29731831c7c59bd9fc2bf1f3bed511ff1fe",
+      "FLYWHEEL": "/flywheel/v0"
+    },
+    "inputs": {
+      "image_file": {
+        "base": "file",
+        "description": "A dicom file or zipped dicom series.",
+        "optional": false,
+        "type": {
+          "enum": [
+            "archive",
+            "dicom"
+          ]
+        }
+      },
+      "bbox_coords": {
+        "base": "file",
+        "description": "Json containing the bounding box coordinates of a previous scanning run.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": false
+      }
+    },
+    "label": "Presidio Image Redactor",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "presidio-image-redactor",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/presidio-image-redactor",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/presidio-image-redactor",
+    "version": "0.1.1"
+  },
+  "exchange": {
+    "git-commit": "b8a3f8025d4497078608ff5c3ad162bd717cc3cd",
+    "rootfs-hash": "sha384:6601566827793ea6e913bf5597aa31f4789148b6c792c19f3dd3082d12d2d6e9a6b79a4dfe61cb242e16cc9e5011e47e",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-presidio-image-redactor-sha384-6601566827793ea6e913bf5597aa31f4789148b6c792c19f3dd3082d12d2d6e9a6b79a4dfe61cb242e16cc9e5011e47e.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Presidio Image Redactor",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "detection-only": {
+            "type": "boolean",
+            "default": true
+          },
+          "use_dicom_metadata": {
+            "type": "boolean",
+            "default": true
+          },
+          "Create Bounding Box Images": {
+            "type": "boolean"
+          },
+          "PERSON": {
+            "type": "boolean"
+          },
+          "DATE_TIME": {
+            "type": "boolean"
+          },
+          "LOCATION": {
+            "type": "boolean"
+          },
+          "PHONE_NUMBER": {
+            "type": "boolean"
+          },
+          "MEDICAL_LICENSE": {
+            "type": "boolean"
+          },
+          "URL": {
+            "type": "boolean"
+          },
+          "NRP": {
+            "type": "boolean"
+          },
+          "EMAIL_ADDRESS": {
+            "type": "boolean"
+          },
+          "CRYPTO": {
+            "type": "boolean"
+          },
+          "IBAN_CODE": {
+            "type": "boolean"
+          },
+          "IP_ADDRESS": {
+            "type": "boolean"
+          },
+          "CREDIT_CARD": {
+            "type": "boolean"
+          },
+          "US_SSN": {
+            "type": "boolean"
+          },
+          "US_DRIVER_LICENSE": {
+            "type": "boolean"
+          },
+          "US_PASSPORT": {
+            "type": "boolean"
+          },
+          "US_BANK_NUMBER": {
+            "type": "boolean"
+          },
+          "US_ITIN": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "detection-only",
+          "use_dicom_metadata"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "image_file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "archive",
+                  "dicom"
+                ]
+              }
+            }
+          },
+          "bbox_coords": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "image_file",
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
