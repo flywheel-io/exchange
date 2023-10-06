@@ -116,10 +116,10 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/presidio-image-redactor:0.1.0"
+      "image": "flywheel/presidio-image-redactor:0.1.1"
     }
   },
-  "description": "This gear utilizes Mircrosoft's opensource Presidio SDK to scan images for potential Personal Identifiable Information (PII), report on PII findings, and redact PII contained within pixel data.",
+  "description": "This gear utilizes Mircrosoft's open source Presidio SDK to scan images for potential Personal Identifiable Information (PII), report on PII findings, and redact PII contained within pixel data.",
   "environment": {
     "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "LANG": "C.UTF-8",
@@ -164,5 +164,5 @@
   "name": "presidio-image-redactor",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/presidio-image-redactor",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/presidio-image-redactor",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
