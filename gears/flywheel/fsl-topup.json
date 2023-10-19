@@ -22,7 +22,7 @@
   "inputs": {
     "image_1": {
       "base": "file",
-      "description": "first image in an pair of images with opposite phase encoding direction",
+      "description": "first image in a pair of images with opposite phase encoding direction",
       "optional": false,
       "type": {
         "enum": [
@@ -32,7 +32,7 @@
     },
     "image_2": {
       "base": "file",
-      "description": "second image in an pair of images with opposite phase encoding direction",
+      "description": "second image in a pair of images with opposite phase encoding direction",
       "optional": false,
       "type": {
         "enum": [
@@ -97,7 +97,7 @@
     },
     "topup_only": {
       "default": false,
-      "description": "only run topup and get fieldmaps (do no correct images)",
+      "description": "Only run topup and get fieldmaps (do no correct images)",
       "type": "boolean"
     },
     "displacement_field": {
@@ -112,7 +112,7 @@
     },
     "rigid_body_matrix": {
       "default": true,
-      "description": "save rigid body transformation matricies to align volumes",
+      "description": "Save rigid body transformation matricies to align volumes",
       "type": "boolean"
     },
     "verbose": {
