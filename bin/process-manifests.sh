@@ -236,51 +236,74 @@ function process_manifests() {
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
                 manifest_version=""
             fi
-            echo "Pulling image $docker_image"
-            docker pull $docker_image
-            # Get docker image digest
-            digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
-            # Strip off just the sha256 hash value
-            sha256=$(printf "$digest" | sed 's/.*\://')
 
-#            container=$( docker create $docker_image /bin/true )
-#            rootfs_path="$tempdir/$manifest_slug.tgz"
-#            >&2 echo "Exporting container"
-#            docker export $container | gzip -n > $rootfs_path
-#            shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
-#            #docker rm $container # fails on CircleCI
+            beta_exchange="$( jq -r '.custom.flywheel.beta_exchange' $manifest_path)"
+            if [ "$beta_exchange" == "true" ]; then
+                echo "Pulling image $docker_image"
+                docker pull $docker_image
+                # Get docker image digest
+                digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
+                # Strip off just the sha256 hash value
+                sha256=$(printf "$digest" | sed 's/.*\://')
+                v_manifest_name="$manifest_slug-sha256-$sha256"
+                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
+                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
 
-            v_manifest_name="$manifest_slug-sha256-$sha256"
-            v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-            mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
 
-            jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
+                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
 
-            jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
-                > $tempfile && mv $tempfile $v_manifest_path
+                jq ".exchange.\"rootfs-hash\" = \"sha256:$shasum\" |
+                    .exchange.\"rootfs-url\" =
+                        \"$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
 
-            jq ".exchange.\"rootfs-hash\" = \"sha256:$shasum\" |
-                .exchange.\"rootfs-url\" =
-                    \"$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
-                > $tempfile && mv $tempfile $v_manifest_path
+                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
+                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
 
-            invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-            jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-                > $tempfile && mv $tempfile $v_manifest_path
-            >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
+                exchange_image = "$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
+                docker tag $docker_image $exchange_image
+                cat $GCLOUD_SERVICE_ACCOUNT_FILE | docker login -u _json_key_base64 \
+                    --password-stdin \
+                    https://us-docker.pkg.dev
+                docker push $exchange_image
+            else
+                container=$( docker create $docker_image /bin/true )
+                rootfs_path="$tempdir/$manifest_slug.tgz"
+                >&2 echo "Exporting container"
+                docker export $container | gzip -n > $rootfs_path
+                shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
+                #docker rm $container # fails on CircleCI
 
-#            rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
-#            mv $rootfs_path $rootfs_hash_path
-#            gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
-#            BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
+                v_manifest_name="$manifest_slug-sha384-$shasum"
+                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
+                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
 
-#            exchange_image="$GCR_HOST_PROJECT/$manifest_slug:$manifest_version"
-            exchange_image = "$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
-            docker tag $docker_image $exchange_image
-            cat $GCLOUD_SERVICE_ACCOUNT_FILE | docker login -u _json_key_base64 \
-                --password-stdin \
-                https://us-docker.pkg.dev
-            docker push $exchange_image
+                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
+
+                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+
+                jq ".exchange.\"rootfs-hash\" = \"sha384:$shasum\" | .exchange.\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+
+                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
+                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
+
+                rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
+                mv $rootfs_path $rootfs_hash_path
+                gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
+                BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
+
+                exchange_image="$GCR_HOST_PROJECT/$manifest_slug:$manifest_version"
+                docker tag $docker_image $exchange_image
+                gcloud docker -- push $exchange_image
+            fi
 
             git add $v_manifest_path
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
