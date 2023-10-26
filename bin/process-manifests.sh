@@ -8,7 +8,7 @@ EXCHANGE_JSON="exchange.json"
 
 GEAR_SCHEMA_URL="https://raw.githubusercontent.com/flywheel-io/gears/master/spec/manifest.schema.json"
 BOUTIQUE_SCHEMA_URL="https://raw.githubusercontent.com/boutiques/boutiques/master/schema/descriptor.schema.json"
-EXCHANGE_ARTIFACT_REGISTRY_URL="docker://us-docker.pkg.dev/flywheel-exchange/gear-exchange"
+EXCHANGE_ARTIFACT_REGISTRY_URL="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
 
 GIT_REMOTE=${GIT_REMOTE:-"origin"}
 GIT_BRANCH="$( git rev-parse --abbrev-ref HEAD )"
@@ -256,7 +256,7 @@ function process_manifests() {
 
                 jq ".exchange.\"rootfs-hash\" = \"sha256:$shasum\" |
                     .exchange.\"rootfs-url\" =
-                        \"$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
+                        \"docker://$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
                     > $tempfile && mv $tempfile $v_manifest_path
 
                 invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
@@ -264,7 +264,7 @@ function process_manifests() {
                     > $tempfile && mv $tempfile $v_manifest_path
                 >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
 
-                exchange_image = "$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
+                exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
                 docker tag $docker_image $exchange_image
                 cat $GCLOUD_SERVICE_ACCOUNT_FILE | docker login -u _json_key_base64 \
                     --password-stdin \
