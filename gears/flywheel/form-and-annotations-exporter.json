@@ -43,7 +43,7 @@
       "image": "flywheel/form-and-annotations-exporter:0.1.0"
     }
   },
-  "description": "Export Form Responses and/or Annotations to CSV file(s).",
+  "description": "Export Form Responses and/or Annotations to CSV file(s). ",
   "environment": {
     "FLYWHEEL": "/flywheel/v0",
     "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
