@@ -1,0 +1,213 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "python /flywheel/v0/run.py",
+    "config": {
+      "additional-arguments": {
+        "description": "Expert Option: Additional arguments to be passed through to the converter (Dicom input only).",
+        "optional": true,
+        "type": "string"
+      },
+      "all-file-versions": {
+        "default": false,
+        "description": "Whether to exporter ROIs from all file versions, not just the latest file version. Default False.",
+        "type": "boolean"
+      },
+      "annotations-scope": {
+        "default": "both",
+        "description": "Scope of ROIs to save: task, non-task, or both. Default both.",
+        "enum": [
+          "task",
+          "non-task",
+          "both"
+        ],
+        "type": "string"
+      },
+      "completed-task-only": {
+        "default": true,
+        "description": "Whether to export only completed read task ROIs (ignores incomplete read tasks). Default True.",
+        "type": "boolean"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "save-binary-masks": {
+        "default": true,
+        "description": " Saves individually labeled ROIs as binary masks. Otherwise use bitmasked values (sums of powers of two). Default is True.",
+        "type": "boolean"
+      },
+      "save-combined-output": {
+        "default": "individual",
+        "description": "Whether to save each task's ROIs as individual files by label, combined, or both. Default individual.",
+        "enum": [
+          "individual",
+          "combined",
+          "both"
+        ],
+        "type": "string"
+      },
+      "save-nrrd": {
+        "default": false,
+        "description": "Saves the ROI's as output type NRRD instead of NIfTI.  Default False.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/mask-exporter:1.1.4"
+      }
+    },
+    "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
+    "environment": {
+      "BUILD_TIME": "2023-03-01T08:58:30Z",
+      "COMMIT_REF": "main",
+      "COMMIT_SHA": "0481c74f",
+      "CXX": "/usr/bin/gcc",
+      "DCMCOMMIT": "fe2f26005109f396a4f828aa438241f73fc25fe8",
+      "DEBIAN_FRONTEND": "noninteractive",
+      "EDITOR": "micro",
+      "FLYWHEEL": "/flywheel/v0",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "HOME": "/root",
+      "LANG": "C.UTF-8",
+      "OJ_VERSION": "2.4.0",
+      "OPENJPEGDIR": "/flywheel/v0/openjpeg",
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "PWD": "/flywheel/v0",
+      "PYSITE": "/usr/local/lib/python3.11/site-packages",
+      "PYTHON_GET_PIP_SHA256": "394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "22.3.1",
+      "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+      "PYTHON_VERSION": "3.11.2",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+      "SHLVL": "1",
+      "TERM": "xterm",
+      "XDG_RUNTIME_DIR": "/tmp/runtime-sliceruser",
+      "_": "/usr/bin/env"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": false
+      },
+      "input-file": {
+        "base": "file",
+        "description": "NIfTI or DICOM file with ROI drawn in OHIF Viewer (Required).",
+        "optional": false,
+        "type": {
+          "enum": [
+            "nifti",
+            "dicom"
+          ]
+        }
+      }
+    },
+    "label": "Mask Exporter",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "mask-exporter",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mask-exporter",
+    "url": "",
+    "version": "1.1.4"
+  },
+  "exchange": {
+    "git-commit": "069ce68c5c2c07b268d1d36cf5073b1c1d0fe87c",
+    "rootfs-hash": "sha384:edf06fa0ce921ad99e20f3ff4cff10e316f59e6ddbdcec9ddaae05c291b5c12bbc0c00d87ff20d5cc05c09e759e38a38",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-mask-exporter-sha384-edf06fa0ce921ad99e20f3ff4cff10e316f59e6ddbdcec9ddaae05c291b5c12bbc0c00d87ff20d5cc05c09e759e38a38.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Mask Exporter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "additional-arguments": {
+            "type": "string"
+          },
+          "all-file-versions": {
+            "default": false,
+            "type": "boolean"
+          },
+          "annotations-scope": {
+            "default": "both",
+            "enum": [
+              "task",
+              "non-task",
+              "both"
+            ],
+            "type": "string"
+          },
+          "completed-task-only": {
+            "default": true,
+            "type": "boolean"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "save-binary-masks": {
+            "default": true,
+            "type": "boolean"
+          },
+          "save-combined-output": {
+            "default": "individual",
+            "enum": [
+              "individual",
+              "combined",
+              "both"
+            ],
+            "type": "string"
+          },
+          "save-nrrd": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "all-file-versions",
+          "annotations-scope",
+          "completed-task-only",
+          "debug",
+          "save-binary-masks",
+          "save-combined-output",
+          "save-nrrd"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "input-file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "nifti",
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
