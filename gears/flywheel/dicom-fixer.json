@@ -55,6 +55,7 @@
   },
   "custom": {
     "flywheel": {
+      "beta_exchange": true,
       "classification": {
         "classification": [],
         "dataset": [],
