@@ -266,7 +266,7 @@ function process_manifests() {
 
                 exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
                 docker tag $docker_image $exchange_image
-                echo $ARTIFACT_REGISTRY_CREDS | docker login -u _json_key_base64 \
+                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
                     --password-stdin \
                     https://us-docker.pkg.dev
                 docker push $exchange_image
