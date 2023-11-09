@@ -254,7 +254,7 @@ function process_manifests() {
                 jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
                     > $tempfile && mv $tempfile $v_manifest_path
 
-                jq ".exchange.\"rootfs-hash\" = \"sha256:$shasum\" |
+                jq ".exchange.\"rootfs-hash\" = \"sha256:$sha256\" |
                     .exchange.\"rootfs-url\" =
                         \"docker://$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
                     > $tempfile && mv $tempfile $v_manifest_path
