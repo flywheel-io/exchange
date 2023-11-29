@@ -24,16 +24,17 @@ def main(name):
         os.remove(gear_json[0])
 
     manifest_jsons = list(MANIFEST_ROOT.rglob(f'**/*{name}*.json'))
-    # Filtering once more using regex in case with have a gear with matching
-    # part of the name
-    reg = re.compile(f".*-{name}-sha.*")
-    manifest_jsons = [p for p in manifest_jsons if reg.match(p.name)]
     if len(manifest_jsons) == 0:
         log.warning("Gear %s not found in MANIFEST_ROOT folder", name)
     elif len(manifest_jsons) > 1:
         for manifest in manifest_jsons:
-            log.info("Removing gear %s", manifest)
-            os.remove(manifest)
+            # Filtering once more using regex in case with have a gear with matching
+            # part of the name
+            parent = manifest.parent.name
+            reg = re.compile(f"{parent}-{name}-sha.*")
+            if reg.match(manifest.name):
+                log.info("Removing gear %s", manifest)
+                os.remove(manifest)
 
 
 if __name__ == "__main__":
