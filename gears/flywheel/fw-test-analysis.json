@@ -1,0 +1,37 @@
+{
+  "name": "fw-test-analysis",
+  "label": "FW QA Test Analysis Gear",
+  "description": "Analysis Gear that can be configured to pass or fail",
+  "version": "1.0.0",
+  "inputs": {
+    "file": {
+      "base": "file",
+      "description": "Any file.",
+      "optional": false
+    }
+  },
+  "config": {
+    "fail": {
+      "default": false,
+      "description": "Select checkbox to fail gear run",
+      "type": "boolean"
+    }
+  },
+  "environment": {},
+  "command": "python run.py",
+  "author": "Jen Vickerman",
+  "maintainer": "Jen Vickerman",
+  "cite": "List citations here.",
+  "license": "Other",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+  "custom": {
+    "flywheel": {
+      "show-job": true
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/fw-test-analysis:1.0.0"
+    }
+  }
+}
