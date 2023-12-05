@@ -1,0 +1,143 @@
+{
+  "gear": {
+    "author": "Flywheel Exchange, LLC",
+    "command": "poetry run python3 /flywheel/v0/run.py",
+    "config": {
+      "allowed": {
+        "default": "_-",
+        "description": "Characters that will be allowed in names when suggesting new names. Default = '_-'",
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "dry_run": {
+        "default": false,
+        "description": "Whether or not to perform a dry run, logging what would be changed without actually changing it. Default = False",
+        "type": "boolean"
+      },
+      "suggest": {
+        "default": true,
+        "description": "Whether or not to suggest new names by removing spaces and special characters from names. Default = True",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "BIDS"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-pre-curation:0.4.1"
+      },
+      "license": {
+        "dependencies": [],
+        "main": {
+          "name": "MIT",
+          "url": ""
+        },
+        "non-commercial-use-only": false
+      }
+    },
+    "description": "Prepare a project for BIDS Curation. BIDS Pre-Curate offers a simple way to modify labels of project data to be compatible with the BIDS-spec. Running pre-curate on a given project (as a project-level analysis) will generate CSV files that will be populated with a unique list of container labels, as well as slots for the information needed for BIDS curation (classification, task, etc.). These CSV files can be downloaded and modified (outside of Flywheel) to provide missing or corrected information. The corrected CSV file is then uploaded to the project (as an attachment) and provided as input to a run of this same gear to do on-the-fly mappings and metadata updates. For more information, please see the readme in the source repository.",
+    "environment": {
+      "PYTHONUNBUFFERED": "1"
+    },
+    "inputs": {
+      "acquisition_table": {
+        "base": "file",
+        "description": "CSV file containing corrected acquisition information.",
+        "optional": true
+      },
+      "key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "session_table": {
+        "base": "file",
+        "description": "CSV file containing corrected session information.",
+        "optional": true
+      },
+      "subject_table": {
+        "base": "file",
+        "description": "CSV file containing corrected subject information.",
+        "optional": true
+      }
+    },
+    "label": "BIDS Pre-Curation",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "bids-pre-curate",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
+    "version": "0.4.1"
+  },
+  "exchange": {
+    "git-commit": "6172731bf46e5bacc38b336ab7d7aae1fc516462",
+    "rootfs-hash": "sha384:701e4a668529b8ab31f30bd8e1b5715ea5f714d5dc876d8985167b4704040c265138b3fc30754a12a1ae74147fda3c6f",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bids-pre-curation-sha384-701e4a668529b8ab31f30bd8e1b5715ea5f714d5dc876d8985167b4704040c265138b3fc30754a12a1ae74147fda3c6f.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS Pre-Curation",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "allowed": {
+            "default": "_-",
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "dry_run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "suggest": {
+            "default": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "allowed",
+          "debug",
+          "dry_run",
+          "suggest"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "acquisition_table": {
+            "type": "object",
+            "properties": {}
+          },
+          "key": {
+            "type": "object"
+          },
+          "session_table": {
+            "type": "object",
+            "properties": {}
+          },
+          "subject_table": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
