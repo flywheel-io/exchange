@@ -1,0 +1,143 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "poetry run python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "derived metadata": {
+        "default": true,
+        "description": "When enabled, adds derived metadata under filer.info.header.derived (e.g. ScanCoverage for Dicom CT)",
+        "type": "boolean"
+      },
+      "siemens CSA": {
+        "default": false,
+        "description": "When enabled, parses Siemens CSA header (stored in file.info.header.csa). More on info on Siemens CSA header at https://nipy.org/nibabel/dicom/siemens_csa.html.",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "file-metadata-importer",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true,
+        "suite": "Utility"
+      },
+      "gear-builder": {
+        "category": "converter",
+        "image": "flywheel/file-metadata-importer:1.4.1"
+      }
+    },
+    "description": "Import file metadata into Flywheel. Metadata is stored under file.info.header. Supports DICOM and DICOM Zip Archives, PTD (Siemens PT format), NIfTI, ParaVision (Bruker format), and PAR/REC (Philips format)",
+    "environment": {
+      "COMMIT": "main.a30a2597",
+      "COMMIT_TIME": "2022-06-21T13:24:40+00:00",
+      "EDITOR": "micro",
+      "FLYWHEEL": "/flywheel/v0",
+      "GJO_VERSION": "1.0.2",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "JQ_VERSION": "jq-1.6",
+      "LANG": "C.UTF-8",
+      "MICRO_VERSION": "2.0.10",
+      "MUSTACHE_VERSION": "1.3.1",
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PIP_NO_CACHE_DIR": "0",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.13",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "PWD": "/flywheel/v0",
+      "PYSITE": "/usr/local/lib/python3.10/site-packages",
+      "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "PYTHON_VERSION": "3.10.5",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "input-file": {
+        "base": "file",
+        "description": "Input file.",
+        "optional": false
+      }
+    },
+    "label": "File metadata importer",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-metadata-importer",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
+    "version": "1.4.1"
+  },
+  "exchange": {
+    "git-commit": "1bf36a5ac61a091e3d914bb15567c71a5c167388",
+    "rootfs-hash": "sha384:a4a497c1e638d74ac210ff95cfcd6cd4b86a0797c7d3285c99a191f0b816c4f35059b3fd8c4697f6e56804104706d6ae",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-metadata-importer-sha384-a4a497c1e638d74ac210ff95cfcd6cd4b86a0797c7d3285c99a191f0b816c4f35059b3fd8c4697f6e56804104706d6ae.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File metadata importer",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "derived metadata": {
+            "default": true,
+            "type": "boolean"
+          },
+          "siemens CSA": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "file-metadata-importer",
+            "type": "string"
+          }
+        },
+        "required": [
+          "debug",
+          "derived metadata",
+          "siemens CSA",
+          "tag"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "input-file": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "api-key",
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
