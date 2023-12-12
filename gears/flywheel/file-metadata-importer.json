@@ -31,7 +31,7 @@
     },
     "gear-builder": {
       "category": "converter",
-      "image": "flywheel/file-metadata-importer:1.4.0"
+      "image": "flywheel/file-metadata-importer:1.4.1"
     }
   },
   "description": "Import file metadata into Flywheel. Metadata is stored under file.info.header. Supports DICOM and DICOM Zip Archives, PTD (Siemens PT format), NIfTI, ParaVision (Bruker format), and PAR/REC (Philips format)",
@@ -78,5 +78,5 @@
   "name": "file-metadata-importer",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
-  "version": "1.4.0"
+  "version": "1.4.1"
 }
