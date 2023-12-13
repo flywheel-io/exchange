@@ -31,7 +31,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fw-brain-lobe-segmentation:0.1.0"
+      "image": "flywheel/brain-lobe-segmentation:0.1.1"
     }
   },
   "description": "A gear for segmenting brain lobes from brain MRI images using SynthSeg.",
@@ -72,5 +72,5 @@
   "name": "brain-lobe-segmentation",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/brain-lobe-segmentation",
   "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/SynthSeg",
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
