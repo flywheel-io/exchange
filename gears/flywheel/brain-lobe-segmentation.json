@@ -1,0 +1,81 @@
+{
+  "author": "Flywheel",
+  "cite": "FreeSurfer. Martinos Center for Biomedical Imaging, Massachusetts General Hospital. Available at https://surfer.nmr.mgh.harvard.edu\nSynthSeg: Segmentation of brain MRI scans of any contrast and resolution without retraining. B Billot, DN Greve, O Puonti, A Thielscher, K Van Leemput, B Fischl, AV Dalca, JE Iglesias. Medical Image Analysis, 83, 102789 (2023).\nRobust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets. B Billot, C Magdamo, SE Arnold, S Das, JE Iglesias. PNAS, 120(9), e2216399120 (2023).",
+  "command": "python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages.",
+      "type": "boolean"
+    },
+    "include_wm_in_lobes": {
+      "default": false,
+      "description": "Include white matter in the 'lobes'. This is done using a Nearest Neighbors approach. This can be useful for some analyses.",
+      "type": "boolean"
+    },
+    "output_original_parcellation": {
+      "default": false,
+      "description": "Additionally output the original segmentation from synthseg.",
+      "type": "boolean"
+    },
+    "save_individual_masks": {
+      "default": false,
+      "description": "Output separate files for each lobe.",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true,
+      "suite": "Image Processing - Segmentation"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/brain-lobe-segmentation:0.1.1"
+    }
+  },
+  "description": "A gear for segmenting brain lobes from brain MRI images using SynthSeg.",
+  "environment": {
+    "DEBIAN_FRONTEND": "non-interactive",
+    "FLYWHEEL": "/flywheel/v0",
+    "FREESURFER_HOME": "/opt/freesurfer",
+    "FSFAST_HOME": "/opt/freesurfer/fsfast",
+    "FSMRI_DIR": "/opt/freesurfer/mri",
+    "FS_LICENSE": "/opt/freesurfer/license.txt",
+    "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "LANG": "C.UTF-8",
+    "LOCAL_DIR": "/opt/freesurfer/local",
+    "MNI_DIR": "/opt/freesurfer/mni",
+    "PATH": "/opt/freesurfer/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/sbin:/bin:/opt/ants/bin",
+    "PWD": "/flywheel/v0",
+    "PYTHON_GET_PIP_SHA256": "9cc01665956d22b3bf057ae8287b035827bfd895da235bcea200ab3b811790b6",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/4cfa4081d27285bda1220a62a5ebf5b4bd749cdb/public/get-pip.py",
+    "PYTHON_PIP_VERSION": "23.0.1",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "PYTHON_VERSION": "3.10.13",
+    "SUBJECTS_DIR": "/opt/freesurfer/subjects"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "file-input": {
+      "base": "file",
+      "description": "Input MRI image file.",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
+    }
+  },
+  "label": "Brain Lobe Segmentation",
+  "license": "Apache-2.0",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "brain-lobe-segmentation",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/brain-lobe-segmentation",
+  "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/SynthSeg",
+  "version": "0.1.1"
+}
