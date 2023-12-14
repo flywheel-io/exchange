@@ -5,7 +5,7 @@
   "config": {
     "debug": {
       "default": false,
-      "description": "Log debug messages",
+      "description": "Log debug messages.",
       "type": "boolean"
     },
     "include_wm_in_lobes": {
@@ -20,7 +20,7 @@
     },
     "save_individual_masks": {
       "default": false,
-      "description": "Output separate files for each lobe",
+      "description": "Output separate files for each lobe.",
       "type": "boolean"
     }
   },
@@ -63,7 +63,12 @@
     },
     "file-input": {
       "base": "file",
-      "description": "Input MRI image file."
+      "description": "Input MRI image file.",
+      "type": {
+        "enum": [
+          "nifti"
+        ]
+      }
     }
   },
   "label": "Brain Lobe Segmentation",
