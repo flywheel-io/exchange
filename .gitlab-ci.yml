@@ -34,7 +34,7 @@ publish:exchange-docker:
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
     # TODO this will be revised
-    - python ./scripts/generate_invocation_schema.py ./scripts/manifest.json
+    - python scripts/generate_invocation_schema.py scripts/manifest.json
     - |-
       INVOCATION_SCHEMA=$( python \
       scripts/generate_invocation_schema.py \
