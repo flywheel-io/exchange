@@ -1,4 +1,4 @@
 include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
-    ref: 30738b53408902e42a1ce9c695fbcd793486575d
+    ref: cb80203bfeb9a2b97122695157271bda0e93749d
     file: ci/gear-exchange.yml
