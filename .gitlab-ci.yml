@@ -37,7 +37,7 @@ publish:exchange-docker:
       DIGEST_VAL=$(gcloud container images describe \
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
-    - ls
+    - ls ./bin
     # TODO this will be revised
     - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
     - |-
