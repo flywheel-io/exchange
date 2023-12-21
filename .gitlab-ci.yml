@@ -22,7 +22,7 @@ publish:exchange-docker:
     - |-
       IMAGE_NAME="${GCP_IMG_PREFIX}/${MANIFEST_NAME}:${GEAR_VERSION}"
     - echo ${MANIFEST_NAME}:${GEAR_VERSION}
-    - docker pull ${MANIFEST_NAME}:${GEAR_VERSION}
+    - docker pull flywheel/${MANIFEST_NAME}:${GEAR_VERSION}
     - |-
       docker tag ${MANIFEST_NAME}:${GEAR_VERSION} \
       ${IMAGE_NAME}
