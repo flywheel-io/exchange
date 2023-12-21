@@ -9,7 +9,7 @@ publish:exchange-docker:
   extends: .publish:exchange-docker
   rules:
     - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
-        $MANIFEST_VAL=="true"
+        $MANIFEST_VAL==""
   script:
     # TODO expecting flywheel/poetry-cow-says format
     # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
