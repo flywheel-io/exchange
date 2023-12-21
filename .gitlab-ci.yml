@@ -7,6 +7,9 @@ include:
 
 publish:exchange-docker:
   extends: .publish:exchange-docker
+  rules:
+    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
+        $MANIFEST_VAL=="true"
   script:
     # TODO expecting flywheel/poetry-cow-says format
     # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
@@ -34,6 +37,7 @@ publish:exchange-docker:
       DIGEST_VAL=$(gcloud container images describe \
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
+    - ls
     # TODO this will be revised
     - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
     - |-
