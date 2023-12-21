@@ -3,10 +3,15 @@ include:
     ref: ef4fcd765545acc32720a78cdd12f5819243ee1a
     file: ci/gear-exchange.yml
 
-
+variables:
+  CACHE_KEY: cache
+  CACHE_CLEAR: ""
 
 publish:exchange-docker:
   extends: .publish:exchange-docker
+  cache:
+    key: $CACHE_KEY
+    paths: [ .cache ]
   rules:
     - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
         $MANIFEST_VAL==""
@@ -71,3 +76,21 @@ publish:exchange-docker:
       '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
       > $tempfile && mv $tempfile $V_MANIFEST_PATH
     - cat $V_MANIFEST_PATH
+    - |-
+      git remote set-url origin \
+      https://$CI_PUSH_USER_NAME:$CI_PUSH_TOKEN@gitlab.com/$CI_PROJECT_PATH.git
+    - git config --global user.name "$CI_PUSH_USER_NAME"
+    - git config --global user.email "$CI_PUSH_USER_EMAIL"
+    - git status
+    - git branch -al
+    - git fetch --unshallow
+    - git branch -D $CI_COMMIT_REF_NAME &>/dev/null || true
+    - git checkout "$CI_COMMIT_REF_NAME"
+    - git pull origin $CI_COMMIT_REF_NAME; \
+    - |-
+      if git status --porcelain | grep -E '^(A|M|\?\?)'; then \
+      git add .; \
+      git commit -m "Auto-commit by CI/CD"; \
+      git pull origin $CI_COMMIT_REF_NAME; \
+      git push origin $CI_COMMIT_REF_NAME -vvv; \
+      fi
