@@ -24,7 +24,7 @@ publish:exchange-docker:
     - echo ${MANIFEST_NAME}:${GEAR_VERSION}
     - docker pull flywheel/${MANIFEST_NAME}:${GEAR_VERSION}
     - |-
-      docker tag ${MANIFEST_NAME}:${GEAR_VERSION} \
+      docker tag flywheel/${MANIFEST_NAME}:${GEAR_VERSION} \
       ${IMAGE_NAME}
     - |-
       docker push \
