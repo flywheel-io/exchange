@@ -21,7 +21,8 @@ publish:exchange-docker:
     - GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
     - |-
       IMAGE_NAME="${GCP_IMG_PREFIX}/${MANIFEST_NAME}:${GEAR_VERSION}"
-    - docker pull flywheel/fw-test-analysis:1.0.0
+    - echo ${MANIFEST_NAME}:${GEAR_VERSION}
+    - docker pull ${MANIFEST_NAME}:${GEAR_VERSION}
     - |-
       docker tag ${MANIFEST_NAME}:${GEAR_VERSION} \
       ${IMAGE_NAME}
