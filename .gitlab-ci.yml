@@ -10,6 +10,7 @@ publish:exchange-docker:
   script:
     # TODO expecting flywheel/poetry-cow-says format
     # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
+    - MANIFEST_VAL="flywheel/fw-test-analysis:1.0.0"
     - MANIFEST_NAME_VR="${MANIFEST_VAL#*/}"
     - MANIFEST_NAME="${MANIFEST_NAME_VR%%:*}"
     - MANIFEST_SLUG="${MANIFEST_NAME//\//-}"
@@ -34,11 +35,11 @@ publish:exchange-docker:
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
     # TODO this will be revised
-    - python scripts/generate_invocation_schema.py scripts/manifest.json
+    - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
     - |-
       INVOCATION_SCHEMA=$( python \
-      scripts/generate_invocation_schema.py \
-      scripts/manifest.json )
+      bin/generate_invocation_schema.py \
+      gears/flywheel/${MANIFEST_NAME}.json )
     - echo $INVOCATION_SCHEMA
     - SHASUM="sha256:${DIGEST_VAL}"
     - V_MANIFEST_NAME="${MANIFEST_SLUG}-sha256-${DIGEST_VAL}"
@@ -54,7 +55,7 @@ publish:exchange-docker:
     - tempdir=$( mktemp -d )
     - tempfile=$tempdir/tempfile
     - |
-      jq "{\"gear\": .}" ./scripts/manifest.json > $V_MANIFEST_PATH
+      jq "{\"gear\": .}" gears/flywheel/${MANIFEST_NAME}.json > $V_MANIFEST_PATH
     - |
       jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $V_MANIFEST_PATH \
       > $tempfile && mv $tempfile $V_MANIFEST_PATH
