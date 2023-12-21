@@ -1,6 +1,6 @@
 include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
-    ref: cb80203bfeb9a2b97122695157271bda0e93749d
+    ref: ef4fcd765545acc32720a78cdd12f5819243ee1a
     file: ci/gear-exchange.yml
 
 
@@ -37,9 +37,8 @@ publish:exchange-docker:
       DIGEST_VAL=$(gcloud container images describe \
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
-    - ls ./bin
     # TODO this will be revised
-    - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
+    # - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
     - |-
       INVOCATION_SCHEMA=$( python \
       bin/generate_invocation_schema.py \
