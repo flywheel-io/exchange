@@ -40,7 +40,7 @@
   "license": "MIT",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "fhir-bundle-exporter",
-  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-export",
-  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-export",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
   "version": "0.1.0"
 }
