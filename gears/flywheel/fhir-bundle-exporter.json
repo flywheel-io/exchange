@@ -12,7 +12,7 @@
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fhir-bundle-exporter:0.1.0"
+      "image": "flywheel/fhir-bundle-exporter:0.1.2"
     },
     "flywheel": {
       "suite": "Curation"
@@ -42,5 +42,5 @@
   "name": "fhir-bundle-exporter",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
-  "version": "0.1.0"
+  "version": "0.1.2"
 }
