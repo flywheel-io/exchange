@@ -16,7 +16,7 @@ publish:exchange-docker:
     - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
         $MANIFEST_VAL==""
   script:
-    # TODO expecting flywheel/poetry-cow-says format
+    # TODO expecting flywheel/poetry-cow-says:x.x.x format
     # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
     - MANIFEST_VAL="flywheel/fw-test-analysis:1.0.0"
     - MANIFEST_NAME_VR="${MANIFEST_VAL#*/}"
@@ -29,11 +29,11 @@ publish:exchange-docker:
       sed 's/_.*//')
     - GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
     - |-
-      IMAGE_NAME="${GCP_IMG_PREFIX}/${MANIFEST_NAME}:${GEAR_VERSION}"
-    - echo ${MANIFEST_NAME}:${GEAR_VERSION}
-    - docker pull flywheel/${MANIFEST_NAME}:${GEAR_VERSION}
+      IMAGE_NAME="${GCP_IMG_PREFIX}/${MANIFEST_NAME_VR}"
+    # - echo ${MANIFEST_NAME}:${GEAR_VERSION}
+    - docker pull flywheel/${MANIFEST_NAME_VR}
     - |-
-      docker tag flywheel/${MANIFEST_NAME}:${GEAR_VERSION} \
+      docker tag flywheel/${MANIFEST_NAME_VR} \
       ${IMAGE_NAME}
     - |-
       docker push \
@@ -43,19 +43,18 @@ publish:exchange-docker:
       $IMAGE_NAME \
       --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
     # TODO this will be revised
-    # - python bin/generate_invocation_schema.py gears/flywheel/${MANIFEST_NAME}.json
     - |-
       INVOCATION_SCHEMA=$( python \
       bin/generate_invocation_schema.py \
       gears/flywheel/${MANIFEST_NAME}.json )
-    - echo $INVOCATION_SCHEMA
+    - echo ${INVOCATION_SCHEMA}
     - SHASUM="sha256:${DIGEST_VAL}"
     - V_MANIFEST_NAME="${MANIFEST_SLUG}-sha256-${DIGEST_VAL}"
     - GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
     - MANIFEST_HIER="/${MANIFEST_NAME}"
     - MANIFEST_HIER="${MANIFEST_HIER%/*}"
     - MANIFEST_DIR="temp_manifest_dir"
-    - V_MANIFEST_PATH="manifests/test-manifest/${V_MANIFEST_NAME}.json"
+    - V_MANIFEST_PATH="manifests/${MANIFEST_DIR}/${V_MANIFEST_NAME}.json"
     - echo ${V_MANIFEST_PATH}
     - |-
       LATEST_MERGED_BRANCH=$(echo "$CI_COMMIT_TITLE" \
