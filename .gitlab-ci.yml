@@ -76,11 +76,14 @@ publish:exchange-docker:
       '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
       > $tempfile && mv $tempfile $V_MANIFEST_PATH
     - cat $V_MANIFEST_PATH
+    - /qa-ci/scripts/run.sh job git_login
+    - git remote --verbose
     - |-
       git remote set-url origin \
       https://$CI_PUSH_USER_NAME:$CI_PUSH_TOKEN@gitlab.com/$CI_PROJECT_PATH.git
-    - git config --global user.name "$CI_PUSH_USER_NAME"
-    - git config --global user.email "$CI_PUSH_USER_EMAIL"
+    - git remote --verbose
+#    - git config --global user.name "$CI_PUSH_USER_NAME"
+#    - git config --global user.email "$CI_PUSH_USER_EMAIL"
     - git status
     - git branch -al
     - git fetch --unshallow
