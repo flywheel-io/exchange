@@ -53,8 +53,9 @@ publish:exchange-docker:
     - GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
     - MANIFEST_HIER="/${MANIFEST_NAME}"
     - MANIFEST_HIER="${MANIFEST_HIER%/*}"
-    - MANIFEST_DIR="temp_manifest_dir"
-    - V_MANIFEST_PATH="manifests/test-manifest/${V_MANIFEST_NAME}.json"
+    - MANIFEST_DIR="manifests/temp_manifest_dir"
+    - mkdir -p ${MANIFEST_DIR}
+    - V_MANIFEST_PATH="${MANIFEST_DIR}/${V_MANIFEST_NAME}.json"
     - echo ${V_MANIFEST_PATH}
     - |-
       LATEST_MERGED_BRANCH=$(echo "$CI_COMMIT_TITLE" \
