@@ -13,10 +13,11 @@ publish:exchange-docker:
     key: $CACHE_KEY
     paths: [ .cache ]
   rules:
-#    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
-#        $MANIFEST_VAL==""
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH
       when: always
+#    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
+#        $MANIFEST_VAL==""
+
   script:
     - ./bin/process-manifests-mod.sh
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
