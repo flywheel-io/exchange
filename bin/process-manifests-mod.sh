@@ -20,7 +20,7 @@ GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 # processed.
 # TODO commenting below and hard coding the commit for testing
 # GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
-GIT_COMMIT_SENTINEL="8dd57317f8b07ae0a1d25a53938abb479595c48f"
+GIT_COMMIT_SENTINEL="16beb9d7b6f46ff0cf36418991e93252befa0068"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
