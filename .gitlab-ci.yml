@@ -6,7 +6,7 @@ include:
 variables:
   CACHE_KEY: cache
   CACHE_CLEAR: ""
-  GIT_DEPTH: 10
+  GIT_DEPTH: 100000
 
 publish:exchange-docker:
   extends: .publish:exchange-docker
@@ -21,8 +21,6 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
-    - /qa-ci/scripts/run.sh job git_login
-    - git diff --name-only --diff-filter=d  6297b0244246e167ff53eada5f385bd026683f05
     - ./bin/process-manifests-mod.sh
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
 #    # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
