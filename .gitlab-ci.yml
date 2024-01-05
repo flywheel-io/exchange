@@ -21,7 +21,7 @@ publish:exchange-docker:
 
   script:
     - /qa-ci/scripts/run.sh job git_login
-    - git diff --name-only --diff-filter=d 51e0d1d728b9efeff4b00e32fcc97722e2869582
+    - git diff --name-only 51e0d1d728b9efeff4b00e32fcc97722e2869582
     - ./bin/process-manifests-mod.sh
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
 #    # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
