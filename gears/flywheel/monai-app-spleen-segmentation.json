@@ -1,0 +1,95 @@
+{
+  "author": "Flywheel <support@flywheel.io>",
+  "cite": "https://github.com/Project-MONAI/monai-deploy-app-sdk/tree/main/examples/apps/ai_spleen_seg_app",
+  "command": "python run.py",
+  "config": {
+    "debug": {
+      "type": "boolean",
+      "description": "Log debug messages",
+      "default": false
+    }
+  },
+  "description": "Run MONAI Spleen Segmentation Application",
+  "environment": {
+    "PATH": "/opt/conda/lib/python3.8/site-packages/torch_tensorrt/bin:/opt/conda/bin:/opt/cmake-3.19.3-Linux-$(uname -m)/bin/:/usr/local/mpi/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/tensorrt/bin",
+    "CUDA_VERSION": "11.5.0.029",
+    "CUDA_DRIVER_VERSION": "495.29.05",
+    "CUDA_CACHE_DISABLE": "1",
+    "_CUDA_COMPAT_PATH": "/usr/local/cuda/compat",
+    "ENV": "/etc/shinit_v2",
+    "BASH_ENV": "/etc/bash.bashrc",
+    "NVIDIA_REQUIRE_CUDA": "cuda>=9.0",
+    "NCCL_VERSION": "2.11.4+cuda11.4",
+    "CUBLAS_VERSION": "11.7.3.1",
+    "CUFFT_VERSION": "10.6.0.54",
+    "CURAND_VERSION": "10.2.6.48",
+    "CUSPARSE_VERSION": "11.7.0.31",
+    "CUSOLVER_VERSION": "11.2.1.48",
+    "CUTENSOR_VERSION": "1.3.2.3",
+    "NPP_VERSION": "11.5.1.53",
+    "NVJPEG_VERSION": "11.5.3.48",
+    "CUDNN_VERSION": "8.3.0.96",
+    "TRT_VERSION": "8.0.3.4+cuda11.3.1.005",
+    "TRTOSS_VERSION": "21.10",
+    "NSIGHT_SYSTEMS_VERSION": "2021.3.2.4",
+    "NSIGHT_COMPUTE_VERSION": "2021.3.0.13",
+    "DALI_VERSION": "1.7.0",
+    "DALI_BUILD": "3161358",
+    "DLPROF_VERSION": "21.11",
+    "LD_LIBRARY_PATH": "/opt/conda/lib/python3.8/site-packages/torch/lib:/opt/conda/lib/python3.8/site-packages/torch_tensorrt/lib:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,video",
+    "NVIDIA_PRODUCT_NAME": "PyTorch",
+    "GDRCOPY_VERSION": "2.3",
+    "HPCX_VERSION": "2.9.0",
+    "MOFED_VERSION": "5.4-rdmacore36.0",
+    "OPENUCX_VERSION": "1.11.0-rc1",
+    "OPENMPI_VERSION": "4.1.1",
+    "RDMACORE_VERSION": "36.0",
+    "OPAL_PREFIX": "/opt/hpcx/ompi",
+    "OMPI_MCA_coll_hcoll_enable": "0",
+    "LIBRARY_PATH": "/usr/local/cuda/lib64/stubs:",
+    "PYTORCH_BUILD_VERSION": "1.11.0a0+b6df043",
+    "PYTORCH_VERSION": "1.11.0a0+b6df043",
+    "PYTORCH_BUILD_NUMBER": "0",
+    "NVIDIA_PYTORCH_VERSION": "21.11",
+    "NVM_DIR": "/usr/local/nvm",
+    "JUPYTER_PORT": "8888",
+    "TENSORBOARD_PORT": "6006",
+    "TORCH_CUDA_ARCH_LIST": "5.2 6.0 6.1 7.0 7.5 8.0 8.6+PTX",
+    "CUDA_HOME": "/usr/local/cuda",
+    "COCOAPI_VERSION": "2.0+nv0.5.1",
+    "PYTHONIOENCODING": "utf-8",
+    "LC_ALL": "C.UTF-8",
+    "NVIDIA_BUILD_ID": "29224839",
+    "FLYWHEEL": "/flywheel/v0",
+    "POETRY_VIRTUALENVS_CREATE": "false"
+  },
+  "custom": {
+    "gear-builder": {
+      "image": "monai-app-spleen-segmentation:0.1.0",
+      "category": "analysis"
+    },
+    "flywheel": {
+      "show-job": true
+    }
+  },
+  "inputs": {
+    "dicom-file": {
+      "base": "file",
+      "optional": false,
+      "type": {
+        "enum": [
+          "dicom"
+        ]
+      },
+      "description": "A DICOM archive file"
+    }
+  },
+  "label": "MONAI Spleen Segmentation App",
+  "name": "monai-app-spleen-segmentation",
+  "source": "https://github.com/Project-MONAI/monai-deploy-app-sdk/tree/main/examples/apps/ai_spleen_seg_app",
+  "url": "",
+  "license": "MIT",
+  "version": "0.1.0"
+}
