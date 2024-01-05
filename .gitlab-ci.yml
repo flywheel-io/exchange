@@ -22,6 +22,7 @@ publish:exchange-docker:
 
   script:
     - chmod +x ./bin/process-manifests-mod.sh
+    - ./bin/process-manifests-mod.sh get_manifests_list
     - result=$(./bin/process-manifests-mod.sh get_manifests_list 2>&1)
     - echo "Results from get_manifests_list - ${result}"
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format

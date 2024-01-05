@@ -338,25 +338,25 @@ publish_global_manifest() {
 }
 
 function get_manifests_list(){
-  >&2 echo "On branch $GIT_BRANCH"
+  echo "On branch $GIT_BRANCH"
 
-    local manifests
+  local manifests
 
-    if [ -z "$GIT_COMMIT_SENTINEL" ]; then
-        >&2 echo "Using all manifests"
-        manifests=$(find "$GEARS_DIR" "$BOUTIQUES_DIR" -iname "*.json")
-        >&2 echo "$manifests"
-    else
-        >&2 echo "Using updated manifests"
-        echo "GIT_COMMIT_SENTINEL: $GIT_COMMIT_SENTINEL"
-        manifests=$(git diff --name-only --diff-filter=d "$GIT_COMMIT_SENTINEL" | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
-        >&2 echo "$manifests"
-    fi
+  if [ -z "$GIT_COMMIT_SENTINEL" ]; then
+      echo "Using all manifests"
+      manifests=$(find "$GEARS_DIR" "$BOUTIQUES_DIR" -iname "*.json")
+      echo "$manifests"
+  else
+      echo "Using updated manifests"
+      echo "GIT_COMMIT_SENTINEL: $GIT_COMMIT_SENTINEL"
+      manifests=$(git diff --name-only --diff-filter=d "$GIT_COMMIT_SENTINEL" | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
+      echo "$manifests"
+  fi
 
-    if [ -z "$manifests" ]; then
-        >&2 echo "No manifests to process or validate"
-        exit 0
-    fi
+  if [ -z "$manifests" ]; then
+      echo "No manifests to process or validate"
+      exit 0
+  fi
 
     echo "$manifests"
 }
