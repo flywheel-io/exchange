@@ -21,7 +21,8 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
-    - ./bin/process-manifests-mod.sh
+    - result=$(./bin/process-manifests-mod.sh get_manifests_list)
+    - echo $result
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
 #    # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
 #    - MANIFEST_VAL="flywheel/fw-test-analysis:1.0.0"
