@@ -15,7 +15,7 @@ publish:exchange-docker:
   rules:
 #    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
 #        $MANIFEST_VAL==""
-    - if: '$CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"'
+    -  if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH
       when: always
   script:
     - ./bin/process-manifests-mod.sh
