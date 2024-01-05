@@ -345,6 +345,9 @@ if [ -z "$GIT_COMMIT_SENTINEL" ]; then
     >&2 echo "$manifests"
 else
     >&2 echo "Using updated manifests"
+    git log
+    git log --oneline
+    git rev-parse --verify $GIT_COMMIT_SENTINEL
     git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL
     manifests=$( git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
     >&2 echo "$manifests"
