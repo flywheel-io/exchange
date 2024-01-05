@@ -20,7 +20,7 @@ GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 # processed.
 # TODO commenting below and hard coding the commit for testing
 # GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
-GIT_COMMIT_SENTINEL="367cf594070b4b4ea1ac71951918d17535374d85"
+GIT_COMMIT_SENTINEL="8dd57317f8b07ae0a1d25a53938abb479595c48f"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
@@ -346,7 +346,8 @@ if [ -z "$GIT_COMMIT_SENTINEL" ]; then
 else
     >&2 echo "Using updated manifests"
     echo "GIT_COMMIT_SENTINEL: $GIT_COMMIT_SENTINEL"
-#    manifests=$( git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
+    git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL
+    manifests=$( git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
     >&2 echo "$manifests"
 fi
 if [ -z "$manifests" ]; then
