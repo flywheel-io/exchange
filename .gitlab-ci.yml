@@ -13,8 +13,7 @@ publish:exchange-docker:
     key: $CACHE_KEY
     paths: [ .cache ]
   rules:
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      when: always
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 #    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
 #      when: always
 #    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
