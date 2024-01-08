@@ -358,7 +358,23 @@ function get_manifests_list(){
       exit 0
   fi
 
-    echo "$manifests"
+    export manifests  # Export the manifests variable
+    echo "Exported manifests variable: $manifests"
+
+    #if [ $GIT_BRANCH == "master" ]; then
+#    >&2 echo "Processing..."
+#    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
+#        >&2 echo "Error: EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
+#        exit 1
+#    fi
+#    set -eu
+#    process_manifests "$manifests"
+#    publish_global_manifest
+#else
+#    >&2 echo "Validating..."
+#    set -eu
+#    validate_manifests "$manifests"
+#fi
 }
 #>&2 echo "On branch $GIT_BRANCH"
 #if [ -z "$GIT_COMMIT_SENTINEL" ]; then
