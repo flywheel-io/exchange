@@ -246,42 +246,52 @@ function process_manifests() {
                 manifest_version=""
             fi
             >&2 echo "Docker image: $docker_image"
+            # Docker image: flywheel/fw-test-analysis:1.0.0
             >&2 echo "Manifest version: $manifest_version"
+            # Manifest version: 1.0.0
 
-#            beta_exchange="$( jq -r '.custom.flywheel.beta_exchange' $manifest_path)"
-#            if [ "$beta_exchange" == "true" ]; then
-#                echo "Pulling image $docker_image"
-#                docker pull $docker_image
-#                # Get docker image digest
-#                digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
-#                # Strip off just the sha256 hash value
-#                sha256=$(printf "$digest" | sed 's/.*\://')
-#                v_manifest_name="$manifest_slug-sha256-$sha256"
-#                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-#                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
-#
-#                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
-#
-#                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#
-#                jq ".exchange.\"rootfs-hash\" = \"sha256:$sha256\" |
-#                    .exchange.\"rootfs-url\" =
-#                        \"docker://$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#
-#                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-#                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-#
-#                exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
-#                docker tag $docker_image $exchange_image
-#                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
-#                    --password-stdin \
-#                    https://us-docker.pkg.dev
-#                docker push $exchange_image
-#            else
+            beta_exchange="$( jq -r '.custom.flywheel.beta_exchange' $manifest_path)"
+            if [ "$beta_exchange" == "true" ]; then
+                echo "Pulling image $docker_image"
+                docker pull $docker_image
+                # Get docker image digest
+                digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
+                # Strip off just the sha256 hash value
+                sha256=$(printf "$digest" | sed 's/.*\://')
+                v_manifest_name="$manifest_slug-sha256-$sha256"
+                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
+                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+
+                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
+
+                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+
+                jq ".exchange.\"rootfs-hash\" = \"sha256:$sha256\" |
+                    .exchange.\"rootfs-url\" =
+                        \"docker://$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+
+                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
+                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+                    > $tempfile && mv $tempfile $v_manifest_path
+                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
+
+                exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
+                docker tag $docker_image $exchange_image
+                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
+                    --password-stdin \
+                    https://us-docker.pkg.dev
+                docker push $exchange_image
+            else
+                >&2 echo "Skipping beta exchange"
+                GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
+                IMAGE_NAME="${GCP_IMG_PREFIX}/${manifest_name}:${manifest_version}"
+                >&2 echo "IMAGE_NAME: $IMAGE_NAME"
+                >&2 echo " Pulling docker image $docker_image"
+                docker pull ${docker_image}
+
+            fi
 #                container=$( docker create $docker_image /bin/true )
 #                rootfs_path="$tempdir/$manifest_slug.tgz"
 #                >&2 echo "Exporting container"
@@ -325,13 +335,13 @@ function process_manifests() {
         fi
     done
 
-    if git push -q $GIT_REMOTE $GIT_BRANCH; then
-        >&2 echo "Git push successful"
-    else
-        >&2 echo "Git push failed"
-        EXIT_STATUS=1
-        cleanup
-    fi
+#    if git push -q $GIT_REMOTE $GIT_BRANCH; then
+#        >&2 echo "Git push successful"
+#    else
+#        >&2 echo "Git push failed"
+#        EXIT_STATUS=1
+#        cleanup
+#    fi
 }
 
 
