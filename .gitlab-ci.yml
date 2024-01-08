@@ -21,6 +21,7 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
+    - env
     - ./bin/process-manifests-mod.sh
 
 #    - source ./bin/process-manifests-mod.sh
