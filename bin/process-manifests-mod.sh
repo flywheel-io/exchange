@@ -27,6 +27,9 @@ GIT_COMMIT_SENTINEL="edc20abe2eba9f393e9477d3c2bd315cf8f4ba61"
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
+# Accessing predefined GitLab CI environment variables
+echo "CI_COMMIT_BRANCH is: $CI_COMMIT_BRANCH"
+echo "CI_COMMIT_SHA is: $CI_COMMIT_SHA"
 
 git_config_cleanup () {
     git config --local --remove-section user 2>/dev/null || true
