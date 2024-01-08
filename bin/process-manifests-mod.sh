@@ -48,6 +48,9 @@ if ! $( git diff-index --quiet HEAD -- ); then
     exit 1
 fi
 
+echo $CI_PUSH_USER_NAME
+echo $CI_PUSH_USER_EMAIL
+
 if ! $( git config --get user.email &> /dev/null ); then
     git config --local user.email "service+github-flywheel-exchange@flywheel.io"
     git config --local user.name "Flywheel Exchange Bot"
