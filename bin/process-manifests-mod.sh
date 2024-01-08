@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -eEuo pipefail
 
 
@@ -362,7 +362,7 @@ function get_manifests_list(){
 
     export manifests  # Export the manifests variable
     echo "Exported manifests variable: $manifests"
-
+get_manifests_list
     #if [ $GIT_BRANCH == "master" ]; then
 #    >&2 echo "Processing..."
 #    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
