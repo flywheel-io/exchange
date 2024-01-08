@@ -48,25 +48,22 @@ if ! $( git diff-index --quiet HEAD -- ); then
     exit 1
 fi
 
-echo $CI_PUSH_USER_NAME
-echo $CI_PUSH_USER_EMAIL
-
 if ! $( git config --get user.email &> /dev/null ); then
-    git config --local user.email "service+github-flywheel-exchange@flywheel.io"
-    git config --local user.name "Flywheel Exchange Bot"
+    git config --local user.email $CI_PUSH_USER_EMAIL
+    git config --local user.name $CI_PUSH_USER_NAME
 fi
-
-# TODO
-if [ ! -z "$EXCHANGE_SERVICE_ACCOUNTT" ]; then
-    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
-    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
-fi
-
-if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
-    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
-fi
+#
+## TODO
+#if [ ! -z "$EXCHANGE_SERVICE_ACCOUNTT" ]; then
+#    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
+#    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
+#    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
+#    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
+#fi
+#
+#if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
+#    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
+#fi
 
 
 function gear_version_already_exists() {
@@ -366,7 +363,11 @@ function get_manifests_list(){
 
     export manifests  # Export the manifests variable
     echo "Exported manifests variable: $manifests"
+
 get_manifests_list
+
+#exit $EXIT_STATUS
+
     #if [ $GIT_BRANCH == "master" ]; then
 #    >&2 echo "Processing..."
 #    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
@@ -414,4 +415,4 @@ get_manifests_list
 #    validate_manifests "$manifests"
 #fi
 
-exit $EXIT_STATUS
+
