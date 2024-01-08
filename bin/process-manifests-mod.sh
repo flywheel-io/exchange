@@ -26,12 +26,12 @@ GIT_COMMIT_SENTINEL="16beb9d7b6f46ff0cf36418991e93252befa0068"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
-
-
-git_config_cleanup () {
-    git config --local --remove-section user 2>/dev/null || true
-}
-trap git_config_cleanup EXIT
+#
+#
+#git_config_cleanup () {
+#    git config --local --remove-section user 2>/dev/null || true
+#}
+#trap git_config_cleanup EXIT
 
 
 if [ $BASH_VERSION \< 4.2 ]; then
