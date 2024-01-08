@@ -290,7 +290,8 @@ function process_manifests() {
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
                 >&2 echo " Pulling docker image $docker_image"
                 docker pull ${docker_image}
-
+                docker tag ${docker_image} ${IMAGE_NAME}
+                gcloud container images describe us-docker.pkg.dev/flywheel-exchange/gear-exchange/flywheel/poetry-cow-say --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}'
             fi
 #                container=$( docker create $docker_image /bin/true )
 #                rootfs_path="$tempdir/$manifest_slug.tgz"
