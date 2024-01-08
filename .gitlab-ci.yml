@@ -21,12 +21,17 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
-    - source ./bin/process-manifests-mod.sh
-    - export manifests="abc"
-    - echo $manifests
+    - export_manifests=$(source ./bin/process-manifests-mod.sh && echo $manifests)
+    - echo "Exported manifests: $export_manifests"
     - ./bin/process-manifests-mod.sh get_manifests_list
-    - echo $manifests
-    - echo "${manifests}"
+    - echo "Manifests after get_manifests_list: $manifests"
+
+#    - source ./bin/process-manifests-mod.sh
+#    - export manifests="abc"
+#    - echo $manifests
+#    - ./bin/process-manifests-mod.sh get_manifests_list
+#    - echo $manifests
+#    - echo "${manifests}"
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
 #    # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
 #    - MANIFEST_VAL="flywheel/fw-test-analysis:1.0.0"
