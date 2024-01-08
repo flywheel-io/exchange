@@ -368,6 +368,8 @@ function get_manifests_list() {
 
 get_manifests_list
 >&2 echo "Exported manifests variable: $manifests"
+
+>&2 echo "On branch $CI_COMMIT_BRANCH"
 if [ $GIT_BRANCH == "GEAR-2518-exchange-CI-plugin" ]; then
     >&2 echo "Processing..."
     # TODO figure out the exchange stuff
