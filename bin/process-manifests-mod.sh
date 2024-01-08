@@ -108,6 +108,7 @@ function validate_manifest() {
         gear_version="$( jq -r '.version' $2 )"
         gear_dir="${2%/*}"
         gear_org="${gear_dir##*/}"
+        echo "GEAR VERSION CHECK ---> $gear_org" "$gear_name" "$gear_version"
         if gear_version_already_exists "$gear_org" "$gear_name" "$gear_version" ; then
           >&2 echo "Error: Candidate gear already strongly versioned. Submit the gear to the exchange with a unique version." && exit 1
         fi
