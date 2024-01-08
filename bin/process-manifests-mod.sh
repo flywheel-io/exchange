@@ -345,7 +345,7 @@ publish_global_manifest() {
 function get_manifests_list() {
   >&2 echo "On branch $GIT_BRANCH"
 
-  local manifests
+#  local manifests
 
   if [ -z "$GIT_COMMIT_SENTINEL" ]; then
     >&2 echo "Using all manifests"
@@ -368,8 +368,8 @@ function get_manifests_list() {
 }
 
 get_manifests_list
-
-if [ $GIT_BRANCH == "master" ]; then
+>&2 echo "Exported manifests variable: $manifests"
+if [ $GIT_BRANCH == "GEAR-2518-exchange-CI-plugin" ]; then
     >&2 echo "Processing..."
     # TODO figure out the exchange stuff
 #    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
