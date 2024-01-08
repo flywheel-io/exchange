@@ -21,13 +21,13 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
-    - sh ./bin/process-manifests-mod.sh get_manifests_list
+    - ./bin/process-manifests-mod.sh get_manifests_list
     - echo "Exported manifests - $export_manifests"
-#    - source ./bin/process-manifests-mod.sh && echo "$manifests" > manifest_file.txt
-#    - export_manifests=$(cat manifest_file.txt)
-#    - echo "Exported manifests - $export_manifests"
-#    - ./bin/process-manifests-mod.sh get_manifests_list
-#    - echo "Manifests after get_manifests_list - $manifests"
+    - source ./bin/process-manifests-mod.sh && echo "$manifests" > manifest_file.txt
+    - export_manifests=$(cat manifest_file.txt)
+    - echo "Exported manifests - $export_manifests"
+    - ./bin/process-manifests-mod.sh get_manifests_list
+    - echo "Manifests after get_manifests_list - $manifests"
 
 #    - source ./bin/process-manifests-mod.sh
 #    - export manifests="abc"
