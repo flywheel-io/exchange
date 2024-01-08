@@ -26,12 +26,12 @@ GIT_COMMIT_SENTINEL="16beb9d7b6f46ff0cf36418991e93252befa0068"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
-#
-#
-#git_config_cleanup () {
-#    git config --local --remove-section user 2>/dev/null || true
-#}
-#trap git_config_cleanup EXIT
+
+
+git_config_cleanup () {
+    git config --local --remove-section user 2>/dev/null || true
+}
+trap git_config_cleanup EXIT
 
 
 if [ $BASH_VERSION \< 4.2 ]; then
@@ -54,16 +54,16 @@ if ! $( git config --get user.email &> /dev/null ); then
 fi
 #
 ## TODO
-#if [ ! -z "$EXCHANGE_SERVICE_ACCOUNTT" ]; then
-#    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-#    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-#    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
-#    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
-#fi
-#
-#if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
-#    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
-#fi
+if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
+    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
+    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
+    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
+    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
+fi
+
+if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
+    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
+fi
 
 
 function gear_version_already_exists() {
