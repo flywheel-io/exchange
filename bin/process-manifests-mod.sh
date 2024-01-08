@@ -28,7 +28,7 @@ BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
 # Accessing predefined GitLab CI environment variables
-echo "CI_COMMIT_BRANCH is: $CI_COMMIT_BRANCH"
+echo "CI_COMMIT_REF_NAME is: $CI_COMMIT_REF_NAME"
 echo "CI_COMMIT_SHA is: $CI_COMMIT_SHA"
 
 git_config_cleanup () {
@@ -372,7 +372,7 @@ function get_manifests_list() {
 get_manifests_list
 >&2 echo "Exported manifests variable: $manifests"
 
->&2 echo "On branch $CI_COMMIT_BRANCH"
+>&2 echo "On branch ${CI_COMMIT_REF_NAME}"
 if [ $GIT_BRANCH == "GEAR-2518-exchange-CI-plugin" ]; then
     >&2 echo "Processing..."
     # TODO figure out the exchange stuff
