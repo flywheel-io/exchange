@@ -2,7 +2,7 @@
   "name": "fw-test-analysis",
   "label": "FW QA Test Analysis Gear",
   "description": "Analysis Gear that can be configured to pass or fail",
-  "version": "1.0.999",
+  "version": "1.0.0",
   "inputs": {
     "file": {
       "base": "file",
@@ -31,7 +31,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fw-test-analysis:1.0.999"
+      "image": "flywheel/fw-test-analysis:1.0.0"
     }
   }
 }

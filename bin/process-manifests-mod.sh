@@ -22,7 +22,7 @@ GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 # processed.
 # TODO commenting below and hard coding the commit for testing
 # GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
-GIT_COMMIT_SENTINEL="16beb9d7b6f46ff0cf36418991e93252befa0068"
+GIT_COMMIT_SENTINEL="edc20abe2eba9f393e9477d3c2bd315cf8f4ba61"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
@@ -344,8 +344,6 @@ publish_global_manifest() {
 
 function get_manifests_list() {
   >&2 echo "On branch $GIT_BRANCH"
-
-#  local manifests
 
   if [ -z "$GIT_COMMIT_SENTINEL" ]; then
     >&2 echo "Using all manifests"
