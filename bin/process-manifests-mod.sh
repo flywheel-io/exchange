@@ -285,6 +285,7 @@ function process_manifests() {
                 docker push $exchange_image
             else
                 >&2 echo "Skipping beta exchange"
+                echo "env"
                 GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
                 IMAGE_NAME="${GCP_IMG_PREFIX}/${manifest_name}:${manifest_version}"
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
@@ -294,6 +295,7 @@ function process_manifests() {
                 gcloud config list account
 
                 gcloud auth list --format="value(account)"
+                gcloud container images list --repository=us-docker.pkg.dev/flywheel-exchange/gear-exchange
 
                 gcloud container images describe us-docker.pkg.dev/flywheel-exchange/gear-exchange/flywheel/poetry-cow-say --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}'
             fi
