@@ -292,11 +292,14 @@ function process_manifests() {
                 >&2 echo " Pulling docker image $docker_image"
                 docker pull ${docker_image}
                 docker tag ${docker_image} ${IMAGE_NAME}
-                gcloud config list account
-
-                gcloud auth list --format="value(account)"
-                gcloud container images list --repository=us-docker.pkg.dev/flywheel-exchange/gear-exchange
-                gcloud container images describe us-docker.pkg.dev/flywheel-exchange/gear-exchange/poetry-cow-say --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}'
+                docker push ${IMAGE_NAME}
+                DIGEST_VAL=$(gcloud container images describe $IMAGE_NAME --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
+                >&2 echo "DIGEST_VAL: $DIGEST_VAL"
+#                gcloud config list account
+#
+#                gcloud auth list --format="value(account)"
+#                gcloud container images list --repository=us-docker.pkg.dev/flywheel-exchange/gear-exchange
+#                gcloud container images describe us-docker.pkg.dev/flywheel-exchange/gear-exchange/poetry-cow-say:2.2.2 --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}'
             fi
 #                container=$( docker create $docker_image /bin/true )
 #                rootfs_path="$tempdir/$manifest_slug.tgz"
