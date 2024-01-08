@@ -22,7 +22,7 @@ publish:exchange-docker:
 
   script:
     - source ./bin/process-manifests-mod.sh
-    - export manifests="abc
+    - export manifests="abc"
     - echo $manifests
     - ./bin/process-manifests-mod.sh get_manifests_list
     - echo $manifests
