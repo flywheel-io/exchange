@@ -295,6 +295,8 @@ function process_manifests() {
                 docker push ${IMAGE_NAME}
                 DIGEST_VAL=$(gcloud container images describe $IMAGE_NAME --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
                 >&2 echo "DIGEST_VAL: $DIGEST_VAL"
+                INVOCATION_SCHEMA=$( python bin/generate_invocation_schema.py ${manifest_path} )
+                >&2 echo ${INVOCATION_SCHEMA}
 #                gcloud config list account
 #
 #                gcloud auth list --format="value(account)"
