@@ -383,7 +383,7 @@ get_manifests_list
 #    set -eu
 #    validate_manifests "$manifests"
 #fi
-}
+
 #>&2 echo "On branch $GIT_BRANCH"
 #if [ -z "$GIT_COMMIT_SENTINEL" ]; then
 #    >&2 echo "Using all manifests"
