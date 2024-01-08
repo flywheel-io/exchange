@@ -21,8 +21,11 @@ publish:exchange-docker:
 #        $MANIFEST_VAL==""
 
   script:
-    - chmod +x ./bin/process-manifests-mod.sh
+    - source ./bin/process-manifests-mod.sh
+    - export manifests="abc
+    - echo $manifests
     - ./bin/process-manifests-mod.sh get_manifests_list
+    - echo $manifests
     - echo "${manifests}"
 #    # TODO expecting flywheel/poetry-cow-says:x.x.x format
 #    # - MANIFEST_NAME="${CI_MERGE_REQUEST_TITLE}"
