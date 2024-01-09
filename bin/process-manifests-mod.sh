@@ -315,21 +315,16 @@ function process_manifests() {
                 jq ".exchange.\"rootfs-hash\" = \"$SHASUM\" | .exchange.\"image-name\" = \"$IMAGE_NAME\"" $V_MANIFEST_PATH \
                     > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
 
-#                INVOCATION_SCHEMA=$( python bin/generate_invocation_schema.py ${manifest_path} )
                 INVOCATION_SCHEMA=$( derive_invocation_schema $manifest_type $manifest_path )
-                cat $INVOCATION_SCHEMA
                 >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-#                jq ".\"invocation-schema\" = $INVOCATION_SCHEMA" $V_MANIFEST_PATH \
-#                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
                 jq --argjson content "$(cat $INVOCATION_SCHEMA)" '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
                     > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
                 cat ${V_MANIFEST_PATH}
-#                gcloud config list account
-#
-#                gcloud auth list --format="value(account)"
-#                gcloud container images list --repository=us-docker.pkg.dev/flywheel-exchange/gear-exchange
-#                gcloud container images describe us-docker.pkg.dev/flywheel-exchange/gear-exchange/poetry-cow-say:2.2.2 --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}'
             fi
+
+            /qa-ci/scripts/run.sh job git_login
+            git remote --verbose
+
 #                container=$( docker create $docker_image /bin/true )
 #                rootfs_path="$tempdir/$manifest_slug.tgz"
 #                >&2 echo "Exporting container"
