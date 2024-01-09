@@ -323,26 +323,26 @@ function process_manifests() {
             fi
             env
             /qa-ci/scripts/run.sh job git_login
-#            git add $V_MANIFEST_PATH
+            git add $V_MANIFEST_PATH
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
             cat $SENTINEL_FILENAME
-#            git add $SENTINEL_FILENAME
+            git add $SENTINEL_FILENAME
             echo "Process $manifest_type $manifest_name $manifest_version"
-#            git commit -m "Process $manifest_type $manifest_name $manifest_version"
-#            git branch -D $CI_COMMIT_REF_NAME &>/dev/null || true
-#            git checkout "$CI_COMMIT_REF_NAME"
-#            git pull origin $CI_COMMIT_REF_NAME
-#            git status --porcelain
+            git commit -m "Process $manifest_type $manifest_name $manifest_version"
+
+            rm -rf $tempdir
         fi
     done
 
-#    if git push -q $GIT_REMOTE $GIT_BRANCH; then
-#        >&2 echo "Git push successful"
-#    else
-#        >&2 echo "Git push failed"
-#        EXIT_STATUS=1
-#        cleanup
-#    fi
+    if git push -q $GIT_REMOTE $GIT_BRANCH; then
+        >&2 echo "Git push successful"
+    else
+        >&2 echo "Git push failed"
+        EXIT_STATUS=1
+        cleanup
+    fi
+
+
 }
 
 
