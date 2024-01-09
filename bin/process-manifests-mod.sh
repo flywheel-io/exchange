@@ -27,10 +27,6 @@ GIT_COMMIT_SENTINEL="edc20abe2eba9f393e9477d3c2bd315cf8f4ba61"
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
 
-# Accessing predefined GitLab CI environment variables
-echo "CI_COMMIT_REF_NAME is: $CI_COMMIT_REF_NAME"
-echo "CI_COMMIT_SHA is: $CI_COMMIT_SHA"
-
 git_config_cleanup () {
     git config --local --remove-section user 2>/dev/null || true
 }
@@ -325,24 +321,24 @@ function process_manifests() {
             /qa-ci/scripts/run.sh job git_login
             git branch
             git status
-#            git add $V_MANIFEST_PATH
-#            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
-#            cat $SENTINEL_FILENAME
-#            git add $SENTINEL_FILENAME
-#            echo "Process $manifest_type $manifest_name $manifest_version"
-#            git commit -m "Process $manifest_type $manifest_name $manifest_version"
+            git add $V_MANIFEST_PATH
+            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
+            cat $SENTINEL_FILENAME
+            git add $SENTINEL_FILENAME
+            echo "Process $manifest_type $manifest_name $manifest_version"
+            git commit -m "Process $manifest_type $manifest_name $manifest_version"
 
             rm -rf $tempdir
         fi
     done
 
-#    if git push -q $GIT_REMOTE $GIT_BRANCH; then
-#        >&2 echo "Git push successful"
-#    else
-#        >&2 echo "Git push failed"
-#        EXIT_STATUS=1
-#        cleanup
-#    fi
+    if git push -q $GIT_REMOTE HEAD:$CI_COMMIT_REF_NAME; then
+        >&2 echo "Git push successful"
+    else
+        >&2 echo "Git push failed"
+        EXIT_STATUS=1
+        cleanup
+    fi
 
 
 }
