@@ -252,12 +252,13 @@ function process_manifests() {
 
             beta_exchange="$( jq -r '.custom.flywheel.beta_exchange' $manifest_path)"
             if [ "$beta_exchange" == "true" ]; then
-                echo "Pulling image $docker_image"
-                docker pull $docker_image
+                >&2 echo "Pulling docker image $docker_image"
+                docker pull ${docker_image}
                 # Get docker image digest
                 digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
                 # Strip off just the sha256 hash value
                 sha256=$(printf "$digest" | sed 's/.*\://')
+
                 v_manifest_name="$manifest_slug-sha256-$sha256"
                 v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
                 mkdir -p "$MANIFESTS_DIR/$manifest_hier"
@@ -279,35 +280,48 @@ function process_manifests() {
 
                 exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
                 docker tag $docker_image $exchange_image
-                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
-                    --password-stdin \
-                    https://us-docker.pkg.dev
+                # commenting this part out as the variable is not defined
+#                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
+#                    --password-stdin \
+#                    https://us-docker.pkg.dev
                 docker push $exchange_image
             else
                 >&2 echo "Skipping beta exchange"
-                >&2 echo "Printing all environment variables:"
-                env
-                GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
-                IMAGE_NAME="${GCP_IMG_PREFIX}/${manifest_name}:${manifest_version}"
+#                GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
+                IMAGE_NAME="${$EXCHANGE_ARTIFACT_REGISTRY_URL}/${manifest_name}:${manifest_version}"
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
-                >&2 echo " Pulling docker image $docker_image"
+                >&2 echo "Pulling docker image $docker_image"
                 docker pull ${docker_image}
                 docker tag ${docker_image} ${IMAGE_NAME}
                 docker push ${IMAGE_NAME}
                 DIGEST_VAL=$(gcloud container images describe $IMAGE_NAME --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
                 >&2 echo "DIGEST_VAL: $DIGEST_VAL"
-                INVOCATION_SCHEMA=$( python bin/generate_invocation_schema.py ${manifest_path} )
-                >&2 echo "${INVOCATION_SCHEMA}"
-                cat ${INVOCATION_SCHEMA}
+
+
                 SHASUM="sha256:${DIGEST_VAL}"
                 echo "SHASUM: $SHASUM"
                 V_MANIFEST_NAME="${manifest_slug}-sha256-${DIGEST_VAL}"
                 >&2 echo "V_MANIFEST_NAME: $V_MANIFEST_NAME"
-                GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
+
                 >&2 echo "GIT_COMMIT_CURRENT: $GIT_COMMIT_CURRENT"
                 V_MANIFEST_PATH="${MANIFESTS_DIR}/${manifest_hier}/${V_MANIFEST_NAME}.json"
                 mkdir -p "$MANIFESTS_DIR/$manifest_hier"
                 echo ${V_MANIFEST_PATH}
+                jq "{\"$manifest_type\": .}" ${manifest_path} > ${V_MANIFEST_PATH}
+                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" ${V_MANIFEST_PATH} \
+                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+                jq ".exchange.\"rootfs-hash\" = \"$SHASUM\" | .exchange.\"image-name\" = \"$IMAGE_NAME\"" $V_MANIFEST_PATH \
+                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+
+#                INVOCATION_SCHEMA=$( python bin/generate_invocation_schema.py ${manifest_path} )
+                INVOCATION_SCHEMA=$( derive_invocation_schema $manifest_type $manifest_path )
+                cat $INVOCATION_SCHEMA
+                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
+                jq ".\"invocation-schema\" = $INVOCATION_SCHEMA" $V_MANIFEST_PATH \
+                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+#                jq --argjson content "$(cat $INVOCATION_SCHEMA)" '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
+#                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+                cat ${V_MANIFEST_PATH}
 #                gcloud config list account
 #
 #                gcloud auth list --format="value(account)"
