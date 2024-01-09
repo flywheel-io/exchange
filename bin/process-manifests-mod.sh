@@ -323,48 +323,11 @@ function process_manifests() {
             fi
 
             /qa-ci/scripts/run.sh job git_login
-            git remote --verbose
-
-#                container=$( docker create $docker_image /bin/true )
-#                rootfs_path="$tempdir/$manifest_slug.tgz"
-#                >&2 echo "Exporting container"
-#                docker export $container | gzip -n > $rootfs_path
-#                shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
-#                #docker rm $container # fails on CircleCI
-#
-#                v_manifest_name="$manifest_slug-sha384-$shasum"
-#                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-#                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
-#
-#                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
-#
-#                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#
-#                jq ".exchange.\"rootfs-hash\" = \"sha384:$shasum\" | .exchange.\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#
-#                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-#                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
-#                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-#
-#                rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
-#                mv $rootfs_path $rootfs_hash_path
-#                gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
-#                BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
-#
-#                exchange_image="$GCR_HOST_PROJECT/$manifest_slug:$manifest_version"
-#                docker tag $docker_image $exchange_image
-#                gcloud docker -- push $exchange_image
-#            fi
-#
-#            git add $v_manifest_path
-#            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
-#            git add $SENTINEL_FILENAME
-#            git commit -m "Process $manifest_type $manifest_name $manifest_version"
-#
-#            rm -rf $tempdir
+            git fetch --unshallow
+            git branch -D $CI_COMMIT_REF_NAME &>/dev/null || true
+            git checkout "$CI_COMMIT_REF_NAME"
+            git pull origin $CI_COMMIT_REF_NAME
+            git status --porcelain
         fi
     done
 
