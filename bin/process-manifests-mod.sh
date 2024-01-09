@@ -274,7 +274,9 @@ function process_manifests() {
                     > $tempfile && mv $tempfile $v_manifest_path
 
                 invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+#                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
+#                    > $tempfile && mv $tempfile $v_manifest_path
+                jq --argjson content "$(cat $invocation_schema)" '.["invocation-schema"] = $content' $v_manifest_path \
                     > $tempfile && mv $tempfile $v_manifest_path
                 >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
 
@@ -317,10 +319,10 @@ function process_manifests() {
                 INVOCATION_SCHEMA=$( derive_invocation_schema $manifest_type $manifest_path )
                 cat $INVOCATION_SCHEMA
                 >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-                jq ".\"invocation-schema\" = $INVOCATION_SCHEMA" $V_MANIFEST_PATH \
-                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
-#                jq --argjson content "$(cat $INVOCATION_SCHEMA)" '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
+#                jq ".\"invocation-schema\" = $INVOCATION_SCHEMA" $V_MANIFEST_PATH \
 #                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+                jq --argjson content "$(cat $INVOCATION_SCHEMA)" '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
+                    > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
                 cat ${V_MANIFEST_PATH}
 #                gcloud config list account
 #
