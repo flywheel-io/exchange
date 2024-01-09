@@ -1,7 +1,7 @@
 {
   "name": "fw-test-analysis",
   "label": "FW QA Test Analysis Gear",
-  "description": "Analysis Gear that can be configured to pass or fail   ",
+  "description": "Analysis Gear that can be configured to pass or fail     ",
   "version": "1.0.0",
   "inputs": {
     "file": {
