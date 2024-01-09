@@ -245,7 +245,7 @@ function process_manifests() {
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
                 manifest_version=""
             fi
-            >&2 echo "Docker image: $docker_image"
+            >&2 echo "Docker image: ${docker_image}"
             # Docker image: flywheel/fw-test-analysis:1.0.0
             >&2 echo "Manifest version: $manifest_version"
             # Manifest version: 1.0.0
@@ -288,7 +288,7 @@ function process_manifests() {
             else
                 >&2 echo "Skipping beta exchange"
 #                GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
-                IMAGE_NAME="${$EXCHANGE_ARTIFACT_REGISTRY_URL}/${manifest_name}:${manifest_version}"
+                IMAGE_NAME="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
                 >&2 echo "Pulling docker image $docker_image"
                 docker pull ${docker_image}
