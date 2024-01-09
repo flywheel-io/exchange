@@ -321,12 +321,11 @@ function process_manifests() {
                     > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
                 cat ${V_MANIFEST_PATH}
             fi
-
+            env
             /qa-ci/scripts/run.sh job git_login
-            git fetch --unshallow
-            git branch -D $CI_COMMIT_REF_NAME &>/dev/null || true
-            git checkout "$CI_COMMIT_REF_NAME"
-            git pull origin $CI_COMMIT_REF_NAME
+#            git branch -D $CI_COMMIT_REF_NAME &>/dev/null || true
+#            git checkout "$CI_COMMIT_REF_NAME"
+#            git pull origin $CI_COMMIT_REF_NAME
             git status --porcelain
         fi
     done
