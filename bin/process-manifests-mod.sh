@@ -194,7 +194,7 @@ function validate_manifests() {
 
 function derive_invocation_schema() {
     if [ "$1" == "gear" ]; then
-        echo $( python -m gears generate-invocation-schema "$2" )
+        echo $( python bin/generate_invocation_schema.py "$2" )
     elif [ "$1" == "boutique" ]; then
         # FIXME add invocation schema generation for boutiques
         echo "{\"WARNING\": \"Invocation schema validation for boutiques not yet implemented\"}"
