@@ -17,7 +17,7 @@ publish:exchange-docker:
     # TODO change this to DEFAULT_BRANCH when merged
     - changes:
         - "gears/**/*"
-      when: $CI_PIPELINE_SOURCE == "merge_request_event"
+      if: $CI_PIPELINE_SOURCE == "merge_request_event"
 #    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 #      # only run when there are changes in the gears directory
 #      changes:
