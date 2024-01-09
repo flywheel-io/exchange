@@ -285,7 +285,8 @@ function process_manifests() {
                 docker push $exchange_image
             else
                 >&2 echo "Skipping beta exchange"
-                echo "env"
+                >&2 echo "Printing all environment variables:"
+                env
                 GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
                 IMAGE_NAME="${GCP_IMG_PREFIX}/${manifest_name}:${manifest_version}"
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
@@ -297,6 +298,15 @@ function process_manifests() {
                 >&2 echo "DIGEST_VAL: $DIGEST_VAL"
                 INVOCATION_SCHEMA=$( python bin/generate_invocation_schema.py ${manifest_path} )
                 >&2 echo "${INVOCATION_SCHEMA}"
+                SHASUM="sha256:${DIGEST_VAL}"
+                echo "SHASUM: $SHASUM"
+                V_MANIFEST_NAME="${manifest_slug}-sha256-${DIGEST_VAL}"
+                >&2 echo "V_MANIFEST_NAME: $V_MANIFEST_NAME"
+                GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
+                >&2 echo "GIT_COMMIT_CURRENT: $GIT_COMMIT_CURRENT"
+                V_MANIFEST_PATH="${MANIFEST_DIR}/${manifest_hier}/${V_MANIFEST_NAME}.json"
+                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+                echo ${V_MANIFEST_PATH}
 #                gcloud config list account
 #
 #                gcloud auth list --format="value(account)"
