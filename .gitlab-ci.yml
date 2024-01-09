@@ -15,14 +15,16 @@ publish:exchange-docker:
     paths: [ .cache ]
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - gears/*
 #    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
 #      when: always
 #    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
 #        $MANIFEST_VAL==""
 
   script:
-    - gcloud container images list --repository=us-docker.pkg.dev/flywheel-exchange/gear-exchange
-    - ./bin/process-manifests-mod.sh
+    - echo "hello"
+#    - ./bin/process-manifests-mod.sh
 
 #    - source ./bin/process-manifests-mod.sh
 #    - export manifests="abc"
