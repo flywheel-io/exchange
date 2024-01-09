@@ -16,7 +16,7 @@ publish:exchange-docker:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
-        - gears/*
+        - gears/**/*
 #    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
 #      when: always
 #    - if: $CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ &&
