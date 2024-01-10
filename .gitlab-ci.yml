@@ -21,7 +21,7 @@ publish:exchange-docker:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       # only run when there are changes in the gears directory
       changes:
-        - "gears/**/*.json"
+        - gears/**/*.json
 
   script:
     # TODO move changes to the actual shell script
