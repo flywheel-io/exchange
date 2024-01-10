@@ -14,8 +14,10 @@ publish:exchange-docker:
     key: $CACHE_KEY
     paths: [ .cache ]
   only:
+    refs:
+      - branches
     changes:
-      - gears/vistalab/*.json
+        - gears/vistalab/*.json
 #  rules:
 #    # TODO change this to DEFAULT_BRANCH when merged
 ##    - changes:
