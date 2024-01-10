@@ -15,8 +15,8 @@ publish:exchange-docker:
     paths: [ .cache ]
   rules:
     - if: "$CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ && $CI_COMMIT_BRANCH == 'GEAR-2518-exchange-CI-plugin'"
-      exists:
-        - "gears/**/*"
+#      exists:
+#        - "gears/**/*"
 #      changes:
 #        paths:
 #          - "gears/**/*"
