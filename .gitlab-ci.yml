@@ -21,7 +21,7 @@ publish:exchange-docker:
     - if: $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
       # only run when there are changes in the gears directory
       changes:
-        - gears/flywheel/*.json
+        - gears/**/*.json
   before_script:
     - echo "nothing"
   script:
