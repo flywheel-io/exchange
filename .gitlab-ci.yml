@@ -18,7 +18,7 @@ publish:exchange-docker:
 #    - changes:
 #        - "./gears/*"
 #      if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
       # only run when there are changes in the gears directory
       changes:
         - gears/flywheel/*.json
