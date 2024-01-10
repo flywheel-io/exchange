@@ -21,7 +21,7 @@ publish:exchange-docker:
         paths:
           - "gears/vistalab/*.json"
           - "gears/vistalab/*/*.json"
-        compare_to: $CI_COMMIT_BRANCH
+        compare_to: "f306549661541b99852eca5c701ed814f5516a3f"
       when: always
 #    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 #      when: never
