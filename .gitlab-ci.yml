@@ -16,11 +16,10 @@ publish:exchange-docker:
   rules:
     - if: "$CI_PIPELINE_SOURCE =~ /^(merge_request_event|web|api)$/ && $MANIFEST_VAL =~ /^[a-zA-Z0-9_-]+\\/[a-zA-Z0-9_.:-]+$/ && $CI_COMMIT_BRANCH == 'GEAR-2518-exchange-CI-plugin'"
       exists:
-        - "gears/vistalab/*.json"
+        - "gears/**/*"
       changes:
         paths:
-          - "gears/vistalab/*.json"
-          - "gears/vistalab/*/*.json"
+          - "gears/**/*"
         compare_to: "f306549661541b99852eca5c701ed814f5516a3f"
       when: always
 #    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
