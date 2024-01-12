@@ -1,47 +1,47 @@
 {
   "author": "Flywheel <support@flywheel.io>",
   "cite": "dicom3tools: 1993-2021, David A. Clunie DBA PixelMed Publishing.",
-  "command": "poetry run python run.py",
+  "command": "python run.py",
   "config": {
     "check_bed_moving": {
+      "default": true,
       "description": "Check for duplicate slice positions (ImagePositionPatient)",
-      "type": "boolean",
-      "default": true
-    },
-    "check_embedded_localizer": {
-      "description": "Check for existance of embedded localizer",
-      "type": "boolean",
-      "default": true
-    },
-    "check_instance_number_uniqueness": {
-      "description": "Check for uniqueness of InstanceNumber",
-      "type": "boolean",
-      "default": true
-    },
-    "check_series_consistency": {
-      "description": "Check for inconsistent SeriesNumber",
-      "type": "boolean",
-      "default": true
-    },
-    "check_slice_consistency": {
-      "description": "Check for inconsistent slice locations",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     },
     "check_dciodvfy": {
+      "default": true,
       "description": "Use dciodvfy (dicom iod verify) binary to check for compliance.",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
+    },
+    "check_embedded_localizer": {
+      "default": true,
+      "description": "Check for existance of embedded localizer",
+      "type": "boolean"
+    },
+    "check_instance_number_uniqueness": {
+      "default": true,
+      "description": "Check for uniqueness of InstanceNumber",
+      "type": "boolean"
+    },
+    "check_series_consistency": {
+      "default": true,
+      "description": "Check for inconsistent SeriesNumber",
+      "type": "boolean"
+    },
+    "check_slice_consistency": {
+      "default": true,
+      "description": "Check for inconsistent slice locations",
+      "type": "boolean"
+    },
+    "debug": {
+      "default": false,
+      "description": "Include debug output",
+      "type": "boolean"
     },
     "tag": {
       "default": "dicom-qc",
       "description": "The tag to be added on input file upon run completion.",
       "type": "string"
-    },
-    "debug": {
-      "description": "Include debug output",
-      "type": "boolean",
-      "default": false
     }
   },
   "custom": {
@@ -50,36 +50,40 @@
     },
     "gear-builder": {
       "category": "qa",
-      "image": "flywheel/dicom-qc:0.4.9"
+      "image": "flywheel/dicom-qc:0.4.10"
     }
   },
   "description": "Validate dicom archive on a set of hardcoded and user-specified rules",
   "environment": {
+    "COMMIT": "main.bcc9ef6b",
+    "COMMIT_TIME": "2022-01-21T16:12:11+00:00",
+    "EDITOR": "micro",
+    "FLYWHEEL": "/flywheel/v0",
+    "GDCM_VERSION": "3.0.10",
+    "GJO_VERSION": "1.0.2",
+    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+    "JQ_VERSION": "jq-1.6",
+    "LANG": "C.UTF-8",
+    "MICRO_VERSION": "2.0.10",
+    "MUSTACHE_VERSION": "1.3.1",
     "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "PIP_NO_CACHE_DIR": "0",
     "POETRY_HOME": "/opt/poetry",
     "POETRY_VERSION": "1.1.12",
     "POETRY_VIRTUALENVS_CREATE": "false",
-    "FLYWHEEL": "/flywheel/v0",
-    "LANG": "C.UTF-8",
-    "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
-    "PYTHON_VERSION": "3.9.10",
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "PYTHON_GET_PIP_SHA256": "c518250e91a70d7b20cceb15272209a4ded2a0c263ae5776f129e0d9b5674309",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/3cb8888cc2869620f57d5d2da64da38f516078c7/public/get-pip.py",
     "PYTHON_PIP_VERSION": "21.2.4",
     "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
-    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/3cb8888cc2869620f57d5d2da64da38f516078c7/public/get-pip.py",
-    "PYTHON_GET_PIP_SHA256": "c518250e91a70d7b20cceb15272209a4ded2a0c263ae5776f129e0d9b5674309",
-    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
-    "MICRO_VERSION": "2.0.10",
-    "EDITOR": "micro",
-    "MUSTACHE_VERSION": "1.3.1",
-    "GJO_VERSION": "1.0.2",
-    "JQ_VERSION": "jq-1.6",
-    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
-    "COMMIT": "main.bcc9ef6b",
-    "COMMIT_TIME": "2022-01-21T16:12:11+00:00",
-    "GDCM_VERSION": "3.0.10"
+    "PYTHON_VERSION": "3.9.10",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib"
   },
   "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
     "dicom": {
       "base": "file",
       "description": "Dicom Archive",
@@ -99,17 +103,13 @@
           "source code"
         ]
       }
-    },
-    "api-key": {
-      "base": "api-key",
-      "read-only": true
     }
   },
   "label": "Dicom QC",
   "license": "BSD-3-Clause",
   "maintainer": "Flywheel <support@flywheel.io>",
   "name": "dicom-qc",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/dicom-qc/-/blob/master/README.md",
-  "version": "0.4.9"
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/dicom-qc",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/dicom-qc/-/blob/master/README.md",
+  "version": "0.4.10"
 }
