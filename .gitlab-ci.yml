@@ -14,32 +14,14 @@ publish:exchange-docker:
     key: $CACHE_KEY
     paths: [ .cache ]
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       exists:
         - "gears/**/*"
       changes:
         paths:
           - "gears/**/*"
-        compare_to: "master"
+#        compare_to: "master"
       when: always
-#    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#      when: never
-#    - if: $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
-#    - exists:
-#        - "gears/vistalab/*.json"
-#    - changes:
-#        - "gears/vistalab/*.json"
-#    - changes:
-#        - "gears/vistalab/*/*.json"
-#  rules:
-#    # TODO change this to DEFAULT_BRANCH when merged
-##    - changes:
-##        - "./gears/*"
-##      if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#    - if: $CI_COMMIT_BRANCH == "GEAR-2518-exchange-CI-plugin"
-#      # only run when there are changes in the gears directory
-#      changes:
-#        - gears/vistalab/*.json
   before_script:
     - echo "nothing"
   script:
