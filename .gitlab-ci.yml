@@ -22,4 +22,4 @@ publish:exchange-docker:
           - "gears/**/*"
 #        compare_to: "master"
   script:
-    - ./bin/process-manifests-mod.sh
+    - ./bin/process-manifests.sh
