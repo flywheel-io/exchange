@@ -21,10 +21,5 @@ publish:exchange-docker:
         paths:
           - "gears/**/*"
 #        compare_to: "master"
-      when: always
-  before_script:
-    - echo "nothing"
   script:
-    - echo "test"
-    # TODO move changes to the actual shell script
-#    - ./bin/process-manifests-mod.sh
+    - ./bin/process-manifests-mod.sh
