@@ -34,32 +34,39 @@ git_config_cleanup () {
 trap git_config_cleanup EXIT
 
 
-if [ $BASH_VERSION \< 4.2 ]; then
+# shellcheck disable=SC2072
+if [ "$BASH_VERSION" \< 4.2 ]; then
     >&2 echo "This script requires bash version 4.2 or greater."
     exit 1
 fi
 
+# shellcheck disable=SC2091
 if ! $( git status &> /dev/null ); then
     >&2 echo "This script must be run from within a git repo."
     exit 1
 fi
+# shellcheck disable=SC2091
 if ! $( git diff-index --quiet HEAD -- ); then
     >&2 echo "This script can only be run in a clean git repo."
     exit 1
 fi
 
+# shellcheck disable=SC2091
 if ! $( git config --get user.email &> /dev/null ); then
-    git config --local user.email $CI_PUSH_USER_EMAIL
+    git config --local user.email "$CI_PUSH_USER_EMAIL"
+    # shellcheck disable=SC2086
     git config --local user.name $CI_PUSH_USER_NAME
 fi
 
 if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
     GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
     # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
+    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > "$GCLOUD_SERVICE_ACCOUNT_FILE"
+    # shellcheck disable=SC2086
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
 
+# shellcheck disable=SC2166
 if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
     echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
 fi
@@ -77,8 +84,8 @@ function gear_version_already_exists() {
 
     if [ -d "$MANIFESTS_DIR/$gear_org" ]; then
         for f in "$MANIFESTS_DIR/$gear_org/"*.json ; do
-            v_gear_name="$( jq -r '.gear.name' $f )"
-            v_gear_version="$( jq -r '.gear.version' $f )"
+            v_gear_name="$( jq -r '.gear.name' "$f" )"
+            v_gear_version="$( jq -r '.gear.version' "$f" )"
 
             if [[ "$gear_name" == "$v_gear_name" && "$gear_version" == "$v_gear_version" ]] ; then
                 >&2 echo "Strongly versioned gear '$gear_name' of version '$gear_version' found in file '$f'"
@@ -103,8 +110,8 @@ function validate_manifest() {
 
     if [ "$1" == "gear" ]; then
         # Validate that strongly versioned gear with same name and version doesn't already exist.
-        gear_name="$( jq -r '.name' $2 )"
-        gear_version="$( jq -r '.version' $2 )"
+        gear_name="$( jq -r '.name' "$2" )"
+        gear_version="$( jq -r '.version' "$2" )"
         gear_dir="${2%/*}"
         gear_org="${gear_dir##*/}"
         if gear_version_already_exists "$gear_org" "$gear_name" "$gear_version" ; then
@@ -115,13 +122,15 @@ function validate_manifest() {
         if [ ! -v GEAR_SCHEMA_PATH ]; then
             >&2 echo "Installing gear schema"
             GEAR_SCHEMA_PATH=$( mktemp )
-            curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
+            curl -s $GEAR_SCHEMA_URL > "$GEAR_SCHEMA_PATH"
         fi
+        # shellcheck disable=SC2086
         python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
 
         # Confirm the image is valid.
-        docker_image="$( jq -r '.custom."gear-builder".image' $2 )"
+        docker_image="$( jq -r '.custom."gear-builder".image' "$2" )"
         if [ "$docker_image" == 'null' ]; then
+            # shellcheck disable=SC2086
             docker_image="$( jq -r '.custom."docker-image"' $2 )"
         fi
 
@@ -151,7 +160,7 @@ function validate_manifest() {
         # Curl for the image root and check the response for its existence
         response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/")
         if [[ ${response} != *"Object not found"* ]]; then
-          image_info=$(echo ${response} | jq '."results"[]["name"]' | sort)
+          image_info=$(echo "${response}" | jq '."results"[]["name"]' | sort)
         else
           echo "Image: \"${docker_image}\" does not exist" && exit 1
         fi
@@ -165,10 +174,11 @@ function validate_manifest() {
         if [ ! -v BOUTIQUE_SCHEMA_PATH ]; then
             >&2 echo "Installing boutique schema"
             BOUTIQUE_SCHEMA_PATH=$( mktemp )
-            curl -s $BOUTIQUE_SCHEMA_URL > $BOUTIQUE_SCHEMA_PATH
-            jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH # FIXME upgrade to full boutiques and remove this hack
+            curl -s $BOUTIQUE_SCHEMA_URL > "$BOUTIQUE_SCHEMA_PATH"
+            # shellcheck disable=SC2086
+            jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > "$BOUTIQUE_SCHEMA_PATH"- && mv "$BOUTIQUE_SCHEMA_PATH"- $BOUTIQUE_SCHEMA_PATH # FIXME upgrade to full boutiques and remove this hack
         fi
-        python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
+        python -m jsonschema -i "$2" "$BOUTIQUE_SCHEMA_PATH"
     else
         >&2 echo "Manifest validation for type \"$1\" not implemented"
         return 1
@@ -182,13 +192,14 @@ function validate_manifests() {
         manifest_name="${manifest_path#*/}"
         manifest_name="${manifest_name%.json}"
         >&2 echo "Validating $manifest_type $manifest_name"
-        validate_manifest $manifest_type $manifest_path
+        validate_manifest "$manifest_type" "$manifest_path"
     done
 }
 
 
 function derive_invocation_schema() {
     if [ "$1" == "gear" ]; then
+        # shellcheck disable=SC2046
         echo $( python bin/generate_invocation_schema.py "$2" )
     elif [ "$1" == "boutique" ]; then
         # FIXME add invocation schema generation for boutiques
@@ -202,10 +213,11 @@ function derive_invocation_schema() {
 
 cleanup () {
     >&2 echo "Restoring git commit history"
-    git reset --hard $GIT_COMMIT_CURRENT
+    git reset --hard "$GIT_COMMIT_CURRENT"
     >&2 echo "Attempting to remove build artifacts"
+    # shellcheck disable=SC2086
     gsutil rm $BUILD_ARTIFACTS
-    gcloud container images delete --quiet $exchange_image
+    gcloud container images delete --quiet "$exchange_image"
     >&2 echo "Build artifacts removed successfully"
 }
 
@@ -220,7 +232,8 @@ function process_manifests() {
         manifest_slug="${manifest_name//\//-}"
         >&2 echo "Processing manifest $manifest_type $manifest_name"
 
-        if ! validate_manifest $manifest_type $manifest_path; then
+        # shellcheck disable=SC2086
+        if ! validate_manifest "$manifest_type" $manifest_path; then
             >&2 echo "Schema validation failed for $manifest_type $manifest_name"
             EXIT_STATUS=1
             cleanup
@@ -252,6 +265,7 @@ function process_manifests() {
                 # Get docker image digest
                 digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
                 # Strip off just the sha256 hash value
+                # shellcheck disable=SC2059
                 sha256=$(printf "$digest" | sed 's/.*\://')
 
                 v_manifest_name="$manifest_slug-sha256-$sha256"
@@ -269,8 +283,6 @@ function process_manifests() {
                     > $tempfile && mv $tempfile $v_manifest_path
 
                 invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-#                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-#                    > $tempfile && mv $tempfile $v_manifest_path
                 jq --argjson content "$(cat $invocation_schema)" '.["invocation-schema"] = $content' $v_manifest_path \
                     > $tempfile && mv $tempfile $v_manifest_path
                 >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
@@ -284,7 +296,6 @@ function process_manifests() {
                 docker push $exchange_image
             else
                 >&2 echo "Skipping beta exchange"
-#                GCP_IMG_PREFIX="us-docker.pkg.dev/flywheel-exchange/gear-exchange"
                 IMAGE_NAME="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
                 >&2 echo "IMAGE_NAME: $IMAGE_NAME"
                 >&2 echo "Pulling docker image $docker_image"
@@ -329,7 +340,8 @@ function process_manifests() {
         fi
     done
 
-    if git push -q $GIT_REMOTE HEAD:$CI_COMMIT_REF_NAME; then
+    # shellcheck disable=SC2086
+    if git push -q "$GIT_REMOTE" HEAD:$CI_COMMIT_REF_NAME; then
         >&2 echo "Git push successful"
     else
         >&2 echo "Git push failed"
@@ -339,15 +351,16 @@ function process_manifests() {
 }
 
 publish_global_manifest() {
-#    >&2 echo "Publish global manifest - NOT AVAILABLE YET"
     >&2 echo "Publish global manifest"
+    # shellcheck disable=SC2038
     find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
     git fetch origin gh-pages-json
     git checkout gh-pages-json
     mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
     git add $EXCHANGE_JSON
     git commit --amend --reset-author -m "Add exchange.json"
-    git push -f $GIT_REMOTE  gh-pages-json
+    git push -f "$GIT_REMOTE"  gh-pages-json
+    # shellcheck disable=SC2086
     git checkout $GIT_BRANCH
 }
 function get_manifests_list() {
