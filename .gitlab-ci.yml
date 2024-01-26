@@ -2,8 +2,3 @@ include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
     ref: 9f765b76dd080f1c0c68df918f328d39187ab10c
     file: ci/gear-exchange.yml
-
-variables:
-  CACHE_KEY: cache
-  CACHE_CLEAR: ""
-  GIT_DEPTH: 100000
