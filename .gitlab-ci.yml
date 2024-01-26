@@ -1,25 +1,9 @@
 include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
-    ref: ef4fcd765545acc32720a78cdd12f5819243ee1a
+    ref: 9f765b76dd080f1c0c68df918f328d39187ab10c
     file: ci/gear-exchange.yml
 
 variables:
   CACHE_KEY: cache
   CACHE_CLEAR: ""
   GIT_DEPTH: 100000
-
-publish:exchange-docker:
-  extends: .publish:exchange-docker
-  cache:
-    key: $CACHE_KEY
-    paths: [ .cache ]
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      exists:
-        - "gears/**/*"
-      changes:
-        paths:
-          - "gears/**/*"
-#        compare_to: "master"
-  script:
-    - ./bin/process-manifests.sh
