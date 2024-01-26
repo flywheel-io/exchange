@@ -318,24 +318,24 @@ function process_manifests() {
             fi
             env
             /qa-ci/scripts/run.sh job git_login
-#            git add $V_MANIFEST_PATH
-#            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
-#            cat $SENTINEL_FILENAME
-#            git add $SENTINEL_FILENAME
-#            echo "Process $manifest_type $manifest_name $manifest_version"
-#            git commit -m "Process $manifest_type $manifest_name $manifest_version"
+            git add $V_MANIFEST_PATH
+            echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
+            cat $SENTINEL_FILENAME
+            git add $SENTINEL_FILENAME
+            echo "Process $manifest_type $manifest_name $manifest_version"
+            git commit -m "Process $manifest_type $manifest_name $manifest_version"
 
             rm -rf $tempdir
         fi
     done
 
-#    if git push -q $GIT_REMOTE HEAD:$CI_COMMIT_REF_NAME; then
-#        >&2 echo "Git push successful"
-#    else
-#        >&2 echo "Git push failed"
-#        EXIT_STATUS=1
-#        cleanup
-#    fi
+    if git push -q $GIT_REMOTE HEAD:$CI_COMMIT_REF_NAME; then
+        >&2 echo "Git push successful"
+    else
+        >&2 echo "Git push failed"
+        EXIT_STATUS=1
+        cleanup
+    fi
 }
 
 publish_global_manifest() {
