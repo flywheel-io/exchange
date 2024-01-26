@@ -346,6 +346,8 @@ publish_global_manifest() {
     git checkout gh-pages-json
 #    mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
     echo $EXCHANGE_JSON
+    cat .$EXCHANGE_JSON
+    cat $EXCHANGE_JSON
 #    git add $EXCHANGE_JSON
 #    git commit --amend --reset-author -m "Add exchange.json"
 #    git push -f $GIT_REMOTE  gh-pages-json
