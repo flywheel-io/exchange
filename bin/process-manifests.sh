@@ -383,7 +383,7 @@ if [ "${CI_COMMIT_REF_NAME}" == "GEAR-2518-exchange-CI-plugin" ]; then
 #    fi
     set -eu
     process_manifests "$manifests"
-#    publish_global_manifest
+    publish_global_manifest
 else
     >&2 echo "Validating..."
     set -eu
