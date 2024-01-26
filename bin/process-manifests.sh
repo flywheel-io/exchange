@@ -318,8 +318,6 @@ function process_manifests() {
             fi
             env
             /qa-ci/scripts/run.sh job git_login
-            git branch
-            git status
             git add $V_MANIFEST_PATH
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
             cat $SENTINEL_FILENAME
@@ -346,10 +344,11 @@ publish_global_manifest() {
     find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
     git checkout gh-pages-json
     mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
-    git add $EXCHANGE_JSON
-    git commit --amend --reset-author -m "Add exchange.json"
-    git push -f $GIT_REMOTE  gh-pages-json
-    git checkout $GIT_BRANCH
+    echo $EXCHANGE_JSON
+#    git add $EXCHANGE_JSON
+#    git commit --amend --reset-author -m "Add exchange.json"
+#    git push -f $GIT_REMOTE  gh-pages-json
+#    git checkout $GIT_BRANCH
 }
 function get_manifests_list() {
   >&2 echo "On branch $CI_COMMIT_REF_NAME"
@@ -376,7 +375,7 @@ function get_manifests_list() {
 get_manifests_list
 >&2 echo "Exported manifests variable: $manifests"
 
-if [ "${CI_COMMIT_REF_NAME}" == "fw-test-analysis" ]; then
+if [ "${CI_COMMIT_REF_NAME}" == "GEAR-2518-exchange-CI-plugin" ]; then
     >&2 echo "Processing..."
 #    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
 #        >&2 echo "Error: EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
