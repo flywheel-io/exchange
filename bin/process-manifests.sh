@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-#set -eEuo pipefail
-set -x  # Enable debugging
+
+# Set strict error handling
+set -eEuo pipefail
+#set -x  # Enable debugging
 
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
