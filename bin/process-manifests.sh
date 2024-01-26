@@ -342,8 +342,9 @@ publish_global_manifest() {
 #    >&2 echo "Publish global manifest - NOT AVAILABLE YET"
     >&2 echo "Publish global manifest"
     find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
+    git fetch origin gh-pages-json
     git checkout gh-pages-json
-    mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
+#    mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
     echo $EXCHANGE_JSON
 #    git add $EXCHANGE_JSON
 #    git commit --amend --reset-author -m "Add exchange.json"
