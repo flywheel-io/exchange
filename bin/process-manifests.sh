@@ -375,7 +375,7 @@ function get_manifests_list() {
 get_manifests_list
 >&2 echo "Exported manifests variable: $manifests"
 
-if [ "${CI_COMMIT_REF_NAME}" == "GEAR-2518-exchange-CI-plugin" ]; then
+if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
     >&2 echo "Processing..."
 #    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
 #        >&2 echo "Error: EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
