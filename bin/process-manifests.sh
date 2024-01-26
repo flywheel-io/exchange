@@ -22,9 +22,7 @@ GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 # which a manifest was generated successfully. This is used to determine which
 # gears and boutiques have since been changed or added and thus need to be
 # processed.
-# TODO commenting below and hard coding the commit for testing
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
-#GIT_COMMIT_SENTINEL="edc20abe2eba9f393e9477d3c2bd315cf8f4ba61"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
