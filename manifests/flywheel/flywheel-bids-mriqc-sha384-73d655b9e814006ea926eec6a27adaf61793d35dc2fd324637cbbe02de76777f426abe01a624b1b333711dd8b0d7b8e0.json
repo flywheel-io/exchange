@@ -1,0 +1,175 @@
+{
+  "gear": {
+    "author": "Poldrack Lab, Stanford University",
+    "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+    "command": "/opt/flypy/bin/python run.py",
+    "config": {
+      "bids_app_command": {
+        "default": "",
+        "description": "OPTIONAL. The gear will run the algorithm defaults, if no command is supplied. For usage, see https://mriqc.readthedocs.io/en/latest/running.html#command-line-interface. Example command: mriqc bids_dir output_dir participant [arg1 [arg2 ...]]",
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Do everything Flywheel-related except actually execute BIDS App command. Different from passing '--dry-run' in the BIDS App command.",
+        "type": "boolean"
+      },
+      "gear-post-processing-only": {
+        "default": false,
+        "description": "REQUIRES archive file. Gear will skip the BIDS algorithm and go straight to generating the HTML reports and processing metadata.",
+        "type": "boolean"
+      },
+      "no-sub": {
+        "description": "Turn off submission of anonymized quality metrics to MRIQC’s metrics repository",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "analysis-level": "participant",
+      "bids-app-binary": "mriqc",
+      "bids-app-modalities": [
+        "anat",
+        "func",
+        "dwi",
+        "perf"
+      ],
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-mriqc:2.0.0_23.1.0"
+      },
+      "license": {
+        "main": {
+          "name": "MIT"
+        },
+        "dependencies": [
+          {
+            "name": "Other",
+            "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+          },
+          {
+            "name": "Other",
+            "url": "https://github.com/ANTsX/ANTs/blob/v2.3.4/COPYING.txt"
+          },
+          {
+            "name": "Other",
+            "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/License"
+          }
+        ],
+        "non-commercial-use-only": true
+      }
+    },
+    "description": "MRIQC (23.1.0) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  For more commandline options, please visit https://mriqc.readthedocs.io/en/latest/running.html. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+    "environment": {
+      "PATH": "/opt/conda/bin:/opt/ants:/opt/afni:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "en_US.UTF-8",
+      "LC_ALL": "en_US.UTF-8",
+      "CONDA_PATH": "/opt/conda",
+      "CPATH": "/opt/conda/include:",
+      "PYTHONNOUSERSITE": "1",
+      "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/opt/conda/lib",
+      "AFNI_DIR": "/opt/afni",
+      "AFNI_IMSAVE_WARNINGS": "NO",
+      "AFNI_MODELPATH": "/opt/afni/models",
+      "AFNI_TTATLAS_DATASET": "/opt/afni/atlases",
+      "AFNI_PLUGINPATH": "/opt/afni/plugins",
+      "ANTSPATH": "/opt/ants",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "IS_DOCKER_8395080871": "1",
+      "HOME": "/home/mriqc",
+      "FLYWHEEL": "/flywheel/v0",
+      "PYTHONUNBUFFERED": "1"
+    },
+    "inputs": {
+      "archived_runs": {
+        "base": "file",
+        "description": "Zip file with data or analyses from previous runs (e.g., FreeSurfer archive)",
+        "optional": true
+      },
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      }
+    },
+    "label": "BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
+    "license": "Other",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "bids-mriqc",
+    "source": "https://github.com/nipreps/mriqc/tree/master",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-apps/bids-mriqc",
+    "version": "2.0.0_23.1.0"
+  },
+  "exchange": {
+    "git-commit": "49ec4ffc0edda7470eed17446f80bb32050e2708",
+    "rootfs-hash": "sha384:73d655b9e814006ea926eec6a27adaf61793d35dc2fd324637cbbe02de76777f426abe01a624b1b333711dd8b0d7b8e0",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-bids-mriqc-sha384-73d655b9e814006ea926eec6a27adaf61793d35dc2fd324637cbbe02de76777f426abe01a624b1b333711dd8b0d7b8e0.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "bids_app_command": {
+            "default": "",
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-post-processing-only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "no-sub": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "bids_app_command",
+          "debug",
+          "gear-dry-run",
+          "gear-post-processing-only",
+          "no-sub"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "archived_runs": {
+            "type": "object",
+            "properties": {}
+          },
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
