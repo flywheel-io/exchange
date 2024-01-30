@@ -2,3 +2,55 @@ include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
     ref: dc3eb0cf8f45e958861ec2806a0d2b5410b6f9c8
     file: ci/gear-exchange.yml
+
+publish:exchange-docker:
+  extends: .publish:exchange-docker
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache
+      - /usr/local/gcloud/google-cloud-sdk
+  rules:
+    - if: $TEST == "force"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      exists:
+        - "gears/**/*"
+      changes:
+        paths:
+          - "gears/**/*"
+  before_script:
+    - |-
+      if [ ! -d "/usr/local/gcloud/google-cloud-sdk/bin" ]; then
+      echo "not found"
+      rm -rf /usr/local/gcloud/google-cloud-sdk;
+      curl -s \
+      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+      /tmp/google-cloud-sdk.tar.gz;
+      mkdir -p /usr/local/gcloud;
+      tar -C /usr/local/gcloud -xf /tmp/google-cloud-sdk.tar.gz;
+      /usr/local/gcloud/google-cloud-sdk/install.sh \
+      --path-update true \
+      -q --rc-path /root/.bashrc &>/dev/null || {
+          echo "Error occurred when installing gcloud SDK"; exit 1; }
+      else echo "found";
+      fi
+#    - |
+#      curl -s \
+#      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+#      /tmp/google-cloud-sdk.tar.gz
+#    - mkdir -p /usr/local/gcloud
+#    - tar -C /usr/local/gcloud -xf /tmp/google-cloud-sdk.tar.gz
+#    - |-
+#      /usr/local/gcloud/google-cloud-sdk/install.sh \
+#      --path-update true \
+#      -q --rc-path /root/.bashrc &>/dev/null || {
+#          echo "Error occurred when installing gcloud SDK"; exit 1; }
+    - source /root/.bashrc
+    - gcloud auth activate-service-account --key-file $EXCHANGE_SERVICE_ACCOUNT
+    - gcloud auth configure-docker us-docker.pkg.dev --quiet
+    - gcloud config set project flywheel-exchange
+    - pip install jsonschema
+  script:
+    # - ./bin/process-manifests.sh
+    - echo "test"
+    - gcloud --version
