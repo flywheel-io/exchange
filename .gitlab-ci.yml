@@ -50,6 +50,8 @@ publish:exchange-docker:
     - gcloud auth configure-docker us-docker.pkg.dev --quiet
     - gcloud config set project flywheel-exchange
     - pip install jsonschema
+    - ls -al
+    - ls -al .cache
   script:
     # - ./bin/process-manifests.sh
     - echo "test"
