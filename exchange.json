@@ -870,6 +870,41 @@
     {
       "author": "Poldrack Lab, Stanford University",
       "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+      "command": "/opt/flypy/bin/python run.py",
+      "description": "MRIQC (23.1.0) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  For more commandline options, please visit https://mriqc.readthedocs.io/en/latest/running.html. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+      "environment": {
+        "AFNI_DIR": "/opt/afni",
+        "AFNI_IMSAVE_WARNINGS": "NO",
+        "AFNI_MODELPATH": "/opt/afni/models",
+        "AFNI_PLUGINPATH": "/opt/afni/plugins",
+        "AFNI_TTATLAS_DATASET": "/opt/afni/atlases",
+        "ANTSPATH": "/opt/ants",
+        "CONDA_PATH": "/opt/conda",
+        "CPATH": "/opt/conda/include:",
+        "FLYWHEEL": "/flywheel/v0",
+        "FREESURFER_HOME": "/opt/freesurfer",
+        "HOME": "/home/mriqc",
+        "IS_DOCKER_8395080871": "1",
+        "LANG": "en_US.UTF-8",
+        "LC_ALL": "en_US.UTF-8",
+        "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/opt/conda/lib",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "PATH": "/opt/conda/bin:/opt/ants:/opt/afni:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONUNBUFFERED": "1"
+      },
+      "label": "BIDS MRIQC: Automatic prediction of quality and visual reporting of MRI scans in BIDS format",
+      "license": "Other",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "bids-mriqc",
+      "source": "https://github.com/nipreps/mriqc/tree/master",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-apps/bids-mriqc",
+      "version": "2.0.0_23.1.0"
+    },
+    {
+      "author": "Poldrack Lab, Stanford University",
+      "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
       "command": "python run.py",
       "description": "MRIQC (0.15.2 - April 6, 2020) extracts no-reference image quality metrics (IQMs) from T1w and T2w structural and functional magnetic resonance imaging data.  Note: arguments --n_procs --mem_gb and --ants-nthreads are not availble to configure becaues they are set to use the maximum available as detected by MRIQC. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
       "environment": {
@@ -1086,51 +1121,6 @@
     }
   ],
   [
-    {
-      "author": "Flywheel Exchange, LLC",
-      "command": "poetry run python3 /flywheel/v0/run.py",
-      "description": "Prepare a project for BIDS Curation. BIDS Pre-Curate offers a simple way to modify labels of project data to be compatible with the BIDS-spec. Running pre-curate on a given project (as a project-level analysis) will generate CSV files that will be populated with a unique list of container labels, as well as slots for the information needed for BIDS curation (classification, task, etc.). These CSV files can be downloaded and modified (outside of Flywheel) to provide missing or corrected information. The corrected CSV file is then uploaded to the project (as an attachment) and provided as input to a run of this same gear to do on-the-fly mappings and metadata updates. For more information, please see the readme in the source repository.",
-      "environment": {
-        "PYTHONUNBUFFERED": "1"
-      },
-      "label": "BIDS Pre-Curation",
-      "license": "MIT",
-      "maintainer": "Flywheel <support@flywheel.io>",
-      "name": "bids-pre-curate",
-      "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "version": "0.4.1"
-    },
-    {
-      "author": "Flywheel Exchange, LLC",
-      "command": "poetry run python3 /flywheel/v0/run.py",
-      "description": "Prepare a project for BIDS Curation. BIDS Pre-Curate offers a simple way to modify labels of project data to be compatible with the BIDS-spec. Running pre-curate on a given project (as a project-level analysis) will generate CSV files that will be populated with a unique list of container labels, as well as slots for the information needed for BIDS curation (classification, task, etc.). These CSV files can be downloaded and modified (outside of Flywheel) to provide missing or corrected information. The corrected CSV file is then uploaded to the project (as an attachment) and provided as input to a run of this same gear to do on-the-fly mappings and metadata updates. For more information, please see the readme in the source repository.",
-      "environment": {
-        "PYTHONUNBUFFERED": "1"
-      },
-      "label": "BIDS Pre-Curation",
-      "license": "MIT",
-      "maintainer": "Flywheel <support@flywheel.io>",
-      "name": "bids-pre-curate",
-      "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "version": "0.4.0"
-    },
-    {
-      "author": "Flywheel Exchange, LLC",
-      "command": "poetry run python3 /flywheel/v0/run.py",
-      "description": "Prepare project for BIDS Curation. BIDS Pre-Curate offers a simple way to modify labels and classifications of project data to be compatible with the BIDS-spec. Running pre-curate on a given project (as a project-level analysis) will generate CSV files that will be populated with a unique list of container labels, as well as slots for the information needed for BIDS curation (classification, task, etc.). These CSV files can be downloaded and modified (outside of Flywheel) to provide missing or corrected information. The completed CSV file is then uploaded to the project (as an attachment) and provided as input to a run of this same gear to do on-the-fly mappings and metadata updates. For more information, please see the readme in the source repository.",
-      "environment": {
-        "PYTHONUNBUFFERED": "1"
-      },
-      "label": "BIDS Pre-Curation",
-      "license": "MIT",
-      "maintainer": "Flywheel <support@flywheel.io>",
-      "name": "bids-pre-curate",
-      "source": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-pre-curate",
-      "version": "0.3.1"
-    },
     {
       "author": "Flywheel Exchange, LLC",
       "command": "pipenv run python3 /flywheel/v0/run.py",
@@ -1436,6 +1426,42 @@
       "source": "https://qsiprep.readthedocs.io/en/latest/",
       "url": "https://github.com/flywheel-apps/bids-qsiprep",
       "version": "0.0.0_0.12.2"
+    }
+  ],
+  [
+    {
+      "author": "Flywheel",
+      "cite": "FreeSurfer. Martinos Center for Biomedical Imaging, Massachusetts General Hospital. Available at https://surfer.nmr.mgh.harvard.edu\nSynthSeg: Segmentation of brain MRI scans of any contrast and resolution without retraining. B Billot, DN Greve, O Puonti, A Thielscher, K Van Leemput, B Fischl, AV Dalca, JE Iglesias. Medical Image Analysis, 83, 102789 (2023).\nRobust machine learning segmentation for large-scale analysis of heterogeneous clinical brain MRI datasets. B Billot, C Magdamo, SE Arnold, S Das, JE Iglesias. PNAS, 120(9), e2216399120 (2023).",
+      "command": "python run.py",
+      "description": "A gear for segmenting brain lobes from brain MRI images using SynthSeg.",
+      "environment": {
+        "DEBIAN_FRONTEND": "non-interactive",
+        "FLYWHEEL": "/flywheel/v0",
+        "FREESURFER_HOME": "/opt/freesurfer",
+        "FSFAST_HOME": "/opt/freesurfer/fsfast",
+        "FSMRI_DIR": "/opt/freesurfer/mri",
+        "FS_LICENSE": "/opt/freesurfer/license.txt",
+        "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
+        "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+        "LANG": "C.UTF-8",
+        "LOCAL_DIR": "/opt/freesurfer/local",
+        "MNI_DIR": "/opt/freesurfer/mni",
+        "PATH": "/opt/freesurfer/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/sbin:/bin:/opt/ants/bin",
+        "PWD": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "9cc01665956d22b3bf057ae8287b035827bfd895da235bcea200ab3b811790b6",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/4cfa4081d27285bda1220a62a5ebf5b4bd749cdb/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "23.0.1",
+        "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+        "PYTHON_VERSION": "3.10.13",
+        "SUBJECTS_DIR": "/opt/freesurfer/subjects"
+      },
+      "label": "Brain Lobe Segmentation",
+      "license": "Apache-2.0",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "brain-lobe-segmentation",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/brain-lobe-segmentation",
+      "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/SynthSeg",
+      "version": "0.1.1"
     }
   ],
   [
@@ -1872,6 +1898,35 @@
   ],
   [
     {
+      "author": "Craddock C, Sikka S, Cheung B, et al.",
+      "command": "python3.9 /flywheel/v0/run.py",
+      "description": "The Configurable Pipeline for the Analysis of Connectomes.  C-PAC is software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+      "environment": {
+        "ANTSPATH": "/usr/lib/ants",
+        "C3DPATH": "/opt/c3d",
+        "FREESURFER_HOME": "/usr/lib/freesurfer",
+        "FSLDIR": "/usr/share/fsl/5.0",
+        "FSLMULTIFILEQUIT": "TRUE",
+        "FSLOUTPUTTYPE": "NIFTI_GZ",
+        "FSLTCLSH": "/usr/bin/tclsh",
+        "FSLWISH": "/usr/bin/wish",
+        "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+        "PATH": "/usr/local/miniconda/bin:/usr/lib/freesurfer/bin:/usr/lib/freesurfer/fsfast/bin:/usr/lib/freesurfer/tktools:/usr/share/fsl/5.0/bin:/usr/lib/fsl/5.0:/usr/lib/freesurfer/mni/bin:/opt/poetry/bin:/opt/venv/bin:/usr/lib/freesurfer/bin:/usr/local/miniconda/bin:/opt/ICA-AROMA:/usr/lib/ants:/opt/afni:/opt/c3d/bin:/root/.nvm/versions/node/v11.15.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "POETRY_HOME": "/opt/poetry",
+        "POSSUMDIR": "/usr/share/fsl/5.0",
+        "python": "/usr/local/miniconda/bin/python"
+      },
+      "label": "BIDS-APP: C-PAC (Configurable Pipeline for the Analysis of Connectomes)",
+      "license": "Apache-2.0",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "cpac",
+      "source": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",
+      "url": "https://gitlab.com/flywheel-io/flywheel-apps/cpac",
+      "version": "0.3.2_1.8.5"
+    }
+  ],
+  [
+    {
       "author": "Flywheel",
       "cite": "",
       "command": "python run.py",
@@ -1887,6 +1942,26 @@
     }
   ],
   [
+    {
+      "author": "Flywheel",
+      "cite": "Jakob Wasserthal, Manfred Meyer, Hanns-Christian Breit, Joshy Cyriac, Shan Yang, Martin Segeroth, TotalSegmentator: robust segmentation of 104 anatomical structures in CT images",
+      "command": "/opt/conda/bin/python run.py",
+      "description": "Tool for segmentation of 104 classes in CT images. It was trained on a wide range of different CT images (different scanners, institutions, protocols,...) and therefore should work well on most images.",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+        "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+        "NVIDIA_VISIBLE_DEVICES": "all",
+        "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/conda/bin"
+      },
+      "label": "CT Total Segmentator",
+      "license": "Other",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "ct-total-segmentator",
+      "source": "https://github.com/wasserth/TotalSegmentator",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/ct-total-segmentator",
+      "version": "0.1.9_2.0.5"
+    },
     {
       "author": "Flywheel",
       "cite": "Jakob Wasserthal, Manfred Meyer, Hanns-Christian Breit, Joshy Cyriac, Shan Yang, Martin Segeroth, TotalSegmentator: robust segmentation of 104 anatomical structures in CT images",
@@ -4576,6 +4651,58 @@
     {
       "author": "Flywheel",
       "cite": "",
+      "command": "/flywheel/v0/run.py",
+      "description": "Export FHIR Bundles as json files ",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+        "LANG": "C.UTF-8",
+        "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PWD": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+        "PYTHON_VERSION": "3.8.13"
+      },
+      "label": "FHIR Bundle Exporter",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "fhir-bundle-exporter",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+      "version": "0.1.3"
+    },
+    {
+      "author": "Flywheel",
+      "cite": "",
+      "command": "/flywheel/v0/run.py",
+      "description": "Export FHIR Bundles as json files ",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+        "LANG": "C.UTF-8",
+        "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PWD": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+        "PYTHON_VERSION": "3.8.13"
+      },
+      "label": "FHIR Bundle Exporter",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "fhir-bundle-exporter",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+      "version": "0.1.2"
+    }
+  ],
+  [
+    {
+      "author": "Flywheel",
+      "cite": "",
       "command": "python run.py",
       "description": "Generic file classifier. This gear update the classification of a file based on the metadata attached to it, and therefore should only run AFTER gears which populate metadata on the file, such as file-metadata-curator. The gear takes as input a file, and an optional classification profile. The gear tags the input file upon completion.",
       "environment": {
@@ -4884,6 +5011,45 @@
     }
   ],
   [
+    {
+      "author": "Flywheel",
+      "cite": "",
+      "command": "poetry run python run.py",
+      "description": "Import file metadata into Flywheel. Metadata is stored under file.info.header. Supports DICOM and DICOM Zip Archives, PTD (Siemens PT format), NIfTI, ParaVision (Bruker format), and PAR/REC (Philips format)",
+      "environment": {
+        "COMMIT": "main.a30a2597",
+        "COMMIT_TIME": "2022-06-21T13:24:40+00:00",
+        "EDITOR": "micro",
+        "FLYWHEEL": "/flywheel/v0",
+        "GJO_VERSION": "1.0.2",
+        "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+        "JQ_VERSION": "jq-1.6",
+        "LANG": "C.UTF-8",
+        "MICRO_VERSION": "2.0.10",
+        "MUSTACHE_VERSION": "1.3.1",
+        "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PIP_NO_CACHE_DIR": "0",
+        "POETRY_HOME": "/opt/poetry",
+        "POETRY_VERSION": "1.1.13",
+        "POETRY_VIRTUALENVS_CREATE": "false",
+        "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+        "PWD": "/flywheel/v0",
+        "PYSITE": "/usr/local/lib/python3.10/site-packages",
+        "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+        "PYTHON_VERSION": "3.10.5",
+        "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+      },
+      "label": "File metadata importer",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "file-metadata-importer",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-metadata-importer",
+      "version": "1.4.1"
+    },
     {
       "author": "Flywheel",
       "cite": "",
@@ -6758,6 +6924,47 @@
     }
   ],
   [
+    {
+      "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
+      "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
+      "command": "python run.py",
+      "description": "MRIQC (v23.1.0) extracts no-reference IQMs (image quality metrics) from structural (T1w and T2w) and functional MRI (magnetic resonance imaging) data. Note, this gear only supports the generation of individual scan reports; group reports are not generated. Also note, for the auto-detection config option to work for this gear, the follow gears must be run beforehand: (1) dicom-mr-classifier then (2) dcm2niix (version 0.3.1 or higher).",
+      "environment": {
+        "AFNI_DIR": "/opt/afni",
+        "AFNI_IMSAVE_WARNINGS": "NO",
+        "AFNI_MODELPATH": "/opt/afni/models",
+        "AFNI_PLUGINPATH": "/opt/afni/plugins",
+        "AFNI_TTATLAS_DATASET": "/opt/afni/atlases",
+        "ANTSPATH": "/opt/ants",
+        "CONDA_PATH": "/opt/conda",
+        "CPATH": "/opt/conda/include:",
+        "FLYWHEEL": "/flywheel/v0",
+        "FREESURFER_HOME": "/opt/freesurfer",
+        "FSLDIR": "/opt/fsl",
+        "FSLGECUDAQ": "cuda.q",
+        "FSLMULTIFILEQUIT": "TRUE",
+        "FSLOUTPUTTYPE": "NIFTI_GZ",
+        "FSLTCLSH": "/opt/fsl/bin/fsltclsh",
+        "FSLWISH": "/opt/fsl/bin/fslwish",
+        "IS_DOCKER_8395080871": "1",
+        "LANG": "en_US.UTF-8",
+        "LC_ALL": "en_US.UTF-8",
+        "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/opt/conda/lib",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "PATH": "/opt/ants:/opt/afni:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "POSSUMDIR": "/opt/fsl",
+        "PWD": "/flywheel/v0",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "label": "MRIQC: No-reference image quality metrics for quality assessment of MRI ",
+      "license": "BSD-3-Clause",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "mriqc",
+      "source": "https://github.com/nipreps/mriqc",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mriqc",
+      "version": "0.8.0_23.1.0"
+    },
     {
       "author": "Oscar Esteban, Krzysztof F. Gorgolewski. Poldrack Lab, Psychology, CRN, Stanford University",
       "cite": "Esteban O, Birman D, Schaer M, Koyejo OO, Poldrack RA, Gorgolewski KJ; MRIQC: Advancing the Automatic Prediction of Image Quality in MRI from Unseen Sites; PLOS ONE 12(9):e0184661; doi:10.1371/journal.pone.0184661.",
