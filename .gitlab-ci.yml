@@ -19,8 +19,20 @@ publish:exchange-docker:
         paths:
           - "gears/**/*"
   before_script:
-    - ls -al .cache/gcloud
-    - ls -al
+    - |-
+      if [ ! -f ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
+      echo "not found"
+      mkdir -p .cache/gcloud;
+      curl -s \
+      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+      .cache/google-cloud-sdk.tar.gz;
+      tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+      else echo "found";
+      source /root/.bashrc;
+      echo $PATH;
+      cat /root/.bashrc;
+      gcloud --version;
+      fi
     - |-
       .cache/gcloud/google-cloud-sdk/install.sh \
       --path-update true \
