@@ -27,11 +27,6 @@ publish:exchange-docker:
       https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
       .cache/google-cloud-sdk.tar.gz;
       tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
-      else echo "found";
-      source /root/.bashrc;
-      echo $PATH;
-      cat /root/.bashrc;
-      gcloud --version;
       fi
     - |-
       .cache/gcloud/google-cloud-sdk/install.sh \
@@ -40,7 +35,6 @@ publish:exchange-docker:
           echo "Error occurred when installing gcloud SDK"; exit 1; }
     - source /root/.bashrc
     - echo $PATH
-    - cat /root/.bashrc
     - gcloud --version
 #    - |-
 #      if [ ! -f ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
