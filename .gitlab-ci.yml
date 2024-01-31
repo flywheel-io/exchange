@@ -19,20 +19,22 @@ publish:exchange-docker:
         paths:
           - "gears/**/*"
   before_script:
-    - |-
-      if [ ! -d ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
-      echo "not found"
-      mkdir -p .cache/gcloud;
-      curl -s \
-      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
-      .cache/google-cloud-sdk.tar.gz;
-      tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
-      fi
-    - .cache/gcloud/google-cloud-sdk/install.sh \
-      --path-update true \
-      -q --rc-path /root/.bashrc &>/dev/null || {
-          echo "Error occurred when installing gcloud SDK"; exit 1; }
-    - gcloud --version
+    - ls -al .cache/gcloud
+    - ls -al .cache/gcloud/google-cloud-sdk
+#    - |-
+#      if [ ! -d ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
+#      echo "not found"
+#      mkdir -p .cache/gcloud;
+#      curl -s \
+#      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+#      .cache/google-cloud-sdk.tar.gz;
+#      tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+#      fi
+#    - .cache/gcloud/google-cloud-sdk/install.sh \
+#      --path-update true \
+#      -q --rc-path /root/.bashrc &>/dev/null || {
+#          echo "Error occurred when installing gcloud SDK"; exit 1; }
+#    - gcloud --version
 #    - tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
 #    - ls -al .cache/gcloud/google-cloud-sdk
 #    - |-
@@ -68,14 +70,14 @@ publish:exchange-docker:
 #      --path-update true \
 #      -q --rc-path /root/.bashrc &>/dev/null || {
 #          echo "Error occurred when installing gcloud SDK"; exit 1; }
-    - source /root/.bashrc
-    - gcloud auth activate-service-account --key-file $EXCHANGE_SERVICE_ACCOUNT
-    - gcloud auth configure-docker us-docker.pkg.dev --quiet
-    - gcloud config set project flywheel-exchange
-    - pip install jsonschema
-    - ls -al
-    - ls -al .cache
-    - ls -al .cache/gcloud
+#    - source /root/.bashrc
+#    - gcloud auth activate-service-account --key-file $EXCHANGE_SERVICE_ACCOUNT
+#    - gcloud auth configure-docker us-docker.pkg.dev --quiet
+#    - gcloud config set project flywheel-exchange
+#    - pip install jsonschema
+#    - ls -al
+#    - ls -al .cache
+#    - ls -al .cache/gcloud
   script:
     # - ./bin/process-manifests.sh
     - echo "test"
