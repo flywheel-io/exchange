@@ -21,7 +21,8 @@ publish:exchange-docker:
   before_script:
     - ls -al .cache/gcloud
     - ls -al
-    - .cache/gcloud/google-cloud-sdk/install.sh \
+    - |-
+      .cache/gcloud/google-cloud-sdk/install.sh \
       --path-update true \
       -q --rc-path /root/.bashrc &>/dev/null || {
           echo "Error occurred when installing gcloud SDK"; exit 1; }
