@@ -20,9 +20,17 @@ publish:exchange-docker:
           - "gears/**/*"
   before_script:
     - ls -al .cache/gcloud
-    - ls -al .cache/gcloud/google-cloud-sdk
+    - ls -al
+    - .cache/gcloud/google-cloud-sdk/install.sh \
+      --path-update true \
+      -q --rc-path /root/.bashrc &>/dev/null || {
+          echo "Error occurred when installing gcloud SDK"; exit 1; }
+    - source /root/.bashrc
+    - echo $PATH
+    - cat /root/.bashrc
+    - gcloud --version
 #    - |-
-#      if [ ! -d ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
+#      if [ ! -f ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
 #      echo "not found"
 #      mkdir -p .cache/gcloud;
 #      curl -s \
@@ -81,4 +89,4 @@ publish:exchange-docker:
   script:
     # - ./bin/process-manifests.sh
     - echo "test"
-    - gcloud --version
+#    - gcloud --version
