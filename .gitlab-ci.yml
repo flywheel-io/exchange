@@ -19,15 +19,16 @@ publish:exchange-docker:
         paths:
           - "gears/**/*"
   before_script:
-    - |-
-      if [ ! -d ".cache/google-cloud-sdk.tar.gz" ]; then
-      echo "not found"
-      curl -s \
-      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
-      .cache/google-cloud-sdk.tar.gz;
-      tar -C /usr/local/gcloud -xf .cache/google-cloud-sdk.tar.gz;
-      fi
-    - tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+#    - |-
+#      if [ ! -d ".cache/google-cloud-sdk.tar.gz" ]; then
+#      echo "not found"
+#      mkdir -p /usr/local/gcloud;
+#      curl -s \
+#      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+#      .cache/google-cloud-sdk.tar.gz;
+#      tar -C /usr/local/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+#      fi
+#    - tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
     - ls -al .cache/gcloud/google-cloud-sdk
     - |-
       mkdir -p /usr/local/gcloud;
