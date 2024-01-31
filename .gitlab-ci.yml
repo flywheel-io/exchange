@@ -20,20 +20,37 @@ publish:exchange-docker:
           - "gears/**/*"
   before_script:
     - |-
-      if [ ! -d ".cache/gcloud/google-cloud-sdk/bin" ]; then
+      if [ ! -d ".cache/google-cloud-sdk.tar.gz" ]; then
       echo "not found"
-      rm -rf .cache/gcloud/google-cloud-sdk;
       curl -s \
       https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
-      /tmp/google-cloud-sdk.tar.gz;
-      mkdir -p .cache/gcloud;
-      tar -C /usr/local/gcloud -xf /tmp/google-cloud-sdk.tar.gz;
+      .cache/google-cloud-sdk.tar.gz;
+      tar -C /usr/local/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+      fi
+    - tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
+    - ls -al .cache/gcloud/google-cloud-sdk
+    - |-
+      mkdir -p /usr/local/gcloud;
+      tar -C /usr/local/gcloud -xf .cache/google-cloud-sdk.tar.gz;
       /usr/local/gcloud/google-cloud-sdk/install.sh \
       --path-update true \
       -q --rc-path /root/.bashrc &>/dev/null || {
           echo "Error occurred when installing gcloud SDK"; exit 1; }
-      else echo "found";
-      fi
+#    - |-
+#      if [ ! -d ".cache/google-cloud-sdk.tar.gz" ]; then
+#      echo "not found"
+#      rm -rf .cache/gcloud/google-cloud-sdk;
+#      curl -s \
+#      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
+#      .cache/google-cloud-sdk.tar.gz;
+#      mkdir -p .cache/gcloud;
+#      tar -C .cache/gcloud -xf /tmp/google-cloud-sdk.tar.gz;
+#      /usr/local/gcloud/google-cloud-sdk/install.sh \
+#      --path-update true \
+#      -q --rc-path /root/.bashrc &>/dev/null || {
+#          echo "Error occurred when installing gcloud SDK"; exit 1; }
+#      else echo "found";
+#      fi
 #    - |
 #      curl -s \
 #      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
