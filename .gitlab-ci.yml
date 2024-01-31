@@ -20,13 +20,13 @@ publish:exchange-docker:
           - "gears/**/*"
   before_script:
     - |-
-      if [ ! -d "/usr/local/gcloud/google-cloud-sdk/bin" ]; then
+      if [ ! -d ".cache/gcloud/google-cloud-sdk/bin" ]; then
       echo "not found"
-      rm -rf /usr/local/gcloud/google-cloud-sdk;
+      rm -rf .cache/gcloud/google-cloud-sdk;
       curl -s \
       https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
       /tmp/google-cloud-sdk.tar.gz;
-      mkdir -p /usr/local/gcloud;
+      mkdir -p .cache/gcloud;
       tar -C /usr/local/gcloud -xf /tmp/google-cloud-sdk.tar.gz;
       /usr/local/gcloud/google-cloud-sdk/install.sh \
       --path-update true \
@@ -52,6 +52,7 @@ publish:exchange-docker:
     - pip install jsonschema
     - ls -al
     - ls -al .cache
+    - ls -al .cache/gcloud
   script:
     # - ./bin/process-manifests.sh
     - echo "test"
