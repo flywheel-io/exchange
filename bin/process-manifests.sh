@@ -58,10 +58,10 @@ fi
 if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
     GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
     # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > "$GCLOUD_SERVICE_ACCOUNT_FILE"
-    # shellcheck disable=SC2086
+    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
     gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
 fi
+
 
 if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
     echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
