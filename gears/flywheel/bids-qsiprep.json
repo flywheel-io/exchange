@@ -128,6 +128,11 @@
       "description": "Do everything except actually executing qsiprep",
       "type": "boolean"
     },
+    "gear-ignore-bids-errors": {
+      "default": false,
+      "description": "By default, the gear will not run if there are any BIDS errors detected.  Set this to run even if BIDS errors are detected",
+      "type": "boolean"
+    },
     "gear-intermediate-files": {
       "default": "",
       "description": "Space separated list of FILES to retain from the intermediate work directory.",
@@ -141,6 +146,11 @@
     "gear-keep-output": {
       "default": false,
       "description": "Don't delete output.  Output is always zipped into a single file for easy download.  Choose this option to prevent output deletion after zipping.",
+      "type": "boolean"
+    },
+    "gear-run-bids-validation": {
+      "default": true,
+      "description": "Gear will run BIDS validation after downloading data.  If validation fails qsiprep will NOT be run.",
       "type": "boolean"
     },
     "gear-save-intermediate-output": {
@@ -240,12 +250,6 @@
       "optional": true,
       "type": "string"
     },
-    "recon-only": {
-      "description": "Run only the reconstruction steps. Output may be used in future gear runs.",
-      "optional": true,
-      "type": "boolean"
-
-    },
     "pepolar_method": {
       "description": "select which SDC method to use for PEPOLAR fieldmaps",
       "enum": [
@@ -275,16 +279,6 @@
       "description": "number of SHORELine iterations. (default: 2)",
       "optional": true,
       "type": "integer"
-    },
-    "skip-bids-validation": {
-      "description": "skip BIDS validation within QSIPrep",
-      "default": false,
-      "type": "boolean"
-    },
-    "skip-odf-reports": {
-      "description": "skip odf plotting in recon reports.",
-      "type": "boolean",
-      "optional": true
     },
     "skip-t1-based-spatial-normalization": {
       "description": "skip running the t1w-based normalization to template space. Default is to run the normalization.",
@@ -364,7 +358,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/bids-qsiprep:1.0.5_0.16.1"
+      "image": "flywheel/bids-qsiprep:1.0.4_0.16.1"
     },
     "license": {
       "dependencies": [
@@ -432,10 +426,10 @@
     "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
     "MRTRIX3_DEPS": "bzip2 ca-certificates curl libpng16-16 libblas3 liblapack3",
     "MRTRIX_NTHREADS": "1",
-    "NCCL_VERSION": "2.13.4",
+    "NCCL_VERSION": "2.11.4",
     "NVARCH": "x86_64",
     "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
-    "NVIDIA_REQUIRE_CUDA": "cuda>=10.2 brand=tesla,driver>=418,driver<419",
+    "NVIDIA_REQUIRE_CUDA": "cuda>=10.2 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441",
     "NVIDIA_VISIBLE_DEVICES": "all",
     "NV_CUDA_CUDART_VERSION": "10.2.89-1",
     "NV_CUDA_LIB_VERSION": "10.2.89-1",
@@ -443,18 +437,21 @@
     "NV_LIBCUBLAS_PACKAGE_NAME": "libcublas10",
     "NV_LIBCUBLAS_VERSION": "10.2.2.89-1",
     "NV_LIBCUSPARSE_VERSION": "10.2.89-1",
-    "NV_LIBNCCL_PACKAGE": "libnccl2=2.13.4-1+cuda10.2",
+    "NV_LIBNCCL_PACKAGE": "libnccl2=2.11.4-1+cuda10.2",
     "NV_LIBNCCL_PACKAGE_NAME": "libnccl2",
-    "NV_LIBNCCL_PACKAGE_VERSION": "2.13.4-1",
+    "NV_LIBNCCL_PACKAGE_VERSION": "2.11.4-1",
     "NV_LIBNPP_VERSION": "10.2.89-1",
     "NV_ML_REPO_ENABLED": "1",
     "NV_ML_REPO_URL": "https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64",
     "NV_NVTX_VERSION": "10.2.89-1",
     "OMP_NUM_THREADS": "1",
     "OS": "Linux",
-    "PATH": "/opt/qt512/bin:/opt/art/bin:/opt/convert3d-nightly/bin:/usr/local/miniconda/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/opt/qt512/bin:/opt/fsl-6.0.5.1/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ants/bin:/opt/dsi-studio/dsi_studio_64:/opt/mrtrix3-latest/bin:/opt/3Tissue/bin:/opt/afni-latest",
+    "PATH": "/opt/poetry/bin:/opt/qt512/bin:/opt/art/bin:/opt/convert3d-nightly/bin:/usr/local/miniconda/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/opt/qt512/bin:/opt/fsl-6.0.5.1/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ants/bin:/opt/dsi-studio/dsi_studio_64:/opt/mrtrix3-latest/bin:/opt/3Tissue/bin:/opt/afni-latest",
     "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
     "PKG_CONFIG_PATH": "/opt/qt512/lib/pkgconfig:/opt/qt512/lib/pkgconfig:",
+    "POETRY_HOME": "/opt/poetry",
+    "POETRY_VERSION": "1.1.13",
+    "POETRY_VIRTUALENVS_CREATE": "false",
     "PYTHONUNBUFFERED": "1",
     "QSIRECON_ATLAS": "/atlas/qsirecon_atlases",
     "QTDIR": "/opt/qt512",
@@ -482,16 +479,6 @@
       "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
       "optional": true
     },
-    "recon-input": {
-      "description": "Previous output (zip archive) of qsiprep run (e.g., bids-qsiprep_<subject_code>*.zip)",
-      "optional": true,
-      "base": "file",
-      "type": {
-        "enum": [
-          "archive"
-        ]
-      }
-    },
     "recon-spec": {
       "base": "file",
       "description": "json file specifying a reconstruction pipeline to be run after preprocessing.",
@@ -504,5 +491,5 @@
   "name": "bids-qsiprep",
   "source": "https://qsiprep.readthedocs.io/en/latest/",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/bids-qsiprep",
-  "version": "1.0.5_0.16.1"
+  "version": "1.0.4_0.16.1"
 }
