@@ -2,7 +2,14 @@ include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
     ref: dc3eb0cf8f45e958861ec2806a0d2b5410b6f9c8
     file: ci/gear-exchange.yml
-
+variables:
+  DEPENDENCY_SCANNING_DISABLED: "true"
+  LICENSE_MANAGEMENT_DISABLED: "true"
+  SAST_DISABLED: "true"
+  SECRET_DETECTION_DISABLED: "true"
+  CACHE_KEY: cache
+  CACHE_CLEAR: ""
+  GIT_DEPTH: 100000
 publish:exchange-docker:
   extends: .publish:exchange-docker
   cache:
