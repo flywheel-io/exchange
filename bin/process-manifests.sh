@@ -54,13 +54,13 @@ if ! $( git config --get user.email &> /dev/null ); then
     git config --local user.email $CI_PUSH_USER_EMAIL
     git config --local user.name $CI_PUSH_USER_NAME
 fi
-
-if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
-    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
-    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
-fi
+#
+#if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
+#    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
+#    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
+#    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
+#    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
+#fi
 
 
 if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
