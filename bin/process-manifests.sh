@@ -64,7 +64,7 @@ fi
 
 
 if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
-    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
+    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKER_CI_USER" --password-stdin
 fi
 
 
