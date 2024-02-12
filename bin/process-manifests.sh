@@ -340,10 +340,12 @@ if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
     set -eu
     process_manifests "$manifests"
     publish_global_manifest
+    >&2 echo "Successfully process manifest..."
 else
-    >&2 echo "Validating..."
+    >&2 echo "Validating manifest and docker image..."
     set -eu
     validate_manifests "$manifests"
+    >&2 echo "Manifest has been validated..."
 fi
 
 exit $EXIT_STATUS
