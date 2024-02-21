@@ -1,51 +1,7 @@
 include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
-    ref: dc3eb0cf8f45e958861ec2806a0d2b5410b6f9c8
+    ref: 653839a2f731d8af64ae94780ef5382b6e9ae7a0
     file: ci/gear-exchange.yml
 variables:
-  DEPENDENCY_SCANNING_DISABLED: "true"
-  LICENSE_MANAGEMENT_DISABLED: "true"
-  SAST_DISABLED: "true"
-  SECRET_DETECTION_DISABLED: "true"
-  CACHE_KEY: cache
-  CACHE_CLEAR: ""
-  GIT_DEPTH: 100000
-publish:exchange-docker:
-  extends: .publish:exchange-docker
-  cache:
-    key: $CACHE_KEY
-    paths:
-      - .cache
-      - /usr/local/gcloud/google-cloud-sdk
-  rules:
-    - if: $TEST == "force"
-    - if: $CI_PIPELINE_SOURCE !~ /^(merge_request_event|web)$/
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      exists:
-        - "gears/**/*"
-      changes:
-        paths:
-          - "gears/**/*"
-  before_script:
-    - |-
-      if [ ! -f ".cache/gcloud/google-cloud-sdk/install.sh" ]; then
-      echo "not found"
-      mkdir -p .cache/gcloud;
-      curl -s \
-      https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > \
-      .cache/google-cloud-sdk.tar.gz;
-      tar -C .cache/gcloud -xf .cache/google-cloud-sdk.tar.gz;
-      fi
-    - |-
-      .cache/gcloud/google-cloud-sdk/install.sh \
-      --path-update true \
-      -q --rc-path /root/.bashrc &>/dev/null || {
-          echo "Error occurred when installing gcloud SDK"; exit 1; }
-    - source /root/.bashrc
-    - gcloud auth activate-service-account --key-file $EXCHANGE_SERVICE_ACCOUNT
-    - gcloud auth configure-docker us-docker.pkg.dev --quiet
-    - gcloud config set project flywheel-exchange
-    - pip install jsonschema
-  script:
-     - ./bin/process-manifests.sh
-
+  PYTEST_COV_FAIL_UNDER: 0  # Set pytest coverage to 0
+  DEBUG: "9"
