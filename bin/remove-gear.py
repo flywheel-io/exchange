@@ -26,7 +26,7 @@ def main(name):
     manifest_jsons = list(MANIFEST_ROOT.rglob(f'**/*{name}*.json'))
     if len(manifest_jsons) == 0:
         log.warning("Gear %s not found in MANIFEST_ROOT folder", name)
-    elif len(manifest_jsons) > 1:
+    elif len(manifest_jsons) > 0:
         for manifest in manifest_jsons:
             # Filtering once more using regex in case with have a gear with matching
             # part of the name

@@ -17,14 +17,6 @@
       "type": "boolean"
     }
   },
-  "environment": {},
-  "command": "python run.py",
-  "author": "Jen Vickerman",
-  "maintainer": "Jen Vickerman",
-  "cite": "List citations here.",
-  "license": "Other",
-  "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
-  "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
   "custom": {
     "flywheel": {
       "show-job": true
@@ -33,5 +25,21 @@
       "category": "analysis",
       "image": "flywheel/fw-test-analysis:1.0.2"
     }
-  }
+  },
+  "description": "Analysis Gear that can be configured to pass or fail",
+  "environment": {},
+  "inputs": {
+    "file": {
+      "base": "file",
+      "description": "Any file.",
+      "optional": false
+    }
+  },
+  "label": "FW QA Test Analysis Gear",
+  "license": "Other",
+  "maintainer": "Jen Vickerman",
+  "name": "fw-test-analysis",
+  "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+  "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+  "version": "1.0.3"
 }

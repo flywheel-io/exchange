@@ -1,0 +1,87 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "/flywheel/v0/run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fhir-bundle-exporter:0.1.2"
+      },
+      "flywheel": {
+        "suite": "Curation"
+      }
+    },
+    "description": "Export FHIR Bundles as json files ",
+    "environment": {
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "FLYWHEEL": "/flywheel/v0",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "LANG": "C.UTF-8",
+      "PYTHON_VERSION": "3.8.13",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PWD": "/flywheel/v0",
+      "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      }
+    },
+    "label": "FHIR Bundle Exporter",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "fhir-bundle-exporter",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/fhir-bundle-exporter",
+    "version": "0.1.2"
+  },
+  "exchange": {
+    "git-commit": "cbf676086b54280ce84e858fa3dffaca0d5bd543",
+    "rootfs-hash": "sha384:895bfad8e85b1014fbf035fbb021eb04c693a560afac1313b61a403883049ebc6a06ea73f26e04002cf3726af9861533",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-fhir-bundle-exporter-sha384-895bfad8e85b1014fbf035fbb021eb04c693a560afac1313b61a403883049ebc6a06ea73f26e04002cf3726af9861533.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for FHIR Bundle Exporter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
