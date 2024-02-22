@@ -1,0 +1,80 @@
+{
+  "exchange": {
+    "git-commit": "4e175917e4a5070c41612f0e55f71b8b0e26186c",
+    "image-name": "us-docker.pkg.dev/flywheel-exchange/gear-exchange/flywheel-fw-test-analysis:1.0.4",
+    "rootfs-hash": "sha256:4134f5e0abaa0b7ec29add92361ee88637a4e98b211eb3a5909c8c54c5d36c26"
+  },
+  "gear": {
+    "author": "Jen Vickerman",
+    "cite": "List citations here.",
+    "command": "python run.py",
+    "config": {
+      "fail": {
+        "default": false,
+        "description": "Select checkbox to fail gear run",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/fw-test-analysis:1.0.4"
+      }
+    },
+    "description": "Analysis Gear that can be configured to pass or fail",
+    "environment": {},
+    "inputs": {
+      "file": {
+        "base": "file",
+        "description": "Any file.",
+        "optional": false
+      }
+    },
+    "label": "FW QA Test Analysis Gear",
+    "license": "Other",
+    "maintainer": "Jen Vickerman",
+    "name": "fw-test-analysis",
+    "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+    "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
+    "version": "1.0.4"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+      "config": {
+        "additionalProperties": false,
+        "properties": {
+          "fail": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "fail"
+        ],
+        "type": "object"
+      },
+      "inputs": {
+        "properties": {
+          "file": {
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "title": "Invocation manifest for FW QA Test Analysis Gear",
+    "type": "object"
+  }
+}
