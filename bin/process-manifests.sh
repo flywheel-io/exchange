@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Set strict error handling
+set -eEuo pipefail
+#set -x  # Enable debugging
+
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
 MANIFESTS_DIR="manifests"
@@ -18,7 +22,9 @@ GIT_COMMIT_CURRENT=$( git rev-parse HEAD )
 # which a manifest was generated successfully. This is used to determine which
 # gears and boutiques have since been changed or added and thus need to be
 # processed.
+# TODO commenting below and hard coding the commit for testing
 GIT_COMMIT_SENTINEL=$( cat $SENTINEL_FILENAME 2> /dev/null || true )
+#GIT_COMMIT_SENTINEL="edc20abe2eba9f393e9477d3c2bd315cf8f4ba61"
 
 BUILD_ARTIFACTS=""
 EXIT_STATUS=0
@@ -45,19 +51,20 @@ if ! $( git diff-index --quiet HEAD -- ); then
 fi
 
 if ! $( git config --get user.email &> /dev/null ); then
-    git config --local user.email "service+github-flywheel-exchange@flywheel.io"
-    git config --local user.name "Flywheel Exchange Bot"
+    git config --local user.email $CI_PUSH_USER_EMAIL
+    git config --local user.name $CI_PUSH_USER_NAME
 fi
+#
+#if [ ! -z "$EXCHANGE_SERVICE_ACCOUNT" ]; then
+#    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
+#    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
+#    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
+#    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
+#fi
 
-if [ ! -z "$GCLOUD_SERVICE_ACCOUNT" ]; then
-    GCLOUD_SERVICE_ACCOUNT_FILE=$( mktemp )
-    # GCLOUD_SERVICE_ACCOUNT MUST be Base-64 Encoded!
-    echo "$GCLOUD_SERVICE_ACCOUNT" | base64 -d > $GCLOUD_SERVICE_ACCOUNT_FILE
-    gcloud auth activate-service-account --key-file $GCLOUD_SERVICE_ACCOUNT_FILE
-fi
 
-if [ ! -z "$DOCKERHUB_USER" -a ! -z "$DOCKERHUB_PASSWORD" ]; then
-    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+if [ ! -z "$DOCKER_CI_USER" -a ! -z "$DOCKER_CI_PASS" ]; then
+    echo "$DOCKER_CI_PASS" | docker login -u "$DOCKER_CI_USER" --password-stdin
 fi
 
 
@@ -185,7 +192,7 @@ function validate_manifests() {
 
 function derive_invocation_schema() {
     if [ "$1" == "gear" ]; then
-        echo $( python -m gears generate-invocation-schema "$2" )
+        echo $( python bin/generate_invocation_schema.py "$2" )
     elif [ "$1" == "boutique" ]; then
         # FIXME add invocation schema generation for boutiques
         echo "{\"WARNING\": \"Invocation schema validation for boutiques not yet implemented\"}"
@@ -236,85 +243,53 @@ function process_manifests() {
                 docker_image="$( jq -r '."container-image"."image"' $manifest_path )"
                 manifest_version=""
             fi
+            >&2 echo "Docker image: ${docker_image}"
+            >&2 echo "Manifest version: $manifest_version"
 
-            beta_exchange="$( jq -r '.custom.flywheel.beta_exchange' $manifest_path)"
-            if [ "$beta_exchange" == "true" ]; then
-                echo "Pulling image $docker_image"
-                docker pull $docker_image
-                # Get docker image digest
-                digest=$(docker inspect $docker_image | jq -r '.[0].RepoDigests[0]')
-                # Strip off just the sha256 hash value
-                sha256=$(printf "$digest" | sed 's/.*\://')
-                v_manifest_name="$manifest_slug-sha256-$sha256"
-                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+            >&2 echo "Skipping beta exchange"
+            IMAGE_NAME="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
+            >&2 echo "IMAGE_NAME: $IMAGE_NAME"
+            >&2 echo "Pulling docker image $docker_image"
+            docker pull ${docker_image}
+            docker tag ${docker_image} ${IMAGE_NAME}
+            docker push ${IMAGE_NAME}
+            DIGEST_VAL=$(gcloud container images describe $IMAGE_NAME --format='value(image_summary.digest)' | grep -oP '[a-f0-9]{64}')
+            >&2 echo "DIGEST_VAL: $DIGEST_VAL"
 
-                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
 
-                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
+            SHASUM="sha256:${DIGEST_VAL}"
+            echo "SHASUM: $SHASUM"
+            V_MANIFEST_NAME="${manifest_slug}-sha256-${DIGEST_VAL}"
+            >&2 echo "V_MANIFEST_NAME: $V_MANIFEST_NAME"
 
-                jq ".exchange.\"rootfs-hash\" = \"sha256:$sha256\" |
-                    .exchange.\"rootfs-url\" =
-                        \"docker://$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug@sha256:$sha256\"" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
+            >&2 echo "GIT_COMMIT_CURRENT: $GIT_COMMIT_CURRENT"
+            V_MANIFEST_PATH="${MANIFESTS_DIR}/${manifest_hier}/${V_MANIFEST_NAME}.json"
+            mkdir -p "$MANIFESTS_DIR/$manifest_hier"
+            echo ${V_MANIFEST_PATH}
+            jq "{\"$manifest_type\": .}" ${manifest_path} > ${V_MANIFEST_PATH}
+            jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" ${V_MANIFEST_PATH} \
+                > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+            jq ".exchange.\"rootfs-hash\" = \"$SHASUM\" | .exchange.\"image-name\" = \"$IMAGE_NAME\"" $V_MANIFEST_PATH \
+                > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
 
-                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
-                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-
-                exchange_image="$EXCHANGE_ARTIFACT_REGISTRY_URL/$manifest_slug:$manifest_version"
-                docker tag $docker_image $exchange_image
-                echo $ARTIFACT_REGISTRY_KEY | docker login -u _json_key_base64 \
-                    --password-stdin \
-                    https://us-docker.pkg.dev
-                docker push $exchange_image
-            else
-                container=$( docker create $docker_image /bin/true )
-                rootfs_path="$tempdir/$manifest_slug.tgz"
-                >&2 echo "Exporting container"
-                docker export $container | gzip -n > $rootfs_path
-                shasum=$( sha384sum $rootfs_path | cut -d " " -f 1 )
-                #docker rm $container # fails on CircleCI
-
-                v_manifest_name="$manifest_slug-sha384-$shasum"
-                v_manifest_path="$MANIFESTS_DIR/$manifest_hier/$v_manifest_name.json"
-                mkdir -p "$MANIFESTS_DIR/$manifest_hier"
-
-                jq "{\"$manifest_type\": .}" $manifest_path > $v_manifest_path
-
-                jq ".exchange.\"git-commit\" = \"$GIT_COMMIT_CURRENT\"" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
-
-                jq ".exchange.\"rootfs-hash\" = \"sha384:$shasum\" | .exchange.\"rootfs-url\" = \"$EXCHANGE_DOWNLOAD_URL/$v_manifest_name.tgz\"" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
-
-                invocation_schema=$( derive_invocation_schema $manifest_type $manifest_path )
-                jq ".\"invocation-schema\" = $invocation_schema" $v_manifest_path \
-                    > $tempfile && mv $tempfile $v_manifest_path
-                >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
-
-                rootfs_hash_path="$tempdir/$v_manifest_name.tgz"
-                mv $rootfs_path $rootfs_hash_path
-                gsutil cp $rootfs_hash_path $EXCHANGE_BUCKET_URI
-                BUILD_ARTIFACTS="$BUILD_ARTIFACTS $EXCHANGE_BUCKET_URI/${rootfs_hash_path##*/}"
-
-                exchange_image="$GCR_HOST_PROJECT/$manifest_slug:$manifest_version"
-                docker tag $docker_image $exchange_image
-                gcloud docker -- push $exchange_image
-            fi
-
-            git add $v_manifest_path
+            INVOCATION_SCHEMA=$( derive_invocation_schema $manifest_type $manifest_path )
+            >&2 echo "Invocation schema generated for $manifest_type $manifest_name"
+            jq --argjson content "$(cat $INVOCATION_SCHEMA)" '.["invocation-schema"] = $content' $V_MANIFEST_PATH \
+                > $tempfile && mv $tempfile ${V_MANIFEST_PATH}
+            cat ${V_MANIFEST_PATH}
+            /qa-ci/scripts/run.sh job git_login
+            git add $V_MANIFEST_PATH
             echo $GIT_COMMIT_CURRENT > $SENTINEL_FILENAME
+            cat $SENTINEL_FILENAME
             git add $SENTINEL_FILENAME
+            echo "Process $manifest_type $manifest_name $manifest_version"
             git commit -m "Process $manifest_type $manifest_name $manifest_version"
 
             rm -rf $tempdir
         fi
     done
 
-    if git push -q $GIT_REMOTE $GIT_BRANCH; then
+    if git push -q $GIT_REMOTE HEAD:$CI_COMMIT_REF_NAME; then
         >&2 echo "Git push successful"
     else
         >&2 echo "Git push failed"
@@ -323,10 +298,11 @@ function process_manifests() {
     fi
 }
 
-
 publish_global_manifest() {
     >&2 echo "Publish global manifest"
-    find manifests -type f | xargs jq -sS '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
+    # shellcheck disable=SC2038
+    find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
+    git fetch origin gh-pages-json
     git checkout gh-pages-json
     mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
     git add $EXCHANGE_JSON
@@ -334,36 +310,42 @@ publish_global_manifest() {
     git push -f $GIT_REMOTE  gh-pages-json
     git checkout $GIT_BRANCH
 }
+function get_manifests_list() {
+  >&2 echo "On branch $CI_COMMIT_REF_NAME"
 
-
->&2 echo "On branch $GIT_BRANCH"
-if [ -z "$GIT_COMMIT_SENTINEL" ]; then
+  if [ -z "$GIT_COMMIT_SENTINEL" ]; then
     >&2 echo "Using all manifests"
-    manifests=$( find $GEARS_DIR $BOUTIQUES_DIR -iname "*.json" )
+    manifests=$(find "$GEARS_DIR" "$BOUTIQUES_DIR" -iname "*.json")
     >&2 echo "$manifests"
-else
+  else
     >&2 echo "Using updated manifests"
-    manifests=$( git diff --name-only --diff-filter=d $GIT_COMMIT_SENTINEL | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true )
+    manifests=$(git diff --name-only --diff-filter=d "$GIT_COMMIT_SENTINEL" | grep -e "^$GEARS_DIR/..*$" -e "^$BOUTIQUES_DIR/..*$" || true)
     >&2 echo "$manifests"
-fi
-if [ -z "$manifests" ]; then
+  fi
+
+  if [ -z "$manifests" ]; then
     >&2 echo "No manifests to process or validate"
     exit 0
-fi
+  fi
 
-if [ $GIT_BRANCH == "master" ]; then
+  export manifests  # Export the manifests variable
+  >&2 echo "Exported manifests variable: $manifests"
+}
+
+get_manifests_list
+>&2 echo "Exported manifests variable: $manifests"
+
+if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
     >&2 echo "Processing..."
-    if [ -z "$EXCHANGE_BUCKET_URI" -o -z "$EXCHANGE_DOWNLOAD_URL" ]; then
-        >&2 echo "Error: EXCHANGE_BUCKET_URI and EXCHANGE_DOWNLOAD_URL must be defined."
-        exit 1
-    fi
     set -eu
     process_manifests "$manifests"
     publish_global_manifest
+    >&2 echo "Successfully process manifest..."
 else
-    >&2 echo "Validating..."
+    >&2 echo "Validating manifest and docker image..."
     set -eu
     validate_manifests "$manifests"
+    >&2 echo "Manifest has been validated..."
 fi
 
 exit $EXIT_STATUS
