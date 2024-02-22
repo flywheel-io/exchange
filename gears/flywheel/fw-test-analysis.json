@@ -15,7 +15,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/fw-test-analysis:1.0.2"
+      "image": "flywheel/fw-test-analysis:1.0.4"
     }
   },
   "description": "Analysis Gear that can be configured to pass or fail",
@@ -33,5 +33,5 @@
   "name": "fw-test-analysis",
   "source": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
   "url": "https://gitlab.com/flywheel-io/flywheel-apps/fw-test-analysis",
-  "version": "1.0.2"
+  "version": "1.0.4"
 }
