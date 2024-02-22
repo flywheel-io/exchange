@@ -1,6 +1,6 @@
 include:
   - project: flywheel-io/scientific-solutions/etc/sse-qa-ci
-    ref: d85d1bc0817015f1c6b83860a6c64b5f5c29968f
+    ref: 0e94b5a5f76631d38d6e9dff10f68068503c843a
     file: ci/gear-exchange.yml
 variables:
   PYTEST_COV_FAIL_UNDER: 0  # Set pytest coverage to 0
