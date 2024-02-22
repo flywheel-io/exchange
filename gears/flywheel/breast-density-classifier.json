@@ -20,7 +20,7 @@
     },
     "gear-builder": {
       "category": "utility",
-      "image": "flywheel/breast-density-classifier:0.1.8"
+      "image": "flywheel/breast-density-classifier:0.1.14"
     }
   },
   "description": "Gear for breast density classification on mamography images",
@@ -48,5 +48,5 @@
   "name": "breast-density-classifier",
   "source": "https://monai.io/model-zoo.html",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
-  "version": "0.1.8"
+  "version": "0.1.14"
 }
