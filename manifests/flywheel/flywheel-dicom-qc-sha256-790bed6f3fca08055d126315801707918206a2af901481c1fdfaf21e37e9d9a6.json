@@ -1,0 +1,215 @@
+{
+  "exchange": {
+    "git-commit": "6c3e7d1731960694b809df09292d00734765ca8a",
+    "image-name": "us-docker.pkg.dev/flywheel-exchange/gear-exchange/flywheel-dicom-qc:0.4.13",
+    "rootfs-hash": "sha256:790bed6f3fca08055d126315801707918206a2af901481c1fdfaf21e37e9d9a6"
+  },
+  "gear": {
+    "author": "Flywheel <support@flywheel.io>",
+    "cite": "dicom3tools: 1993-2021, David A. Clunie DBA PixelMed Publishing.",
+    "command": "python run.py",
+    "config": {
+      "check_bed_moving": {
+        "default": true,
+        "description": "Check for duplicate slice positions (ImagePositionPatient)",
+        "type": "boolean"
+      },
+      "check_dciodvfy": {
+        "default": true,
+        "description": "Use dciodvfy (dicom iod verify) binary to check for compliance.",
+        "type": "boolean"
+      },
+      "check_embedded_localizer": {
+        "default": true,
+        "description": "Check for existance of embedded localizer",
+        "type": "boolean"
+      },
+      "check_instance_number_uniqueness": {
+        "default": true,
+        "description": "Check for uniqueness of InstanceNumber",
+        "type": "boolean"
+      },
+      "check_series_consistency": {
+        "default": true,
+        "description": "Check for inconsistent SeriesNumber",
+        "type": "boolean"
+      },
+      "check_slice_consistency": {
+        "default": true,
+        "description": "Check for inconsistent slice locations",
+        "type": "boolean"
+      },
+      "debug": {
+        "default": false,
+        "description": "Include debug output",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "dicom-qc",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true,
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "qa",
+        "image": "flywheel/dicom-qc:0.4.13"
+      }
+    },
+    "description": "Validate dicom archive on a set of hardcoded and user-specified rules",
+    "environment": {
+      "COMMIT": "main.bcc9ef6b",
+      "COMMIT_TIME": "2022-01-21T16:12:11+00:00",
+      "EDITOR": "micro",
+      "FLYWHEEL": "/flywheel/v0",
+      "GDCM_VERSION": "3.0.10",
+      "GJO_VERSION": "1.0.2",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "JQ_VERSION": "jq-1.6",
+      "LANG": "C.UTF-8",
+      "MICRO_VERSION": "2.0.10",
+      "MUSTACHE_VERSION": "1.3.1",
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PIP_NO_CACHE_DIR": "0",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.12",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "PYTHON_GET_PIP_SHA256": "c518250e91a70d7b20cceb15272209a4ded2a0c263ae5776f129e0d9b5674309",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/3cb8888cc2869620f57d5d2da64da38f516078c7/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "21.2.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_VERSION": "3.9.10",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "dicom": {
+        "base": "file",
+        "description": "Dicom Archive",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      },
+      "validation-schema": {
+        "base": "file",
+        "description": "A JSON template to validate file.info.header",
+        "optional": false,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "label": "Dicom QC",
+    "license": "BSD-3-Clause",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "dicom-qc",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/dicom-qc",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/dicom-qc/-/blob/master/README.md",
+    "version": "0.4.13"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+      "config": {
+        "additionalProperties": false,
+        "properties": {
+          "check_bed_moving": {
+            "default": true,
+            "type": "boolean"
+          },
+          "check_dciodvfy": {
+            "default": true,
+            "type": "boolean"
+          },
+          "check_embedded_localizer": {
+            "default": true,
+            "type": "boolean"
+          },
+          "check_instance_number_uniqueness": {
+            "default": true,
+            "type": "boolean"
+          },
+          "check_series_consistency": {
+            "default": true,
+            "type": "boolean"
+          },
+          "check_slice_consistency": {
+            "default": true,
+            "type": "boolean"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "dicom-qc",
+            "type": "string"
+          }
+        },
+        "required": [
+          "check_bed_moving",
+          "check_dciodvfy",
+          "check_embedded_localizer",
+          "check_instance_number_uniqueness",
+          "check_series_consistency",
+          "check_slice_consistency",
+          "debug",
+          "tag"
+        ],
+        "type": "object"
+      },
+      "inputs": {
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "dicom": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "validation-schema": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key",
+          "dicom",
+          "validation-schema"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "title": "Invocation manifest for Dicom QC",
+    "type": "object"
+  }
+}
