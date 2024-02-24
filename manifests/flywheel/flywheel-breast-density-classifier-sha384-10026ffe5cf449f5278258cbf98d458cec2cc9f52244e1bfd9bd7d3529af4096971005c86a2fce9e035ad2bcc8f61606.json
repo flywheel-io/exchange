@@ -1,0 +1,105 @@
+{
+  "gear": {
+    "author": "support@flywheel.io",
+    "cite": "",
+    "command": "cd /opt/monai ; /opt/conda/bin/python app/breast_density_classifier_map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/traced_ts_model/traced_ts_model.pt",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Enable debug mode.",
+        "type": "boolean"
+      },
+      "save-json": {
+        "default": false,
+        "description": "use flag to save json containing model results.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true
+      },
+      "gear-builder": {
+        "category": "utility",
+        "image": "flywheel/breast-density-classifier:0.1.14"
+      }
+    },
+    "description": "Gear for breast density classification on mamography images",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+      "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+      "NVIDIA_VISIBLE_DEVICES": "all",
+      "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "inputs": {
+      "input-file": {
+        "base": "file",
+        "description": "Input file for the gear",
+        "optional": false,
+        "type": {
+          "enum": [
+            "dicom"
+          ]
+        }
+      }
+    },
+    "label": "Breast Density Classifier",
+    "license": "MIT",
+    "name": "breast-density-classifier",
+    "source": "https://monai.io/model-zoo.html",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
+    "version": "0.1.14"
+  },
+  "exchange": {
+    "git-commit": "2cb44db5de232f297bde794a9686d687c23d87a1",
+    "rootfs-hash": "sha384:10026ffe5cf449f5278258cbf98d458cec2cc9f52244e1bfd9bd7d3529af4096971005c86a2fce9e035ad2bcc8f61606",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-breast-density-classifier-sha384-10026ffe5cf449f5278258cbf98d458cec2cc9f52244e1bfd9bd7d3529af4096971005c86a2fce9e035ad2bcc8f61606.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Breast Density Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "save-json": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "save-json"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "input-file": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "dicom"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "input-file"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
