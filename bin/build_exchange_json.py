@@ -1,3 +1,4 @@
+import git
 import json
 import sys
 from functools import partial
@@ -12,10 +13,15 @@ def rm_extra_keys(d: dict) -> dict:
 
 def rm_nulls(d: dict) -> dict:
     if isinstance(d, dict):
-        return {k: rm_nulls(v) for k, v in d.items() if v}
+        return {k: rm_nulls(v) for k, v in d.items() if (v and rm_nulls(v))}
     if isinstance(d, list):
-        return [rm_nulls(v) for v in d if v]
+        return [rm_nulls(v) for v in d if (v and rm_nulls(v))]
     return d
+
+def _test_rn_nulls():
+    assert rm_nulls({"a": ["b", None]}) == {"a": ["b"]}
+    assert rm_nulls({"a": {"b": None}}) == {}
+    assert rm_nulls({"a": None}) == {}
 
 
 def add_path_key(d: dict, fpath: Path) -> dict:
@@ -38,6 +44,20 @@ def group_by_and_sort(l: list[dict]) -> list[dict]:  # noqa
     for g in groups.values():
         sorted_l.append(sorted(g, key=lambda v: v["version"], reverse=True))
     return sorted_l
+
+def tag_latest(repo: git.Repo, group: list[dict]):
+    key = "git-commit"
+    hash_dates = {v[key]: repo.commit(v[key]).committed_date for v in group}
+    latest_hash = max(hash_dates, key=hash_dates.get)
+    new_group = []
+    for g in group:
+        if latest_hash == g[key]:
+            g["latest"] = True
+        else:
+            g["latest"] = False
+        del g[key]
+        new_group.append(g)
+    return new_group
 
 
 def main(manifest_dir: str, save_path: str):
@@ -67,6 +87,11 @@ def main(manifest_dir: str, save_path: str):
         gears.append(gear)
 
     grouped_gears = group_by_and_sort(gears)
+
+    repo = git.Repo(".")
+    for i, group in enumerate(grouped_gears):
+        grouped_gears[i] = tag_latest(repo, group)
+
 
     with open(save_path, "w") as f:
         json.dump(grouped_gears, f)
