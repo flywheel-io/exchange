@@ -1,5 +1,6 @@
-import sys
 import json
+import sys
+from functools import partial
 from pathlib import Path
 
 
@@ -17,7 +18,17 @@ def rm_nulls(d: dict) -> dict:
     return d
 
 
-def group_by_and_sort(l: list[dict]) -> list:  # noqa
+def add_path_key(d: dict, fpath: Path) -> dict:
+    d["exchange-path"] = str(fpath)
+    return d
+
+
+def add_commit_key(d: dict, hash: str) -> dict:
+    d["git-commit"] = hash
+    return d
+
+
+def group_by_and_sort(l: list[dict]) -> list[dict]:  # noqa
     l.sort(key=lambda d: d["name"])
     groups = {}
     for d in l:
@@ -32,6 +43,7 @@ def group_by_and_sort(l: list[dict]) -> list:  # noqa
 def main(manifest_dir: str, save_path: str):
     gears = []
     for manifest_path in Path(manifest_dir).rglob("*"):
+
         if not manifest_path.suffix == ".json":
             continue
 
@@ -40,9 +52,17 @@ def main(manifest_dir: str, save_path: str):
 
         gear = manifest["gear"]
 
-        gear = rm_extra_keys(gear)
+        # list of functions to apply to gear dict
+        # all functions take in and return gear dict
+        funcs = [
+            rm_extra_keys,
+            rm_nulls,
+            partial(add_path_key, fpath=manifest_path),
+            partial(add_commit_key, hash=manifest["exchange"]["git-commit"]),
+        ]
 
-        gear = rm_nulls(gear)
+        for func in funcs:
+            gear = func(gear)
 
         gears.append(gear)
 
