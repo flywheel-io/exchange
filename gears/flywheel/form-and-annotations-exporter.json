@@ -40,7 +40,7 @@
     },
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/form-and-annotations-exporter:0.1.1"
+      "image": "flywheel/form-and-annotations-exporter:0.1.3"
     }
   },
   "description": "Export Form Responses and/or Annotations to CSV file(s).",
@@ -67,5 +67,5 @@
   "name": "form-and-annotations-exporter",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
   "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
-  "version": "0.1.1"
+  "version": "0.1.3"
 }
