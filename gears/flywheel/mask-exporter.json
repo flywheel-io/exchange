@@ -57,7 +57,7 @@
   "custom": {
     "gear-builder": {
       "category": "analysis",
-      "image": "flywheel/mask-exporter:1.1.4"
+      "image": "flywheel/mask-exporter:1.2.0"
     }
   },
   "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
@@ -113,5 +113,5 @@
   "name": "mask-exporter",
   "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/mask-exporter",
   "url": "",
-  "version": "1.1.4"
+  "version": "1.2.0"
 }
