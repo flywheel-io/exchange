@@ -4,7 +4,6 @@ import sys
 from functools import partial
 from pathlib import Path
 
-
 def rm_extra_keys(d: dict) -> dict:
     for k in ["config", "inputs", "custom", "flywheel"]:
         d.pop(k, None)
