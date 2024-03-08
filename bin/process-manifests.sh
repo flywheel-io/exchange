@@ -2,7 +2,7 @@
 
 # Set strict error handling
 set -eEuo pipefail
-#set -x  # Enable debugging
+# set -x  # Enable debugging
 
 GEARS_DIR="gears"
 BOUTIQUES_DIR="boutiques"
@@ -120,7 +120,7 @@ function validate_manifest() {
             GEAR_SCHEMA_PATH=$( mktemp )
             curl -s $GEAR_SCHEMA_URL > $GEAR_SCHEMA_PATH
         fi
-        python -m jsonschema -i "$2" $GEAR_SCHEMA_PATH
+        check-jsonschema --schemafile $GEAR_SCHEMA_PATH "$2"
 
         # Confirm the image is valid.
         docker_image="$( jq -r '.custom."gear-builder".image' $2 )"
@@ -153,12 +153,11 @@ function validate_manifest() {
 
         # Curl for the image root and check the response for its existence
         response=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/${image_root}/tags/")
-        if [[ ${response} != *"Object not found"* ]]; then
-          image_info=$(echo ${response} | jq '."results"[]["name"]' | sort)
+        if [[ $(echo "${response}" | grep -i "object not found") ]]; then
+           echo "Image: \"${docker_image}\" does not exist" && exit 1
         else
-          echo "Image: \"${docker_image}\" does not exist" && exit 1
+           image_info=$(echo ${response} | jq '."results"[]["name"]' | sort)
         fi
-
         # If there is a tag, check the response for its existence
         if [[ -n ${image_tag} && ${image_info} != *"\"${image_tag}\""* ]]; then
           echo "Specified image tag: \"${image_tag}\" does not exist for image \"${image_root}\"" && exit 1
@@ -171,7 +170,7 @@ function validate_manifest() {
             curl -s $BOUTIQUE_SCHEMA_URL > $BOUTIQUE_SCHEMA_PATH
             jq "del(.required)" $BOUTIQUE_SCHEMA_PATH > $BOUTIQUE_SCHEMA_PATH- && mv $BOUTIQUE_SCHEMA_PATH- $BOUTIQUE_SCHEMA_PATH # FIXME upgrade to full boutiques and remove this hack
         fi
-        python -m jsonschema -i "$2" $BOUTIQUE_SCHEMA_PATH
+        check-jsonschema --schemafile $BOUTIQUE_SCHEMA_PATH "$2"
     else
         >&2 echo "Manifest validation for type \"$1\" not implemented"
         return 1
