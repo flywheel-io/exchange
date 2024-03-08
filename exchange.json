@@ -176,19 +176,6 @@
   ],
   [
     {
-      "author": "Bob Dougherty <bobd@stanford.edu>",
-      "description": "Reorient NIfTI data and metadata fields into RAS space by estimating and applying a canonical transform.",
-      "label": "Apply Canonical Transform",
-      "license": "MIT",
-      "maintainer": "Michael Perry <lmperry@stanford.edu>",
-      "name": "apply-canonical-xform",
-      "source": "https://github.com/scitran-apps/apply-canonical-xform",
-      "url": "https://github.com/vistalab/vistasoft/blob/master/fileFilters/nifti/niftiApplyCannonicalXform.m",
-      "version": "0.1.0"
-    }
-  ],
-  [
-    {
       "author": "Poldrack lab, Stanford University",
       "cite": "see https://fmriprep.readthedocs.io/en/stable/citing.html",
       "command": "/flywheel/v0/run.sh",
@@ -1502,20 +1489,25 @@
       "source": "https://monai.io/model-zoo.html (https://arxiv.org/abs/2202.08238)",
       "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
       "version": "0.1.7"
-    }
-  ],
-  [
+    },
     {
-      "author": "Flywheel",
-      "command": "python run.py",
-      "description": "Bruker2nifti is an open source medical image format converter from raw Bruker ParaVision to NifTi, without any intermediate step through the DICOM standard formats.",
-      "label": "Bruker to NIfTI converter",
-      "license": "Other",
-      "maintainer": "support@flywheel.io",
-      "name": "bruker2nifti",
-      "source": "",
-      "url": "",
-      "version": "0.1.0"
+      "author": "support@flywheel.io",
+      "cite": "",
+      "command": "cd /opt/monai ; /opt/conda/bin/python app/breast_density_classifier_map.py -i /flywheel/v0/input/input-file/ -o /flywheel/v0/output/ -m models/traced_ts_model/traced_ts_model.pt",
+      "description": "Gear for breast density classification on mamography images",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+        "NVIDIA_REQUIRE_CUDA": "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441 driver>=450",
+        "NVIDIA_VISIBLE_DEVICES": "all",
+        "PATH": "/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      },
+      "label": "Breast Density Classifier",
+      "license": "MIT",
+      "name": "breast-density-classifier",
+      "source": "https://monai.io/model-zoo.html",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/breast-density-classifier",
+      "version": "0.1.14"
     }
   ],
   [
@@ -2895,19 +2887,6 @@
       "source": "https://github.com/scitran-apps/dcm2niiix",
       "url": "https://www.nitrc.org/projects/dcm2nii",
       "version": "0.0.3"
-    }
-  ],
-  [
-    {
-      "author": "Jennifer Reiter <jenniferreiter@invenshure.com>",
-      "description": "This Gear produces a 1GB .txt file.",
-      "label": "Debug File Generator: Creating a 1 GB file",
-      "license": "Other",
-      "maintainer": "Jennifer Reiter <jenniferreiter@invenshure.com>",
-      "name": "debug-generatefile",
-      "source": "https://github.com/flywheel-apps/debug-generatefile",
-      "url": "https://github.com/flywheel-apps/debug-generatefile",
-      "version": "0.0.1"
     }
   ],
   [
@@ -4397,19 +4376,6 @@
   ],
   [
     {
-      "author": "Brian Wandell <wandell@stanford.edu>, Michael Perry <lmperry@stanford.edu>",
-      "description": "Find RMSE between the measured and ADC (or dSIG) based on tensor model. Calculate the histogram of differences between dti based predictions (ADC or dSig) with the actual ADC or dSig data. Larger deviations suggest noisier data.",
-      "label": "VISTALAB: DTI Error",
-      "license": "GPL-2.0",
-      "maintainer": "Michael Perry <lmperry@stanford.edu>",
-      "name": "dti-error",
-      "source": "https://github.com/scitran-apps/dtiError/src",
-      "url": "https://github.com/scitran-apps/dtiError",
-      "version": "0.1.0"
-    }
-  ],
-  [
-    {
       "author": "Stanford VISTA Lab",
       "description": "VISTALAB's dtiInit (DTI Initialization) runs the VISTASOFT/mrDiffusion pre-processing pipeline on raw DWI data. This Gear allows all dtiInit parameters to be set from within the configuration UI. All outputs are archived in a zip file for easy download. dtiInit.json is saved for easy reference to configuration parameters used at runtime. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
       "label": "VISTALAB: dtiInit - Diffusion Data Initialization Pipeline",
@@ -4446,32 +4412,6 @@
       "name": "dtiinit-diffusion-maps",
       "source": "https://github.com/vistalab/fw-gear-dtiinit-diffusion-maps",
       "url": "https://github.com/vistalab/vistasoft/wiki",
-      "version": "1.0.0"
-    }
-  ],
-  [
-    {
-      "author": "GLU <glerma@stanford.edu>",
-      "description": "Flips the sign of the the specified B-vector(s).",
-      "label": "VISTA Lab: DWI Flip BVEC",
-      "license": "MIT",
-      "maintainer": "GLU <glerma@stanford.edu>",
-      "name": "dwi-flip-bvec",
-      "source": "https://github.com/vistalab/dwi-flip-bvec",
-      "url": "https://github.com/vistalab/dwi-flip-bvec",
-      "version": "1.0.0"
-    }
-  ],
-  [
-    {
-      "author": "Travis Richardson",
-      "description": "Classifies Brain Vision EEG data and appends metadata attributes to the file's custom info structure within Flywheel. Input to this gear is a Flywheel packaged EEG archive (.eeg.zip) containing Brain Vision EEG data (in .vhdr format). Output is a JSON file (.metadata.json) containing metadata that will be used by the Flywheel platform to populate the input file's custom info fields.",
-      "label": "Brain Vision EEG Classifier",
-      "license": "MIT",
-      "maintainer": "Travis Richardson",
-      "name": "eeg-classifier",
-      "source": "https://github.com/flywheel-apps/eeg-classifier",
-      "url": "https://github.com/flywheel-apps/eeg-classifier",
       "version": "1.0.0"
     }
   ],
@@ -4700,6 +4640,46 @@
     }
   ],
   [
+    {
+      "author": "Flywheel",
+      "cite": "",
+      "command": "python run.py",
+      "description": "Generic file classifier. This gear update the classification of a file based on the metadata attached to it, and therefore should only run AFTER gears which populate metadata on the file, such as file-metadata-curator. The gear takes as input a file, and an optional classification profile. The gear tags the input file upon completion.",
+      "environment": {
+        "COMMIT": "main.a30a2597",
+        "COMMIT_TIME": "2022-06-21T13:24:40+00:00",
+        "EDITOR": "micro",
+        "FLYWHEEL": "/flywheel/v0",
+        "GJO_VERSION": "1.0.2",
+        "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+        "JQ_VERSION": "jq-1.6",
+        "LANG": "C.UTF-8",
+        "MICRO_VERSION": "2.0.10",
+        "MUSTACHE_VERSION": "1.3.1",
+        "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PIP_NO_CACHE_DIR": "0",
+        "POETRY_HOME": "/opt/poetry",
+        "POETRY_VERSION": "1.1.13",
+        "POETRY_VIRTUALENVS_CREATE": "false",
+        "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+        "PWD": "/flywheel/v0",
+        "PYSITE": "/usr/local/lib/python3.10/site-packages",
+        "PYTHONPATH": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+        "PYTHON_VERSION": "3.10.5",
+        "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+      },
+      "label": "File Classifier",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "file-classifier",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-classifier.git",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-classifier.git",
+      "version": "0.6.4"
+    },
     {
       "author": "Flywheel",
       "cite": "",
@@ -5253,20 +5233,6 @@
   ],
   [
     {
-      "author": "Tinashe Michael Tapera",
-      "cite": "",
-      "description": "Audit your Flywheel project for sequence completeness, BIDS curation summaries, gear and job runs, workflow completeness, and more.",
-      "label": "Flaudit: Flywheel Audit",
-      "license": "BSD-3-Clause",
-      "maintainer": "Tinashe Michael Tapera",
-      "name": "flaudit",
-      "source": "",
-      "url": "https://fw-heudiconv.readthedocs.io/en/latest/",
-      "version": "0.0.5_0.1.6"
-    }
-  ],
-  [
-    {
       "author": "Flywheel <support@flywheel.io>",
       "description": "Sample gear to demonstrate a simple use case of outputting the name of each input file.",
       "label": "Flywheel Example Gear",
@@ -5290,6 +5256,56 @@
     }
   ],
   [
+    {
+      "author": "Flywheel",
+      "cite": "",
+      "command": "/flywheel/v0/run.py",
+      "description": "Export Form Responses and/or Annotations to CSV file(s).",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+        "LANG": "C.UTF-8",
+        "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PWD": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+        "PYTHON_VERSION": "3.8.13"
+      },
+      "label": "Form and Annotation Exporter",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "form-and-annotations-exporter",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+      "version": "0.1.4"
+    },
+    {
+      "author": "Flywheel",
+      "cite": "",
+      "command": "/flywheel/v0/run.py",
+      "description": "Export Form Responses and/or Annotations to CSV file(s).",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+        "LANG": "C.UTF-8",
+        "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PWD": "/flywheel/v0",
+        "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+        "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+        "PYTHON_PIP_VERSION": "22.0.4",
+        "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+        "PYTHON_VERSION": "3.8.13"
+      },
+      "label": "Form and Annotation Exporter",
+      "license": "MIT",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "form-and-annotations-exporter",
+      "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+      "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+      "version": "0.1.3"
+    },
     {
       "author": "Flywheel",
       "cite": "",
@@ -6205,6 +6221,27 @@
   ],
   [
     {
+      "author": "Analysis Group, FMRIB, Oxford, UK",
+      "cite": "",
+      "command": "poetry run python3 run.py",
+      "description": "This gear returns statistical output for a given NIFTI image.  LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.",
+      "environment": {
+        "FLYWHEEL": "/flywheel/v0",
+        "LD_LIBRARY_PATH": "/usr/lib/fsl/5.0",
+        "PATH": "/usr/lib/fsl/5.0:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "POSSUMDIR": "/usr/share/fsl/5.0"
+      },
+      "label": "FSL fslstats",
+      "license": "Other",
+      "maintainer": "Flywheel <support@flywheel.io>",
+      "name": "fsl-stats",
+      "source": "https://gitlab.com/flywheel-io/flywheel-apps/fsl-stats",
+      "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Fslutils",
+      "version": "0.1.5_5.0.9"
+    }
+  ],
+  [
+    {
       "author": "Sina Aslan, Ph.D.",
       "description": "Modified Brain Extraction Tool 2 (BET2) from FMRIB Software Library (FSL) v5.0 called SuperBET2 deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1. LICENSING NOTE: FSL software are owned by Oxford University Innovation and license is required for any commercial applications. For commercial licence please contact fsl@innovation.ox.ac.uk. For academic use, an academic license is required which is available by registering on the FSL website. Any use of the software requires that the user obtain the appropriate license. See https://fsl.fmrib.ox.ac.uk/fsldownloads_registration for more information.\n",
       "label": "FSL: SUPER Brain Extraction Tool (BET2)",
@@ -6385,19 +6422,6 @@
       "source": "https://gitlab.com/flywheel-io/flywheel-apps/google-dlp-phi-screen",
       "url": "https://cloud.google.com/dlp",
       "version": "1.0.0"
-    }
-  ],
-  [
-    {
-      "author": "Schneider Lab, University of Pittsburgh",
-      "description": "Computes a transformation of multi-shell diffusion weighted data to a set of Spherical Harmonic coefficients and outputs 4D Spherical Harmonic coefficient data. This is a first step in the Schneider Lab HDFT diffusion reconstruction process. See: Pathak, S. K., Fissell, C., Krishnaswamy, D., Aggarwal, S., Hachey, R., Schneider, W. (2015). Diffusion reconstruction by combining spherical harmonics and generalized q-sampling imaging. ISMRM, Toronto, Canada.",
-      "label": "HDFT Subsampled Diffusion Reconstruction",
-      "license": "GPL-2.0",
-      "maintainer": "Michael Perry <lmperry@stanford.edu>",
-      "name": "hdft-subsampled-recon",
-      "source": "https://github.com/schlabhdft/ALDIT",
-      "url": "http://www.lrdc.pitt.edu/schneiderlab/",
-      "version": "0.0.1"
     }
   ],
   [
@@ -8058,37 +8082,6 @@
   [
     {
       "author": "Flywheel",
-      "cite": "Roy, A.G., Conjeti, S., Navab, N. and Wachinger, C., 2018. QuickNAT: Segmenting\nMRI Neuroanatomy in 20 seconds. arXiv:1801.04161",
-      "command": "/flywheel/v0/run.py",
-      "description": "Flywheel gear wrapper for QuickNAT_pytorch",
-      "environment": {
-        "PYTHONPATH": "/opt/quickNAT_pytorch/"
-      },
-      "label": "QuickNAT Pytorch",
-      "license": "Apache-2.0",
-      "maintainer": "Flywheel <support@flywheel.io>",
-      "name": "quicknat-gear",
-      "source": "https://github.com/ai-med/quickNAT_pytorch",
-      "url": "https://github.com/flywheel-apps/quicknat-gear",
-      "version": "0.1.0"
-    }
-  ],
-  [
-    {
-      "author": "Noah C. Benson <nben@nyu.edu>",
-      "description": "Runs FreeSurfer's RECON-ALL and applies the V1, V2, and V3 anatomical template of retinotopy from Benson et al. (2014) as well as the ROI template of Wang et al. (2015) to the output images using the Neuropythy neuroscience library for Python by Noah C. Benson. * Note that this Gear does not use the original version of the Benson et al. template, but rather an updated version that has also been published on the website indicated in the original paper. If using this Gear in your work, please cite: Benson NC, Butt OH, Datta R, Radoeva PD, Brainard DH, Aguirre GK (2012) The retinotopic organization of striate cortex is well predicted by surface topology. Curr Biol22(21):2081-5.",
-      "label": "NEUROPYTHY: Retinotopy Template Generation (Benson, et. al.)",
-      "license": "GPL-2.0",
-      "maintainer": "Michael Perry <lmperry@stanford.edu>",
-      "name": "retinotopy-templates",
-      "source": "https://github.com/scitran-apps/retinotopy-templates",
-      "url": "https://github.com/noahbenson/neuropythy",
-      "version": "0.1.0"
-    }
-  ],
-  [
-    {
-      "author": "Flywheel",
       "cite": "",
       "command": "poetry run python3 /flywheel/v0/run.py",
       "description": "This gear converts ROIs created in Flywheel's OHIF viewer to NIfTI files.",
@@ -8656,115 +8649,6 @@
       "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/stress-test",
       "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/stress-test",
       "version": "0.2.2"
-    }
-  ],
-  [
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.9"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.5"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.4"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.3"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.2"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.10"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.1"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "command": "python task_gen.py",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.0-1"
-    },
-    {
-      "author": "Harsha Kethineni",
-      "description": "Converts log files to tsv task files as per bids specs",
-      "label": "Task tsv Converter",
-      "license": "Other",
-      "maintainer": "Harsha Kethineni",
-      "name": "task-tsv-converter",
-      "source": "",
-      "url": "",
-      "version": "0.1.0"
     }
   ],
   [
