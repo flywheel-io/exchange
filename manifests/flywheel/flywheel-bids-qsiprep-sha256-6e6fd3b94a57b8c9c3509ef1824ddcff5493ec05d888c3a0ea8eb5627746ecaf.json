@@ -1,0 +1,292 @@
+{
+  "exchange": {
+    "git-commit": "79be40e19a2024eefcd26ff7815841c0efc0764a",
+    "image-name": "us-docker.pkg.dev/flywheel-exchange/gear-exchange/flywheel-bids-qsiprep:1.1.0_0.20.0",
+    "rootfs-hash": "sha256:6e6fd3b94a57b8c9c3509ef1824ddcff5493ec05d888c3a0ea8eb5627746ecaf"
+  },
+  "gear": {
+    "author": "Matthew Cieslak, Philip A. Cook, Theodore D. Satterthwaite, et al.",
+    "cite": "https://qsiprep.readthedocs.io/en/latest/citing.html",
+    "command": "/opt/flypy/bin/python run.py",
+    "config": {
+      "bids_app_command": {
+        "default": "",
+        "description": "OPTIONAL. The gear will run the algorithm defaults, if no command is supplied. See https://qsiprep.readthedocs.io/en/latest/usage.html for options. e.g., `qsiprep bids_dir output_dir participant [arg1 [arg2 ...]] -w work_dir`",
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "gear-dry-run": {
+        "default": false,
+        "description": "Do everything Flywheel-related except actually execute BIDS App command. Different from passing '--dry-run' in the BIDS App command.",
+        "type": "boolean"
+      },
+      "gear-keep-output": {
+        "default": false,
+        "description": "Keep ALL the extra output files that are created during the run in addition to the normal, zipped output. Note: This option may cause a gear failure because there are too many files for the engine.",
+        "type": "boolean"
+      },
+      "gear-post-processing-only": {
+        "default": false,
+        "description": "REQUIRES archive file (aka recon_input). Gear will skip the BIDS algorithm and go straight to generating the HTML reports and processing metadata.",
+        "type": "boolean"
+      },
+      "gear-save-intermediate-output": {
+        "default": false,
+        "description": "Gear will save ALL intermediate output into bids_qsiprep_work.zip",
+        "type": "boolean"
+      },
+      "notrack": {
+        "default": true,
+        "description": "Opt out of statistical usage tracking.",
+        "type": "boolean"
+      },
+      "output-resolution": {
+        "description": "Spatial resolution of the prepocessed DWI series. For more help, see https://qsiprep.readthedocs.io/en/latest/quickstart.html#specifying-outputs",
+        "optional": false,
+        "type": "number"
+      }
+    },
+    "custom": {
+      "analysis-level": "participant",
+      "bids-app-binary": "qsiprep",
+      "bids-app-data-types": [
+        "anat",
+        "dwi",
+        "fmap"
+      ],
+      "flywheel": {
+        "suite": "BIDS Apps"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/bids-qsiprep:1.1.0_0.20.0"
+      },
+      "license": {
+        "dependencies": [
+          {
+            "name": "Other",
+            "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+          },
+          {
+            "name": "Other",
+            "url": "https://github.com/ANTsX/ANTs/blob/v2.2.0/COPYING.txt"
+          },
+          {
+            "name": "Other",
+            "url": "https://afni.nimh.nih.gov/pub/dist/doc/program_help/README.copyright.html"
+          },
+          {
+            "name": "Other",
+            "url": "https://dsi-studio.labsolver.org/download.html"
+          },
+          {
+            "name": "MPL-2.0",
+            "url": "https://github.com/MRtrix3/mrtrix3/blob/master/LICENCE.txt"
+          }
+        ],
+        "main": {
+          "name": "BSD-3-Clause",
+          "url": "https://github.com/PennLINC/qsiprep/blob/0.16.1/LICENSE"
+        },
+        "non-commercial-use-only": false
+      }
+    },
+    "description": "BIDS qsiprep 1.1.*_0.20.0 \n qsiprep configures pipelines for processing diffusion-weighted MRI (dMRI) data. The main features of this software are:\n\nA BIDS-app approach to preprocessing nearly all kinds of modern diffusion MRI data.\n\nAutomatically generated preprocessing pipelines that correctly group, distortion correct, motion correct, denoise, co-register and resample your scans, producing visual reports and QC metrics.\n\nA system for running state-of-the-art reconstruction pipelines that include algorithms from Dipy, MRTrix, DSI Studio and others.\n\nA novel motion correction algorithm that works on DSI and random q-space sampling schemes",
+    "environment": {
+      "AFNI_IMSAVE_WARNINGS": "NO",
+      "AFNI_INSTALLDIR": "/opt/afni-latest",
+      "ANTSPATH": "/opt/ants/bin",
+      "ANTS_DEPS": "zlib1g-dev",
+      "ARTHOME": "/opt/art",
+      "C3DPATH": "/opt/convert3d-nightly",
+      "CRN_SHARED_DATA": "/niworkflows_data",
+      "DIPY_HOME": "/home/qsiprep/.dipy",
+      "DSI_STUDIO_DEPS": "qt512base qt512charts-no-lgpl",
+      "FLYWHEEL": "/flywheel/v0",
+      "FREESURFER_DEPS": "bc ca-certificates curl libgomp1 libxmu6 libxt6 tcsh perl",
+      "FREESURFER_HOME": "/opt/freesurfer",
+      "FSF_OUTPUT_FORMAT": "nii.gz",
+      "FSLDIR": "/opt/fsl-6.0.5.1",
+      "FSLGECUDAQ": "cuda.q",
+      "FSLMULTIFILEQUIT": "TRUE",
+      "FSLOUTPUTTYPE": "NIFTI_GZ",
+      "FSL_DEPS": "libquadmath0",
+      "FSL_DIR": "/opt/fsl-6.0.5.1",
+      "FS_OVERRIDE": "0",
+      "FUNCTIONALS_DIR": "/opt/freesurfer/sessions",
+      "IS_DOCKER_8395080871": "1",
+      "KMP_WARNINGS": "0",
+      "LD_LIBRARY_PATH": "/opt/qt512/lib/x86_64-linux-gnu:/opt/qt512/lib:/opt/qt512/lib/x86_64-linux-gnu:/opt/qt512/lib:/opt/ants/lib:/opt/fsl-6.0.5.1/lib:",
+      "LOCAL_DIR": "/opt/freesurfer/local",
+      "MINC_BIN_DIR": "/opt/freesurfer/mni/bin",
+      "MINC_LIB_DIR": "/opt/freesurfer/mni/lib",
+      "MKL_NUM_THREADS": "1",
+      "MNI_DATAPATH": "/opt/freesurfer/mni/data",
+      "MNI_DIR": "/opt/freesurfer/mni",
+      "MNI_PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "MRTRIX3_DEPS": "bzip2 ca-certificates curl libpng16-16 libblas3 liblapack3",
+      "MRTRIX_NTHREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OS": "Linux",
+      "PATH": "/opt/qt512/bin:/opt/art/bin:/opt/convert3d-nightly/bin:/usr/local/miniconda/bin:/opt/freesurfer/bin:/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/opt/qt512/bin:/opt/fsl-6.0.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ants/bin:/opt/dsi-studio/dsi_studio_64:/opt/mrtrix3-latest/bin:/opt/3Tissue/bin:/opt/afni-latest:/src/TORTOISEV4/bin",
+      "PERL5LIB": "/opt/freesurfer/mni/lib/perl5/5.8.5",
+      "PKG_CONFIG_PATH": "/opt/qt512/lib/pkgconfig:/opt/qt512/lib/pkgconfig:",
+      "QSIRECON_ATLAS": "/atlas/qsirecon_atlases",
+      "QTDIR": "/opt/qt512",
+      "QT_BASE_DIR": "/opt/qt512",
+      "SUBJECTS_DIR": "/opt/freesurfer/subjects",
+      "TORTOISE_DEPS": "libeigen3-dev fftw3 libfftw3-dev"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "archived_runs": {
+        "base": "file",
+        "description": "Previous output (zip archive) of qsiprep run (e.g., bids-qsiprep_<subject_code>*.zip)",
+        "optional": true
+      },
+      "bidsignore": {
+        "base": "file",
+        "description": "A .bidsignore file to provide to the bids-validator that this gear runs before running the main command.",
+        "optional": true
+      },
+      "eddy-config": {
+        "base": "file",
+        "description": "path to a json file with settings for the call to eddy. If no json is specified, a default one will be used. The current default json can be found here: https://github.com/PennBBL/qsiprep/blob/master/qsiprep/data/eddy_params.json",
+        "optional": true
+      },
+      "freesurfer_license_file": {
+        "base": "file",
+        "description": "FreeSurfer license file, provided during registration with FreeSurfer. This file will be copied to the $FSHOME directory and used during execution of the Gear.",
+        "optional": true
+      },
+      "recon-input": {
+        "base": "file",
+        "description": "Previous output (zip archive) of qsiprep run (e.g., bids-qsiprep_<subject_code>*.zip)",
+        "optional": true,
+        "type": {
+          "enum": [
+            "archive"
+          ]
+        }
+      },
+      "recon-spec": {
+        "base": "file",
+        "description": "json file specifying a reconstruction pipeline to be run after preprocessing.",
+        "optional": true
+      }
+    },
+    "label": "BIDS QSIPrep",
+    "license": "BSD-3-Clause",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "bids-qsiprep",
+    "source": "https://qsiprep.readthedocs.io/en/latest/",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-apps/bids-qsiprep",
+    "version": "1.1.0_0.20.0"
+  },
+  "invocation-schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+      "config": {
+        "additionalProperties": false,
+        "properties": {
+          "bids_app_command": {
+            "default": "",
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-dry-run": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-keep-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-post-processing-only": {
+            "default": false,
+            "type": "boolean"
+          },
+          "gear-save-intermediate-output": {
+            "default": false,
+            "type": "boolean"
+          },
+          "notrack": {
+            "default": true,
+            "type": "boolean"
+          },
+          "output-resolution": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "bids_app_command",
+          "debug",
+          "gear-dry-run",
+          "gear-keep-output",
+          "gear-post-processing-only",
+          "gear-save-intermediate-output",
+          "notrack",
+          "output-resolution"
+        ],
+        "type": "object"
+      },
+      "inputs": {
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "archived_runs": {
+            "properties": {},
+            "type": "object"
+          },
+          "bidsignore": {
+            "properties": {},
+            "type": "object"
+          },
+          "eddy-config": {
+            "properties": {},
+            "type": "object"
+          },
+          "freesurfer_license_file": {
+            "properties": {},
+            "type": "object"
+          },
+          "recon-input": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "archive"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "recon-spec": {
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ],
+    "title": "Invocation manifest for BIDS QSIPrep",
+    "type": "object"
+  }
+}
