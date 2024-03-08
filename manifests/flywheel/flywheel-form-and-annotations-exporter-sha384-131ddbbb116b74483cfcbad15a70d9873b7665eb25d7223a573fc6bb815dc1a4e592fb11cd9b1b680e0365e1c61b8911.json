@@ -1,0 +1,145 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "/flywheel/v0/run.py",
+    "config": {
+      "annotations-scope": {
+        "default": "task",
+        "description": "The scope of the exported annotations.",
+        "enum": [
+          "task",
+          "non-task",
+          "both",
+          "none"
+        ],
+        "type": "string"
+      },
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "form-responses-scope": {
+        "default": "task",
+        "description": "The scope of the form responses.",
+        "enum": [
+          "task",
+          "none"
+        ],
+        "type": "string"
+      },
+      "protocol_name": {
+        "description": "The name of the protocol to export data from.",
+        "optional": true,
+        "type": "string"
+      },
+      "read_timeout": {
+        "default": 60,
+        "description": "The maximum time in seconds to wait for a response from the server.",
+        "type": "integer"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "analysis",
+        "image": "flywheel/form-and-annotations-exporter:0.1.4"
+      }
+    },
+    "description": "Export Form Responses and/or Annotations to CSV file(s).",
+    "environment": {
+      "FLYWHEEL": "/flywheel/v0",
+      "GPG_KEY": "E3FF2839C048B25C084DEBE9B26995E310250568",
+      "LANG": "C.UTF-8",
+      "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PWD": "/flywheel/v0",
+      "PYTHON_GET_PIP_SHA256": "5aefe6ade911d997af080b315ebcb7f882212d070465df544e1175ac2be519b4",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/5eaac1050023df1f5c98b173b248c260023f2278/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "57.5.0",
+      "PYTHON_VERSION": "3.8.13"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key"
+      }
+    },
+    "label": "Form and Annotation Exporter",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "form-and-annotations-exporter",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/form-and-annotations-exporter",
+    "version": "0.1.4"
+  },
+  "exchange": {
+    "git-commit": "6bb13f26cc95833dd3bcbe12288bd80e23918f3c",
+    "rootfs-hash": "sha384:131ddbbb116b74483cfcbad15a70d9873b7665eb25d7223a573fc6bb815dc1a4e592fb11cd9b1b680e0365e1c61b8911",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-form-and-annotations-exporter-sha384-131ddbbb116b74483cfcbad15a70d9873b7665eb25d7223a573fc6bb815dc1a4e592fb11cd9b1b680e0365e1c61b8911.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for Form and Annotation Exporter",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "annotations-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "non-task",
+              "both",
+              "none"
+            ],
+            "type": "string"
+          },
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "form-responses-scope": {
+            "default": "task",
+            "enum": [
+              "task",
+              "none"
+            ],
+            "type": "string"
+          },
+          "protocol_name": {
+            "type": "string"
+          },
+          "read_timeout": {
+            "default": 60,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "annotations-scope",
+          "debug",
+          "form-responses-scope",
+          "read_timeout"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "api-key"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
