@@ -299,8 +299,10 @@ function process_manifests() {
 
 publish_global_manifest() {
     >&2 echo "Publish global manifest"
+    # fetch all branches from remote and update local remote-tracking branches
+    git fetch origin +refs/heads/*:refs/remotes/origin/*
     # shellcheck disable=SC2038
-    find manifests -type f | xargs jq -s '[ .[].gear | del(.config, .inputs, .custom, .flywheel) ] | del(.[] | nulls) | group_by(.name) | .[] |= sort_by(.version) | .[] |= reverse' > .$EXCHANGE_JSON
+    python bin/build_exchange_json.py $MANIFESTS_DIR .$EXCHANGE_JSON
     git fetch origin gh-pages-json
     git checkout gh-pages-json
     mv -f .$EXCHANGE_JSON $EXCHANGE_JSON
