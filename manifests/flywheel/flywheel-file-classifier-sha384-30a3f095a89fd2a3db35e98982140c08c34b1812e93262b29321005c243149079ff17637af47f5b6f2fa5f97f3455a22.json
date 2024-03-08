@@ -1,0 +1,163 @@
+{
+  "gear": {
+    "author": "Flywheel",
+    "cite": "",
+    "command": "python run.py",
+    "config": {
+      "debug": {
+        "default": false,
+        "description": "Log debug messages",
+        "type": "boolean"
+      },
+      "remove_existing": {
+        "default": false,
+        "description": "Clear existing classification.",
+        "type": "boolean"
+      },
+      "tag": {
+        "default": "file-classifier",
+        "description": "The tag to be added on input file upon run completion.",
+        "type": "string"
+      },
+      "validate": {
+        "default": false,
+        "description": "If true the gear will validate the classification schema.",
+        "type": "boolean"
+      }
+    },
+    "custom": {
+      "flywheel": {
+        "show-job": true,
+        "suite": "Curation"
+      },
+      "gear-builder": {
+        "category": "classifier",
+        "image": "flywheel/file-classifier:0.6.4"
+      }
+    },
+    "description": "Generic file classifier. This gear update the classification of a file based on the metadata attached to it, and therefore should only run AFTER gears which populate metadata on the file, such as file-metadata-curator. The gear takes as input a file, and an optional classification profile. The gear tags the input file upon completion.",
+    "environment": {
+      "COMMIT": "main.a30a2597",
+      "COMMIT_TIME": "2022-06-21T13:24:40+00:00",
+      "EDITOR": "micro",
+      "FLYWHEEL": "/flywheel/v0",
+      "GJO_VERSION": "1.0.2",
+      "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+      "JQ_VERSION": "jq-1.6",
+      "LANG": "C.UTF-8",
+      "MICRO_VERSION": "2.0.10",
+      "MUSTACHE_VERSION": "1.3.1",
+      "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PIP_NO_CACHE_DIR": "0",
+      "POETRY_HOME": "/opt/poetry",
+      "POETRY_VERSION": "1.1.13",
+      "POETRY_VIRTUALENVS_CREATE": "false",
+      "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+      "PWD": "/flywheel/v0",
+      "PYSITE": "/usr/local/lib/python3.10/site-packages",
+      "PYTHONPATH": "/flywheel/v0",
+      "PYTHON_GET_PIP_SHA256": "ba3ab8267d91fd41c58dbce08f76db99f747f716d85ce1865813842bb035524d",
+      "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/6ce3639da143c5d79b44f94b04080abf2531fd6e/public/get-pip.py",
+      "PYTHON_PIP_VERSION": "22.0.4",
+      "PYTHON_SETUPTOOLS_VERSION": "58.1.0",
+      "PYTHON_VERSION": "3.10.5",
+      "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+    },
+    "inputs": {
+      "api-key": {
+        "base": "api-key",
+        "read-only": true
+      },
+      "file-input": {
+        "base": "file",
+        "description": "File to classify"
+      },
+      "profile": {
+        "base": "file",
+        "description": "Optional classification profile.",
+        "optional": true,
+        "type": {
+          "enum": [
+            "source code"
+          ]
+        }
+      }
+    },
+    "label": "File Classifier",
+    "license": "MIT",
+    "maintainer": "Flywheel <support@flywheel.io>",
+    "name": "file-classifier",
+    "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-classifier.git",
+    "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/file-classifier.git",
+    "version": "0.6.4"
+  },
+  "exchange": {
+    "git-commit": "c0e8b30b9a09d32c1a3143785a7781436b2d9a90",
+    "rootfs-hash": "sha384:30a3f095a89fd2a3db35e98982140c08c34b1812e93262b29321005c243149079ff17637af47f5b6f2fa5f97f3455a22",
+    "rootfs-url": "https://storage.googleapis.com/flywheel-exchange/flywheel-file-classifier-sha384-30a3f095a89fd2a3db35e98982140c08c34b1812e93262b29321005c243149079ff17637af47f5b6f2fa5f97f3455a22.tgz"
+  },
+  "invocation-schema": {
+    "title": "Invocation manifest for File Classifier",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "object",
+        "properties": {
+          "debug": {
+            "default": false,
+            "type": "boolean"
+          },
+          "remove_existing": {
+            "default": false,
+            "type": "boolean"
+          },
+          "tag": {
+            "default": "file-classifier",
+            "type": "string"
+          },
+          "validate": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "debug",
+          "remove_existing",
+          "tag",
+          "validate"
+        ]
+      },
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "api-key": {
+            "type": "object"
+          },
+          "file-input": {
+            "type": "object",
+            "properties": {}
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "source code"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "api-key",
+          "file-input"
+        ]
+      }
+    },
+    "required": [
+      "config",
+      "inputs"
+    ]
+  }
+}
