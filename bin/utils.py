@@ -192,9 +192,6 @@ def extract_gear_categories(row: list, header: list) -> dict:
     return gear_categories.to_dict()
 
 
-# def fix_gear_url_and_source(url: str) -> str:
-
-
 def set_gear_permission(permission: str, current_manifest: dict):
     """Set the gear permission in the manifest."""
     # in case the permission is an empty string:
@@ -241,7 +238,7 @@ def clone_repo(repo_url) -> Repo:
 
 
 def commit_and_push_changes_to_manifest(
-        repo: Repo, new_branch_name="Update_manifest", commit_message="Update manifest.json"
+        repo: Repo, new_branch_name="Update_manifest", commit_message="Update manifest.json",
 ) -> bool:
     """Commit and push the changes to the manifest a new branch.
 
@@ -325,7 +322,7 @@ def merge_project(
         remote_repo: str,
         source_branch: str,
         target_branch: str,
-        title: str = "Update manifest.json"
+        title: str = "Update manifest.json",
 ):
     """Create a merge request in the given project.
 
@@ -398,7 +395,7 @@ def merge_project(
 def commit_manifest_changes_to_gear_exchange_repo(
         repo: Repo,
         new_branch_name="Update_gear_manifests",
-        commit_message="Update manifests.json"
+        commit_message="Update manifests.json",
 ) -> bool:
     """Commit and push the changes to the manifest a new branch.
 

@@ -31,7 +31,7 @@ logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 def update_manifest_single_csv_row(
         this_row: List[str],
         header: List[str],
-        new_branch_name: str = NEW_BRANCH_NAME
+        new_branch_name: str = NEW_BRANCH_NAME,
 ) -> Optional[utils.GearDetails]:
     """Update the manifest for a single gear from a row in the CSV file.
 
@@ -75,7 +75,7 @@ def update_manifest_single_csv_row(
     # recursively delete the temp file with the local repo:
     rmtree(os.path.dirname(gear_repo.working_tree_dir))
 
-    return utils.GearDetails(gear_name, repo_url)
+    return utils.GearDetails(gear_name, row_manifest_url)
 
 
 def update_manifest_in_gear_repos(
@@ -122,7 +122,7 @@ def update_manifest_in_gear_repos(
 
 def find_matching_manifest_files_in_repo(
         gear_to_match: utils.GearDetails,
-        exchange_repo: utils.Repo
+        exchange_repo: utils.Repo,
 ) -> Optional[str]:
     """Find manifests with the same gear_name in local repo.
 
@@ -199,7 +199,7 @@ def update_exchange_manifests(
     # Now, commit the changes (in a single commit) to the gear exchange repo and push them to the remote
     exchange_repo_changed = utils.commit_manifest_changes_to_gear_exchange_repo(
         exchange_repo,
-        new_branch_name=NEW_BRANCH_NAME,
+        new_branch_name=new_branch_name,
         commit_message="UP: update manifests with gear categorization",
     )
 
@@ -207,9 +207,9 @@ def update_exchange_manifests(
         # create a pull request in the gear exchange repo
         utils.merge_project(
             GEAR_EXCHANGE_REPO,
-            source_branch=NEW_BRANCH_NAME,
+            source_branch=new_branch_name,
             target_branch="main" if "gitlab" in GEAR_EXCHANGE_REPO.removeprefix("https://") else "master",
-            title=NEW_BRANCH_NAME
+            title=new_branch_name
         )
 
     # recursively delete the temp file with the local repo:
