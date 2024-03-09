@@ -241,6 +241,10 @@ def main(csv_file_path: os.PathLike, new_branch_name: str = NEW_BRANCH_NAME, aut
     updated_gears = update_manifest_in_gear_repos(csv_file_path, new_branch_name, automerge)
     # if you want to save the list of updated gears to a file, you can do it here:
     utils.save_updated_files_to_csv(updated_gears, "updated_gears.csv")
+    # Now, we're going to have to wait a bit for the PRs to be merged (either manually, or
+    # automatically after the CI pipelines succeed) before we can pull the new manifests from
+    # the gear repos main branches:
+    input("Once the pending MRs and PRs are done, press a key to continue...")
     update_exchange_manifests(updated_gears, new_branch_name)
 
 
