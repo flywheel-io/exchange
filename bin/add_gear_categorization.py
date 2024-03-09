@@ -32,6 +32,7 @@ def update_manifest_single_csv_row(
         this_row: List[str],
         header: List[str],
         new_branch_name: str = NEW_BRANCH_NAME,
+        automerge: bool = True,
 ) -> Optional[utils.GearDetails]:
     """Update the manifest for a single gear from a row in the CSV file.
 
@@ -39,6 +40,7 @@ def update_manifest_single_csv_row(
         this_row (List[str]): Row from the CSV file.
         header (List[str]): Header of the CSV file.
         new_branch_name (str): Name of the new branch to be created.
+        automerge (bool): Whether to automerge the pull request.
 
     Returns:
         Optional[utils.GearDetails]: Gear details if the gear was processed, None otherwise.
@@ -69,7 +71,8 @@ def update_manifest_single_csv_row(
             repo_url,
             source_branch=new_branch_name,
             target_branch="main" if "gitlab" in repo_url.removeprefix("https://") else "master",
-            title=new_branch_name
+            title=new_branch_name,
+            automerge=automerge,
         )
 
     # recursively delete the temp file with the local repo:
@@ -81,12 +84,14 @@ def update_manifest_single_csv_row(
 def update_manifest_in_gear_repos(
         csv_file_path: os.PathLike,
         new_branch_name: str = NEW_BRANCH_NAME,
+        automerge: bool = True,
 ) -> List[utils.GearDetails]:
     """Update the manifest file in the gear repositories with info from csv file.
 
     Args:
         csv_file_path (os.PathLike): Path to the CSV file with the gear categorization.
         new_branch_name (str): Name of the new branch to be created.
+        automerge (bool): Whether to automerge the pull request.
 
     Returns:
         list[utils.GearDetails]: List of gears that have been processed.
@@ -108,10 +113,16 @@ def update_manifest_in_gear_repos(
                 log.debug("Skipping deprecated gear: %s", row[header.index("name")])
                 continue
 
-            # if everything went well, add the gear to the list of processed gears:
-            # (we store the repo_url so that we don't need to search for it later)
-            this_gear = update_manifest_single_csv_row(row, header, new_branch_name)
+            try:
+                this_gear = update_manifest_single_csv_row(row, header, new_branch_name, automerge)
+            except Exception as e:
+                log.error("Error processing gear: %s", row[header.index("name")])
+                log.error(e)
+                continue
+
             if this_gear:
+                # if everything went well, add the gear to the list of processed gears:
+                # (we store the repo_url so that we don't need to search for it later)
                 log.info("Done processing gear: %s", this_gear.gear_name)
                 processed_gears.append(this_gear)
             else:
@@ -209,28 +220,40 @@ def update_exchange_manifests(
             GEAR_EXCHANGE_REPO,
             source_branch=new_branch_name,
             target_branch="main" if "gitlab" in GEAR_EXCHANGE_REPO.removeprefix("https://") else "master",
-            title=new_branch_name
+            title=new_branch_name,
+            automerge=False,
         )
 
     # recursively delete the temp file with the local repo:
     rmtree(os.path.dirname(exchange_repo.working_tree_dir))
 
 
-def main(csv_file_path: os.PathLike, new_branch_name: str = NEW_BRANCH_NAME):
-    """Main function of the script."""
+def main(csv_file_path: os.PathLike, new_branch_name: str = NEW_BRANCH_NAME, automerge: bool = True):
+    """Main function of the script.
+
+    Args:
+        csv_file_path (os.PathLike): Path to the CSV file with the gear categorization.
+        new_branch_name (str): Name of the new branch to be created.
+        automerge (bool): Whether to automerge the pull request.
+    """
     logging.basicConfig(level=logging.INFO)
     log.info("Adding gear categorization to gears from CSV file: %s", csv_file_path)
-    updated_gears = update_manifest_in_gear_repos(csv_file_path, new_branch_name)
+    updated_gears = update_manifest_in_gear_repos(csv_file_path, new_branch_name, automerge)
     # if you want to save the list of updated gears to a file, you can do it here:
     utils.save_updated_files_to_csv(updated_gears, "updated_gears.csv")
-    update_exchange_manifests(updated_gears)
+    update_exchange_manifests(updated_gears, new_branch_name)
 
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Add gear categorization from CSV file")
     parser.add_argument("--csv", help="CSV file with gear categorization", required=True)
-    parser.add_argument("--new_branch_name", help="Name of the new branch to be created", default=NEW_BRANCH_NAME)
+    parser.add_argument("--new-branch-name", help="Name of the new branch to be created", default=NEW_BRANCH_NAME)
+    parser.add_argument(
+        "--automerge",
+        help="Whether to automerge the pull request",
+        action="store_true",
+    )
 
     args = parser.parse_args()
 
-    main(args.csv, args.new_branch_name)
+    main(args.csv, args.new_branch_name, args.automerge)

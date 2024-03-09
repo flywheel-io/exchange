@@ -94,7 +94,7 @@ def get_manifest_content_from_remote(manifest_url: str) -> Optional[dict]:
         return None
 
     if response.status_code != 200:
-        log.warning("Could not download the manifest.json at %s", manifest_url)
+        log.debug("Could not download the manifest.json at %s", manifest_url)
         return None
 
     return response.json()
@@ -308,7 +308,7 @@ def update_manifest(repo: Repo, update_info: dict, repo_url: str):
             # overwrite the manifest file with the updated manifest:
             file.seek(0)
             json.dump(manifest, file, indent=2)
-            file.write('\n')
+            file.write('\n')  # add a newline at the end of the file
             file.truncate()
     else:
         log.warning(f"Manifest.json not found in {repo.working_tree_dir}")
@@ -323,6 +323,7 @@ def merge_project(
         source_branch: str,
         target_branch: str,
         title: str = "Update manifest.json",
+        automerge: bool = False
 ):
     """Create a merge request in the given project.
 
@@ -331,6 +332,7 @@ def merge_project(
         source_branch (str): name of the source branch.
         target_branch (str): name of the target branch.
         title (str): title of the merge request.
+        automerge (bool): whether to actually merge the MR after creating it.
     """
     description = "Update manifest.json with gear categories"
 
@@ -353,9 +355,10 @@ def merge_project(
             "allow_maintainer_to_push": True,
             "approvals_before_merge": 0,
         })
-        # it looks like if you try to merge a MR that is not ready, it will fail.
-        sleep(15)
-        mr.merge(merge_when_pipeline_succeeds=True)
+        if automerge:
+            # it looks like if you try to merge a MR that is not ready, it will fail.
+            sleep(15)
+            mr.merge(merge_when_pipeline_succeeds=True)
 
     def merge_project_github():
         """Create a merge request in a GitHub project."""
@@ -371,14 +374,15 @@ def merge_project(
             base=target_branch,
             head=source_branch,
             title=title,
-            body=description
+            body=description,
         )
-        merge_status = pr.merge()
-        if merge_status.merged:
-            # delete the source branch if the merge was successful:
-            project.get_git_ref(f"heads/{source_branch}").delete()
-        else:
-            log.error(f"Merge request {pr.number} could not be merged.")
+        if automerge:
+            merge_status = pr.merge()
+            if merge_status.merged:
+                # delete the source branch if the merge was successful:
+                project.get_git_ref(f"heads/{source_branch}").delete()
+            else:
+                log.error(f"Merge request {pr.number} could not be merged.")
 
     remote_repo_parsed = urlparse(remote_repo)
     host_url = f"{remote_repo_parsed.scheme}://{remote_repo_parsed.netloc}"
