@@ -7,6 +7,21 @@ of files that have been modified. Then, it goes through the list of modified gea
 new manifest from the gear repository and modifies the corresponding manifest in the gear
 exchange repo in GitHub. It finally makes a commit to the gear exchange repository with all
 the changes
+
+The script needs as main input a CSV file with at least the following columns:
+- name: name of the gear
+- recom. action: recommended action for the gear (DEP for deprecated means it will be skipped,
+                 otherwise it will be processed)
+- source: URL of the repository where the ALGORITHM is stored
+- url: URL of the gear repository
+- category: category of the gear (analysis, utility, converter, qa)
+- Species: species the gear is intended for (Animal, Human, Phantom, Other)
+- Organ: organ the gear is intended for (Brain, Heart, Lung, ...)
+- Therapeutic Area: therapeutic area the gear is intended for (Neurology, Cardiology, Psychiatry, ...)
+- Modality: modality the gear is intended for (MRI, CT, PET, ...)
+- Function: function of the gear (Segmentation, Registration, Curation, ...)
+- Suite: group under which list the gear (Curation, Image Processing, Utility, ...)
+- Gear Permissions: Flywheel permissions the gear needs (None, Read-only, Read-write)
 """
 
 import csv
