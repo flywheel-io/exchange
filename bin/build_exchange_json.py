@@ -1,13 +1,30 @@
+from typing import List
+
 import git
 import json
 import sys
 from functools import partial
 from pathlib import Path
 
-def rm_extra_keys(d: dict) -> dict:
-    for k in ["config", "inputs", "custom", "flywheel"]:
-        d.pop(k, None)
+def rm_nested_keys(d:dict, nested_k:List[str]) -> dict:
+    current = d
+    for key in nested_k[:-1]:
+        if key in current:
+            current = current[key]
+        else:
+            return d
+
+    current.pop(nested_k[-1], None)
+
     return d
+
+def rm_extra_keys(d: dict) -> dict:
+    for k in ["config", "inputs", "flywheel"]:
+        d.pop(k, None)
+
+    updated_d = rm_nested_keys(d, ["custom", "gear-builder", "image"])
+
+    return updated_d
 
 
 def rm_nulls(d: dict) -> dict:
