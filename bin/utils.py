@@ -198,7 +198,7 @@ def set_gear_permission(permission: str, current_manifest: dict):
     if not permission:
         permission = "None"
     # First, check that the permission is valid:
-    if permission not in ["None", "Read Only", "Read-write", "Admin"]:
+    if permission not in ["None", "Read-only", "Read-write", "Admin"]:
         raise ValueError(f"Invalid gear permission: {permission}")
     # Now, if the permission is "None":
     if permission == "None":
@@ -334,10 +334,11 @@ def merge_project(
         target_branch (str): name of the target branch.
         title (str): title of the merge request.
         automerge (bool): whether to actually merge the MR after creating it.
+        skip_ci (bool): whether to skip the CI pipeline.
     """
     description = "Update manifest.json with gear categories"
     if skip_ci:
-        description += " [skip ci]"
+        description += "\n\n[skip ci]"
 
     def merge_project_gitlab():
         """Create a merge request in a GitLab project."""
