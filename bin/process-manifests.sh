@@ -299,8 +299,9 @@ function process_manifests() {
 
 publish_global_manifest() {
     >&2 echo "Publish global manifest"
-    # fetch all branches from remote and update local remote-tracking branches
-    git fetch origin +refs/heads/*:refs/remotes/origin/*
+    git fetch --unshallow || git fetch --all  # Attempt to unshallow, fallback to fetching all
+#    # fetch all branches from remote and update local remote-tracking branches
+#    git fetch origin +refs/heads/*:refs/remotes/origin/*
     # shellcheck disable=SC2038
     python bin/build_exchange_json.py $MANIFESTS_DIR .$EXCHANGE_JSON
     git fetch origin gh-pages-json
@@ -348,5 +349,6 @@ else
     validate_manifests "$manifests"
     >&2 echo "Manifest has been validated..."
 fi
+
 
 exit $EXIT_STATUS
