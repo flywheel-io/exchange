@@ -48,6 +48,7 @@ def update_manifest_single_csv_row(
         header: List[str],
         new_branch_name: str = NEW_BRANCH_NAME,
         automerge: bool = True,
+        skip_ci: bool = False,
 ) -> Optional[utils.GearDetails]:
     """Update the manifest for a single gear from a row in the CSV file.
 
@@ -56,6 +57,7 @@ def update_manifest_single_csv_row(
         header (List[str]): Header of the CSV file.
         new_branch_name (str): Name of the new branch to be created.
         automerge (bool): Whether to automerge the pull request.
+        skip_ci (bool): Whether to skip the CI pipelines in the MRs for the gear repos.
 
     Returns:
         Optional[utils.GearDetails]: Gear details if the gear was processed, None otherwise.
@@ -75,10 +77,13 @@ def update_manifest_single_csv_row(
 
     utils.update_manifest(gear_repo, this_gear_categories, repo_url)
 
+    commit_message = "UP: add gear categories to manifest.json"
+    if skip_ci:
+        commit_message += " [skip ci]"
     changes_to_repo = utils.commit_and_push_changes_to_manifest(
         gear_repo,
         new_branch_name=new_branch_name,
-        commit_message="UP: add gear categories to manifest.json"
+        commit_message=commit_message,
     )
 
     if changes_to_repo:
@@ -100,6 +105,7 @@ def update_manifest_in_gear_repos(
         csv_file_path: os.PathLike,
         new_branch_name: str = NEW_BRANCH_NAME,
         automerge: bool = True,
+        skip_ci: bool = False,
 ) -> List[utils.GearDetails]:
     """Update the manifest file in the gear repositories with info from csv file.
 
@@ -107,6 +113,7 @@ def update_manifest_in_gear_repos(
         csv_file_path (os.PathLike): Path to the CSV file with the gear categorization.
         new_branch_name (str): Name of the new branch to be created.
         automerge (bool): Whether to automerge the pull request.
+        skip_ci (bool): Whether to skip the CI pipelines in the MRs for the gear repos.
 
     Returns:
         list[utils.GearDetails]: List of gears that have been processed.
@@ -129,7 +136,9 @@ def update_manifest_in_gear_repos(
                 continue
 
             try:
-                this_gear = update_manifest_single_csv_row(row, header, new_branch_name, automerge)
+                this_gear = update_manifest_single_csv_row(
+                    row, header, new_branch_name, automerge, skip_ci
+                )
             except Exception as e:
                 log.error("Error processing gear: %s", row[header.index("name")])
                 log.error(e)
@@ -243,17 +252,23 @@ def update_exchange_manifests(
     rmtree(os.path.dirname(exchange_repo.working_tree_dir))
 
 
-def main(csv_file_path: os.PathLike, new_branch_name: str = NEW_BRANCH_NAME, automerge: bool = True):
+def main(
+        csv_file_path: os.PathLike,
+        new_branch_name: str = NEW_BRANCH_NAME,
+        automerge: bool = True,
+        skip_ci: bool = False,
+):
     """Main function of the script.
 
     Args:
         csv_file_path (os.PathLike): Path to the CSV file with the gear categorization.
         new_branch_name (str): Name of the new branch to be created.
         automerge (bool): Whether to automerge the pull request.
+        skip_ci (bool): Whether to skip the CI pipelines in the MRs for the gear repos.
     """
     logging.basicConfig(level=logging.INFO)
     log.info("Adding gear categorization to gears from CSV file: %s", csv_file_path)
-    updated_gears = update_manifest_in_gear_repos(csv_file_path, new_branch_name, automerge)
+    updated_gears = update_manifest_in_gear_repos(csv_file_path, new_branch_name, automerge, skip_ci)
     # if you want to save the list of updated gears to a file, you can do it here:
     utils.save_updated_files_to_csv(updated_gears, "updated_gears.csv")
     # Now, we're going to have to wait a bit for the PRs to be merged (either manually, or
@@ -268,6 +283,11 @@ if __name__ == "__main__":
     parser.add_argument("--csv", help="CSV file with gear categorization", required=True)
     parser.add_argument("--new-branch-name", help="Name of the new branch to be created", default=NEW_BRANCH_NAME)
     parser.add_argument(
+        "--skip-ci",
+        help="Whether to skip the CI pipelines in the MRs for the gear repos",
+        action="store_true",
+    )
+    parser.add_argument(
         "--automerge",
         help="Whether to automerge the pull request",
         action="store_true",
@@ -275,4 +295,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args.csv, args.new_branch_name, args.automerge)
+    main(args.csv, args.new_branch_name, args.automerge, args.skip_ci)

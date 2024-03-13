@@ -323,7 +323,8 @@ def merge_project(
         source_branch: str,
         target_branch: str,
         title: str = "Update manifest.json",
-        automerge: bool = False
+        automerge: bool = False,
+        skip_ci: bool = False,
 ):
     """Create a merge request in the given project.
 
@@ -335,6 +336,8 @@ def merge_project(
         automerge (bool): whether to actually merge the MR after creating it.
     """
     description = "Update manifest.json with gear categories"
+    if skip_ci:
+        description += " [skip ci]"
 
     def merge_project_gitlab():
         """Create a merge request in a GitLab project."""
