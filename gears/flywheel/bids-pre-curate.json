@@ -1,0 +1,81 @@
+{
+  "author": "Flywheel",
+  "cite": "",
+  "command": "python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "dry_run": {
+      "default": false,
+      "description": "Whether or not to perform a dry run, logging what would be changed without actually changing it. Default = False",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "flywheel": {
+      "show-job": true,
+      "suite": "BIDS"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/bids-pre-curate:0.5.1"
+    }
+  },
+  "description": "This gear offers a simple way to modify labels of project containers to be compatible with a project curation template such as reproin.json. Running pre-curate as a project-level analysis will generate CSV files that will be populated with a unique list of subject, session and acquisition labels.  These CSV files need to be downloaded and modified to provide new container names. Edited CSV files are then uploaded to the project as an attachment and provided as input to a run of this same gear to modify container names. For more information, please see the README in the source repository.",
+  "environment": {
+    "BUILD_TIME": "2023-10-30T13:12:10Z",
+    "COMMIT_REF": "main",
+    "COMMIT_SHA": "771cdc04",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "EDITOR": "micro",
+    "FLYWHEEL": "/flywheel/v0",
+    "FW_GID": "31337",
+    "FW_UID": "31337",
+    "GPG_KEY": "A035C8C19219BA821ECEA86B64E628F8D684696D",
+    "LANG": "C.UTF-8",
+    "LANGUAGE": "en_US",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    "PROMETHEUS_MULTIPROC_DIR": "/var/metrics",
+    "PWD": "/flywheel/v0",
+    "PYSITE": "/usr/local/lib/python3.11/site-packages",
+    "PYTHON_GET_PIP_SHA256": "22b849a10f86f5ddf7ce148ca2a31214504ee6c83ef626840fde6e5dcd809d11",
+    "PYTHON_GET_PIP_URL": "https://github.com/pypa/get-pip/raw/c6add47b0abf67511cdfb4734771cbab403af062/public/get-pip.py",
+    "PYTHON_PIP_VERSION": "23.2.1",
+    "PYTHON_SETUPTOOLS_VERSION": "65.5.1",
+    "PYTHON_VERSION": "3.11.6",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib"
+  },
+  "inputs": {
+    "acquisitions": {
+      "base": "file",
+      "description": "CSV file containing new acquisition labels.",
+      "optional": true
+    },
+    "key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "sessions": {
+      "base": "file",
+      "description": "CSV file containing new session labels.",
+      "optional": true
+    },
+    "subjects": {
+      "base": "file",
+      "description": "CSV file containing new subject labels.",
+      "optional": true
+    }
+  },
+  "label": "BIDS Pre-Curation",
+  "license": "MIT",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "bids-pre-curate",
+  "source": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-pre-curate",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-pre-curate",
+  "version": "0.5.1"
+}
