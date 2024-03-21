@@ -1,3 +1,5 @@
+# ⚠️ This repository has been archived. Please make any future merge requests/gear releases to the [gitlab repo](https://gitlab.com/flywheel-io/scientific-solutions/gears/gear-exchange/)
+
 ## Flywheel Exchange
 
 This repository consists of three distinct assets:
