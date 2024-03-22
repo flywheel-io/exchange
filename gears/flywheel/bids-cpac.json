@@ -1,0 +1,140 @@
+{
+  "author": "Craddock C, Sikka S, Cheung B, et al.",
+  "cite": "https://www.biorxiv.org/content/10.1101/2021.12.01.470790v3",
+  "command": "/opt/flypy/bin/python run.py",
+  "config": {
+    "bids_app_command": {
+      "default": "",
+      "description": "OPTIONAL. The gear will run the algorithm defaults, if no command is supplied. See https://fcp-indi.github.io/docs/latest/user/quick#usage-cpac-run for options. e.g., cpac bids_dir output_dir participant [arg1 [arg2 ...]]. Please use the input tab to load any of the files you define as a keyword arg.",
+      "type": "string"
+    },
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    },
+    "gear-dry-run": {
+      "default": false,
+      "description": "Do everything Flywheel-related except actually execute BIDS App command. Different from passing '--dry-run' in the BIDS App command.",
+      "type": "boolean"
+    },
+    "gear-post-processing-only": {
+      "default": false,
+      "description": "REQUIRES archive file. Gear will skip the BIDS algorithm and go straight to generating the HTML reports and processing metadata.",
+      "type": "boolean"
+    },
+    "tracking_opt-out": {
+      "default": true,
+      "description": "Disable usage tracking. Only the number of participants on the analysis is tracked.",
+      "type": "boolean"
+    }
+  },
+  "custom": {
+    "analysis-level": "participant",
+    "bids-app-binary": "cpac",
+    "bids-app-data-types": [
+      "anat",
+      "func",
+      "fmap"
+    ],
+    "flywheel": {
+      "classification": {
+        "components": [
+          "FSL",
+          "ANTS",
+          "fmriprep"
+        ],
+        "keywords": [
+          "neuroimaging",
+          "pipeline"
+        ],
+        "modality": [
+          "MR"
+        ],
+        "type": [
+          "NIFTI"
+        ]
+      },
+      "suite": "BIDS Apps"
+    },
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/bids-cpac:0.4.1_1.8.6"
+    },
+    "license": {
+      "dependencies": [
+        {
+          "name": "Other",
+          "url": "https://fcp-indi.github.io/docs/latest/license"
+        },
+        {
+          "name": "Other",
+          "url": "https://github.com/ANTsX/ANTs/blob/v2.3.4/COPYING.txt"
+        },
+        {
+          "name": "Other",
+          "url": "https://afni.nimh.nih.gov/Legal_info"
+        },
+        {
+          "name": "Other",
+          "url": "https://surfer.nmr.mgh.harvard.edu/fswiki/License"
+        },
+        {
+          "name": "Other",
+          "url": "https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence"
+        }
+      ],
+      "main": {
+        "name": "MIT"
+      },
+      "non-commercial-use-only": true
+    }
+  },
+  "description": "The Configurable Pipeline for the Analysis of Connectomes.  C-PAC is software for performing high-throughput preprocessing and analysis of functional connectomes data using high-performance computers. C-PAC is implemented in Python using the Nipype pipelining library to efficiently combine tools from AFNI, ANTS, and FSL to achieve high quality and robust automated processing. This docker container, when built, is an application for performing participant level analyses. Future releases will include group-level analyses, when there is a BIDS standard for handling derivatives and group models.",
+  "environment": {
+    "C3DPATH": "/opt/c3d",
+    "FLYWHEEL": "/flywheel/v0",
+    "FREESURFER_HOME": "/usr/lib/freesurfer",
+    "FSFAST_HOME": "/usr/lib/freesurfer/fsfast",
+    "FSLDIR": "/usr/share/fsl/6.0",
+    "FSLMULTIFILEQUIT": "TRUE",
+    "FSLOUTPUTTYPE": "NIFTI_GZ",
+    "FSLTCLSH": "/usr/share/fsl/6.0/bin/fsltclsh",
+    "FSLWISH": "/usr/share/fsl/6.0/bin/fslwish",
+    "LD_LIBRARY_PATH": "/usr/share/fsl/6.0/6.0:",
+    "MINC_BIN_DIR": "/usr/lib/freesurfer/mni/bin",
+    "MINC_LIB_DIR": "/usr/lib/freesurfer/mni/lib",
+    "MNI_DIR": "/usr/lib/freesurfer/mni",
+    "NO_FSFAST": "1",
+    "PATH": "/usr/local/miniconda/bin:/usr/lib/freesurfer/bin:/opt/ICA-AROMA:/usr/lib/ants/bin:/opt/afni:/opt/c3d/bin:/usr/share/fsl/6.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/.local/bin::/home/c-pac_user/.local/bin",
+    "PERL5LIB": "/usr/lib/freesurfer/mni/share/perl5",
+    "PYTHONPATH": ":/.local/lib/python3.10/site-packages:/home/c-pac_user/.local/lib/python3.10/site-packages",
+    "PYTHONUSERBASE": "/home/c-pac_user/.local",
+    "SUBJECTS_DIR": "/usr/lib/freesurfer/subjects",
+    "TZ": "America/New_York",
+    "USER": "c-pac_user"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    },
+    "pipeline_file": {
+      "base": "file",
+      "description": "NOT THE DATASET; An optional custom pipeline file (yaml).",
+      "optional": true
+    },
+    "archived_runs": {
+    "base": "file",
+    "description": "Previous output (zip archive) of qsiprep run (e.g., bids-qsiprep_<subject_code>*.zip)",
+    "optional": true
+    }
+  },
+  "label": "BIDS C-PAC",
+  "license": "Other",
+  "maintainer": "Flywheel <support@flywheel.io>",
+  "name": "bids-cpac",
+  "source": "https://github.com/FCP-INDI/C-PAC",
+  "url": "https://gitlab.com/flywheel-io/scientific-solutions/gears/bids-apps/bids-cpac",
+  "version": "0.4.1_1.8.6"
+}
